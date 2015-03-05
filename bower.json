@@ -1,0 +1,17 @@
+{
+  "name": "SugoiOverflow",
+  "version": "0.0.1",
+  "authors": [
+    "Alexander Lapa <alex.lapa@live.com>"
+  ],
+  "main": "client/index.html",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
