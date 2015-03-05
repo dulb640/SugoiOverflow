@@ -1,10 +1,13 @@
 angular
 	.module('sugoiOverflow',
 		['ngMessages',
-        'ui.select2',
+    'ui.select2',
 		'ui.router',
 		'ui.bootstrap',
-        'angularLoad',
+    'angularLoad',
+    'ngSanitize',
+    'btford.markdown',
+    'ngTagsInput',
 		'sugoiOverflow.settings',
 		'sugoiOverflow.shared',
 		'sugoiOverflow.interceptors'

@@ -29,3 +29,4 @@ node_modules
 
 config*.json
 server/iisnode
+bower_components
