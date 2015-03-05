@@ -1,12 +1,14 @@
-<div class="profile-layout" ng-controller="profileController">
-	<form action="" class="profile-form" name="profileForm">
+<div class="profile-layout">
+	<form novalidate action="" class="profile-form" name="profileForm" ng-submit="submit()">
     <div class="form-control">
       <div class="form-label" for="location">Location</div>
       <input type="text" name="location">
     </div>
     <div class="form-control">
       <div class="form-label" for="specialisations">Specialisations</div>
-      <input type="text" name="specialisations">
+      <tags-input ng-model="tags">
+        <auto-complete source="loadTags(query)"></auto-complete>
+      </tags-input>
     </div>
     <button class="form-submit" type="submit"></button>
   </form>

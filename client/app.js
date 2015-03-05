@@ -11,6 +11,7 @@ angular
 		'sugoiOverflow.settings',
 		'sugoiOverflow.shared',
 		'sugoiOverflow.interceptors'
+    'sugoiOverflow.profile'
 		])
 	.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'settingsProvider',
 		function($stateProvider, $urlRouterProvider, $httpProvider, settingsProvider){
