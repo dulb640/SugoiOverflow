@@ -25,13 +25,7 @@ angular.module('sugoiOverflow.services')
           // .error(function(error){
           //   deferred.reject(error);
           // });
-          deferred.resolve({
-            userId: '1234',
-            name: 'jack',
-            karma: 99,
-            location: 'Water Cooler',
-            tags: [{text: 'hello'}]
-          });
+          deferred.resolve(new UserMock());
           return deferred.promise;
         },
 
