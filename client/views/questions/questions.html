@@ -3,6 +3,9 @@
 		<a href="#/questions/suggested"><span>Suggested</span></a>
 		<a href="#/questions/mostWanted"><span>Most Wanted</span></a>
 		<a href="#/questions/All"><span>All</span></a>
+		<a href="#/questions/suggested"><span class="category">Suggested</span></a>
+		<a href="#/questions/mostWanted"><span class="category">Most Wanted</span></a>
+		<a href="#/questions/All"><span class="category">All</span></a>
 	</div>
 	<div class="content container">
 		<div class="question-container" ng-repeat="question in questions">
@@ -16,6 +19,8 @@
 			<div class="question-status">
 				<div class="answers">{{question.answerCount}} answers</div>
 				<div class="subs">{{question.subCount}} subs</div>
+				<div class="answers"><span>{{question.answerCount}}</span><span>answers</span></div>
+				<div class="subs"><span>{{question.subCount}}</span><span>subs</span></div>
 			</div>
 		</div>
 	</div>
