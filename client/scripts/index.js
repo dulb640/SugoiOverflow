@@ -1,17 +1,17 @@
 angular
 	.module('sugoiOverflow',
 		['ngMessages',
-    'ui.select2',
-		'ui.router',
-		'ui.bootstrap',
-    'angularLoad',
-    'ngSanitize',
-    'btford.markdown',
-    'ngTagsInput',
-		'sugoiOverflow.settings',
-		'sugoiOverflow.shared',
-		'sugoiOverflow.interceptors'
-    'sugoiOverflow.profile'
+			'ui.select2',
+			'ui.router',
+			'ui.bootstrap',
+			'angularLoad',
+			'ngSanitize',
+			'btford.markdown',
+			'ngTagsInput',
+			'sugoiOverflow.settings',
+			'sugoiOverflow.shared',
+			'sugoiOverflow.interceptors',
+			'sugoiOverflow.profile'
 		])
 	.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'settingsProvider',
 		function($stateProvider, $urlRouterProvider, $httpProvider, settingsProvider){
