@@ -1,13 +1,81 @@
 @import 'components/colors';
+@import 'components/buttons';
 @import 'helpers/flexbox';
+@import 'helpers/mixins';
 
 body {
 	padding: 0;
 	margin: 0;
+	font-family: 'Segoe Ui Light', arial, sans-serif;
 }
 
 .header {
 	background-color: $teal;
+	height: 60px;
+	padding: 15px;
 
 	@extend %display-flex;
+	@include flex-vertical-aligns(center);
+	@include flex-direction(row);
+
+
+	.branding {
+		font-size: 18px;
+		color: #fff;
+	}
+
+	.search {
+		margin-left: 15px;
+
+		.search-bar {
+			width: 300px;
+			border: 1px solid $gray-dark;
+			padding: 5px;
+
+			@include border-radius(8px);
+		}
+		
+	}
+
+	.user {
+		@extend %display-flex;
+		@include flex-vertical-aligns(center);
+		margin-left: auto; //Align div to the right;
+
+		color: #fff;
+
+		.notifications {
+			.notices {
+				border: 1px solid #fff;
+				background-color: #fff;
+				color: red;
+				border-radius: 15px;
+				padding: 5px 10px 5px 10px;
+			}
+
+			margin-right: 20px;
+		}
+
+		.profile {
+			.profile-icon {
+				border: 1px solid #fff;
+				background-color: #fff;
+				color: red;
+				border-radius: 15px;
+				padding: 5px 10px 5px 10px;
+			}
+
+			margin-right: 20px;
+		}
+	}
+
+	.ask {
+		.ask-button {
+			width: 100px;
+			height: 35px;
+			font-size: 16px;
+			text-align: center;
+			display: block;
+		}
+	}
 }

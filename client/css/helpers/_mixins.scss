@@ -1,0 +1,39 @@
+@mixin flex-justify-content($value) {
+	-webkit-justify-content: $value;
+    justify-content: $value;
+}
+
+@mixin flex-direction($value){
+	flex-direction: $value;
+    -webkit-flex-direction: $value;
+}
+
+
+@mixin flex-vertical-aligns($value){
+	align-items: $value;
+    -webkit-align-items: $value;
+}
+
+@mixin flex-grow($value){
+    flex-grow: $value;
+    -webkit-flex-grow: $value;
+}    
+
+
+@mixin transition($value){
+	transition: $value;
+    -moz-transition: $value;
+    -webkit-transition: $value;
+}
+
+@mixin border-radius($value){
+	border-radius: $value;
+	-webkit-border-radius: $value;
+	-moz-border-radius: $value;
+}
+
+@mixin box-shadow($value){
+	box-shadow: $value;
+	-webkit-box-shadow: $value;
+	-moz-box-shadow: $value;
+}
