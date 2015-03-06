@@ -2,25 +2,39 @@
 
 angular.module('sugoiOverflow.controllers')
   .controller('profileController',
-    function($scope, $q, tagsDataService, currentUserService){
+    function($scope, $q, $routeParams, tagsDataService, userDataService){
 
       _.extend($scope, {
+        isOwnProfile: false,
+        showSuccessfulSubmit: false,
         user: {},
         tags: [],
         loadTags: function($query){return tagsDataService.getAvailableTags($query);},
         submit: function(){
-          var ace = 1;
+          //Only submit the form when viewing own profile
+          $scope.showSuccessfulSubmit = false;
+          if ($scope.isOwnProfile){
+            userDataService.saveUserDetails($scope.user.userId, $scope.user)
+            .then(function(){
+              $scope.showSuccessfulSubmit = true;
+            });
+          }
         }
       });
 
-      var init = function(){
-        $scope.user = currentUserService.user;
-      };
-
-      if (currentUserService.userId){
-        init();
+      if ($routeParams.userId){
+        userDataService.getUser($routeParams.userId)
+        .then(function(user){
+          $scope.user = user;
+        });
       } else {
+        userDataService.getCurrentUser()
+        .then(function(user){
+          $scope.user = user;
+          $scope.isOwnProfile = true;
+        });
       }
+
     }
   );
 
