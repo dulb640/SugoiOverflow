@@ -7,9 +7,6 @@ angular.module('sugoiOverflow.controllers')
 
       _.extend($scope, {
         questions: {}, //Will have header information about questions - will change based on user tab selection
-        voteQuestion: function(isUpvote){
-
-        }
       });
 
       var init = function(){
