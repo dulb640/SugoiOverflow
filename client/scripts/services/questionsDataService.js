@@ -19,6 +19,7 @@ angular.module('sugoiOverflow.services')
               title: 'How hipster will I be if I use NodeJS to write a web server?',
               answerCount: 5,
               subCount: 9,
+              score: 5,
               tags: [{text: 'This'}, {text: 'Is'}, {text: 'A'}, {text: 'Tag'}]
             },
             {
@@ -26,6 +27,7 @@ angular.module('sugoiOverflow.services')
               title: 'How hipster will I be if I use COBOL to write a web server?',
               answerCount: 2,
               subCount: 25,
+              score: 6,
               tags: [{text: 'This'}, {text: 'Is'}, {text: 'A'}, {text: 'Tag'}]
             }
           ];
