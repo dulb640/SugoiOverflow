@@ -59,6 +59,7 @@
 				border: 1px solid $gray-darker;
 				padding: 0 5px 0 5px;
 				@include border-radius(4px);
+				display: inline-block;
 			}
 		}
 	}
