@@ -17,13 +17,17 @@
       <tags-input ng-model="tags">
         <auto-complete source="loadTags(query)" placeholder="tags"></auto-complete>
       </tags-input>
-        <label for="suggestedTags">Suggested tags: {{loadTags(query)}}</label>
+        <label for="suggestedTags">Suggested tags:
+          <span ng-repeat="tag in loadTags(query)">{{tag.text}}</span>
+        </label>
     </div>
     <div class="form-control">
       <tags-input ng-model="people">
         <auto-complete source="loadPeople(query)" placeholder="Who can answer your question?"></auto-complete>
       </tags-input>
-        <label for="suggestedPeople">Suggested persons: {{loadPeople(query)}}</label>
+        <label for="suggestedTags">Suggested people:
+          <span ng-repeat="person in loadPeople(query)">{{person.name}}</span>
+        </label>
     </div>
     <button class="form-submit" type="submit">Post your question</button>
   </form>

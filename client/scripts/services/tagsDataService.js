@@ -3,7 +3,7 @@ angular.module('sugoiOverflow.services')
   function($http, $q){
     'use strict';
     var service = {
-      getAvailableTags: function(){
+      getAvailableTags: function($query){
          var deferred = $q.defer();
         // $http.get('/api/tags/' + query)
         // .success(function(data){

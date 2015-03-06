@@ -8,7 +8,7 @@ angular.module('sugoiOverflow.controllers')
         loadTags: function($query){return tagsDataService.getAvailableTags($query);},
         submit: function(){},
         getProfilePictureUrl: function(){},
-        loadPeople: function($query){return userDataService.getAvailableUsers($query);}
+        loadPeople: function($query){return userDataService.getSuggestedUsers($query);}
       });
       userDataService.getUser('1234')
       .then(function(user){
