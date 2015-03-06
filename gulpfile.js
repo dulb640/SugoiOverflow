@@ -26,6 +26,7 @@ var mainBowerFiles  = require ('main-bower-files');
 
 var envType = gutil.env.type || 'debug';
 var isDebug = envType === 'debug';
+var isDebug = true;
 
 var paths = {
   scripts        : ['client/scripts/**/*.js'],
@@ -61,9 +62,9 @@ gulp.task('scripts-lib', function(){
 gulp.task('scripts-app', /*['lint-scripts'],*/ function(){
   return gulp.src(paths.scripts)
     .pipe(ngAnnotate())
-    .pipe(isDebug ? gutil.noop() : angularFilesort())
-    .pipe(isDebug ? gutil.noop() : concat('app.js'))
-    .pipe(isDebug ? gutil.noop() : uglify())
+    .pipe(angularFilesort())
+/*    .pipe(isDebug ? gutil.noop() : concat('app.js'))
+    .pipe(isDebug ? gutil.noop() : uglify())*/
     .pipe(gulp.dest('build/scripts/app'));
 });
 
@@ -94,8 +95,7 @@ gulp.task('templates', function(){
 
   var scriptsApp = gulp.src(['scripts/app/**/*.js'],{
     cwd: cwd
-  })
-    .pipe(isDebug ? angularFilesort() : gutil.noop());
+  });
 
   var stylesLib = gulp.src(['styles/lib/**/*.css'],{
     cwd: cwd
@@ -106,11 +106,11 @@ gulp.task('templates', function(){
   });
 
   var index = gulp.src(paths.index, {base: 'client'})
-          .pipe(inject(scriptsLib, {name: 'lib'}))
-          .pipe(inject(scriptsApp, {name: 'app'}))
-          .pipe(inject(stylesLib, {name: 'lib'}))
-          .pipe(inject(stylesApp, {name: 'app'}))
-          .pipe(gulp.dest('build'));
+    .pipe(inject(scriptsLib, {name: 'lib'}))
+    .pipe(inject(scriptsApp, {name: 'app'}))
+    .pipe(inject(stylesLib, {name: 'lib'}))
+    .pipe(inject(stylesApp, {name: 'app'}))
+    .pipe(gulp.dest('build'));
 
   var html = gulp.src(paths.html, {base: 'client'})
           .pipe(gulp.dest('build'));

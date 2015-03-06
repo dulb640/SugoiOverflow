@@ -16,7 +16,6 @@
   ],
   "dependencies": {
     "jquery": "<2.0",
-    "jquery-ui": "~1.11.1",
     "jquery.placeholder": "~0.2.4",
     "modernizr": "~2.8.3",
     "ui-router": "~0.2.11",
