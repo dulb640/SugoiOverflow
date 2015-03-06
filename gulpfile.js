@@ -95,7 +95,8 @@ gulp.task('templates', function(){
 
   var scriptsApp = gulp.src(['scripts/app/**/*.js'],{
     cwd: cwd
-  });
+  })
+    .pipe(angularFilesort());
 
   var stylesLib = gulp.src(['styles/lib/**/*.css'],{
     cwd: cwd
@@ -106,11 +107,11 @@ gulp.task('templates', function(){
   });
 
   var index = gulp.src(paths.index, {base: 'client'})
-    .pipe(inject(scriptsLib, {name: 'lib'}))
-    .pipe(inject(scriptsApp, {name: 'app'}))
-    .pipe(inject(stylesLib, {name: 'lib'}))
-    .pipe(inject(stylesApp, {name: 'app'}))
-    .pipe(gulp.dest('build'));
+          .pipe(inject(scriptsLib, {name: 'lib'}))
+          .pipe(inject(scriptsApp, {name: 'app'}))
+          .pipe(inject(stylesLib, {name: 'lib'}))
+          .pipe(inject(stylesApp, {name: 'app'}))
+          .pipe(gulp.dest('build'));
 
   var html = gulp.src(paths.html, {base: 'client'})
           .pipe(gulp.dest('build'));

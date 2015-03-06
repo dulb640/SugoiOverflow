@@ -1,4 +1,4 @@
-angular.module('sugoiOverflow.shared')
+angular.module('sugoiOverflow.services')
   .factory('currentUserService',
   function($http, $q){
     'use strict';

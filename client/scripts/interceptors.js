@@ -1,4 +1,5 @@
-angular.module('sugoiOverflow.interceptors', ['sugoiOverflow.shared'])
+angular.module('sugoiOverflow.interceptors', []);
+/*
 .config(function($httpProvider) {
   'use strict';
 
@@ -107,3 +108,4 @@ angular.module('sugoiOverflow.interceptors', ['sugoiOverflow.shared'])
                   }
                 };
               });
+*/

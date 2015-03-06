@@ -9,7 +9,11 @@
   </head>
   <body id="ng-app" ng-app="sugoiOverflow" ng-di-strict>
     <div class="body-container">
-      <div class="content-view" ui-view></div>
+      <div class="content-view" ui-view>
+        <div class="content-container col-xs-12" gs-loading="loadingService.loading">
+          <div ng-view class="content-container-view"></div>
+        </div>
+      </div>
     </div>
     <!-- lib:js -->
     <!-- endinject -->

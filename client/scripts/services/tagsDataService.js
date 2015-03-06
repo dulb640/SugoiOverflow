@@ -1,4 +1,4 @@
-angular.module('sugoiOverflow')
+angular.module('sugoiOverflow.services')
   .factory('tagsDataService',
   function($http, $q){
     'use strict';

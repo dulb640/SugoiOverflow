@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('sugoiOverflow.profile')
+angular.module('sugoiOverflow.controllers')
   .controller('profileController',
-    function($scope, $q, tagsDataService, currentUserService, eventAggregator){
+    function($scope, $q, tagsDataService, currentUserService){
 
       _.extend($scope, {
         user: {},
@@ -20,7 +20,6 @@ angular.module('sugoiOverflow.profile')
       if (currentUserService.userId){
         init();
       } else {
-        eventAggregator.bindEvent($scope, eventAggregator.events.currentUserServiceInitialised, init);
       }
     }
   );

@@ -1,47 +1,37 @@
 angular
 	.module('sugoiOverflow',
-		['ngMessages',
-		'ui.router',
+		['ngRoute',
 		'ui.bootstrap',
-    'ngSanitize',
-    'ngTagsInput',
-    //'wiz.markdown',
 		'sugoiOverflow.settings',
-		'sugoiOverflow.shared',
-		'sugoiOverflow.interceptors',
-    'sugoiOverflow.profile',
-    'sugoiOverflow.questions'
+    'sugoiOverflow.services',
+		'sugoiOverflow.controllers',
+		'sugoiOverflow.interceptors'
 		])
-	.config(function($stateProvider, $urlRouterProvider){
+	.config(function($routeProvider){
 		'use strict';
 
-		$stateProvider
-			.state('root', {
-				templateUrl: '/views/layout.html',
-				abstract: true
-			})
-			.state('root.home', {
-				url: '/',
-				templateUrl: '/views/questions/questions.html',
-			});
-
-		$urlRouterProvider.otherwise('/');
-	})
-  .run(function($rootScope, $cacheFactory, $window){
-  	'use strict';
-
-
-  	if($window.location.pathname.slice(-1) !== '/'){
-  		$window.location.replace($window.location.pathname + '/');
-  	}
-
-  	$rootScope.$on('$stateChangeStart', function(){
-  		var httpCache = $cacheFactory.get('$http');
-  		httpCache.removeAll();
-  	});
-
-    $rootScope.$on('$stateChangeSuccess', function() {
-        angular.element('html, body').animate({ scrollTop: 0 }, 200);
-    });
-});
-
+		$routeProvider
+      .when('/questions/', {
+        templateUrl: 'views/questions/questions.html',
+        controller: 'questionsController'
+      })
+      .when('/questions/new', {
+        templateUrl: 'views/questions/newQuestion.html',
+        controller: 'newQuestionController'
+      })
+      .when('/questions/:id/answers', {
+        templateUrl: 'views/questions/question.html',
+        controller: 'answersController'
+      })
+      .when('/profile/:user', {
+        templateUrl: 'views/profile/profile.html',
+        controller: 'profileController'
+      })
+      .when('/questions', {
+        templateUrl: 'views/questions/questions.html',
+        controller: 'questionsController'
+      })
+      .otherwise({
+        redirectTo: '/questions'
+      });
+	});
