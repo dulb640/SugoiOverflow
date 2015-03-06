@@ -10,7 +10,6 @@ angular.module('sugoiOverflow.questions')
         getProfilePictureUrl: function(){},
         loadPeople: function($query){return userDataService.getAvailableUsers($query);}
       });
-
       userDataService.getUser('1234')
       .then(function(user){
         $scope.user = user;

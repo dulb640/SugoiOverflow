@@ -4,9 +4,9 @@ angular.module('sugoiOverflow.questions', ['sugoiOverflow.shared', 'sugoiOverflo
       'use strict';
 
       $stateProvider
-        .state('root.newQuestion', {
-          url: '/newQuestion',
-          templateUrl: 'client/views/questions/newQuestion.html',
+        .state('root.questions.new', {
+          url: 'questions/new',
+          templateUrl: 'views/questions/newQuestion.html',
           controller: 'newQuestionController'
         });
     }
