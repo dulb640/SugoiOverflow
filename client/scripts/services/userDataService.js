@@ -12,13 +12,7 @@ angular.module('sugoiOverflow.services')
           // .error(function(error){
           //   deferred.reject(error);
           // });
-          deferred.resolve({
-            userId: userId,
-            name: 'jack',
-            karma: 99,
-            location: 'Water Cooler',
-            tags: [{text: 'hello'}]
-          });
+          deferred.resolve(new UserMock());
           return deferred.promise;
         },
         saveUserDetails: function(userId, user){
@@ -29,3 +23,14 @@ angular.module('sugoiOverflow.services')
       return service;
     }
   );
+
+var UserMock =  function(){
+  'use strict';
+  return {
+      userId: '2836',
+      name: 'Jacky Zhen',
+      karma: 897,
+      location: 'Level 3',
+      tags: [{name: 'Veezi', text: 'Veezi'}]
+    };
+};
