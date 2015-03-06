@@ -1,6 +1,6 @@
 angular.module('sugoiOverflow.shared')
   .factory('userDataService',
-
+    'use strict';
     function($http, $q){
       var service = {
         getUser: function(userId){

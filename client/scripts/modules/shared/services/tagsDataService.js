@@ -1,6 +1,6 @@
 angular.module('sugoiOverflow')
   .factory('tagsDataService',
-
+  'use strict';
   function($http, $q){
     var service = {
       getAvailableTags: function(query){
