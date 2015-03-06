@@ -8,14 +8,11 @@ angular
     'wiz.markdown',
 		'sugoiOverflow.settings',
 		'sugoiOverflow.shared',
-<<<<<<< HEAD
 		'sugoiOverflow.interceptors'
     'sugoiOverflow.profile',
     'sugoiOverflow.questions'
-=======
 		'sugoiOverflow.interceptors',
     'sugoiOverflow.profile'
->>>>>>> ed00ea8e2d96e1206f93e17ea7e8ca7a116eb9d2
 		])
 	.config(function($stateProvider, $urlRouterProvider, $httpProvider, settingsProvider){
 		'use strict';
