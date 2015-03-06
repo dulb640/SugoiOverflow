@@ -2,6 +2,7 @@ angular
 	.module('sugoiOverflow',
 		['ngRoute',
 		'ui.bootstrap',
+    'wiz.markdown',
 		'sugoiOverflow.settings',
     'sugoiOverflow.services',
 		'sugoiOverflow.controllers',

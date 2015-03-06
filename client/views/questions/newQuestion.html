@@ -1,34 +1,34 @@
 <div class="newQuestion-layout">
-  <div class="newQuestion-Profile">
-    <img ng-src="{{user.profilePictureUrl}}"></img>
-    <span class="name">{{user.name}}</span>
-  </div>
-  <form novalidate action="" class="newQuestion-form" name="newQuestionForm" ng-submit="submit()">
-    <div class="form-control">
-      <input type="text" name="title" placeholder="Title">
+    <div class="newQuestion-Profile">
+        <img ng-src="{{user.profilePictureUrl}}"></img>
+        <span class="name">{{user.name}}</span>
     </div>
-    <div class="form-control">
-      <wiz-markdown-editor content="mdText">
-        <wiz-toolbar-button command="bold">Bold</wiz-toolbar-button>
-        <wiz-toolbar-button command="italic">Italic</wiz-toolbar-button>
-      </wiz-markdown-editor>
-    </div>
-    <div class="form-control">
-      <tags-input ng-model="tags">
-        <auto-complete source="loadTags(query)" placeholder="tags"></auto-complete>
-      </tags-input>
-        <label for="suggestedTags">Suggested tags:
-          <span ng-repeat="tag in loadTags(query)">{{tag.text}}, </span>
-        </label>
-    </div>
-    <div class="form-control">
-      <tags-input ng-model="people">
-        <auto-complete source="loadPeople(query)" placeholder="Who can answer your question?"></auto-complete>
-      </tags-input>
-        <label for="suggestedTags">Suggested people:
-          <span ng-repeat="person in loadPeople(query)">{{person.name}},</span>
-        </label>
-    </div>
-    <button class="form-submit" type="submit">Post your question</button>
-  </form>
+    <form novalidate action="" class="newQuestion-form" name="newQuestionForm" ng-submit="submit()">
+        <div class="form-control">
+            <input type="text" name="title" placeholder="Title">
+        </div>
+        <div class="form-control">
+            <wiz-markdown-editor content="mdText">
+                <wiz-toolbar-button command="bold">Bold</wiz-toolbar-button>
+                <wiz-toolbar-button command="italic">Italic</wiz-toolbar-button>
+            </wiz-markdown-editor>
+        </div>
+        <div class="form-control">
+            <tags-input ng-model="tags">
+                <auto-complete source="loadTags(query)" placeholder="tags"></auto-complete>
+            </tags-input>
+            <label for="suggestedTags">Suggested tags:
+                <span ng-repeat="tag in tags">{{tag.text}}, </span>
+            </label>
+        </div>
+        <div class="form-control">
+            <tags-input ng-model="suggestedPeople">
+                <auto-complete source="loadPeople(query)" placeholder="Who can answer your question?"></auto-complete>
+            </tags-input>
+            <label for="suggestedTags">Suggested people:
+                <span ng-repeat="person in suggestedPeople">{{person.name}},</span>
+            </label>
+        </div>
+        <button class="form-submit" type="submit">Post your question</button>
+    </form>
 </div>
