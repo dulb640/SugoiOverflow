@@ -27,6 +27,7 @@
     "bootstrap": "~3.2.0",
     "moment": "~2.8.4",
     "ng-tags-input": "~2.2.0",
+
     "lodash": "~3.4.0"
   },
   "devDependencies": {},
