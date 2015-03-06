@@ -8,12 +8,31 @@
     <!-- endinject -->
   </head>
   <body id="ng-app" ng-app="sugoiOverflow" ng-di-strict>
-    <div class="body-container">
-      <div class="content-view" ui-view>
-        <div class="content-container col-xs-12" gs-loading="loadingService.loading">
-          <div ng-view class="content-container-view"></div>
+    <div class="body-container container-fluid">
+        <div class="header">
+          <div class="branding">
+            <span>Sugoi<strong>Overflow</strong></span>
+          </div>
+          <div class="search">
+            <input class="search-bar" type="text" placeholder="Search">
+          </div>
+          <div class="user">
+            <div class="notifications">
+              <span class="notices">6</span>
+              <span>Notifications</span>
+            </div>
+            <div class="profile">
+              <span class="profile-icon">J</span>
+              <span class="profile-name">Jacky Chan</span>
+            </div>
+            <div class="ask">
+              <a class="ask-button" href="#">
+                  Ask
+              </a>
+            </div>
+          </div>
         </div>
-      </div>
+        <div ng-view class="content-container-view"></div>
     </div>
     <!-- lib:js -->
     <!-- endinject -->
