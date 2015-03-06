@@ -1,0 +1,93 @@
+@import '../components/colors';
+
+a, a:hover {
+	color: inherit;
+    text-decoration: none;
+}
+a:focus {
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: "Calibri", "Segoe UI", "Helvetica", sans-serif, Arial;
+}
+
+
+/* Form controls */
+.form-horizontal .control-label{
+    text-align:left;
+    font-weight: normal;
+    padding: 0 10px 0 0;
+}
+
+.form-horizontal .form-group {
+    margin: 0 0 15px 0;
+}
+
+
+.btn-default {
+
+	background-color:#FFF;
+	&:hover{
+		background-color:#FFF;
+	}
+	&:focus{
+		background-color:#FFF;
+	}
+
+
+}
+
+.form-control {
+    border-radius: 0;
+    box-shadow: none;
+    height: 20px;
+    padding: 0 5px;
+}
+.form-control[disabled]{
+    cursor: default;
+}
+
+select.form-control {
+    padding-right:0;
+}
+input[type="radio"][disabled], input[type="checkbox"][disabled]{
+    cursor: default;
+}
+
+input[type="file"] {
+    border:none;
+    height:auto;
+}
+
+/* Modal Dialog */
+.modal-content {
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.modal-header {
+    border: none;
+}
+
+.modal-backdrop {
+    background-color: #ccc;
+}
+
+.modal-footer{
+    padding: 8px;
+}
+
+.modal-dialog{
+    width: 500px;
+    &.modal-lg{
+        width: 980px;
+    }
+}
+
+.modal-body {
+    .modal-footer {
+        margin: 10px -10px -10px;
+    }
+}
