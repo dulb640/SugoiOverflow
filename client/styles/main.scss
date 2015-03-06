@@ -12,6 +12,12 @@ body {
 	font-family: 'Segoe Ui Light', arial, sans-serif;
 }
 
+a {
+	&:visited {
+		color: #fff;
+	}
+}
+
 .header {
 	background-color: $teal;
 	height: 60px;
