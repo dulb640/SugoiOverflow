@@ -23,13 +23,9 @@ angular
         templateUrl: 'views/questions/question.html',
         controller: 'answersController'
       })
-      .when('/profile/:user', {
+      .when('/profile/:userId', {
         templateUrl: 'views/profile/profile.html',
         controller: 'profileController'
-      })
-      .when('/questions', {
-        templateUrl: 'views/questions/questions.html',
-        controller: 'questionsController'
       })
       .otherwise({
         redirectTo: '/questions'
