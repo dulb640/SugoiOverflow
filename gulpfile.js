@@ -77,7 +77,7 @@ gulp.task('styles-lib', /*['lint-styles'],*/ function(){
 
 gulp.task('styles-app', function(){
   return gulp.src(paths.styles)
-    .pipe(isDebug ? gulp.dest('build'): gutil.noop())
+    //.pipe(isDebug ? gulp.dest('build'): gutil.noop())
     .pipe(isDebug ? sourcemaps.init() : gutil.noop())
     .pipe(sass())
     .pipe(isDebug ? gutil.noop() : concatCss('app.css'))
