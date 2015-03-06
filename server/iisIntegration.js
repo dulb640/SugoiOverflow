@@ -1,13 +1,13 @@
 'use strict';
 
-var rewriteIis = function *(next) {
-  var originalUrl = this.request.header['x-original-url'];
+var rewriteIis = function (req, res, next) {
+  var originalUrl = req.headers['x-original-url'];
   if (originalUrl) {
     if (originalUrl !== '') {
-      this.request.url = this.request.url.replace(originalUrl, '') || '/';
+      req.url = req.url.replace(originalUrl, '') || '/';
     }
   }
-  yield next;
+  return next();
 };
 
 module.exports = rewriteIis;

@@ -1,35 +1,48 @@
 'use strict';
 
-var session         = require('koa-generic-session');
-var koa             = require('koa');
-var passport        = require('koa-passport');
+var express    = require('express');
+var bodyParser = require('body-parser');
+var mongoose   = require('mongoose-q')(require('mongoose'));
+var passport        = require('passport');
 var WindowsStrategy = require('passport-windowsauth');
 
 var logger          = require('./logger');
+var morgan     = require('morgan');
 
 var config          = require('./configuration');
-var send            = require('koa-send');
-var serve           = require('koa-static');
 
 var mongoose        = require('mongoose-q')(require('mongoose'));
 var domain          = require('./domain');
 var routes          = require('./routes');
-var bodyParser      = require('koa-body-parser');
 
-var app = koa();
 
-passport.serializeUser(function(user, done) {
+var app = express();
+
+var mongoConnectionString = config('mongo');
+
+mongoose.connect(mongoConnectionString);
+
+var logger = morgan('combined');
+
+/*passport.serializeUser(function(user, done) {
   done(null, user);
 });
 
 passport.deserializeUser(function(user, done) {
   done(null, user);
-});
+});*/
 
 var ldapConfig = config('ldap');
 if(ldapConfig && config('active-directory')){
   var authCallback = function authCallback(profile, done){
-    done(null, profile);
+    var newUser = {
+      adId: profile.id,
+      email: profile.emails[0].value,
+      name: profile.displayName
+    };
+    domain.User.findOrCreate(newUser, function (err, user) {
+      done(err, user);
+    });
   };
   var windowsStrategy = new WindowsStrategy({ ldap: ldapConfig }, authCallback);
   passport.use(windowsStrategy);
@@ -42,30 +55,31 @@ if(config('iis')){
 
 app.use(bodyParser());
 
-app.keys = ['your-session-secret'];
-app.use(session());
+//app.keys = ['your-session-secret'];
+/*app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}));*/
+app.set('trust proxy', 1);
 app.use(passport.initialize());
-app.use(passport.session());
+//app.use(passport.session());
 
-if(config('windows-auth')){
-  app.use(function *(next) {
-    yield* passport.authenticate('WindowsAuthentication')
-      .call(this, next);
-  });
-}
-
-/*app.use(function *(){
-  yield send(this, this.path, { root: __dirname + '../build' });
+/*app.get('/', passport.authenticate('WindowsAuthentication'), function (req, res) {
+  res.send(req.user.emails[0]);
 });*/
 
+if(config('windows-auth')){
+  app.use(passport.authenticate('WindowsAuthentication', { session: false }));
+}
 
-app.use(function *(){
-  this.body = this.req.user.emails[0];
-});
-//app.use(routes);
-
-app.on('error', function(err){
-  logger.error('server error', err);
+app.get('/', function (req, res) {
+  res.send('asd');
 });
 
+
+app.use(routes);
+
+app.use('/', routes);
 app.listen(config('PORT') || config('port'));

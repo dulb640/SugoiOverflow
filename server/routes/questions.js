@@ -4,73 +4,76 @@ var domain      = require('../domain');
 var logger      = require('../logger');
 
 var _           = require('lodash');
-var secureRoute = require('../secureRoute');
-var Router  = require('koa-router');
-var router  = new Router();
+var express = require('express');
+var router  = express.Router();
 
-router.use(secureRoute);
-router.get('/', function *(){
-  var self = this;
+router.get('/', function(req, res){
   domain.Question
     .find()
     .select('title text answers tags timestamp user')
     .execQ()
     .then(function(questions){
-      self.response.status = 200;
-      self.response.body = questions;
+      res
+        .status(200)
+        .send(questions);
     })
     .catch(function(error){
       logger.error('Error getting questions', error);
-      self.response.status = 500;
+      res
+        .status(500)
+        .send();
     });
 });
 
-router.get('/search/:term', function *(){
-  var self = this;
+router.get('/search/:term', function(req, res){
   domain.Question
     .find(
-        { $text : { $search : self.params.term } },
+        { $text : { $search : req.params.term } },
         { score : { $meta: 'textScore' } }
     )
     .sort({ score : { $meta : 'textScore' } })
     .select('text tags added')
     .execQ()
     .then(function(questions){
-      self.response.status = 200;
-      self.response.body = questions;
+      res
+        .status(200)
+        .send(questions);
     })
     .catch(function(error){
       logger.error('Error getting questions', error);
-      self.response.status = 500;
+      res
+        .status(500)
+        .send();
     });
 });
 
-router.get('/tag/:tag', function *(){
-  var self = this;
+router.get('/tag/:tag', function(req, res){
   domain.Question
     .find(
-      { tags : self.params.tag }
+      { tags : req.params.tag }
     )
     .select('text tags added')
     .execQ()
     .then(function(questions){
-      self.response.status = 200;
-      self.response.body = questions;
+      res
+        .status(200)
+        .send(questions);
     })
     .catch(function(error){
-      logger.error('Error getting questions', error);
-      self.response.status = 500;
+      logger.error('Error getting tag', error);
+      res
+        .status(500)
+        .send();
     });
 });
 
-router.post('/:id/answer/', function *(){
-  var self = this;
-  domain.Question.findByIdQ(self.params.id)
+router.post('/:id/answer/', function(req, res){
+  domain.Question.findByIdQ(req.params.id)
     .then(function (question){
       var answer = new domain.Answer({
-        user: self.user._id,
-        text: self.body.text,
-        tags: self.body.tags
+        user: req.user._id,
+        text: req.body.text,
+        tags: req.body.tags
       });
 
       question.answers.push(answer);
@@ -78,26 +81,31 @@ router.post('/:id/answer/', function *(){
       return question.saveQ();
     })
     .then(function(questions){
-      self.response.status = 200;
-      self.response.body = questions;
+      res
+        .status(200)
+        .send(questions);
     })
     .catch(function(error){
-      logger.error('Error getting questions', error);
-      self.response.status = 500;
+      logger.error('Error posting answer', error);
+      res
+        .status(500)
+        .send();
     });
 });
 
-router.post('/', function *(){
-  var self = this;
-  new domain.Question(_.extend(self.request.body, {user: self.user._id}))
+router.post('/', function(req, res){
+  new domain.Question(_.extend(req.request.body, {user: req.user._id}))
     .saveQ()
     .then(function(questions){
-      self.response.status = 200;
-      self.response.body = questions;
+      res
+        .status(200)
+        .send(questions);
     })
     .catch(function(error){
-      logger.error('Error getting questions', error);
-      self.response.status = 500;
+      logger.error('Error posting question', error);
+      res
+        .status(500)
+        .send();
     });
 });
 
