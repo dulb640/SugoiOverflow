@@ -8,10 +8,12 @@ angular
     'ngSanitize',
     'btford.markdown',
     'ngTagsInput',
+    'wiz.markdown',
 		'sugoiOverflow.settings',
 		'sugoiOverflow.shared',
 		'sugoiOverflow.interceptors'
-    'sugoiOverflow.profile'
+    'sugoiOverflow.profile',
+    'sugoiOverflow.questions'
 		])
 	.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'settingsProvider',
 		function($stateProvider, $urlRouterProvider, $httpProvider, settingsProvider){
