@@ -1,5 +1,5 @@
 angular.module('sugoiOverflow.shared')
-    .directive('soLoading', [function () {
+    .directive('soLoading', function () {
         'use strict';
         var template = '<div class="loading-mask"><div class="display">\
             <div class="spinner"></div>\
@@ -22,7 +22,7 @@ angular.module('sugoiOverflow.shared')
                     },
                     function() {
                         if (isLoading) {
-                            loadDelayComplete = false; 
+                            loadDelayComplete = false;
                             setTimeout(function(){
                                  loadDelayComplete = true;
                                  if(!isLoading) {
@@ -41,4 +41,4 @@ angular.module('sugoiOverflow.shared')
                     });
             }
         };
-    }]);
+    });
