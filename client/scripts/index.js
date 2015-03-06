@@ -11,7 +11,7 @@ angular
 		'use strict';
 
 		$routeProvider
-      .when('/questions/', {
+      .when('/questions/:questionFilter?', {
         templateUrl: 'views/questions/questions.html',
         controller: 'questionsController'
       })
@@ -23,11 +23,11 @@ angular
         templateUrl: 'views/questions/question.html',
         controller: 'answersController'
       })
-      .when('/profile/:userId', {
+      .when('/profile/:userId?', {
         templateUrl: 'views/profile/profile.html',
         controller: 'profileController'
       })
       .otherwise({
-        redirectTo: '/questions'
+        redirectTo: '/questions/'
       });
 	});
