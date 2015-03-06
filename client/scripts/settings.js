@@ -1,12 +1,6 @@
-(function() {
-    'use strict';
+'use strict';
 
-    angular.module('sugoiOverflow.settings', [])
-        .provider('settings', function SettingsProvider() {
+angular.module('sugoiOverflow.settings', [])
+  .provider('settings', function SettingsProvider() {
 
-        });  
-})();
-
-
-
-
+  });

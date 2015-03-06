@@ -1,20 +1,12 @@
+'use strict';
+
 angular.module('sugoiOverflow.profile')
   .controller('profileController',
-    function($scope, $q, tagsDataService, userDataService){
-      'use strict'
+    function($scope, $q){
 
       _.extend($scope, {
-        user: {},
         tags: [],
-        loadTags: function($query){return tagsDataService.getAvailableTags($query);},
+        loadTags: function($query){return [];},
         submit: function(){}
       });
-
-      userDataService.getUser('1234')
-      .then(function(user){
-        $scope.user = user;
-      })
-      .catch(function(error){
-      });
-    }
-  );
+    });
