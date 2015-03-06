@@ -1,0 +1,23 @@
+<div class="body-container container-fluid">
+	<div class="toolbar container-fluid">
+		<a href="#/questions/suggested"><span class="category">Suggested</span></a>
+		<a href="#/questions/mostWanted"><span class="category">Most Wanted</span></a>
+		<a href="#/questions/All"><span class="category">All</span></a>
+	</div>
+	<div class="content container">
+		<div class="question-container" ng-repeat="question in questions">
+			<div class="question-content">
+				<div class="title">{{question.title}}</div>
+				<!-- <div class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione et numquam impedit, perferendis suscipit reiciendis cum est porro sed delectus, quos, fuga, laborum atque consectetur laudantium corrupti eum asperiores! Eveniet.....</div> -->
+				<div class="tags" ng-repeat="tag in question.tags">
+					<span class="tag">{{tag.text}}</span>
+				</div>
+			</div>
+			<div class="question-status">
+
+				<div class="answers"><span>{{question.answerCount}}</span><span>answers</span></div>
+				<div class="subs"><span>{{question.subCount}}</span><span>subs</span></div>
+			</div>
+		</div>
+	</div>
+</div>
