@@ -10,7 +10,9 @@ angular.module('sugoiOverflow.controllers')
       });
 
       var init = function(){
-
+        if (!questionFilter){
+          questionFilter = 'suggested';
+        }
         questionsDataService.getQuestionsList(questionFilter)
           .then(function(questions){
             $scope.questions = questions;
