@@ -4,20 +4,11 @@ angular.module('sugoiOverflow.shared')
     'use strict';
 
     return {
-      userId: null,
-      user: {},
-      clearUser: function(){user = {}; userId=null;},
       loadUser: function(){
           $http.get('/api/currentUser/')
           .success(function(data){
-            user = data;
-            userId = data.userId;
-            eventAggregator.raiseEvent(eventAggregator.events.currentUserServiceInitialised, user)
-          })
-          .error(function(error){
-            clearUser();
+            eventAggregator.raiseEvent(eventAggregator.events.currentUserServiceInitialised, data);
           });
-          return deferred.promise;
         }
     };
   });

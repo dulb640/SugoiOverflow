@@ -8,13 +8,11 @@ angular
     'wiz.markdown',
 		'sugoiOverflow.settings',
 		'sugoiOverflow.shared',
-		'sugoiOverflow.interceptors'
+		'sugoiOverflow.interceptors',
     'sugoiOverflow.profile',
     'sugoiOverflow.questions'
-		'sugoiOverflow.interceptors',
-    'sugoiOverflow.profile'
 		])
-	.config(function($stateProvider, $urlRouterProvider, $httpProvider, settingsProvider){
+	.config(function($stateProvider, $urlRouterProvider){
 		'use strict';
 
 		$stateProvider
@@ -29,7 +27,7 @@ angular
 
 		$urlRouterProvider.otherwise('/');
 	})
-  .run(function($rootScope, $cacheFactory, $window, settings){
+  .run(function($rootScope, $cacheFactory, $window){
   	'use strict';
 
 

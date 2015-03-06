@@ -1,6 +1,4 @@
 angular.module('sugoiOverflow.profile', ['sugoiOverflow.shared', 'sugoiOverflow.settings', 'ui.router'])
-  .config(['$stateProvider',
-    function($stateProvider){
   .config(function($stateProvider){
       'use strict';
 

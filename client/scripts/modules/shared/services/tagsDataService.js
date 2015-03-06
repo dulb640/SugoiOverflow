@@ -1,7 +1,7 @@
 angular.module('sugoiOverflow')
   .factory('tagsDataService',
-  'use strict';
   function($http, $q){
+    'use strict';
     var service = {
       getAvailableTags: function(query){
         var deferred = $q.defer();

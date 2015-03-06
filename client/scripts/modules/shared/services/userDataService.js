@@ -1,7 +1,7 @@
 angular.module('sugoiOverflow.shared')
   .factory('userDataService',
-    'use strict';
     function($http, $q){
+      'use strict';
       var service = {
         getUser: function(userId){
           var deferred = $q.defer();

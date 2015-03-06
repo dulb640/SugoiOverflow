@@ -2,7 +2,7 @@
 
 angular.module('sugoiOverflow.profile')
   .controller('profileController',
-    function($scope, $q, tagsDataService, currentUserService){
+    function($scope, $q, tagsDataService, currentUserService, eventAggregator){
 
       _.extend($scope, {
         user: {},
@@ -13,7 +13,7 @@ angular.module('sugoiOverflow.profile')
 
       var init = function(){
         $scope.user = currentUserService.user;
-      }
+      };
 
       if (currentUserService.userId){
         init();
@@ -22,4 +22,4 @@ angular.module('sugoiOverflow.profile')
       }
     }
   );
-});
+
