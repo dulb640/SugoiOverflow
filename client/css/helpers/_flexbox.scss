@@ -1,0 +1,71 @@
+%display-flex {
+    display: flex;
+    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;      /* TWEENER - IE 10 */
+    display: -webkit-flex;     /* NEW - Chrome */
+
+    >* {
+        display: block; //Used to ensure proper alignment in IE10
+    }
+}
+
+%flex-justify-space-between {
+    -ms-flex-pack: justify;
+	justify-content: space-between;
+}
+
+%flex-justify-start {
+    -ms-flex-pack: start;
+	justify-content: flex-start;
+}
+
+%flex-justify-center {
+    -ms-flex-pack: center;
+	justify-content: center;
+}
+
+%flex-align-center {
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+%flex-align-stretch {
+    -ms-flex-align: stretch;
+    align-items: stretch;
+}
+
+%flex-align-start {
+    -ms-flex-align: start;
+    align-items: flex-start;
+}
+
+%flex-align-end {
+    -ms-flex-align: end;
+    align-items: flex-end;
+}
+
+%flex-align-self-end {
+    -ms-align-self: flex-end;
+    align-self: flex-end;
+}
+
+%flex-direction-column{
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+%flex-direction-row{
+    -ms-flex-direction: row;
+    flex-direction: row;
+}
+
+%flex-direction-column-reverse{
+    -ms-flex-direction: column-reverse;
+    flex-direction: column-reverse;
+}
+
+%flex-direction-row-reverse{
+    -ms-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+}
