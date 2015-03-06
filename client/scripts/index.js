@@ -15,7 +15,7 @@ angular
         templateUrl: 'views/questions/questions.html',
         controller: 'questionsController'
       })
-      .when('/questions/new', {
+      .when('/new-question/', {
         templateUrl: 'views/questions/newQuestion.html',
         controller: 'newQuestionController'
       })
