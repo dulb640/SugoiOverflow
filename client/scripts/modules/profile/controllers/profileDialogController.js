@@ -8,7 +8,9 @@ angular.module('sugoiOverflow.profile')
         user: {},
         tags: [],
         loadTags: function($query){return tagsDataService.getAvailableTags($query);},
-        submit: function(){}
+        submit: function(){
+          var ace = 1;
+        }
       });
 
       var init = function(){

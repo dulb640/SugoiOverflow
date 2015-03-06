@@ -5,7 +5,7 @@ angular
 		'ui.bootstrap',
     'ngSanitize',
     'ngTagsInput',
-    'wiz.markdown',
+    //'wiz.markdown',
 		'sugoiOverflow.settings',
 		'sugoiOverflow.shared',
 		'sugoiOverflow.interceptors',
@@ -17,12 +17,12 @@ angular
 
 		$stateProvider
 			.state('root', {
-				templateUrl: 'Scripts/app/views/layout.html',
+				templateUrl: '/views/layout.html',
 				abstract: true
 			})
 			.state('root.home', {
 				url: '/',
-				templateUrl: 'Scripts/app/views/questions/home.html',
+				templateUrl: '/views/questions/questions.html',
 			});
 
 		$urlRouterProvider.otherwise('/');
