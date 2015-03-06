@@ -1,0 +1,104 @@
+@import 'components/colors';
+@import 'helpers/flexbox';
+@import 'helpers/mixins';
+
+.body-container {
+	.toolbar {
+		height: 60px;
+		font-size: 18px;
+		padding-right: 20px;
+		border-bottom: 1px solid $gray-darker;
+
+		@extend %display-flex;
+		@include flex-vertical-aligns(center);
+		@include flex-direction(row);
+		@include flex-justify-content(flex-end);
+
+		.category {
+			border-right: 1px solid $gray-darker;
+			margin-right: 10px;
+			padding-right: 10px;
+			color: $gray-darker;
+
+			&:hover {
+				color: $gray-darkest;
+			}
+
+			&:last-child {
+				border: none;
+			}
+
+			&.active {
+				color: $teal;
+			}
+		}
+	}
+}
+
+.question-container {
+
+	margin-top: 20px;
+
+	@extend %display-flex;
+	@include flex-direction(row);
+
+	.question-content {
+		width: 80%;
+		margin-right: 20px;
+
+		.title {
+			font-size: 18px;
+		}
+		.description {
+			color: darken($gray-darker,20%);
+		}
+
+		.tags {
+			margin-top: 5px;
+			.tag {
+				border: 1px solid $gray-darker;
+				padding: 0 5px 0 5px;
+				@include border-radius(4px);
+			}
+		}
+	}
+
+	.question-status {
+		@extend %display-flex;
+		@include flex-direction(row);
+		width: 20%;
+		min-width: 200px;
+
+		.answers,
+		.subs {
+			width: 70px;
+			height: 70px;
+			border: 1px solid $gray-darker;
+			margin-right: 10px;
+
+			
+			@extend %display-flex;
+			@include flex-direction(column);
+			@include flex-vertical-aligns(center);
+			@include flex-justify-content(center);
+
+			span {
+				display: block;
+			}
+		}
+
+		.answers span:first-child,
+		.subs span:first-child {
+			font-weight: bold;
+			font-size: 18px;
+		}
+
+		.answers span:first-child {
+			color: $teal;			
+		}
+
+		.subs span:first-child {
+			color: $green-light;
+		}
+	}
+}

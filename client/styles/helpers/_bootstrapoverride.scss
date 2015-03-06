@@ -13,6 +13,10 @@ h1, h2, h3, h4, h5, h6,
     font-family: "Calibri", "Segoe UI", "Helvetica", sans-serif, Arial;
 }
 
+.container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+}
 
 /* Form controls */
 .form-horizontal .control-label{
