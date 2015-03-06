@@ -59,10 +59,10 @@ if(config('windows-auth')){
 });*/
 
 
-/*app.use(function *(){
+app.use(function *(){
   this.body = this.req.user.emails[0];
-});*/
-app.use(routes);
+});
+//app.use(routes);
 
 app.on('error', function(err){
   logger.error('server error', err);
