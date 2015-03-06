@@ -15,13 +15,13 @@ var ngAnnotate   = require ('gulp-ng-annotate');
 var minifyCss    = require ('gulp-minify-css');
 var concatCss    = require ('gulp-concat-css');
 var sass         = require ('gulp-sass');
-
 var fs          = require('fs');
 var path        = require('path');
 var angularFilesort = require ('gulp-angular-filesort');
 var inject          = require ('gulp-inject');
 var eventStream     = require ('event-stream');
-
+var connect         = require ('gulp-connect')
+var watch           = require ('gulp-watch');
 var mainBowerFiles  = require ('main-bower-files');
 
 var envType = gutil.env.type || 'debug';
@@ -89,34 +89,30 @@ gulp.task('styles-app', function(){
 gulp.task('templates', function(){
   var cwd = path.resolve(__dirname, './build');
   var scriptsLib = gulp.src(['scripts/lib/**/*.js'],{
-    read: false,
     cwd: cwd
   });
 
   var scriptsApp = gulp.src(['scripts/app/**/*.js'],{
-    read: false,
     cwd: cwd
   })
     .pipe(isDebug ? angularFilesort() : gutil.noop());
 
   var stylesLib = gulp.src(['styles/lib/**/*.css'],{
-    read: false,
     cwd: cwd
   });
 
   var stylesApp = gulp.src(['styles/app/**/*.css'],{
-    read: false,
     cwd: cwd
   });
 
-  var index = gulp.src(paths.index, {base: 'src'})
+  var index = gulp.src(paths.index, {base: 'client'})
           .pipe(inject(scriptsLib, {name: 'lib'}))
           .pipe(inject(scriptsApp, {name: 'app'}))
           .pipe(inject(stylesLib, {name: 'lib'}))
           .pipe(inject(stylesApp, {name: 'app'}))
           .pipe(gulp.dest('build'));
 
-  var html = gulp.src(paths.html, {base: 'src'})
+  var html = gulp.src(paths.html, {base: 'client'})
           .pipe(gulp.dest('build'));
 
   return eventStream.merge(index, html);
@@ -140,10 +136,31 @@ gulp.task('dev', function(){
 });
 
 gulp.task('watch', function(){
-  return gulp.watch('**/*.js', ['lint'])
+  return gulp.watch(['client/**/*'], ['build'])
     .on('change', function(event) {
       console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
     });
 });
 
-gulp.task('default', ['dev']);
+gulp.task('connect', function(done){
+  var callBack = function(){
+    connect.server({
+      root       : 'build',
+      port       : 8085,
+      livereload : true
+    });
+
+    watch('build/**/*.*')
+      .pipe(connect.reload());
+
+    done();
+  };
+
+  runSequence('build',
+              'watch',
+              callBack);
+});
+
+gulp.task('default', ['watch']);
+
+
