@@ -1,11 +1,11 @@
 angular.module('sugoiOverflow')
-  .factory('tagsDataService',
+  .factory('peopleDataService',
   'use strict';
   function($http, $q){
     var service = {
-      getAvailableTags: function(query){
+      getAvailablePeople: function(query){
         var deferred = $q.defer();
-        $http.get('/api/tags/' + query)
+        $http.get('/api/people/' + query)
         .success(function(data){
           deferred.resolve(data);
         })
@@ -15,5 +15,4 @@ angular.module('sugoiOverflow')
         return deferred.promise;
       }
     };
-    return service;
   });
