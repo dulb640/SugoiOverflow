@@ -7,6 +7,9 @@ angular.module('sugoiOverflow.questions', ['sugoiOverflow.shared', 'sugoiOverflo
         .state('root.newQuestion', {
           url: '/newQuestion',
           templateUrl: '/views/questions/newQuestion.html',
+        .state('root.questions.new', {
+          url: 'questions/new',
+          templateUrl: 'views/questions/newQuestion.html',
           controller: 'newQuestionController'
         });
     }

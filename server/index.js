@@ -8,13 +8,13 @@ var WindowsStrategy = require('passport-windowsauth');
 var logger          = require('./logger');
 
 var config          = require('./configuration');
-var send = require('koa-send');
-var serve = require('koa-static');
+var send            = require('koa-send');
+var serve           = require('koa-static');
 
-var mongoose   = require('mongoose-q')(require('mongoose'));
-var domain     = require('./domain');
-var routes     = require('./routes');
-var bodyParser = require('koa-body-parser');
+var mongoose        = require('mongoose-q')(require('mongoose'));
+var domain          = require('./domain');
+var routes          = require('./routes');
+var bodyParser      = require('koa-body-parser');
 
 var app = koa();
 
@@ -41,9 +41,6 @@ if(config('iis')){
 }
 
 app.use(bodyParser());
-var rewrite = require('koa-rewrite');
-
-
 
 app.keys = ['your-session-secret'];
 app.use(session());
@@ -61,11 +58,10 @@ if(config('windows-auth')){
   yield send(this, this.path, { root: __dirname + '../build' });
 });*/
 
-app.use('/', serve('../build'));
 
-/*app.use(function *(){
+app.use(function *(){
   this.body = this.req.user.emails[0];
-});*/
+});
 //app.use(routes);
 
 app.on('error', function(err){
