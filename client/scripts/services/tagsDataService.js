@@ -3,7 +3,7 @@ angular.module('sugoiOverflow.services')
   function($http, $q){
     'use strict';
     var service = {
-      getAvailableTags: function($query){
+      getAvailableTags: function(){
          var deferred = $q.defer();
         // $http.get('/api/tags/' + query)
         // .success(function(data){
@@ -12,7 +12,14 @@ angular.module('sugoiOverflow.services')
         // .error(function(error){
         //   deferred.reject(error);
         // });
-
+        var TagMocks = function(){
+          return [{name: 'POS', text : 'POS'},
+                  {name: 'InternetTicketing', text: 'Internet Ticketing'},
+                  {name: 'HeadOffice', text: 'Head Office'},
+                  {name: 'BackOffice', text: 'Back Office'},
+                  {name: 'CircuitManager', text: 'Circuit Manager'},
+                  {name: 'Veezi', text: 'Veezi'}];
+        };
         deferred.resolve(new TagMocks());
         return new TagMocks();
       }
@@ -20,12 +27,4 @@ angular.module('sugoiOverflow.services')
     return service;
   });
 
-var TagMocks = function(){
-  'use strict';
-  return new [{name: 'POS', text : 'POS'},
-          {name: 'InternetTicketing', text: 'Internet Ticketing'},
-          {name: 'HeadOffice', text: 'Head Office'},
-          {name: 'BackOffice', text: 'Back Office'},
-          {name: 'CircuitManager, text: Circuit Manager'},
-          {name: 'Veezi', text: 'Veezi'}]();
-};
+
