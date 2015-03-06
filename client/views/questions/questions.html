@@ -6,18 +6,23 @@
 	</div>
 	<div class="content container">
 		<div class="question-container" ng-repeat="question in questions">
-			<div class="question-content">
-				<div class="title">{{question.title}}</div>
-				<!-- <div class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione et numquam impedit, perferendis suscipit reiciendis cum est porro sed delectus, quos, fuga, laborum atque consectetur laudantium corrupti eum asperiores! Eveniet.....</div> -->
-				<div class="tags">
-					<span class="tag" ng-repeat="tag in question.tags">{{tag.text}}</span>
-				</div>
-			</div>
-			<div class="question-status">
 
-				<div class="answers"><span>{{question.answerCount}}</span><span>answers</span></div>
-				<div class="subs"><span>{{question.subCount}}</span><span>subs</span></div>
-			</div>
+  			<div class="question-content">
+
+  				<div class="title">
+            <!-- TODO:work out good way to link to question.-->
+            <a ng-href = '?#/questions/{{question.questionId}}/answers'>{{question.title}}</a>
+          </div>
+  				<!-- <div class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione et numquam impedit, perferendis suscipit reiciendis cum est porro sed delectus, quos, fuga, laborum atque consectetur laudantium corrupti eum asperiores! Eveniet.....</div> -->
+  				<div class="tags">
+  					<span class="tag" ng-repeat="tag in question.tags">{{tag.text}}</span>
+  				</div>
+  			</div>
+  			<div class="question-status">
+
+  				<div class="answers"><span>{{question.answerCount}}</span><span>answers</span></div>
+  				<div class="subs"><span>{{question.subCount}}</span><span>subs</span></div>
+  			</div>
 		</div>
 	</div>
 </div>

@@ -11,6 +11,12 @@
             <wiz-markdown-editor content="mdText">
                 <wiz-toolbar-button command="bold">Bold</wiz-toolbar-button>
                 <wiz-toolbar-button command="italic">Italic</wiz-toolbar-button>
+                <wiz-toolbar-button command="heading">Heading</wiz-toolbar-button>
+                <wiz-toolbar-button command="code">Code</wiz-toolbar-button>
+                <wiz-toolbar-button command="ullist">UList</wiz-toolbar-button>
+                <wiz-toolbar-button command="ollist">OList</wiz-toolbar-button>
+                <wiz-toolbar-button command="link">Link</wiz-toolbar-button>
+                <wiz-toolbar-button command="img">Img</wiz-toolbar-button>
             </wiz-markdown-editor>
         </div>
         <div class="form-control">
@@ -18,7 +24,7 @@
                 <auto-complete source="loadTags(query)" placeholder="tags"></auto-complete>
             </tags-input>
             <label for="suggestedTags">Suggested tags:
-                <span ng-repeat="tag in tags">{{tag.text}}, </span>
+                <span ng-repeat="tag in tags">{{tag.text}}</span>
             </label>
         </div>
         <div class="form-control">
@@ -26,7 +32,7 @@
                 <auto-complete source="loadPeople(query)" placeholder="Who can answer your question?"></auto-complete>
             </tags-input>
             <label for="suggestedTags">Suggested people:
-                <span ng-repeat="person in suggestedPeople">{{person.name}},</span>
+                <span ng-repeat="person in suggestedPeople">{{person.name}}</span>
             </label>
         </div>
         <button class="form-submit" type="submit">Post your question</button>

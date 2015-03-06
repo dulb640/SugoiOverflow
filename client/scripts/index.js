@@ -21,7 +21,7 @@ angular
         controller: 'newQuestionController'
       })
       .when('/questions/:id/answers', {
-        templateUrl: 'views/questions/question.html',
+        templateUrl: 'views/questions/answerQuestion.html',
         controller: 'answersController'
       })
       .when('/profile/:userId?', {
