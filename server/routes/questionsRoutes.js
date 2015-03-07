@@ -13,7 +13,7 @@ var router      = express.Router();
 router.get('/', function(req, res){
   domain.Question
     .find()
-    .select('id title text answers.user answers.timestamp answers.correct tags timestamp user')
+    .select('id title text answers.user answers.timestamp answers.correct subscribers tags timestamp user')
     .populate('user', 'name email')
     .execQ()
     .then(function(questions){
