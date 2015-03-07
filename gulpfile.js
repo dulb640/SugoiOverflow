@@ -20,7 +20,8 @@ var path        = require('path');
 var angularFilesort = require ('gulp-angular-filesort');
 var inject          = require ('gulp-inject');
 var eventStream     = require ('event-stream');
-var connect         = require ('gulp-connect')
+var connect         = require ('gulp-connect');
+var livereload = require('gulp-livereload');
 var watch           = require ('gulp-watch');
 var mainBowerFiles  = require ('main-bower-files');
 
@@ -78,7 +79,8 @@ gulp.task('styles-lib', /*['lint-styles'],*/ function(){
   return gulp.src(paths.bowerStyles)
     .pipe(isDebug ? gutil.noop() : concatCss('lib.css'))
     .pipe(isDebug ? gutil.noop() : minifyCss())
-    .pipe(gulp.dest('build/styles/lib'));
+    .pipe(gulp.dest('build/styles/lib'))
+    .pipe(livereload());
 });
 
 gulp.task('styles-app', function(){
@@ -89,7 +91,8 @@ gulp.task('styles-app', function(){
     .pipe(isDebug ? gutil.noop() : concatCss('app.css'))
     .pipe(isDebug ? gutil.noop() : minifyCss())
     .pipe(isDebug ? sourcemaps.write('./') : gutil.noop())
-    .pipe(gulp.dest('build/styles/app'));
+    .pipe(gulp.dest('build/styles/app'))
+    .pipe(livereload());
 });
 
 
@@ -142,7 +145,13 @@ gulp.task('dev', ['build', 'watch'], function(){
 });
 
 gulp.task('watch', function(){
-  return gulp.watch(['client/**/*'], ['build'])
+  livereload.listen();
+  gulp.watch(['client/**/*.scss'], ['styles-lib', 'styles-app'])
+    .on('change', function(event) {
+      console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+    });
+
+  gulp.watch(['client/**/*', '!client/**/*.scss'], ['build'])
     .on('change', function(event) {
       console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
     });
