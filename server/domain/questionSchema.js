@@ -32,7 +32,13 @@ var Question = new Schema({
     type: ObjectId,
     ref: 'User',
     required: true
-  }
+  },
+  subscribers:{
+    type:[ObjectId],
+    ref: 'User',
+    default: [],
+    index: true
+  },
 });
 
 Question.index({ text: 'text', title:'text', tags:'text', 'answers.text':'text' });

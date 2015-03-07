@@ -13,7 +13,8 @@ var router      = express.Router();
 router.get('/', function(req, res){
   domain.Question
     .find()
-    .select('title text answers tags timestamp user')
+    .select('id title text answers.user answers.timestamp answers.correct tags timestamp user')
+    .populate('user', 'name email')
     .execQ()
     .then(function(questions){
       res
@@ -47,13 +48,36 @@ router.get('/:id', function(req, res){
 });
 
 /**
+ * Subscribe to question
+ */
+router.put('/:id/subscribe', function(req, res){
+  domain.Question.findByIdQ(req.params.id)
+    .then(function(question){
+      question.subscribers.push(req.user.id);
+      return question.saveQ();
+    })
+    .then(function(question){
+      res
+        .status(200)
+        .send(question);
+    })
+    .catch(function(error){
+      logger.error('Error getting answer', error);
+      res
+        .status(500)
+        .send();
+    });
+});
+
+/**
  * Fulltext search for questions
  */
 router.get('/search/:term', function(req, res){
   domain.Question
     .find(
         { $text : { $search : req.params.term } },
-        { score : { $meta: 'textScore' } }
+        { score : { $meta: 'textScore' } },
+        { limit: 50 }
     )
     .sort({ score : { $meta : 'textScore' } })
     .execQ()
