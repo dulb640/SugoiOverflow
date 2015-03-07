@@ -126,7 +126,7 @@ gulp.task('build', function(done){
               done);
 });
 
-gulp.task('dev', ['watch'], function(){
+gulp.task('dev', ['build', 'watch'], function(){
   nodemon({
     script: './server/index.js',
     ext: 'js',
