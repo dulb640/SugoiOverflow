@@ -4,7 +4,7 @@ var mongoose = require('mongoose-q')(require('mongoose'));
 var Schema = mongoose.Schema;
 
 var Answer = new Schema({
-  user:{
+  author:{
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true

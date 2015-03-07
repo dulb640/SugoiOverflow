@@ -28,7 +28,7 @@ var Question = new Schema({
     type: Date,
     'default': Date.now
   },
-  user: {
+  author: {
     type: ObjectId,
     ref: 'User',
     required: true

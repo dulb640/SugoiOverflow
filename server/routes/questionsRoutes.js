@@ -13,8 +13,8 @@ var router      = express.Router();
 router.get('/', function(req, res){
   domain.Question
     .find()
-    .select('id title body answers.user answers.timestamp answers.correct subscribers tags timestamp user')
-    .populate('user', 'name email')
+    .select('id title body answers.author answers.timestamp answers.correct subscribers tags timestamp author')
+    .populate('author', 'name email')
     .execQ()
     .then(function(questions){
       res
@@ -35,10 +35,10 @@ router.get('/', function(req, res){
 router.get('/:id', function(req, res){
   domain.Question.findByIdQ(req.params.id)
     .then(function(question){
-      return question.populateQ('user', 'name email');
+      return question.populateQ('author', 'name email');
     })
     .then(function(question){
-      return question.populateQ('answers.user', 'name email');
+      return question.populateQ('answers.author', 'name email');
     })
     .then(function(question){
       res
@@ -125,11 +125,11 @@ router.get('/tag/:tag', function(req, res){
 /**
  * Add answer
  */
-router.post('/:questionId/answer/', function(req, res){
+router.post('/:questionId/answer', function(req, res){
   domain.Question.findByIdQ(req.params.questionId)
     .then(function (question){
       var answer = new domain.Answer({
-        user: req.user._id,
+        author: req.user._id,
         body: req.body.body
       });
 
@@ -230,7 +230,7 @@ router.put('/:questionId/answer/:answerId/downvote', function(req, res){
  * Add question
  */
 router.post('/', function(req, res){
-  new domain.Question(_.extend(req.body, {user: req.user._id}))
+  new domain.Question(_.extend(req.body, {author: req.user._id}))
     .saveQ()
     .then(function(question){
       return domain.User.findByIdQ(req.user.id)

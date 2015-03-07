@@ -2,16 +2,16 @@
   <div class="questionSection">
     <div class="question-container">
       <div class="question-content">
-        <div class="title">{{question.title}}</div>
-        <div class="body">{{question.body}}</div>
+        <div class="title">{{title}}</div>
+        <div class="body">{{body}}</div>
         <div class="tags">
-            <span class="tag" ng-repeat="tag in question.tags">{{tag.text}}</span>
+            <span class="tag" ng-repeat="tag in tags">{{tag.text}}</span>
         </div>
       </div>
     </div>
-    <div class="answers-container" ng-repeat="answer in question.answers">
+    <div class="answers-container" ng-repeat="answer in answers">
       <div class="body">{{answer.body}}</div>
-      <div class="score">{{answer.score}}</div>
+      <!-- <div class="score">{{answer.score}}</div> -->
     </div>
 </div>
 <div class="answerSection">
@@ -19,8 +19,11 @@
     <img ng-src="{{user.profilePictureUrl}}"></img>
     <span class="name">{{user.name}}</span>
   </div>
-  <form novalidate action="" class="answerQuestion-form" name="answerQuestionForm" ng-submit="submit()">
-    <div class="form-control">
+  <form novalidate action="" class="answerQuestion-form" name="answerQuestionForm" ng-submit="submitAnswer()">
+    <div class="form-group">
+      <textarea class="form-control" placeholder="Answer" ng-model="answer"></textarea>
+    </div>
+    <!-- <div class="form-control">
       <wiz-markdown-editor content="mdText">
         <wiz-toolbar-button command="bold">Bold</wiz-toolbar-button>
         <wiz-toolbar-button command="italic">Italic</wiz-toolbar-button>
@@ -31,7 +34,7 @@
         <wiz-toolbar-button command="link">Link</wiz-toolbar-button>
         <wiz-toolbar-button command="img">Img</wiz-toolbar-button>
       </wiz-markdown-editor>
-    </div>
+    </div> -->
     <button class="form-submit" type="submit">Post your answer</button>
   </form>
 </div>

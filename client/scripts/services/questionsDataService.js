@@ -96,6 +96,22 @@ angular.module('sugoiOverflow.services')
         });
 
         return deferred.promise;
+      },
+      addAnswer: function(questionId, answer){
+        var deferred = $q.defer();
+        var data = {
+          body: answer
+        };
+        $http.post(_.str.sprintf('/api/questions/%s/answer', questionId), data)
+        .success(function(data){
+          var updatedQuestion = mapQuestionForClient(data);
+          deferred.resolve(updatedQuestion);
+        })
+        .error(function(error){
+          deferred.reject(error);
+        });
+
+        return deferred.promise;
       }
     };
     return service;

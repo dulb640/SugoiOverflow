@@ -3,20 +3,25 @@ angular.module('sugoiOverflow.controllers')
     function($scope, $q, $routeParams, questionsDataService){
       'use strict';
 
-      _.extend($scope, {
-        question: {}, //Will have header information about questions - will change based on user tab selection
-        voteQuestion: function(isUpvote){
+      function loadQuestion(question){
+        $scope.title = question.title;
+        $scope.body = question.body;
+        $scope.tags = question.tags;
+        $scope.author = question.author;
+        $scope.timestamp = question.timestamp;
+        $scope.answers = question.answers;
 
+        $scope.answer = '';
+      }
+
+      _.extend($scope, {
+        submitAnswer: function(){
+          questionsDataService.addAnswer($routeParams.id, $scope.answer)
+            .then(loadQuestion);
         }
       });
 
-      var init = function(){
-        questionsDataService.getQuestion($routeParams.id)
-          .then(function(question){
-            $scope.question = question;
-          });
-      };
-
-      init();
+      questionsDataService.getQuestion($routeParams.id)
+        .then(loadQuestion);
     }
   );
