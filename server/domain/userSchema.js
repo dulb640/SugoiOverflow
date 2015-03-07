@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose-q')(require('mongoose'));
 var Schema   = mongoose.Schema;
+var ObjectId = Schema.Types.ObjectId;
 
 var User = new Schema({
   adId:{
@@ -25,7 +26,28 @@ var User = new Schema({
   registered:{
     type: Date,
     'default': Date.now
+  },
+  profile: {
+    location:{
+      type: String,
+      default:''
+    },
+    selectedTags:{
+      type: [String],
+      default:[]
+    },
+    asked:{
+      type: [ObjectId],
+      ref: 'Question',
+      default:[]
+    },
+    answered:{
+      type: [ObjectId],
+      ref: 'Question',
+      default:[]
+    }
   }
+
 /*  token:{
     data: {type: String},
     generated: {type: Date}

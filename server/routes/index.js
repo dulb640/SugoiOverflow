@@ -3,7 +3,7 @@
 var express = require('express');
 var router  = express.Router();
 
-router.use('/questions', require('./questions'));
-//router.use('/tags', require('./tags'));
+router.use('/questions', require('./questionsRoutes'));
+router.use('/profiles', require('./profilesRoutes'));
 
 module.exports = router;

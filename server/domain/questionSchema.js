@@ -3,7 +3,7 @@
 var mongoose = require('mongoose-q')(require('mongoose'));
 var Schema = mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId;
-var Answer = require('./answer');
+var Answer = require('./answerSchema');
 
 var Question = new Schema({
   title:{
