@@ -7,7 +7,8 @@ var WindowsStrategy =   require('passport-windowsauth');
 var path =              require('path');
 var morgan =            require('morgan');
 var mongoose =          require('mongoose-q')(require('mongoose'));
-
+var cookieParser =      require('cookie-parser');
+var multer =            require('multer');
 var logger =            require('./logger');
 var config =            require('./configuration');
 var domain =            require('./domain');
@@ -67,6 +68,8 @@ if(config('iis')){
 var morganLogger = morgan('short');
 app.use(morganLogger);
 app.use(bodyParser());
+app.use(cookieParser());
+
 app.set('trust proxy', 1);
 app.use(passport.initialize());
 
@@ -82,8 +85,16 @@ if(config('windows-auth')){
  // app.use(passport.authenticate('WindowsAuthentication', { session: false }));
 }
 
+app.use(function(req, res, next){
+  res.cookie('user-id', req.user.id);
+  res.cookie('user-name', req.user.name);
+  next();
+});
+
 app.use('/api', routes);
+app.use('/content', express.static(path.join(__dirname, '../content')));
 app.use(express.static(path.join(__dirname, '../build')));
+
 
 //app.use('/', routes);
 app.listen(config('PORT') || config('port'));

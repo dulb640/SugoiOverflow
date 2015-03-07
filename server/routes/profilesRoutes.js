@@ -8,7 +8,7 @@ var router  = express.Router();
 
 function mapProfile(user){
   return {
-    id: user._id,
+    id: user.id,
     name: user.name,
     email: user.email,
     location: user.profile.location,
@@ -19,7 +19,7 @@ function mapProfile(user){
 router.get('/', function(req, res){
   domain.User
     .find()
-    .select('_id name email profile')
+    .select('id name email profile')
     .execQ()
     .then(function(users){
       var profiles = users.map(mapProfile);
@@ -29,6 +29,25 @@ router.get('/', function(req, res){
     })
     .catch(function(error){
       logger.error('Error getting profiles', error);
+      res
+        .status(500)
+        .send();
+    });
+});
+
+
+
+router.get('/me', function(req, res){
+  domain.User
+    .findByIdQ(req.user.id)
+    .then(function(user){
+      var profile = mapProfile(user);
+      res
+        .status(200)
+        .send(profile);
+    })
+    .catch(function(error){
+      logger.error('Error getting profile', error);
       res
         .status(500)
         .send();

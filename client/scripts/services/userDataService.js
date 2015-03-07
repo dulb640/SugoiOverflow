@@ -1,144 +1,133 @@
 angular.module('sugoiOverflow.services')
-    .factory('userDataService',
-        function($http, $q) {
-            'use strict';
-            var service = {
-                getUser: function() {
-                    var deferred = $q.defer();
-                    // $http.get('/api/user/' + userId)
-                    // .success(function(data){
-                    //   deferred.resolve(data);
-                    // })
-                    // .error(function(error){
-                    //   deferred.reject(error);
-                    // });
-                    var UserMock = function() {
-                        return {
-                            userId: '2836',
-                            name: 'Jacky Zhen',
-                            profilePictureUrl: 'http://www.connectsavannah.com/binary/bfdc/tom_selleck.jpg',
-                            karma: 897,
-                            location: 'Level 3',
-                            tags: [{
-                                name: 'Veezi',
-                                text: 'Veezi'
-                            }]
-                        };
-                    };
+  .factory('userDataService',
+    function($http, $q) {
+      'use strict';
+      function mapTag(tag){
+        return {
+          name: tag,//wtf is this?
+          text: tag
+        };
+      }
+      function mapProfile(profile){
+        return {
+          userId: profile.id,
+          name: profile.name,
+          tags: _.map(profile.tags, mapTag),
+          karma: profile.karma,
+          location: profile.location,
+          profilePictureUrl: '/content/no-avatar.jpg'
+        };
+      }
+      var service = {
+        getUser: function(id) {
+            var deferred = $q.defer();
+            $http.get('/api/profiles/' + id)
+            .success(function(data){
+              var profile = mapProfile(data);
+              deferred.resolve(profile);
+            })
+            .error(function(error){
+              deferred.reject(error);
+            });
+            return deferred.promise;
+        },
 
-                    deferred.resolve(new UserMock());
-                    return deferred.promise;
-                },
+        getCurrentUser: function() {
+            var deferred = $q.defer();
+            $http.get('/api/profiles/me')
+              .success(function(data){
+                var profile = mapProfile(data);
+                deferred.resolve(profile);
+              })
+              .error(function(error){
+                deferred.reject(error);
+              });
+            return deferred.promise;
+        },
 
-                getCurrentUser: function() {
-                    var deferred = $q.defer();
-                    // $http.get('/api/user/' + userId)
-                    // .success(function(data){
-                    //   deferred.resolve(data);
-                    // })
-                    // .error(function(error){
-                    //   deferred.reject(error);
-                    // });
-                    var UserMock = function() {
-                        return {
-                            userId: '2836',
-                            name: 'Jacky Zhen',
-                            profilePictureUrl: 'http://www.connectsavannah.com/binary/bfdc/tom_selleck.jpg',
-                            karma: 897,
-                            location: 'Level 3',
-                            tags: [{
-                                name: 'Veezi',
-                                text: 'Veezi'
-                            }]
-                        };
-                    };
-                    deferred.resolve(new UserMock());
-                    return deferred.promise;
-                },
+        getSuggestedUsers: function() {
+            var deferred = $q.defer();
+            // $http.get('/api/user/' + userId)
+            // .success(function(data){
+            //   deferred.resolve(data);
+            // })
+            // .error(function(error){
+            //   deferred.reject(error);
+            // });
 
-                getSuggestedUsers: function() {
-                    var deferred = $q.defer();
-                    // $http.get('/api/user/' + userId)
-                    // .success(function(data){
-                    //   deferred.resolve(data);
-                    // })
-                    // .error(function(error){
-                    //   deferred.reject(error);
-                    // });
-
-                    var UserMocks = function() {
-                        return [{
-                            userId: '2836',
-                            name: 'Jacky Zhen',
-                            profilePictureUrl: 'http://www.connectsavannah.com/binary/bfdc/tom_selleck.jpg',
-                            karma: 897,
-                            location: 'Level 3',
-                            tags: [{
-                                name: 'Veezi',
-                                text: 'Veezi'
-                            }]
-                        }, {
-                            userId: '234',
-                            name: 'Sanchit Uttam',
-                            profilePictureUrl: 'http://www.connectsavannah.com/binary/bfdc/tom_selleck.jpg',
-                            karma: -97,
-                            location: 'Level 1',
-                            tags: [{
-                                name: 'Web',
-                                text: 'Web'
-                            }, {
-                                name: 'GroupSales',
-                                text: 'Group Sales'
-                            }, {
-                                name: 'Bikes',
-                                text: 'Bikes'
-                            }]
-                        }, {
-                            userId: '1',
-                            name: 'Alex Bossman',
-                            profilePictureUrl: 'http://www.connectsavannah.com/binary/bfdc/tom_selleck.jpg',
-                            karma: 10000000,
-                            location: 'Level 1',
-                            tags: [{
-                                name: 'Web',
-                                text: 'Web'
-                            }, {
-                                name: 'GroupSales',
-                                text: 'Group Sales'
-                            }, {
-                                name: 'GrowingMarijuana',
-                                text: 'Growing Marijuana'
-                            }]
-                        }, {
-                            userId: '2',
-                            name: 'Giang Nguyen',
-                            profilePictureUrl: 'http://www.connectsavannah.com/binary/bfdc/tom_selleck.jpg',
-                            karma: 10000000,
-                            location: 'Level 1',
-                            tags: [{
-                                name: 'Web',
-                                text: 'Web'
-                            }, {
-                                name: 'GroupSales',
-                                text: 'Group Sales'
-                            }, {
-                                name: 'Lifting',
-                                text: 'Lifting'
-                            }, {
-                                name: 'Gainz',
-                                text: 'Gainz'
-                            }]
-                        }];
-                    };
-
-
-                    deferred.resolve(new UserMocks());
-                    return deferred.promise;
-                }
+            var UserMocks = function() {
+                return [{
+                    userId: '2836',
+                    name: 'Jacky Zhen',
+                    profilePictureUrl: 'http://www.connectsavannah.com/binary/bfdc/tom_selleck.jpg',
+                    karma: 897,
+                    location: 'Level 3',
+                    tags: [{
+                        name: 'Veezi',
+                        text: 'Veezi'
+                    }]
+                }, {
+                    userId: '234',
+                    name: 'Sanchit Uttam',
+                    profilePictureUrl: 'http://www.connectsavannah.com/binary/bfdc/tom_selleck.jpg',
+                    karma: -97,
+                    location: 'Level 1',
+                    tags: [{
+                        name: 'Web',
+                        text: 'Web'
+                    }, {
+                        name: 'GroupSales',
+                        text: 'Group Sales'
+                    }, {
+                        name: 'Bikes',
+                        text: 'Bikes'
+                    }]
+                }, {
+                    userId: '1',
+                    name: 'Alex Bossman',
+                    profilePictureUrl: 'http://www.connectsavannah.com/binary/bfdc/tom_selleck.jpg',
+                    karma: 10000000,
+                    location: 'Level 1',
+                    tags: [{
+                        name: 'Web',
+                        text: 'Web'
+                    }, {
+                        name: 'GroupSales',
+                        text: 'Group Sales'
+                    }, {
+                        name: 'GrowingMarijuana',
+                        text: 'Growing Marijuana'
+                    }]
+                }, {
+                    userId: '2',
+                    name: 'Giang Nguyen',
+                    profilePictureUrl: 'http://www.connectsavannah.com/binary/bfdc/tom_selleck.jpg',
+                    karma: 10000000,
+                    location: 'Level 1',
+                    tags: [{
+                        name: 'Web',
+                        text: 'Web'
+                    }, {
+                        name: 'GroupSales',
+                        text: 'Group Sales'
+                    }, {
+                        name: 'Lifting',
+                        text: 'Lifting'
+                    }, {
+                        name: 'Gainz',
+                        text: 'Gainz'
+                    }]
+                }];
             };
 
 
-            return service;
+            deferred.resolve(new UserMocks());
+            return deferred.promise;
+        }
+    };
 
 
-        });
+    return service;
+
+
+});
