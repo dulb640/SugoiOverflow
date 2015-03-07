@@ -22,12 +22,12 @@ var Answer = new Schema({
     required: true,
     default: false
   },
-  up:{
+  upVotes:{
     type: [Schema.Types.ObjectId],
     ref: 'User',
     default: []
   },
-  down:{
+  downVotes:{
     type: [Schema.Types.ObjectId],
     ref: 'User',
     default: []

@@ -144,6 +144,52 @@ router.put('/:questionId/answer/:answerId/correct', function(req, res){
 });
 
 /**
+ * Upvote answer
+ */
+router.put('/:questionId/answer/:answerId/upvote', function(req, res){
+  domain.Question.findByIdQ(req.params.questionId)
+    .then(function (question){
+      var answer = question.answers.id(req.params.answerId);
+      answer.upVotes.push(req.user.id);
+      return question.saveQ();
+    })
+    .then(function(question){
+      res
+        .status(200)
+        .send(question);
+    })
+    .catch(function(error){
+      logger.error('Error upvoting an answer', error);
+      res
+        .status(500)
+        .send();
+    });
+});
+
+/**
+ * Downvote answer
+ */
+router.put('/:questionId/answer/:answerId/downvote', function(req, res){
+  domain.Question.findByIdQ(req.params.questionId)
+    .then(function (question){
+      var answer = question.answers.id(req.params.answerId);
+      answer.downVotes.push(req.user.id);
+      return question.saveQ();
+    })
+    .then(function(question){
+      res
+        .status(200)
+        .send(question);
+    })
+    .catch(function(error){
+      logger.error('Error upvoting an answer', error);
+      res
+        .status(500)
+        .send();
+    });
+});
+
+/**
  * Add question
  */
 router.post('/', function(req, res){
