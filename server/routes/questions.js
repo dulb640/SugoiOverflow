@@ -25,6 +25,21 @@ router.get('/', function(req, res){
     });
 });
 
+router.get('/:id', function(req, res){
+  domain.Question.findByIdQ(req.params.id)
+    .then(function(question){
+      res
+        .status(200)
+        .send(question);
+    })
+    .catch(function(error){
+      logger.error('Error getting answer', error);
+      res
+        .status(500)
+        .send();
+    });
+});
+
 router.get('/search/:term', function(req, res){
   domain.Question
     .find(
@@ -58,7 +73,7 @@ router.get('/tag/:tag', function(req, res){
         .send(questions);
     })
     .catch(function(error){
-      logger.error('Error getting tag', error);
+      logger.error('Error getting questions by tag', error);
       res
         .status(500)
         .send();

@@ -35,6 +35,6 @@ var Question = new Schema({
   }
 });
 
-Question.index({ text: 'text', title:'text', tags:'text' });
+Question.index({ text: 'text', title:'text', tags:'text', 'answers.text':'text' });
 
 module.exports = Question;

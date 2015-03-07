@@ -29,4 +29,4 @@ var Answer = new Schema({
   },
 });
 
-module.export = Answer;
+module.exports = Answer;
