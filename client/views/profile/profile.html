@@ -1,7 +1,11 @@
 <div class="profile-layout">
   <div class="user-details">
+     <div class="profile">
+        <img ng-src="{{user.profilePictureUrl}}"></img>
+    </div>
     <div class="name">{{user.name}}</div>
     <div class="karma">{{user.karma}}</div>
+
   </div>
   <div class="successful-submit" ng-show="showSuccessfulSubmit">Submitted successfully</div>
 	<form novalidate action="" class="profile-form" name="profileForm" ng-submit="submit()">
