@@ -1,27 +1,22 @@
 'use strict';
 
-var express    = require('express');
-var bodyParser = require('body-parser');
-var passport        = require('passport');
-var WindowsStrategy = require('passport-windowsauth');
+var express =           require('express');
+var bodyParser =        require('body-parser');
+var passport =          require('passport');
+var WindowsStrategy =   require('passport-windowsauth');
+var path =              require('path');
+var morgan =            require('morgan');
+var mongoose =          require('mongoose-q')(require('mongoose'));
 
-var logger          = require('./logger');
-var morgan     = require('morgan');
+var logger =            require('./logger');
+var config =            require('./configuration');
+var domain =            require('./domain');
+var routes =            require('./routes');
 
-var config          = require('./configuration');
-
-var mongoose        = require('mongoose-q')(require('mongoose'));
 var mongoConnectionString = config('mongo');
 mongoose.connect(mongoConnectionString);
-var domain          = require('./domain');
-var routes          = require('./routes');
-
 
 var app = express();
-
-
-
-var logger = morgan('combined');
 
 /*passport.serializeUser(function(user, done) {
   done(null, user);
@@ -69,12 +64,11 @@ if(config('iis')){
   app.use(rewriteIis);
 }
 
+var morganLogger = morgan('short');
+app.use(morganLogger);
 app.use(bodyParser());
-
-
 app.set('trust proxy', 1);
 app.use(passport.initialize());
-
 
 app.use(function(req, res, next){
   req.user = domain.User.findOneQ({adId:'123'})
@@ -84,12 +78,12 @@ app.use(function(req, res, next){
     });
 });
 
-
 if(config('windows-auth')){
  // app.use(passport.authenticate('WindowsAuthentication', { session: false }));
 }
 
-app.use(routes);
+app.use('/api', routes);
+app.use(express.static(path.join(__dirname, '../build')));
 
 //app.use('/', routes);
 app.listen(config('PORT') || config('port'));
