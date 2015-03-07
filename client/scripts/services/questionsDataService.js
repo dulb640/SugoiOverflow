@@ -71,6 +71,19 @@ angular.module('sugoiOverflow.services')
         return deferred.promise;
       },
 
+      searchQuestions: function(terms){
+        var deferred = $q.defer();
+        $http.get('/api/questions/search/' + terms)
+        .success(function(data){
+          var questions = _.map(data, mapQuestionForList);
+          deferred.resolve(questions);
+        })
+        .error(function(error){
+          deferred.reject(error);
+        });
+        return deferred.promise;
+      },
+
       getQuestion: function(id) {
         var deferred = $q.defer();
         $http.get(_.str.sprintf('/api/questions/%s', id))

@@ -3,19 +3,20 @@
 		<span>Sugoi<strong>Overflow</strong></span>
 	</div>
 	<div class="search">
-		<input class="search-bar" type="text" placeholder="Search">
+		<!-- <input class="search-bar" type="text" placeholder="Search" model="searchTerms"> -->
+    <input class="search-bar" type="text" ng-model="searchTerms" placeholder="Search Questions" typeahead="question for questions in searchQuestions($viewValue)"  class="form-control" typeahead-template="questionSearchTemplate.html">
 	</div>
 	<div class="user">
 		<div class="notifications">
-			<span class="notices">6</span>
+			<span class="notices">{{notifications}}</span>
 			<span>Notifications</span>
 		</div>
 		<div class="profile">
-			<span class="profile-icon">J</span>
-			<span class="profile-name">Jacky Chan</span>
+			<span class="profile-icon">J</span> <!--TODO: Replace with profile picture url -->
+			<span class="profile-name">{{user.name}}</span>
 		</div>
 		<div class="ask">
-			<a class="ask-button" href="#">
+			<a class="ask-button" href="#/new-question/">
 					Ask
 			</a>
 		</div>
