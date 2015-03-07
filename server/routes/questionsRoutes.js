@@ -7,6 +7,9 @@ var _           = require('lodash');
 var express = require('express');
 var router  = express.Router();
 
+/**
+ * Get all questions
+ */
 router.get('/', function(req, res){
   domain.Question
     .find()
@@ -25,6 +28,9 @@ router.get('/', function(req, res){
     });
 });
 
+/**
+ * Get question by id
+ */
 router.get('/:id', function(req, res){
   domain.Question.findByIdQ(req.params.id)
     .then(function(question){
@@ -40,6 +46,9 @@ router.get('/:id', function(req, res){
     });
 });
 
+/**
+ * Fulltext search for questions
+ */
 router.get('/search/:term', function(req, res){
   domain.Question
     .find(
@@ -61,6 +70,9 @@ router.get('/search/:term', function(req, res){
     });
 });
 
+/**
+ * Get questions by tag
+ */
 router.get('/tag/:tag', function(req, res){
   domain.Question
     .find(
@@ -80,8 +92,11 @@ router.get('/tag/:tag', function(req, res){
     });
 });
 
-router.post('/:id/answer/', function(req, res){
-  domain.Question.findByIdQ(req.params.id)
+/**
+ * Add answer
+ */
+router.post('/:questionId/answer/', function(req, res){
+  domain.Question.findByIdQ(req.params.questionId)
     .then(function (question){
       var answer = new domain.Answer({
         user: req.user._id,
@@ -105,6 +120,32 @@ router.post('/:id/answer/', function(req, res){
     });
 });
 
+/**
+ * Mark answer as correct
+ */
+router.put('/:questionId/answer/:answerId/correct', function(req, res){
+  domain.Question.findByIdQ(req.params.questionId)
+    .then(function (question){
+      var answer = question.answers.id(req.params.answerId);
+      answer.correct = true;
+      return question.saveQ();
+    })
+    .then(function(question){
+      res
+        .status(200)
+        .send(question);
+    })
+    .catch(function(error){
+      logger.error('Error marking answer as correct', error);
+      res
+        .status(500)
+        .send();
+    });
+});
+
+/**
+ * Add question
+ */
 router.post('/', function(req, res){
   new domain.Question(_.extend(req.body, {user: req.user._id}))
     .saveQ()

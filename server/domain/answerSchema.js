@@ -17,6 +17,11 @@ var Answer = new Schema({
     type: String,
     required: true
   },
+  correct:{
+    type: Boolean,
+    required: true,
+    default: false
+  },
   up:{
     type: [Schema.Types.ObjectId],
     ref: 'User',
