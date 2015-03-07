@@ -32,7 +32,6 @@ router.get('/search/:term', function(req, res){
         { score : { $meta: 'textScore' } }
     )
     .sort({ score : { $meta : 'textScore' } })
-    .select('text tags added')
     .execQ()
     .then(function(questions){
       res
@@ -52,7 +51,6 @@ router.get('/tag/:tag', function(req, res){
     .find(
       { tags : req.params.tag }
     )
-    .select('text tags added')
     .execQ()
     .then(function(questions){
       res
@@ -72,8 +70,7 @@ router.post('/:id/answer/', function(req, res){
     .then(function (question){
       var answer = new domain.Answer({
         user: req.user._id,
-        text: req.body.text,
-        tags: req.body.tags
+        text: req.body.text
       });
 
       question.answers.push(answer);
@@ -94,7 +91,7 @@ router.post('/:id/answer/', function(req, res){
 });
 
 router.post('/', function(req, res){
-  new domain.Question(_.extend(req.request.body, {user: req.user._id}))
+  new domain.Question(_.extend(req.body, {user: req.user._id}))
     .saveQ()
     .then(function(questions){
       res

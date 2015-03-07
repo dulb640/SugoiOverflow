@@ -130,9 +130,8 @@ gulp.task('dev', function(){
   nodemon({
     script: './server/index.js',
     ext: 'js',
-    nodeArgs: '--harmony'
   })
-  .on('change', ['lint'])
+  .on('change')
   .on('restart', function(){gutil.log('restarted!');});
 });
 

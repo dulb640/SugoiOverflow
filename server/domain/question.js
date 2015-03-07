@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose-q')(require('mongoose'));
 var Schema = mongoose.Schema;
+var ObjectId = Schema.Types.ObjectId;
 var Answer = require('./answer');
 
 var Question = new Schema({
@@ -28,12 +29,12 @@ var Question = new Schema({
     'default': Date.now
   },
   user: {
-    type: Schema.Types.ObjectId,
+    type: ObjectId,
     ref: 'User',
     required: true
   }
 });
 
-Question.index({ text: 'text' });
+Question.index({ text: 'text', title:'text', tags:'text' });
 
-module.export = Question;
+module.exports = Question;
