@@ -61,6 +61,12 @@ gulp.task('scripts-lib', function(){
 
 gulp.task('scripts-app', /*['lint-scripts'],*/ function(){
   return gulp.src(paths.scripts)
+    .pipe(plumber({errorHandler:
+      function(){
+        notify.onError('Error: <%= error.message %>').apply(this, arguments);
+        this.emit('end');
+      }
+    }))
     .pipe(ngAnnotate())
     .pipe(angularFilesort())
 /*    .pipe(isDebug ? gutil.noop() : concat('app.js'))
