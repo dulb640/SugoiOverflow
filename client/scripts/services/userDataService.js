@@ -1,29 +1,14 @@
 angular.module('sugoiOverflow.services')
   .factory('userDataService',
-    function($http, $q) {
+    function($http, $q, mappingService) {
       'use strict';
-      function mapTag(tag){
-        return {
-          name: tag,//wtf is this?
-          text: tag
-        };
-      }
-      function mapProfile(profile){
-        return {
-          userId: profile.id,
-          name: profile.name,
-          tags: _.map(profile.tags, mapTag),
-          karma: profile.karma,
-          location: profile.location,
-          profilePictureUrl: '/content/no-avatar.jpg'
-        };
-      }
+
       var service = {
         getUser: function(id) {
             var deferred = $q.defer();
             $http.get('/api/profiles/' + id)
             .success(function(data){
-              var profile = mapProfile(data);
+              var profile = mappingService.mapProfile(data);
               deferred.resolve(profile);
             })
             .error(function(error){
@@ -36,7 +21,7 @@ angular.module('sugoiOverflow.services')
             var deferred = $q.defer();
             $http.get('/api/profiles/me')
               .success(function(data){
-                var profile = mapProfile(data);
+                var profile = mappingService.mapProfile(data);
                 deferred.resolve(profile);
               })
               .error(function(error){

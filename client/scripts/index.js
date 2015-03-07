@@ -13,21 +13,32 @@ angular
 		'use strict';
 
 		$routeProvider
+      .when('/questions/new/', {
+        templateUrl: 'views/questions/newQuestion.html',
+        controller: 'newQuestionController'
+      })
       .when('/questions/:questionFilter?', {
         templateUrl: 'views/questions/questions.html',
         controller: 'questionsController'
-      })
-      .when('/new-question/', {
-        templateUrl: 'views/questions/newQuestion.html',
-        controller: 'newQuestionController'
       })
       .when('/questions/:id/answers', {
         templateUrl: 'views/questions/answerQuestion.html',
         controller: 'answersController'
       })
-      .when('/profile/:userId?', {
-        templateUrl: 'views/profile/profile.html',
-        controller: 'profileController'
+      .when('/profile', {
+        redirectTo: '/profile/me'
+      })
+      .when('/profile/me', {
+        templateUrl: 'views/profile/viewProfile.html',
+        controller: 'viewProfileController'
+      })
+      .when('/profile/me/edit', {
+        templateUrl: 'views/profile/editProfile.html',
+        controller: 'editProfileController'
+      })
+      .when('/profile/:userId', {
+        templateUrl: 'views/profile/viewProfile.html',
+        controller: 'viewProfileController'
       })
       .otherwise({
         redirectTo: '/questions'

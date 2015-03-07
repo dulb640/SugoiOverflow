@@ -1,0 +1,15 @@
+<div class="profile-layout">
+  <div class="user-details">
+     <div class="profile">
+        <img ng-src="{{profilePictureUrl}}"></img>
+    </div>
+    <div class="name">{{name}}</div>
+    <!-- <div class="karma">{{karma}}</div> -->
+    <div class="email">{{email}}</div>
+    <div class="location">{{location}}</div>
+    <div class="tags">
+      <span ng-repeat="tag in tags">{{tag.text}}</span>
+    </div>
+    <a class="button" href="#/profile/me/edit" ng-show="isOwnProfile">Edit</a>
+  </div>
+</div>
