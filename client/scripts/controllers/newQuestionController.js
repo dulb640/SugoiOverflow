@@ -14,7 +14,7 @@ angular.module('sugoiOverflow.controllers')
               return userDataService.getSuggestedUsers($query);
           }
       });
-      userDataService.getUser('1234')
+      userDataService.getCurrentUser()
           .then(function(user) {
               $scope.user = user;
           });
