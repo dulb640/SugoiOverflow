@@ -4,8 +4,8 @@ var domain      = require('../domain');
 var logger      = require('../logger');
 
 var _           = require('lodash');
-var express = require('express');
-var router  = express.Router();
+var express     = require('express');
+var router      = express.Router();
 
 /**
  * Get all questions
@@ -107,10 +107,17 @@ router.post('/:questionId/answer/', function(req, res){
 
       return question.saveQ();
     })
-    .then(function(questions){
-      res
-        .status(200)
-        .send(questions);
+    .then(function(question){
+      return domain.User.findByIdQ(req.user.id)
+      .then(function(user){
+        user.profile.answered.push(question.id);
+        return user.saveQ();
+      })
+      .then(function(){
+        res
+          .status(200)
+          .send(question);
+      });
     })
     .catch(function(error){
       logger.error('Error posting answer', error);
@@ -195,10 +202,17 @@ router.put('/:questionId/answer/:answerId/downvote', function(req, res){
 router.post('/', function(req, res){
   new domain.Question(_.extend(req.body, {user: req.user._id}))
     .saveQ()
-    .then(function(questions){
-      res
-        .status(200)
-        .send(questions);
+    .then(function(question){
+      return domain.User.findByIdQ(req.user.id)
+      .then(function(user){
+        user.profile.asked.push(question.id);
+        return user.saveQ();
+      })
+      .then(function(){
+        res
+          .status(200)
+          .send(question);
+      });
     })
     .catch(function(error){
       logger.error('Error posting question', error);

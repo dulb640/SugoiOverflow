@@ -17,11 +17,11 @@ fs.exists(fullPath, function (exists) {
 
 var logger = new winston.Logger({
   transports: [
-    new (winston.transports.Console)({ json: false, timestamp: true }),
+    new winston.transports.Console({ json: false, timestamp: true, prettyPrint: true, colorize: true }),
     new winston.transports.File({ filename: path.join(fullPath, 'debug.log'), json: false })
   ],
   exceptionHandlers: [
-    new (winston.transports.Console)({ json: false, timestamp: true }),
+    new winston.transports.Console({ json: false, timestamp: true }),
     new winston.transports.File({ filename: path.join(fullPath, 'exceptions.log'), json: false })
   ],
   exitOnError: false
