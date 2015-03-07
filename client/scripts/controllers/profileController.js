@@ -1,8 +1,7 @@
-'use strict';
-
 angular.module('sugoiOverflow.controllers')
   .controller('profileController',
     function($scope, $q, $routeParams, tagsDataService, userDataService){
+      'use strict';
 
       _.extend($scope, {
         isOwnProfile: false,

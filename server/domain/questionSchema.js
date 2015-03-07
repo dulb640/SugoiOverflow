@@ -43,4 +43,11 @@ var Question = new Schema({
 
 Question.index({ text: 'text', title:'text', tags:'text', 'answers.text':'text' });
 
+Question.set('toJSON', {
+  transform: function (doc, ret) {
+    ret.id = ret._id;
+    delete ret._id;
+    delete ret.__v;
+  }
+});
 module.exports = Question;

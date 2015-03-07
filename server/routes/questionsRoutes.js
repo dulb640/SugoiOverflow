@@ -35,6 +35,12 @@ router.get('/', function(req, res){
 router.get('/:id', function(req, res){
   domain.Question.findByIdQ(req.params.id)
     .then(function(question){
+      return question.populateQ('user', 'name email');
+    })
+    .then(function(question){
+      return question.populateQ('answers.user', 'name email');
+    })
+    .then(function(question){
       res
         .status(200)
         .send(question);

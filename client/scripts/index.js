@@ -2,7 +2,7 @@ angular
 	.module('sugoiOverflow',
 		['ngRoute',
 		'ui.bootstrap',
-    'wiz.markdown',
+    //'wiz.markdown',
     'ngTagsInput',
 		'sugoiOverflow.settings',
     'sugoiOverflow.services',
@@ -30,6 +30,6 @@ angular
         controller: 'profileController'
       })
       .otherwise({
-        redirectTo: '/questions/'
+        redirectTo: '/questions'
       });
 	});
