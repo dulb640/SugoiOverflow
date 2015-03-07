@@ -1,6 +1,6 @@
 angular.module('sugoiOverflow.controllers')
   .controller('newQuestionController',
-    function($scope, $q, $location, questionsDataService, tagsDataService, userDataService) {
+    function($scope, $q, $location, questionsDataService, tagsDataService, profilesDataService) {
       'use strict';
       _.extend($scope, {
           user: {},
@@ -21,12 +21,12 @@ angular.module('sugoiOverflow.controllers')
           },
       });
 
-      userDataService.getCurrentUser()
+      profilesDataService.getCurrentUserProfile()
           .then(function(user) {
               $scope.user = user;
           });
 
-      /*userDataService.getSuggestedUsers()
+      /*profilesDataService.getSuggestedUsers()
           .then(function(suggestedPeople) {
               $scope.suggestedPeople = suggestedPeople;
           });

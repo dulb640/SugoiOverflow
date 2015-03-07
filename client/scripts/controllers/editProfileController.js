@@ -1,27 +1,27 @@
 angular.module('sugoiOverflow.controllers')
   .controller('editProfileController',
-    function($scope, $q, $routeParams, $location, tagsDataService, userDataService){
+    function($scope, $q, $routeParams, $location, tagsDataService, profilesDataService){
       'use strict';
 
       _.extend($scope, {
         submit: function(){
           var profile = {
             location: $scope.location,
-            tags: $scope.selectedTags
+            tags: $scope.tags
           };
 
-          userDataService.editProfile(profile)
+          profilesDataService.editProfile(profile)
             .then(function(){
               $location.path('/profile/me');
             });
         }
       });
 
-      userDataService.getCurrentUser()
+      profilesDataService.getCurrentUserProfile()
         .then(function(user){
 /*          $scope.name = user.name;
           $scope.email = user.email;*/
-          $scope.tags = user.selectedTags;
+          $scope.tags = user.tags;
           $scope.location = user.location;
         });
     }

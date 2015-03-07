@@ -1,5 +1,5 @@
 angular.module('sugoiOverflow.services')
-  .factory('userDataService',
+  .factory('profilesDataService',
     function($http, $q, mappingService) {
       'use strict';
 
@@ -8,7 +8,7 @@ angular.module('sugoiOverflow.services')
             var deferred = $q.defer();
             $http.get('/api/profiles/' + id)
             .success(function(data){
-              var profile = mappingService.mapProfile(data);
+              var profile = mappingService.mapProfileForClient(data);
               deferred.resolve(profile);
             })
             .error(function(error){
@@ -17,17 +17,30 @@ angular.module('sugoiOverflow.services')
             return deferred.promise;
         },
 
-        getCurrentUser: function() {
-            var deferred = $q.defer();
-            $http.get('/api/profiles/me')
-              .success(function(data){
-                var profile = mappingService.mapProfile(data);
-                deferred.resolve(profile);
-              })
-              .error(function(error){
-                deferred.reject(error);
-              });
-            return deferred.promise;
+        getCurrentUserProfile: function() {
+          var deferred = $q.defer();
+          $http.get('/api/profiles/me')
+            .success(function(data){
+              var profile = mappingService.mapProfileForClient(data);
+              deferred.resolve(profile);
+            })
+            .error(function(error){
+              deferred.reject(error);
+            });
+          return deferred.promise;
+        },
+        editProfile: function(data) {
+          var profile = mappingService.mapProfileForApi(data);
+          var deferred = $q.defer();
+          $http.put('/api/profiles/me', profile)
+            .success(function(data){
+              var profile = mappingService.mapProfileForClient(data);
+              deferred.resolve(profile);
+            })
+            .error(function(error){
+              deferred.reject(error);
+            });
+          return deferred.promise;
         },
 
         getSuggestedUsers: function() {

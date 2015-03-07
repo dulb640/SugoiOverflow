@@ -58,14 +58,24 @@ angular.module('sugoiOverflow.services')
         };
       },
 
-      mapProfile: function mapProfile(profile){
+      mapProfileForClient: function mapProfile(profile){
         return {
           userId: profile.id,
           name: profile.name,
-          tags: _.map(profile.tags, service.mapTag),
+          tags: _.map(profile.selectedTags, service.mapTagForClient),
           karma: profile.karma,
           location: profile.location,
-          //profilePictureUrl:
+          profilePictureUrl: profile.profilePictureUrl,
+        };
+      },
+
+      mapProfileForApi: function mapProfile(profile){
+        return {
+          name: profile.name,
+          selectedTags: _.map(profile.tags, service.mapTagForApi),
+          karma: profile.karma,
+          location: profile.location,
+          profilePictureUrl: profile.profilePictureUrl,
         };
       }
     };

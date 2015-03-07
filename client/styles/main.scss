@@ -14,7 +14,7 @@ body {
 
 a {
 	&:visited {
-		color: #fff;
+		//color: #fff;
 	}
 }
 
@@ -43,7 +43,7 @@ a {
 
 			@include border-radius(8px);
 		}
-		
+
 	}
 
 	.user {
