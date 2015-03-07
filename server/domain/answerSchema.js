@@ -13,7 +13,7 @@ var Answer = new Schema({
     type: Date,
     'default': Date.now
   },
-  text:{
+  body:{
     type: String,
     required: true
   },

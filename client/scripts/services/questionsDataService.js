@@ -3,10 +3,14 @@ angular.module('sugoiOverflow.services')
   function($http, $q){
     'use strict';
 
-    function mapTag(tag){
+    function mapTagForClient(tag){
       return{
         text: tag
       };
+    }
+
+    function mapTagForApi(tag){
+      return tag.text;
     }
 
     function mapQuestionForList(question){
@@ -15,33 +19,41 @@ angular.module('sugoiOverflow.services')
         title:       question.title,
         answerCount: question.answers.length,
         subCount:    question.subscribers.length,
-        tags:        _.map(question.tags, mapTag)
+        tags:        _.map(question.tags, mapTagForClient)
       };
     }
 
-    function mapAnswer(answer){
+    function mapAnswerForClient(answer){
       return{
         id:         answer.id,
         downVotes:  answer.downVotes,
         upVotes:    answer.upVotes,
         score:      answer.upVotes.length - answer.downVotes.length,
-        body:       answer.text,
+        body:       answer.body,
         correct:    answer.correct,
         timestamp:  answer.timestamp
       };
     }
 
-    function mapQuestionForDisplay(question){
+    function mapQuestionForClient(question){
       return {
-        questionId: question.id,
+        id: question.id,
         title: question.title,
-        body: question.text,
+        body: question.body,
         answerCount: question.answers.length,
         subCount: question.subscribers.length,
         user: question.user,
         timestamp:  question.timestamp,
-        tags: _.map(question.tags, mapTag),
-        answers: _.map(question.answers, mapAnswer)
+        tags: _.map(question.tags, mapTagForClient),
+        answers: _.map(question.answers, mapAnswerForClient)
+      };
+    }
+
+    function mapQuestionForApi(question){
+      return {
+        title: question.title,
+        body: question.body,
+        tags: _.map(question.tags, mapTagForApi)
       };
     }
 
@@ -63,7 +75,7 @@ angular.module('sugoiOverflow.services')
         var deferred = $q.defer();
         $http.get(_.str.sprintf('/api/questions/%s', id))
         .success(function(data){
-          var question = mapQuestionForDisplay(data);
+          var question = mapQuestionForClient(data);
           deferred.resolve(question);
         })
         .error(function(error){
@@ -71,8 +83,20 @@ angular.module('sugoiOverflow.services')
         });
 
         return deferred.promise;
-      }
+      },
+      addQuestion: function(question){
+        var deferred = $q.defer();
+        var data = mapQuestionForApi(question);
+        $http.post('/api/questions/', data)
+        .success(function(addedQuestion){
+          deferred.resolve(addedQuestion);
+        })
+        .error(function(error){
+          deferred.reject(error);
+        });
 
+        return deferred.promise;
+      }
     };
     return service;
   });

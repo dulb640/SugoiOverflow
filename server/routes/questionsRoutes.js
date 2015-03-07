@@ -13,7 +13,7 @@ var router      = express.Router();
 router.get('/', function(req, res){
   domain.Question
     .find()
-    .select('id title text answers.user answers.timestamp answers.correct subscribers tags timestamp user')
+    .select('id title body answers.user answers.timestamp answers.correct subscribers tags timestamp user')
     .populate('user', 'name email')
     .execQ()
     .then(function(questions){
@@ -130,7 +130,7 @@ router.post('/:questionId/answer/', function(req, res){
     .then(function (question){
       var answer = new domain.Answer({
         user: req.user._id,
-        text: req.body.text
+        body: req.body.body
       });
 
       question.answers.push(answer);

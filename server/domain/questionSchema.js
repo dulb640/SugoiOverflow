@@ -10,7 +10,7 @@ var Question = new Schema({
     type: String,
     required: true
   },
-  text:{
+  body:{
     type: String,
     required: true
   },
@@ -41,7 +41,7 @@ var Question = new Schema({
   },
 });
 
-Question.index({ text: 'text', title:'text', tags:'text', 'answers.text':'text' });
+Question.index({ body: 'text', title:'text', tags:'text', 'answers.body':'text' });
 
 Question.set('toJSON', {
   transform: function (doc, ret) {
