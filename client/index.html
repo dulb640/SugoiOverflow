@@ -9,28 +9,7 @@
   </head>
   <body id="ng-app" ng-app="sugoiOverflow" ng-di-strict>
     <div class="body-container container-fluid">
-        <div class="header" ng-controller="siteHeaderController">
-          <div class="branding">
-            <a href="#/questions">Sugoi<strong>Overflow</strong></a>
-          </div>
-          <div class="search">
-            <input class="search-bar" type="text" ng-model="searchTerms" placeholder="Search Questions" typeahead="question for questions in searchQuestions($viewValue)"  class="form-control" typeahead-template-url="/views/shared/questionSearchTemplate.html">
-          </div>
-          <div class="user">
-            <div class="notifications">
-              <span class="notices">{{notifications}}</span>
-              <span>Notifications</span>
-            </div>
-            <div class="profile">
-              <span class="profile-icon">J</span> <!--TODO: Replace with profile picture url -->
-              <a href="#/profile"><span class="profile-name">{{user.name}}</span></a>
-            </div>
-            <div class="ask">
-              <a class="ask-button" href="/#/questions/new">
-                  Ask
-              </a>
-            </div>
-          </div>
+        <div ng-include="'/views/shared/header.html'">
         </div>
         <div ng-view class="content-container-view"></div>
     </div>

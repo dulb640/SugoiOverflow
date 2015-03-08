@@ -7,7 +7,6 @@ var express = require('express');
 var router  = express.Router();
 
 function mapProfile(user){
-  logger.error('========', user.profile);
   return {
     id: user.id,
     name: user.name,

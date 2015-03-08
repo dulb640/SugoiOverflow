@@ -4,6 +4,7 @@ angular
 		'ui.bootstrap',
     'wiz.markdown',
     'ngTagsInput',
+    'pageslide-directive',
 		'sugoiOverflow.settings',
     'sugoiOverflow.services',
 		'sugoiOverflow.controllers',
@@ -17,6 +18,10 @@ angular
       .when('/questions/new/', {
         templateUrl: 'views/questions/newQuestion.html',
         controller: 'newQuestionController'
+      })
+      .when('/questions/search/:searchTerms', {
+        templateUrl: 'views/questions/questions.html',
+        controller: 'questionsController'
       })
       .when('/questions/:questionFilter?', {
         templateUrl: 'views/questions/questions.html',
@@ -42,6 +47,6 @@ angular
         controller: 'viewProfileController'
       })
       .otherwise({
-        redirectTo: '/questions'
+        redirectTo: '/questions/suggested'
       });
 	});

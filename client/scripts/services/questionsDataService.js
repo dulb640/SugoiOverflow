@@ -4,9 +4,35 @@ angular.module('sugoiOverflow.services')
     'use strict';
 
     var service = {
-      getQuestionsList: function(){
+      getAllQuestionsList: function(){
         var deferred = $q.defer();
         $http.get('/api/questions/')
+        .success(function(data){
+          var questions = _.map(data, mappingService.mapQuestionForList);
+          deferred.resolve(questions);
+        })
+        .error(function(error){
+          deferred.reject(error);
+        });
+        return deferred.promise;
+      },
+
+      getSuggestedQuestionsList: function(){
+        var deferred = $q.defer();
+        $http.get('/api/questions/suggested')
+        .success(function(data){
+          var questions = _.map(data, mappingService.mapQuestionForList);
+          deferred.resolve(questions);
+        })
+        .error(function(error){
+          deferred.reject(error);
+        });
+        return deferred.promise;
+      },
+
+      getMostWantedQuestionsList: function(){
+        var deferred = $q.defer();
+        $http.get('/api/questions/most-wanted')
         .success(function(data){
           var questions = _.map(data, mappingService.mapQuestionForList);
           deferred.resolve(questions);
@@ -49,6 +75,19 @@ angular.module('sugoiOverflow.services')
         $http.post('/api/questions/', data)
         .success(function(addedQuestion){
           deferred.resolve(addedQuestion);
+        })
+        .error(function(error){
+          deferred.reject(error);
+        });
+
+        return deferred.promise;
+      },
+      subscribeToQuestion: function(questionId){
+        var deferred = $q.defer();
+        $http.put(_.str.sprintf('/api/questions/%s/subscribe', questionId))
+        .success(function(data){
+          var updatedQuestion = mappingService.mapQuestionForClient(data);
+          deferred.resolve(updatedQuestion);
         })
         .error(function(error){
           deferred.reject(error);
