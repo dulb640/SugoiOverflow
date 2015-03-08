@@ -8,15 +8,15 @@
   </div>
   <form novalidate class="profile-form" name="profileForm" ng-submit="submit()">
     <div class="form-group">
-      <div class="form-label" for="location">Location</div>
-      <input class="form-control" type="text" name="location" ng-model="location">
+      <div class="form-label location" for="location">Location</div>
+      <input class="form-control location" type="text" name="location" ng-model="location">
     </div>
     <div>
-      <div class="form-label" for="specialisations">Specialisations</div>
+      <div class="form-label specialisations" for="specialisations">Specialisations</div>
       <tags-input ng-model="tags" add-on-space="true">
         <!-- <auto-complete source="loadTags($query)"></auto-complete> -->
       </tags-input>
     </div>
-    <button class="form-submit" type="submit">Save Changes</button>
+    <button class="form-submit action-button" type="submit">Save Changes</button>
   </form>
 </div>

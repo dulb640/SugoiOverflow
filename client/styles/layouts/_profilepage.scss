@@ -2,3 +2,95 @@
 @import 'helpers/flexbox';
 @import 'helpers/mixins';
 
+.tags {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	
+	.tag {
+		border: 1px solid $gray-darker;
+		padding: 0 5px 0 5px;
+		@include border-radius(4px);
+		display: inline-block;
+		margin-right: 5px;
+		cursor: pointer;
+	}
+
+	.tag:hover {
+		color: $teal;
+		border-color: $teal;
+	}
+}
+
+.user-details {
+
+	@extend %display-flex;
+	@include flex-vertical-aligns(center);
+	@include flex-direction(row);
+
+	.name {
+		font-size: 18px;
+	}
+}
+
+.profile, .profile-details {
+	display: inline-block;
+}
+
+.profile-details {
+	margin-left: 30px;
+}
+
+/* Edit Profile */
+
+.profile-form {
+	.form-label {
+		font-size: 16px;
+		margin-bottom: 5px;
+	}
+
+	input.location {
+		padding: 15px 5px 15px 5px;
+		color: $gray-text-dark;
+	}
+
+	.tags {
+		border: 1px solid #ccc;
+		box-shadow: none;
+		padding: 5px;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+	}
+
+	.tag-item {
+		border: 1px solid #ccc;
+		background: #fff !important;
+		color: $gray-text-light;
+
+		&:hover {
+			color: red;
+			border-color: red;
+
+			.remove-button {
+				color: red;
+			}
+		}
+	}
+}
+
+/* Font awesome override */
+
+.edit-profile {
+	.fa-pencil {
+		color: $gray-text-normal;
+		margin-right: 5px;
+	}
+	font-size: 16px;
+	margin-top: 20px;
+}
+
+.edit-profile:hover {
+	.fa-pencil {
+		color: $teal;
+	}
+	color: $teal;
+}

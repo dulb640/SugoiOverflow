@@ -1,15 +1,22 @@
 <div class="profile-layout container">
   <div class="user-details">
-     <div class="profile">
+    <div class="profile">
         <img ng-src="{{profilePictureUrl}}"></img>
     </div>
-    <div class="name">{{name}}</div>
-    <!-- <div class="karma">{{karma}}</div> -->
-    <div class="email">{{email}}</div>
-    <div class="location">{{location}}</div>
-    <div class="tags">
-      <span ng-repeat="tag in tags">{{tag.text}}</span>
+    <div class="profile-details">
+      <div class="name">{{name}}</div>
+      <!-- <div class="karma">{{karma}}</div> -->
+      <div class="email">{{email}}</div>
+      <div class="location">{{location}}</div>
+      <div class="tags">
+        <span class="tag" ng-repeat="tag in tags">{{tag.text}}</span>
+      </div>
+      
+      <div class="edit-profile">
+        <i class="fa fa-pencil"></i><a class="button" href="#/profile/me/edit" ng-show="isOwnProfile">Edit</a>
+      </div>
+      
     </div>
-    <a class="button" href="#/profile/me/edit" ng-show="isOwnProfile">Edit</a>
+    
   </div>
 </div>
