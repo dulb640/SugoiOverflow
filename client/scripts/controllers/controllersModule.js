@@ -1,1 +1,1 @@
-angular.module('sugoiOverflow.controllers', []);
+angular.module('sugoiOverflow.controllers', ['sugoiOverflow.filters']);
