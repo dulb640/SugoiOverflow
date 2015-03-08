@@ -1,6 +1,7 @@
 @import 'components/colors';
 @import 'helpers/flexbox';
 @import 'helpers/mixins';
+@import 'helpers/tags';
 
 .tags {
 	margin-top: 5px;
@@ -54,26 +55,11 @@
 	}
 
 	.tags {
-		border: 1px solid #ccc;
-		box-shadow: none;
-		padding: 5px;
-		-webkit-appearance: none;
-		-moz-appearance: none;
+		@extend %tags;
 	}
 
 	.tag-item {
-		border: 1px solid #ccc;
-		background: #fff !important;
-		color: $gray-text-light;
-
-		&:hover {
-			color: red;
-			border-color: red;
-
-			.remove-button {
-				color: red;
-			}
-		}
+		@extend %tag-item;
 	}
 }
 

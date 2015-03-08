@@ -1,0 +1,27 @@
+%tags {
+	border: 1px solid #ccc;
+	box-shadow: none;
+	padding: 5px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+
+	.input {
+		font-family: 'Segoe Ui Light', arial, sans-serif;
+	}
+}
+
+%tag-item {
+	border: 1px solid #ccc;
+	background: #fff !important;
+	color: $gray-text-light;
+	font-family: 'Segoe Ui Light', arial, sans-serif !important;
+
+	&:hover {
+		color: red;
+		border-color: red;
+
+		.remove-button {
+			color: red;
+		}
+	}
+}

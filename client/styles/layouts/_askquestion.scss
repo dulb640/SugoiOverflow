@@ -1,0 +1,61 @@
+@import 'components/colors';
+
+.newQuestion-Profile {
+	font-size: 16px;
+	margin-top: 15px;
+	margin-bottom: 10px;
+}
+
+.newQuestion-form {
+	.form-control {
+		padding: 15px 10px;
+	}
+
+	.markdown-output {
+
+		margin-bottom: 50px;
+	}
+
+	.tags {
+		@extend %tags;
+	}
+
+	.tag-item {
+		@extend %tag-item;
+	}
+}
+
+.markdown-editor {
+	margin-top: 20px;
+	margin-bottom: 10px;
+
+
+	.markdown-input {
+		margin-top: 20px;
+		margin-bottom: 20px;
+		width: 100%;
+		min-height: 100px;
+		border: 1px solid #ccc;
+	}
+}
+
+.markdown-toolbar {
+	.markdown-button {
+		background-color: #fff;
+		box-shadow: none;
+		border: 1px solid $gray-darker;
+
+		i {
+			color: $gray-text-normal;
+		}
+	}
+
+	.markdown-button:hover {
+		border: 1px solid $teal;
+		color: $teal;
+		i {
+			color: $teal;
+		}
+	}
+}
+
