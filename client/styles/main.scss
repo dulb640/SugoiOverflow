@@ -5,17 +5,12 @@
 @import 'helpers/bootstrapoverride';
 
 @import 'layouts/questionspage';
+@import 'layouts/profilepage';
 
 body {
 	padding: 0;
 	margin: 0;
 	font-family: 'Segoe Ui Light', arial, sans-serif;
-}
-
-a {
-	&:visited {
-		//color: #fff;
-	}
 }
 
 .header {
@@ -31,6 +26,12 @@ a {
 	.branding {
 		font-size: 20px;
 		color: #fff;
+
+		a:active,
+		a:hover,
+		a:visited {
+			color: #fff;
+		}
 	}
 
 	.search {
@@ -87,4 +88,16 @@ a {
 			display: block;
 		}
 	}
+}
+
+.notifications-slider{
+  background-color: $gray-medium;
+  padding: 5px;
+
+  .notification-entry{
+    margin: 3px;
+    .notification-title{
+      font-weight: bold;
+    }
+  }
 }

@@ -3,7 +3,8 @@ angular.module('sugoiOverflow.controllers')
     'use strict';
 
     _.extend($scope, {
-      notifications: 6,
+      notifications: [],
+      notificationsOpened: false,
       user: {},
       searchTerms: '',
 /*      searchQuestions: function(terms){
@@ -18,11 +19,18 @@ angular.module('sugoiOverflow.controllers')
         .finally(function(){
           $scope.searchLoading = false;
         });
+      },
+      openNotifications: function(){
+        $scope.notificationsOpened = true;
+      },
+      closeNotifications: function(){
+        $scope.notificationsOpened = false;
       }
     });
 
     profilesDataService.getCurrentUserProfile()
     .then(function(user){
       $scope.user = user;
+      $scope.notifications = user.notifications;
     });
   });
