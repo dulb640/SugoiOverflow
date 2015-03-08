@@ -1,6 +1,6 @@
 angular.module('sugoiOverflow.controllers')
   .controller('questionsController',
-    function($scope, $q, $routeParams, questionsDataService){
+    function($scope, $q, $routeParams, $route, questionsDataService){
       'use strict';
 
       var questionFilter = $routeParams.questionFilter;
