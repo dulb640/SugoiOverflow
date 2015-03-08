@@ -5,5 +5,7 @@ var router  = express.Router();
 
 router.use('/questions', require('./questionsRoutes'));
 router.use('/profiles', require('./profilesRoutes'));
+router.use('/tags', require('./tags'));
+
 
 module.exports = router;
