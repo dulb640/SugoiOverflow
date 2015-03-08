@@ -1,5 +1,5 @@
 angular.module('sugoiOverflow.controllers')
-  .controller('siteHeaderController', function ($scope, $location, $routeParams, profilesDataService, tagsDataService) {
+  .controller('siteHeaderController', function ($rootScope, $scope, $location, $routeParams, profilesDataService, tagsDataService) {
     'use strict';
 
     _.extend($scope, {
@@ -39,10 +39,13 @@ angular.module('sugoiOverflow.controllers')
         $scope.notificationsOpened = false;
       }
     });
-
-    if($routeParams.searchTerms){
-      $scope.searchTerms = $routeParams.searchTerms;
+    function updateSearchTerms(){
+      if($routeParams.searchTerms){
+        $scope.searchTerms = $routeParams.searchTerms;
+      }
     }
+
+    updateSearchTerms();
 
     profilesDataService.getCurrentUserProfile()
     .then(function(user){
@@ -54,4 +57,6 @@ angular.module('sugoiOverflow.controllers')
     .then(function(notifications){
       $scope.notifications = notifications;
     });
+
+    $rootScope.$on('$routeChangeSuccess', updateSearchTerms);
   });

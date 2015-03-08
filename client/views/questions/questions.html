@@ -16,7 +16,7 @@
           </div>
   				<!-- <div class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione et numquam impedit, perferendis suscipit reiciendis cum est porro sed delectus, quos, fuga, laborum atque consectetur laudantium corrupti eum asperiores! Eveniet.....</div> -->
   				<div class="tags">
-  					<span class="tag" ng-repeat="tag in question.tags">{{tag.text}}</span>
+  					<a ng-href="/#/questions/search/{{tag.text}}" class="tag" ng-repeat="tag in question.tags">{{tag.text}}</a>
   				</div>
           <div class="timestap">
              <span ng-bind="question.timestamp | date:'medium'"></span>
