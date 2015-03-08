@@ -8,6 +8,11 @@ angular.module('sugoiOverflow.controllers')
           body: '',
           tags: [],
           suggestedPeople: [],
+          getTagsSuggestions: function(query){
+            return _.filter($scope.availableTags, function(tag){
+              return _.str.include(tag.text, query);
+            });
+          },
           submit: function() {
             var newQuestion = {
               title: $scope.title,
@@ -29,11 +34,11 @@ angular.module('sugoiOverflow.controllers')
       /*profilesDataService.getSuggestedUsers()
           .then(function(suggestedPeople) {
               $scope.suggestedPeople = suggestedPeople;
-          });
+          });*/
 
       tagsDataService.getAvailableTags()
           .then(function(tags){
-              $scope.tags = tags;
-          });*/
+              $scope.availableTags = tags;
+          });
     }
   );

@@ -22,7 +22,7 @@
         <wiz-markdown content="body"></wiz-markdown>
         <div>
             <tags-input ng-model="tags" display-property="text" add-on-space="true">
-                <!-- <auto-complete source="loadTags(query)" placeholder="tags"></auto-complete> -->
+              <auto-complete source="getTagsSuggestions($query)" placeholder="tags"></auto-complete>
             </tags-input>
             <!-- <label for="suggestedTags">Suggested tags:
                 <span ng-repeat="tag in tags">{{tag.text}}</span>
