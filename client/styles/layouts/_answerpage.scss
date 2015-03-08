@@ -27,6 +27,25 @@
 		font-size: 20px;
 		margin-top: 50px;
 	}
+  .user-info {
+    width: 15%;
+    @extend %display-flex;
+    @include flex-direction(column);
+    @include flex-align-items(center);
+
+    margin-bottom: 15px;
+
+    .author-name {
+      font-size: 16px;
+    }
+
+    .author-karma{
+      margin: 2px;
+      padding: 4px;
+      border-radius: 15px;
+      border: 1px solid $green-light;
+    }
+  }
 }
 
 .answers-container {

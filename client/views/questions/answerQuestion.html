@@ -12,7 +12,19 @@
         <span class="subscribed-label" ng-show="isSubscribed()">Subscribed!</span>
 
         <div class="answer-count">{{answers.length}} Answers</div>
+
       </div>
+      <div class="user-info">
+        <div>
+          <a ng-href="/#/profile/{{author.id}}">
+            <img ng-src="{{author.profilePictureUrl || '/content/no-avatar.jpg'}}" />
+          </a>
+        </div>
+        <a ng-href="/#/profile/{{author.id}}">
+          <div>{{author.name}}</div>
+        </a>
+        <div class="author-karma">{{author.karma}}</div>
+    </div>
     </div>
     <div class="answers-container" ng-repeat="answer in answers">
       <div class="score-container">
