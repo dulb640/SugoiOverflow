@@ -21,14 +21,14 @@ angular.module('sugoiOverflow.controllers')
             .then(loadQuestion);
         },
         upvoteAnswer: function(answer){
-          if (answer.upVotes.indexOf($scope.currentUserId) !== -1){
+          if ($scope.hasVoted(answer)){
             return;
           }
           questionsDataService.upvoteAnswer($routeParams.id, answer)
             .then(loadQuestion);
         },
         downvoteAnswer: function(answer){
-          if (answer.downVotes.indexOf($scope.currentUserId) !== -1){
+          if ($scope.hasVoted(answer)){
             return;
           }
           questionsDataService.downvoteAnswer($routeParams.id, answer)
@@ -43,6 +43,10 @@ angular.module('sugoiOverflow.controllers')
             return $scope.subscribers.indexOf($scope.currentUserId) !== -1;
           }
           return false;
+        },
+        hasVoted: function(answer){
+          return answer.downVotes.indexOf($scope.currentUserId) !== -1 ||
+            answer.upVotes.indexOf($scope.currentUserId) !== -1;
         }
       });
 

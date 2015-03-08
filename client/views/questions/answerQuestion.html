@@ -22,9 +22,9 @@
       <div class="body"  ng-bind-html="answer.body | wizMarkdownFltr"></div>
       <div class="timestamp"  ng-bind="answer.timestamp | date:'medium'"></div>
       <div class="score-container">
-        <button class="upvote-button" type="button" ng-disable="hasUserVoted" ng-click="upvoteAnswer(answer)">Upvote</button>
+        <button class="upvote-button" type="button" ng-disable="hasVoted(answer)" ng-click="upvoteAnswer(answer)">Upvote</button>
         <div class="score">{{answer.score}}</div>
-        <button class="downvote-button" type="button" ng-disable="hasUserVoted" ng-click="downvoteAnswer(answer)">Downvote</button>
+        <button class="downvote-button" type="button" ng-disable="hasVoted(answer)" ng-click="downvoteAnswer(answer)">Downvote</button>
       </div>
     </div>
   </div>
