@@ -33,7 +33,7 @@ router.get('/top', function(req, res){
       var tags = _.chain(results)
         .map(function(result){
           return {
-            name: result._id,
+            text: result._id,
             count: result.value
           };
         })

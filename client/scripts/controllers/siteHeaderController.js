@@ -1,5 +1,5 @@
 angular.module('sugoiOverflow.controllers')
-  .controller('siteHeaderController', function ($scope, profilesDataService, questionsDataService) {
+  .controller('siteHeaderController', function ($scope, $location, $routeParams, profilesDataService, tagsDataService) {
     'use strict';
 
     _.extend($scope, {
@@ -7,17 +7,17 @@ angular.module('sugoiOverflow.controllers')
       notificationsOpened: false,
       user: {},
       searchTerms: '',
-/*      searchQuestions: function(terms){
-        $location.path(_.str.sprintf('/#/questions/search/%s', terms));
-      }*/
-      searchQuestions: function(terms){
-        $scope.searchLoading = true;
-        return questionsDataService.searchQuestions(terms)
-        .then(function(questionList){
-          return questionList;
+      searchQuestions: function(){
+        $location.path(_.str.sprintf('/questions/search/%s', $scope.searchTerms));
+      },
+      getTypeahead: function(){
+        $scope.typeaheadLoading = true;
+        return tagsDataService.getAvailableTags()
+        .then(function(tags){
+          return tags;
         })
         .finally(function(){
-          $scope.searchLoading = false;
+          $scope.typeaheadLoading = false;
         });
       },
       openNotifications: function(){
@@ -27,6 +27,10 @@ angular.module('sugoiOverflow.controllers')
         $scope.notificationsOpened = false;
       }
     });
+
+    if($routeParams.searchTerms){
+      $scope.searchTerms = $routeParams.searchTerms;
+    }
 
     profilesDataService.getCurrentUserProfile()
     .then(function(user){

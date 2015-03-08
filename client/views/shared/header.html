@@ -3,7 +3,8 @@
     <a href="#/">Sugoi<strong>Overflow</strong></a>
   </div>
   <div class="search">
-    <input class="search-bar" type="text" ng-model="searchTerms" placeholder="Search Questions" typeahead="question for questions in searchQuestions($viewValue)"  class="form-control" typeahead-template-url="/views/shared/questionSearchTemplate.html" typeahead-loading="searchLoading" typeahead-append-to-body="true" typeahead-wait-ms="150">
+    <input class="search-bar" type="text" ng-model="searchTerms" placeholder="Search Questions" class="form-control" ng-keyup="$event.keyCode === 13 && searchQuestions()"/>
+    <!-- <input class="search-bar" type="text" ng-model="searchTerms" placeholder="Search Questions" typeahead="question for questions in getTypeahead($viewValue)"  class="form-control" typeahead-loading="typeaheadLoading" typeahead-append-to-body="true" typeahead-wait-ms="150" ng-keyup="$event.keyCode === 13 && searchQuestions($value)"/> -->
   </div>
   <div class="user">
     <div class="notifications">
