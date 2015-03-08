@@ -2,6 +2,7 @@
   <div class="user-details">
     <div class="profile-details">
       <div class="name">{{name}}</div>
+      <div class="karma">{{karma}}</div>
       <div class="email">{{email}}</div>
       <div class="location">{{location}}</div>
       <div class="tags">
@@ -10,10 +11,13 @@
       <div class="edit-profile">
         <i class="fa fa-pencil"></i><a class="button" href="#/profile/me/edit" ng-show="isOwnProfile">Edit</a>
       </div>
+
+      <div class="my-subcribed">
+        
+      </div>
     </div>
     <div class="profile">
-        <img ng-src="{{profilePictureUrl}}"></img>
-        <div class="karma">{{karma}}</div>
+        <img ng-src="{{profilePictureUrl}}"></img>    
     </div>
   </div>
   <div class="user-questions" ng-show="isOwnProfile">

@@ -34,6 +34,10 @@
 	.name {
 		font-size: 18px;
 	}
+
+	.email {
+		color: $teal;
+	}
 }
 
 .profile, .profile-details {
@@ -42,7 +46,12 @@
 
 .profile-details {
 	margin-left: 30px;
+	.karma {
+		font-size: 16px;
+		color: $green-light;
+	}
 }
+
 
 /* Edit Profile */
 

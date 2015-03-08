@@ -50,7 +50,8 @@ angular.module('sugoiOverflow.services')
           timestamp:  question.timestamp,
           tags: _.map(question.tags, service.mapTagForClient),
           answers: _.map(question.answers, service.mapAnswerForClient),
-          subscribers: question.subscribers
+          subscribers: question.subscribers,
+          author: question.author
         };
       },
 

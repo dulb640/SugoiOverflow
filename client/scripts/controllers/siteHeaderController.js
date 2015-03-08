@@ -38,7 +38,11 @@ angular.module('sugoiOverflow.controllers')
       },
       closeNotifications: function(){
         $scope.notificationsOpened = false;
+      },
+      hasNewNotifications : function (){
+        return $scope.newNotificationsCount() > 0;
       }
+
     });
 
     if($routeParams.searchTerms){
