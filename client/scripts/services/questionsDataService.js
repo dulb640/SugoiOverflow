@@ -43,6 +43,19 @@ angular.module('sugoiOverflow.services')
         return deferred.promise;
       },
 
+      getQuestionsForUser: function(userId){
+        var deferred = $q.defer();
+        $http.get(_.str.sprintf('/api/questions/profile/%s', userId))
+        .success(function(data){
+          var questions = _.map(data, mappingService.mapQuestionForList);
+          deferred.resolve(questions);
+        })
+        .error(function(error){
+          deferred.reject(error);
+        });
+        return deferred.promise;
+      },
+
       getQuestionsListSearch: function(terms){
         var deferred = $q.defer();
         $http.get(_.str.sprintf('/api/questions/search/%s', terms))

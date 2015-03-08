@@ -1,13 +1,14 @@
 angular.module('sugoiOverflow.controllers')
   .controller('viewProfileController',
-    function($scope, $q, $routeParams, tagsDataService, profilesDataService){
+    function($scope, $q, $routeParams, tagsDataService, profilesDataService, questionsDataService){
       'use strict';
 
       _.extend($scope, {
         isOwnProfile: false,
         profilePictureUrl: '',
         user: {},
-        tags: []
+        tags: [],
+        questions: [],
       });
 
       function loadUser(user){
@@ -24,6 +25,10 @@ angular.module('sugoiOverflow.controllers')
           .then(function(user){
             loadUser(user);
             $scope.isOwnProfile = true;
+            questionsDataService.getQuestionsForUser(user.id)
+              .then(function(questions){
+                $scope.questions = questions;
+              });
           });
       }
       else {
