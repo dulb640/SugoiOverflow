@@ -20,8 +20,16 @@ angular.module('sugoiOverflow.controllers')
           $scope.typeaheadLoading = false;
         });
       },
+      newNotificationsCount: function(){
+        return _.where($scope.notifications, {'read' : false}).length;
+      },
       readNotification: function(notification){
         $scope.notificationsOpened = false;
+        profilesDataService.markNotificationAsRead(notification.id)
+          .then(function(notifications){
+            $scope.notifications = notifications;
+          });
+
         $location.path(_.str.sprintf('/questions/%s/answers', notification.question));
       },
       openNotifications: function(){

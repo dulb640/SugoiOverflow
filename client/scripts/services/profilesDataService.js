@@ -40,6 +40,17 @@ angular.module('sugoiOverflow.services')
             });
           return deferred.promise;
         },
+        markNotificationAsRead: function(id) {
+          var deferred = $q.defer();
+          $http.put(_.str.sprintf('/api/profiles/me/feed/%s/read', id))
+            .success(function(data){
+              deferred.resolve(data.questionNotifications);
+            })
+            .error(function(error){
+              deferred.reject(error);
+            });
+          return deferred.promise;
+        },
         editProfile: function(data) {
           var profile = mappingService.mapProfileForApi(data);
           var deferred = $q.defer();

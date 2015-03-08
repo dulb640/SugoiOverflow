@@ -74,6 +74,30 @@ router.get('/me/feed', function(req, res){
     });
 });
 
+router.put('/me/feed/:notificationId/read', function(req, res){
+  domain.User
+    .findByIdQ(req.user.id)
+    .then(function(user){
+      return user.populateQ('feed', 'questionNotifications');
+    })
+    .then(function(user){
+      var feed = user.feed;
+      var notification = feed.questionNotifications.id(req.params.notificationId);
+      notification.read = true;
+      feed.saveQ().then(function(feed){
+        res
+          .status(200)
+          .send(feed);
+      });
+    })
+    .catch(function(error){
+      logger.error('Error getting user feed', error);
+      res
+        .status(500)
+        .send();
+    });
+});
+
 router.get('/:id', function(req, res){
   domain.User
     .findByIdQ(req.params.id)

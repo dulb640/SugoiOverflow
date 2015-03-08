@@ -21,7 +21,7 @@ var QuestionNotification = new Schema({
     type: String,
     required: true
   },
-  viewed:{
+  read:{
     type: Boolean,
     required: true,
     default: false

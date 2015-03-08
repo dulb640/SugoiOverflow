@@ -8,7 +8,7 @@
   </div>
   <div class="user">
     <div class="notifications">
-      <span class="notices">{{notifications.length}}</span>
+      <span class="notices">{{newNotificationsCount()}}</span>
       <span ng-click="openNotifications()">Notifications</span>
     </div>
     <div class="profile">
@@ -24,7 +24,7 @@
   <div>
     <pageslide class="notification-slider" ps-open="notificationsOpened">
       <div class="notification-container">
-        <div class="notification-entry" ng-repeat="notification in notifications" ng-click="readNotification(notification)">
+        <div class="notification-entry" ng-class="{'notification-read': notification.read, 'notification-new': !notification.read}" ng-repeat="notification in notifications" ng-click="readNotification(notification)">
           <div class="notification-body">{{notification.body}}</div>
           <div class="notification-question-title">{{notification.questionTitle}}</div>
         </div>

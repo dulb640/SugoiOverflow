@@ -19,6 +19,9 @@ body {
   .notification-entry{
     border-bottom: 1px solid $gray-dark;
     padding: 10px 5px;
+    &.notification-new{
+      background-color: yellow;
+    }
   }
 }
 .header {
