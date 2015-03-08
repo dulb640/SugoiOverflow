@@ -11,17 +11,13 @@
   			<div class="question-content">
 
   				<div class="title">
-            <!-- TODO:work out good way to link to question.-->
             <a ng-href = '/#/questions/{{question.questionId}}/answers'>{{question.title}}</a>
           </div>
-  				<!-- <div class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione et numquam impedit, perferendis suscipit reiciendis cum est porro sed delectus, quos, fuga, laborum atque consectetur laudantium corrupti eum asperiores! Eveniet.....</div> -->
   				<div class="tags">
   					<a ng-href="/#/questions/search/{{tag.text}}" class="tag" ng-repeat="tag in question.tags">{{tag.text}}</a>
   				</div>
           <div class="timestap">
              <span ng-bind="question.timestamp | date:'medium'"></span>
-            <!-- TODO: figure out how to use moment.js in this angular proj... to format date to fromNow.. -->
-            <!-- <span>{{moment(question.timestamp).fromNow()}}</span> -->
           </div>
   			</div>
   			<div class="question-status">

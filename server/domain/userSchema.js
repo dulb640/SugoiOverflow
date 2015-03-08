@@ -36,16 +36,14 @@ var User = new Schema({
       type: [String],
       default:[]
     },
-    asked:{
-      type: [ObjectId],
-      ref: 'Question',
-      default:[]
-    },
-    answered:{
-      type: [ObjectId],
-      ref: 'Question',
-      default:[]
-    },
+    asked:[{
+      type: ObjectId,
+      ref: 'Question'
+    }],
+    answered:[{
+      type: ObjectId,
+      ref: 'Question'
+    }],
     profilePictureUrl:{
       type: String
     }
