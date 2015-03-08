@@ -39,13 +39,10 @@ angular.module('sugoiOverflow.controllers')
         $scope.notificationsOpened = false;
       }
     });
-    function updateSearchTerms(){
-      if($routeParams.searchTerms){
-        $scope.searchTerms = $routeParams.searchTerms;
-      }
-    }
 
-    updateSearchTerms();
+    if($routeParams.searchTerms){
+      $scope.searchTerms = $routeParams.searchTerms;
+    }
 
     profilesDataService.getCurrentUserProfile()
     .then(function(user){
@@ -58,5 +55,7 @@ angular.module('sugoiOverflow.controllers')
       $scope.notifications = notifications;
     });
 
-    $rootScope.$on('$routeChangeSuccess', updateSearchTerms);
+    $rootScope.$on('$routeChangeSuccess', function(){
+      $scope.searchTerms = $routeParams.searchTerms;
+    });
   });
