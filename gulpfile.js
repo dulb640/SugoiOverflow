@@ -151,7 +151,7 @@ gulp.task('watch', function(){
       console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
     });
 
-  gulp.watch(['client/**/*', '!client/**/*.scss'], ['build'])
+  gulp.watch(['client/**/*.html', 'client/**/*.js'], ['build'])
     .on('change', function(event) {
       console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
     });
