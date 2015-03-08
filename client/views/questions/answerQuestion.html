@@ -3,7 +3,7 @@
     <div class="question-container">
       <div class="question-content">
         <div class="title" ng-bind-html="title | wizMarkdownFltr"></div>
-        <div class="body" ng-bind-html="body | wizMarkdownFltr"></div>
+        <wiz-markdown content="body"></wiz-markdown>
         <div class="tags">
             <span class="tag" ng-repeat="tag in tags">{{tag.text}}</span>
         </div>
