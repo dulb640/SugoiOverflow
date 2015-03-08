@@ -6,7 +6,7 @@
       <div class="email">{{email}}</div>
       <div class="location">{{location}}</div>
       <div class="tags">
-        <span class="tag" ng-repeat="tag in tags">{{tag.text}}</span>
+        <a href="/#/questions/search/{{tag.text}}" class="tag" ng-repeat="tag in tags">{{tag.text}}</a>
       </div> 
       <div class="edit-profile">
         <i class="fa fa-pencil"></i><a class="button" href="#/profile/me/edit" ng-show="isOwnProfile">Edit</a>
