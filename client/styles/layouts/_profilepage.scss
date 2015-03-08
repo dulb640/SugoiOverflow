@@ -27,6 +27,9 @@
 	@extend %display-flex;
 	@include flex-vertical-aligns(center);
 	@include flex-direction(row);
+	@include flex-justify-content(space-between);
+
+	margin-top: 10px;
 
 	.name {
 		font-size: 18px;

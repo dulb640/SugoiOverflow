@@ -111,6 +111,36 @@ button {
     }
 }
 
+.action-button.blue, a.action-button.blue {
+    background-color: $teal;
+
+    &:hover{
+        border-color: $teal;
+        //background-color: rgba(255, 255, 255, 0);
+        background-color: #fff;
+        color: $teal;
+
+        &.icon-add{
+            @extend .icon-add;
+        }
+    }
+}
+
+.action-button.red, a.action-button.red {
+    background-color: $red;
+
+    &:hover{
+        border-color: $red;
+        //background-color: rgba(255, 255, 255, 0);
+        background-color: #fff;
+        color: $red;
+
+        &.icon-add{
+            @extend .icon-add;
+        }
+    }
+}
+
 .cancel-button {
     border: none;
     background-color: #fff;

@@ -8,6 +8,10 @@
     -webkit-flex-direction: $value;
 }
 
+@mixin flex-align-items($value){
+	align-items: $value;
+    -webkit-align-items: $value;
+}
 
 @mixin flex-vertical-aligns($value){
 	align-items: $value;
