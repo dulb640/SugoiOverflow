@@ -46,6 +46,6 @@ angular
         controller: 'viewProfileController'
       })
       .otherwise({
-        redirectTo: '/questions'
+        redirectTo: '/questions/suggested'
       });
 	});
