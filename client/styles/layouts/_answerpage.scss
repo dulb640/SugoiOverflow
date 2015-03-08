@@ -88,6 +88,10 @@
 		font-size: 16px;
 		margin: 5px 0 5px 0;
 		display: block;
+
+		&:hover {
+			color: $teal;
+		}
 	}
 
 	.author-name {
