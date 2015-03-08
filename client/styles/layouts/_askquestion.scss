@@ -44,28 +44,41 @@
 
 
 	.markdown-input {
-		margin-top: 20px;
 		margin-bottom: 20px;
 		width: 100%;
-		min-height: 100px;
+		min-height: 150px;
 		border: 1px solid #ccc;
+		padding: 5px;
+
+		&:focus {
+			border: 1px solid $green-light;
+			box-shadow: none;
+		}
 	}
 }
 
 .markdown-toolbar {
-	.markdown-button {
-		background-color: #fff;
-		box-shadow: none;
-		border: 1px solid $gray-darker;
+	border: 1px solid #ccc;
+	border-bottom: none;
+	padding: 5px;
+	background-color: $gray-dark;
 
+	.markdown-button {
+		box-shadow: none;
+		background-color: #fff;
+		border: 1px solid $gray-darker;
+		color: $gray-text-normal;
 		i {
 			color: $gray-text-normal;
 		}
 	}
 
 	.markdown-button:hover {
+
+		background-color: #fff;
 		border: 1px solid $teal;
 		color: $teal;
+
 		i {
 			color: $teal;
 		}
