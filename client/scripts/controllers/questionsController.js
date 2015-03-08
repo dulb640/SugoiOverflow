@@ -9,7 +9,11 @@ angular.module('sugoiOverflow.controllers')
       _.extend($scope, {
         questionFilter: questionFilter,
         searchTerms: searchTerms,
-        questions: {}, //Will have header information about questions - will change based on user tab selection
+        questions: {}, //Will have header information about questions - will change based on user tab selection,
+        suggestedNotEmpty : true,
+        suggestedIsEmpty: function() {
+          $scope.suggestedNotEmpty = !(questionFilter === 'suggested' && !$scope.questions.length);
+        }
       });
 
       var init = function(){
@@ -33,6 +37,7 @@ angular.module('sugoiOverflow.controllers')
         promise
           .then(function(questions){
             $scope.questions = questions;
+            $scope.suggestedIsEmpty();
           });
       };
 

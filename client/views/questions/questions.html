@@ -6,6 +6,11 @@
 		<a class="category" ng-class="{active:questionFilter === 'all'}" href="/#/questions/all"><span>All</span></a>
 	</div>
 	<div class="content container">
+    <div class="question-suggested-empty" ng-hide='suggestedNotEmpty'>
+      <a href="#/profile">
+        There are no suggested questions for you. Add more tags on your profile to increase suggestions.
+      </a>
+    </div>
 		<div class="question-container" ng-repeat="question in questions">
 
   			<div class="question-content">
