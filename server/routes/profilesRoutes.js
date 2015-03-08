@@ -7,6 +7,7 @@ var express = require('express');
 var router  = express.Router();
 
 function mapProfile(user){
+  logger.error('========', user.profile);
   return {
     id: user.id,
     name: user.name,
@@ -86,6 +87,25 @@ router.put('/me', function(req, res){
     })
     .catch(function(error){
       logger.error('Error updating profile', error);
+      res
+        .status(500)
+        .send();
+    });
+});
+
+router.get('/tag/:tag', function(req, res){
+  domain.User
+    .find({'profile.selectedTags': req.params.tag})
+    .select('id name email profile')
+    .execQ()
+    .then(function(users){
+      var profiles = users.map(mapProfile);
+      res
+        .status(200)
+        .send(profiles);
+    })
+    .catch(function(error){
+      logger.error('Error getting profile for tag', error);
       res
         .status(500)
         .send();
