@@ -4,6 +4,7 @@ angular
 		'ui.bootstrap',
     'wiz.markdown',
     'ngTagsInput',
+    'pageslide-directive',
 		'sugoiOverflow.settings',
     'sugoiOverflow.services',
 		'sugoiOverflow.controllers',
