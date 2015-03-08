@@ -27,15 +27,6 @@
     </div>
     </div>
     <div class="answers-container" ng-repeat="answer in answers">
-      <div class="score-container">
-        <button class="upvote-button action-button" type="button" ng-disable="votingInProgress || hasUpVoted(answer)" ng-click="upvoteAnswer(answer)"><i class="fa fa-thumbs-up"></i></button>
-        <div class="score">{{answer.score}}</div>
-        <button class="downvote-button action-button red" type="button" ng-disable="votingInProgress || hasDownVoted(answer)" ng-click="downvoteAnswer(answer)"><i class="fa fa-thumbs-down"></i></button>
-      </div>
-      <div class="answer-content">
-        <div class="body"  ng-bind-html="answer.body | wizMarkdownFltr"></div>
-        <div class="timestamp"  ng-bind="answer.timestamp | date:'medium'"></div>
-      </div>
       <div class="user-info">
         <div>
           <a ng-href="/#/profile/{{answer.author.id}}">
@@ -46,6 +37,16 @@
           <div>{{answer.author.name}}</div>
         </a>
         <div class="author-karma">{{answer.author.karma}}</div>
+      </div>
+      <div class="answer-content">
+        <div class="body"  ng-bind-html="answer.body | wizMarkdownFltr"></div>
+        <div class="timestamp"  ng-bind="answer.timestamp | date:'medium'"></div>
+      </div>
+      
+      <div class="score-container">
+        <button class="upvote-button action-button" type="button" ng-disable="votingInProgress || hasUpVoted(answer)" ng-click="upvoteAnswer(answer)"><i class="fa fa-thumbs-up"></i></button>
+        <div class="score">{{answer.score}}</div>
+        <button class="downvote-button action-button red" type="button" ng-disable="votingInProgress || hasDownVoted(answer)" ng-click="downvoteAnswer(answer)"><i class="fa fa-thumbs-down"></i></button>
       </div>
     </div>
   </div>
