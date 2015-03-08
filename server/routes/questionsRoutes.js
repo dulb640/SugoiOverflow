@@ -183,6 +183,22 @@ router.get('/tag/:tag', function(req, res){
 /**
  * Add answer
  */
+
+function updateUserQuestionsFeed(user, question, message){
+  return user.populateQ('feed', 'questionNotifications')
+    .then(function(user){
+      user.feed.questionNotifications.push({
+        body:message,
+        question: question.id,
+        questionTitle: question.title
+      });
+      return user.feed.saveQ()
+        .catch(function(error){
+          logger.error('Error updating user feed', error);
+        });
+    });
+}
+
 router.post('/:questionId/answer', function(req, res){
   domain.Question.findByIdQ(req.params.questionId)
     .then(function (question){
@@ -205,7 +221,19 @@ router.post('/:questionId/answer', function(req, res){
         res
           .status(200)
           .send(question);
+
+        question.populateQ('subscribers', 'feed')
+          .then(function(questionPop){
+            questionPop.subscribers.forEach(function(sub){
+              updateUserQuestionsFeed(sub, question, 'Question has been answered');
+            });
+          });
       });
+    })
+    .then(function(question){
+        res
+          .status(200)
+          .send(question);
     })
     .catch(function(error){
       logger.error('Error posting answer', error);

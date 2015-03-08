@@ -77,6 +77,16 @@ app.use(function(req, res, next){
   req.user = domain.User.findOneQ({adId:'123'})
     .then(function(user){
       req.user = user;
+      if(!user.feed){
+        var newFeed = new domain.UserFeed();
+        newFeed.saveQ()
+          .then(function(feed){
+            user.feed = feed.id;
+            return user.saveQ();
+          });
+      }
+    })
+    .finally(function(){
       next();
     });
 });

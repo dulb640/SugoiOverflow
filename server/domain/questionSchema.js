@@ -33,12 +33,9 @@ var Question = new Schema({
     ref: 'User',
     required: true
   },
-  subscribers:{
-    type:[ObjectId],
-    ref: 'User',
-    default: [],
-    index: true
-  },
+  subscribers:[{
+    type: ObjectId,
+    ref: 'User'}]
 });
 
 Question.index({ body: 'text', title:'text', tags:'text', 'answers.body':'text' });

@@ -48,7 +48,11 @@ var User = new Schema({
     },
     profilePictureUrl:{
       type: String
-    },
+    }
+  },
+  feed:{
+    type: ObjectId,
+    ref: 'UserFeed'
   }
 
 /*  token:{
