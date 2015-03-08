@@ -8,6 +8,8 @@
         <div class="tags">
             <span class="tag" ng-repeat="tag in tags">{{tag.text}}</span>
         </div>
+        <button ng-hide="isSubscribed()" class="subscribe-button" ng-click="subscribeToQuestion()">Subscribe to Question</button>
+        <span class="subscribed-label" ng-show="isSubscribed()">Subscribed!</span>
       </div>
     </div>
     <div class="answers-container" ng-repeat="answer in answers">

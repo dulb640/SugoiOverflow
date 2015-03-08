@@ -56,6 +56,19 @@ angular.module('sugoiOverflow.services')
 
         return deferred.promise;
       },
+      subscribeToQuestion: function(questionId){
+        var deferred = $q.defer();
+        $http.put(_.str.sprintf('/api/questions/%s/subscribe', questionId))
+        .success(function(data){
+          var updatedQuestion = mappingService.mapQuestionForClient(data);
+          deferred.resolve(updatedQuestion);
+        })
+        .error(function(error){
+          deferred.reject(error);
+        });
+
+        return deferred.promise;
+      },
       addAnswer: function(questionId, answer){
         var deferred = $q.defer();
         var data = {

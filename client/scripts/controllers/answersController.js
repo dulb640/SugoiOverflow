@@ -11,7 +11,7 @@ angular.module('sugoiOverflow.controllers')
         $scope.author = question.author;
         $scope.timestamp = question.timestamp;
         $scope.answers = question.answers;
-
+        $scope.subscribers = question.subscribers;
         $scope.answer = '';
       }
 
@@ -33,6 +33,16 @@ angular.module('sugoiOverflow.controllers')
           }
           questionsDataService.downvoteAnswer($routeParams.id, answer)
             .then(loadQuestion);
+        },
+        subscribeToQuestion: function(){
+          questionsDataService.subscribeToQuestion($routeParams.id)
+            .then(loadQuestion);
+        },
+        isSubscribed: function(){
+          if ($scope.subscribers){
+            return $scope.subscribers.indexOf($scope.currentUserId) !== -1;
+          }
+          return false;
         }
       });
 
