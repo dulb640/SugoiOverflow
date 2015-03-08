@@ -76,7 +76,6 @@
 
 	// Custom Globals
 	"globals"       : {
-		"s"         : true,
 		"angular"   : true,
 		"_"         : true,
     "moment"    : true
