@@ -71,11 +71,10 @@ User.set('toJSON', {
   }
 });
 
-User.methods.calculateKarma = function calculateKarma (callback) {
-  var sum = this.karmaChanges
+User.methods.calculateKarma = function calculateKarma() {
+  var sum = this.profile.karmaChanges
     .map(function(k){return k.value || 0; })
     .reduce(function(prev, next){return prev + next;});
-  callback(null, sum);
   return sum;
 };
 

@@ -5,6 +5,8 @@ var logger      = require('../logger');
 
 var _           = require('lodash');
 var express     = require('express');
+var q     = require('Q');
+
 var router      = express.Router();
 
 /**
@@ -288,9 +290,24 @@ router.post('/:questionId/answer', function(req, res){
 router.put('/:questionId/answer/:answerId/correct', function(req, res){
   domain.Question.findByIdQ(req.params.questionId)
     .then(function (question){
-      var answer = question.answers.id(req.params.answerId);
-      answer.correct = true;
-      return question.saveQ();
+      return question.populateQ('answers.author', 'id name email profile.karmaChanges feed')
+        .then(function(question){
+          var answer = question.answers.id(req.params.answerId);
+          answer.correct = true;
+          answer.author.profile.karmaChanges.push({
+            value: 5,
+            reason: 'Answer marked as correct',
+            question: question.id
+          });
+
+          return answer.author.saveQ()
+            .then(function(author){
+              return updateUserQuestionsFeed(author, question, 'Your answer marked as correct');
+            })
+            .then(function(){
+              return question.saveQ();
+            });
+        });
     })
     .then(function(question){
       res
