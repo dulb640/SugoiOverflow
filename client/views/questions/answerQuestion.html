@@ -20,7 +20,7 @@
             <img ng-src="{{author.profilePictureUrl || '/content/no-avatar.jpg'}}" />
           </a>
         </div>
-        <a ng-href="/#/profile/{{author.id}}">
+        <a class="profile-link" ng-href="/#/profile/{{author.id}}">
           <div>{{author.name}}</div>
         </a>
         <div class="author-karma">{{author.karma}}</div>
@@ -42,7 +42,7 @@
             <img ng-src="{{answer.author.profilePictureUrl || '/content/no-avatar.jpg'}}" />
           </a>
         </div>
-        <a ng-href="/#/profile/{{answer.author.id}}">
+        <a class="profile-link" ng-href="/#/profile/{{answer.author.id}}">
           <div>{{answer.author.name}}</div>
         </a>
         <div class="author-karma">{{answer.author.karma}}</div>
