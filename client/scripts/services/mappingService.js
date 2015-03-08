@@ -77,19 +77,7 @@ angular.module('sugoiOverflow.services')
           tags: _.map(profile.selectedTags, service.mapTagForClient),
           karma: profile.karma,
           location: profile.location,
-          profilePictureUrl: profile.profilePictureUrl,
-          notifications: [
-              {
-                id: 1,
-                title: 'Senpai has answered your question!',
-                detail: 'When will senpai notice me?'
-              },
-              {
-                id: 2,
-                title: 'You have reached a new Karma tier!',
-                detail: 'You are now officially better than everyone else.'
-              }
-            ] //This is mocked, replace properly
+          profilePictureUrl: profile.profilePictureUrl
         };
       },
 

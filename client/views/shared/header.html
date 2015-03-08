@@ -21,6 +21,16 @@
       </a>
     </div>
   </div>
-  <div ng-include="'/views/shared/notificationShade.html'"></div>
+  <div>
+    <pageslide class="notification-slider" ps-open="notificationsOpened">
+      <div class="notification-container">
+        <div class="notification-entry" ng-repeat="notification in notifications" ng-click="readNotification(notification)">
+          <div class="notification-body">{{notification.body}}</div>
+          <div class="notification-question-title">{{notification.questionTitle}}</div>
+        </div>
+        <button class="close-button" ng-click="closeNotifications()">Close</button>
+      </div>
+    </pageslide>
+  </div>
 </div>
 

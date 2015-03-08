@@ -20,6 +20,10 @@ angular.module('sugoiOverflow.controllers')
           $scope.typeaheadLoading = false;
         });
       },
+      readNotification: function(notification){
+        $scope.notificationsOpened = false;
+        $location.path(_.str.sprintf('/questions/%s/answers', notification.question));
+      },
       openNotifications: function(){
         $scope.notificationsOpened = true;
       },
@@ -36,5 +40,10 @@ angular.module('sugoiOverflow.controllers')
     .then(function(user){
       $scope.user = user;
       $scope.notifications = user.notifications;
+    });
+
+    profilesDataService.getCurrentUserNotifications()
+    .then(function(notifications){
+      $scope.notifications = notifications;
     });
   });

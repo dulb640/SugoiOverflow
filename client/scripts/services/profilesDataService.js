@@ -29,6 +29,17 @@ angular.module('sugoiOverflow.services')
             });
           return deferred.promise;
         },
+        getCurrentUserNotifications: function() {
+          var deferred = $q.defer();
+          $http.get('/api/profiles/me/feed')
+            .success(function(data){
+              deferred.resolve(data.questionNotifications);
+            })
+            .error(function(error){
+              deferred.reject(error);
+            });
+          return deferred.promise;
+        },
         editProfile: function(data) {
           var profile = mappingService.mapProfileForApi(data);
           var deferred = $q.defer();

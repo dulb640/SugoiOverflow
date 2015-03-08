@@ -12,7 +12,15 @@ body {
 	margin: 0;
 	font-family: 'Segoe Ui Light', arial, sans-serif;
 }
-
+.ng-pageslide{
+  background-color: white;
+}
+.notification-container{
+  .notification-entry{
+    border-bottom: 1px solid $gray-dark;
+    padding: 10px 5px;
+  }
+}
 .header {
 	background-color: $teal;
 	height: 60px;
