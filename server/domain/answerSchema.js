@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose-q')(require('mongoose'));
 var Schema = mongoose.Schema;
+var Comment = require('./commentSchema');
 
 var Answer = new Schema({
   author:{
@@ -16,6 +17,10 @@ var Answer = new Schema({
   body:{
     type: String,
     required: true
+  },
+  comments:{
+    type: [Comment],
+    default: []
   },
   correct:{
     type: Boolean,

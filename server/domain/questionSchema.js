@@ -4,6 +4,7 @@ var mongoose = require('mongoose-q')(require('mongoose'));
 var Schema = mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId;
 var Answer = require('./answerSchema');
+var Comment = require('./commentSchema');
 
 var Question = new Schema({
   title:{
@@ -18,6 +19,10 @@ var Question = new Schema({
     type:[Answer],
     default: [],
     index: true
+  },
+  comments:{
+    type:[Comment],
+    default: []
   },
   tags:{
     type: [String],
