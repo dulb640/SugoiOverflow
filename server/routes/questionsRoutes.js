@@ -61,18 +61,30 @@ router.get('/suggested', function(req, res){
  */
 router.get('/most-wanted', function(req, res){
   domain.Question
-    .find({'answers': {
-        $all: [{
-            $elemMatch: {
-              correct: {$ne: true}
+    .aggregate([{
+        $match:{ 'answers.correct': {$ne: true}}},{
+        $project : {
+          subCount: {
+            $size: {
+              '$ifNull': [ '$subscribers', [] ]
             }
-          }
-        ]
-      }
-    })
-    .sort({'subscribers.length': -1})
-    .select('id title body answers.author answers.timestamp answers.correct subscribers tags timestamp author')
-    .populate('author', 'name email profilePictureUrl')
+          },
+          id : 1,
+          author : 1,
+          title : 1,
+          body : 1,
+          'answers.author' : 1,
+          'answers.correct' : 1,
+          'answers.timestamp' : 1,
+          timestamp : 1,
+          subscribers : 1,
+          tags : 1
+        }
+      },
+      {$sort: {'subCount':-1} }])
+    //.sort({'subscribers.length': -1})
+    //.select('id title body answers.author answers.timestamp answers.correct subscribers tags timestamp author')
+    //.populate('author', 'name email profilePictureUrl')
     .execQ()
     .then(function(questions){
       res
@@ -86,6 +98,7 @@ router.get('/most-wanted', function(req, res){
         .send();
     });
 });
+
 
 /**
  * Get question by id
