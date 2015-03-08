@@ -7,8 +7,8 @@
   </div>
   <div class="user">
     <div class="notifications">
-      <span class="notices">{{notifications}}</span>
-      <span>Notifications</span>
+      <span class="notices">{{notifications.length}}</span>
+      <span ng-click="openNotifications()">Notifications</span>
     </div>
     <div class="profile">
       <span class="profile-icon">J</span> <!--TODO: Replace with profile picture url -->
@@ -20,4 +20,6 @@
       </a>
     </div>
   </div>
+  <div ng-include="'/views/shared/notificationShade.html'"></div>
 </div>
+
