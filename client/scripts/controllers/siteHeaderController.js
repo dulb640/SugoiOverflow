@@ -1,5 +1,5 @@
 angular.module('sugoiOverflow.controllers')
-  .controller('siteHeaderController', function ($scope, userDataService, questionsDataService) {
+  .controller('siteHeaderController', function ($scope, profilesDataService, questionsDataService) {
       'use strict';
 
       _.extend($scope, {
@@ -14,7 +14,7 @@ angular.module('sugoiOverflow.controllers')
         }
       });
 
-      userDataService.getCurrentUser()
+      profilesDataService.getCurrentUserProfile()
       .then(function(user){
         $scope.user = user;
       });
