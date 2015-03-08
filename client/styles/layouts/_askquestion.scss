@@ -20,6 +20,19 @@
 		@extend %tags;
 	}
 
+	.tags.suggested {
+		border: none;
+		i {
+			color: $gray-text-normal;
+		}
+	}
+
+	.tag:hover {
+		i {
+			color: $teal;
+		}
+	}
+
 	.tag-item {
 		@extend %tag-item;
 	}

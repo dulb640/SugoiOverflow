@@ -24,18 +24,18 @@
       <tags-input ng-model="tags" display-property="text" add-on-space="true" placeholder="Add a tag">
         <auto-complete source="getTagsAutocomlete($query)" ></auto-complete>
       </tags-input>
-      <div ng-show="suggestedTags.length > 0">
+      <div class="tags suggested" ng-show="suggestedTags.length > 0">
         <label for="suggestedTags">Suggested tags:</label>
-        <span ng-click="addTag(tag)" ng-repeat="tag in suggestedTags">{{tag}}</span>
+        <span class="tag" ng-click="addTag(tag)" ng-repeat="tag in suggestedTags">{{tag}} <i class="fa fa-plus"></i></span>
       </div>
     </div>
     <div>
       <tags-input ng-model="people" display-property="email" placeholder="Who can answer your question(enter email)?" allowed-tags-pattern="\S+@\S+\.\S+">
         <auto-complete source="getPeopleAutocomplete($query)" ></auto-complete>
       </tags-input>
-      <div ng-show="suggestedPeople.length > 0">
+      <div class="tags suggested" ng-show="suggestedPeople.length > 0">
         <label for="suggestedPeople">Suggested people:</label>
-        <span ng-click="addPerson(person)" ng-repeat="person in suggestedPeople track by $index">{{person.email}}</span>
+        <span class="tag" ng-click="addPerson(person)" ng-repeat="person in suggestedPeople track by $index">{{person.email}} <i class="fa fa-plus"></i></span>
       </div>
     </div>
     <button class="form-submit action-button" type="submit">Post your question</button>
