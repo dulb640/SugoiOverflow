@@ -8,22 +8,22 @@
       <div class="tags">
         <a href="/#/questions/search/{{tag.text}}" class="tag" ng-repeat="tag in tags">{{tag.text}}</a>
       </div>
-      <div class="edit-profile">
-        <i class="fa fa-pencil"></i><a class="button" href="#/profile/me/edit" ng-show="isOwnProfile">Edit</a>
+      <div class="edit-profile" ng-show="isOwnProfile">
+        <i class="fa fa-pencil"></i><a class="button" href="#/profile/me/edit" >Edit</a>
       </div>
 
       <div class="my-subcribed">
-        
+
       </div>
     </div>
     <div class="profile">
-        <img ng-src="{{profilePictureUrl}}"></img>    
+        <img ng-src="{{profilePictureUrl}}"></img>
     </div>
   </div>
 
-  <div class="question-header">My Questions</div>
-  <div class="user-questions" ng-show="isOwnProfile">
-    
+  <div class="question-header">{{name}}'s Questions</div>
+  <div class="user-questions">
+
 
     <div class="question-container" ng-repeat="question in questions">
 
