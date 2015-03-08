@@ -13,10 +13,6 @@ angular.module('sugoiOverflow.controllers')
         $scope.answers = question.answers;
 
         $scope.answer = '';
-
-        if (question.upVotes.indexOf($scope.currentUserId) !== -1 || question.downVotes.indexOf($scope.currentUserId) !== -1){
-          $scope.hasUserVoted = true;
-        }
       }
 
       _.extend($scope, {
@@ -25,20 +21,22 @@ angular.module('sugoiOverflow.controllers')
             .then(loadQuestion);
         },
         upvoteAnswer: function(answer){
-          $scope.hasUserVoted = true;
+          if (answer.upVotes.indexOf($scope.currentUserId) !== -1){
+            return;
+          }
           questionsDataService.upvoteAnswer($routeParams.id, answer)
-            .then(loadQuestion); //TODO: Need to develop a way to prevent users from upvoting answers multiple times
+            .then(loadQuestion);
         },
         downvoteAnswer: function(answer){
-          $scope.hasUserVoted = true;
+          if (answer.downVotes.indexOf($scope.currentUserId) !== -1){
+            return;
+          }
           questionsDataService.downvoteAnswer($routeParams.id, answer)
-            .then(loadQuestion); //TODO: Need to develop a way to prevent users from downvoting answers multiple times
+            .then(loadQuestion);
         }
       });
 
       $scope.currentUserId = '';
-
-      $scope.hasUserVoted = false;
 
       profilesDataService.getCurrentUserProfile().then(function(user){$scope.currentUserId = user.id;});
 
