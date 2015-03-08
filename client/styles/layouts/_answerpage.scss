@@ -3,6 +3,22 @@
 
 .question-container {
 	border-bottom: 1px solid #ccc;
+
+	.title {
+		font-size: 20px;
+	}
+
+	.subscribed-label {
+		color: $green-light;
+		font-size: 16px;
+		margin-top: 10px;
+		display: block;
+	}
+
+	.answer-count {
+		font-size: 20px;
+		margin-top: 50px;
+	}
 }
 
 .answers-container {
