@@ -1,42 +1,43 @@
 <div class="newQuestion-layout container">
-    <div class="newQuestion-Profile">
-        <img ng-src="{{user.profilePictureUrl}}"></img>
-        <span class="name">{{user.name}}</span>
+  <div class="newQuestion-Profile">
+      <img ng-src="{{user.profilePictureUrl}}"></img>
+      <span class="name">{{user.name}}</span>
+  </div>
+  <form novalidate class="newQuestion-form" name="newQuestionForm" ng-submit="submit()">
+    <div class="form-group">
+        <input class="form-control" type="text" name="title" placeholder="Title" ng-model="title"></input>
     </div>
-    <form novalidate class="newQuestion-form" name="newQuestionForm" ng-submit="submit()">
-        <div class="form-group">
-            <input class="form-control" type="text" name="title" placeholder="Title" ng-model="title"></input>
-        </div>
-        <div>
-          <wiz-markdown-editor content="body">
-            <wiz-toolbar-button command="bold">Bold</wiz-toolbar-button>
-            <wiz-toolbar-button command="italic">Italic</wiz-toolbar-button>
-            <wiz-toolbar-button command="heading">Heading</wiz-toolbar-button>
-            <wiz-toolbar-button command="code">Code</wiz-toolbar-button>
-            <wiz-toolbar-button command="ullist">UList</wiz-toolbar-button>
-            <wiz-toolbar-button command="ollist">OList</wiz-toolbar-button>
-            <wiz-toolbar-button command="link">Link</wiz-toolbar-button>
-            <wiz-toolbar-button command="img">Img</wiz-toolbar-button>
-          </wiz-markdown-editor>
-        </div>
-        <wiz-markdown content="body"></wiz-markdown>
-        <div>
-            <tags-input ng-model="tags" display-property="text" add-on-space="true" placeholder="Add a tag">
-              <auto-complete source="getTagsAutocomlete($query)" ></auto-complete>
-            </tags-input>
-            <div ng-show="suggestedTags.length > 0">
-              <label for="suggestedTags">Suggested tags:</label>
-              <span ng-click="addTag(tag)" ng-repeat="tag in suggestedTags">{{tag}}</span>
-            </div>
-        </div>
-        <div>
-            <tags-input ng-model="people" display-property="email" placeholder="Who can answer your question(enter email)?" allowed-tags-pattern="\S+@\S+\.\S+">
-                <auto-complete source="getPeopleAutocomplete($query)" ></auto-complete>
-            </tags-input>
-            <!-- <label for="suggestedTags">Suggested people:
-                <span ng-repeat="person in suggestedPeople track by $index">{{person.name}}</span>
-            </label> -->
-        </div>
-        <button class="form-submit" type="submit">Post your question</button>
-    </form>
+    <div>
+      <wiz-markdown-editor content="body">
+        <wiz-toolbar-button command="bold">Bold</wiz-toolbar-button>
+        <wiz-toolbar-button command="italic">Italic</wiz-toolbar-button>
+        <wiz-toolbar-button command="heading">Heading</wiz-toolbar-button>
+        <wiz-toolbar-button command="code">Code</wiz-toolbar-button>
+        <wiz-toolbar-button command="ullist">UList</wiz-toolbar-button>
+        <wiz-toolbar-button command="ollist">OList</wiz-toolbar-button>
+        <wiz-toolbar-button command="link">Link</wiz-toolbar-button>
+        <wiz-toolbar-button command="img">Img</wiz-toolbar-button>
+      </wiz-markdown-editor>
+    </div>
+    <wiz-markdown content="body"></wiz-markdown>
+    <div>
+      <tags-input ng-model="tags" display-property="text" add-on-space="true" placeholder="Add a tag">
+        <auto-complete source="getTagsAutocomlete($query)" ></auto-complete>
+      </tags-input>
+      <div ng-show="suggestedTags.length > 0">
+        <label for="suggestedTags">Suggested tags:</label>
+        <span ng-click="addTag(tag)" ng-repeat="tag in suggestedTags">{{tag}}</span>
+      </div>
+    </div>
+    <div>
+      <tags-input ng-model="people" display-property="email" placeholder="Who can answer your question(enter email)?" allowed-tags-pattern="\S+@\S+\.\S+">
+        <auto-complete source="getPeopleAutocomplete($query)" ></auto-complete>
+      </tags-input>
+      <div ng-show="suggestedPeople.length > 0">
+        <label for="suggestedPeople">Suggested people:</label>
+        <span ng-click="addPerson(person)" ng-repeat="person in suggestedPeople track by $index">{{person.email}}</span>
+      </div>
+    </div>
+    <button class="form-submit" type="submit">Post your question</button>
+  </form>
 </div>

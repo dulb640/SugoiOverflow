@@ -27,6 +27,10 @@ angular.module('sugoiOverflow.controllers')
           $scope.tags.push(newTag);
           $scope.suggestedTags = _.without($scope.suggestedTags, tag);
         },
+        addPerson: function(person){
+          $scope.people.push(person);
+          $scope.suggestedPeople = _.without($scope.suggestedPeople, person);
+        },
         submit: function() {
           var newQuestion = {
             title: $scope.title,
@@ -61,18 +65,29 @@ angular.module('sugoiOverflow.controllers')
         });
 
       function getTagsSuggestions(){
-          suggestionsDataService.getTags($scope.body, $scope.title)
-            .then(function(tags){
-              var existing = _.pluck($scope.tags, 'text');
-              $scope.suggestedTags = _.filter(tags, function(t){return !_.includes(existing, t);});
-            });
-        }
+        suggestionsDataService.getTags($scope.body, $scope.title)
+          .then(function(tags){
+            var existing = _.pluck($scope.tags, 'text');
+            $scope.suggestedTags = _.filter(tags, function(t){return !_.includes(existing, t);});
+          });
+      }
+
+      function getPeopleSuggestions(){
+        suggestionsDataService.getPeople($scope.body, $scope.title)
+          .then(function(people){
+            var existing = _.pluck($scope.people, 'email');
+            $scope.suggestedPeople = _.filter(people, function(t){return !_.includes(existing, t);});
+          });
+      }
       var timer;
       $scope.$watch('body', function(){
         if(timer){
           $timeout.cancel(timer);
         }
-        timer = $timeout(getTagsSuggestions, 1500);
+        timer = $timeout(function(){
+          getTagsSuggestions();
+          getPeopleSuggestions();
+        }, 1500);
       });
     }
   );
