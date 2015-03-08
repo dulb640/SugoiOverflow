@@ -17,6 +17,11 @@
   				<div class="tags">
   					<span class="tag" ng-repeat="tag in question.tags">{{tag.text}}</span>
   				</div>
+          <div class="timestap">
+             <span ng-bind="question.timestamp | date:'medium'"></span>
+            <!-- TODO: figure out how to use moment.js in this angular proj... to format date to fromNow.. -->
+            <!-- <span>{{moment(question.timestamp).fromNow()}}</span> -->
+          </div>
   			</div>
   			<div class="question-status">
 

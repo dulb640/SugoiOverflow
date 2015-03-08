@@ -18,6 +18,8 @@ angular.module('sugoiOverflow.services')
         return {
           questionId:  question.id,
           title:       question.title,
+          timestamp:   question.timestamp,
+          user:        question.user,
           answerCount: question.answers.length,
           subCount:    question.subscribers.length,
           tags:        _.map(question.tags, service.mapTagForClient)
