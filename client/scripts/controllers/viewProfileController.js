@@ -15,6 +15,7 @@ angular.module('sugoiOverflow.controllers')
         $scope.email = user.email;
         $scope.tags = user.tags;
         $scope.location = user.location;
+        $scope.karma = user.karma;
         $scope.profilePictureUrl = user.profilePictureUrl || '/content/no-avatar.jpg';
       }
 

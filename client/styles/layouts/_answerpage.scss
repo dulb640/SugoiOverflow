@@ -78,5 +78,12 @@
 		.author-name {
 			font-size: 16px;
 		}
+
+    .author-karma{
+      margin: 2px;
+      padding: 4px;
+      border-radius: 15px;
+      border: 1px solid $green-light;
+    }
 	}
 }

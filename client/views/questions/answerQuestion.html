@@ -26,9 +26,14 @@
       </div>
       <div class="user-info">
         <div>
-          <img ng-src="{{answer.author.profilePictureUrl || '/content/no-avatar.jpg'}}" />
+          <a ng-href="/#/profile/{{answer.author.id}}">
+            <img ng-src="{{answer.author.profilePictureUrl || '/content/no-avatar.jpg'}}" />
+          </a>
         </div>
-        <div>{{answer.author.name}}</div>
+        <a ng-href="/#/profile/{{answer.author.id}}">
+          <div>{{answer.author.name}}</div>
+        </a>
+        <div class="author-karma">{{answer.author.karma}}</div>
       </div>
     </div>
   </div>
