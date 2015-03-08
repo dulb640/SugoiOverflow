@@ -12,7 +12,8 @@ function mapProfile(user){
     name: user.name,
     email: user.email,
     location: user.profile.location,
-    selectedTags:user.profile.selectedTags
+    selectedTags:user.profile.selectedTags,
+    karma: 0 //TODO: Change to use real karma
   };
 }
 
