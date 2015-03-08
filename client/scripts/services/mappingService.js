@@ -22,7 +22,8 @@ angular.module('sugoiOverflow.services')
           user:        question.user,
           answerCount: question.answers.length,
           subCount:    question.subscribers.length,
-          tags:        _.map(question.tags, service.mapTagForClient)
+          tags:        _.map(question.tags, service.mapTagForClient),
+          author:      question.author
         };
       },
 

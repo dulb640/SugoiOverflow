@@ -23,7 +23,8 @@
   				<div class="tags">
   					<a ng-href="/#/questions/search/{{tag.text}}" class="tag" ng-repeat="tag in question.tags">{{tag.text}}</a>
   				</div>
-          <div class="timestap">
+          <div class="author"><a ng-href="/#/profile/{{question.author.id}}">Asked by {{question.author.name}} </a></div>
+          <div class="timestamp">
              <span ng-bind="question.timestamp | date:'medium'"></span>
             <!-- TODO: figure out how to use moment.js in this angular proj... to format date to fromNow.. -->
             <!-- <span>{{moment(question.timestamp).fromNow()}}</span> -->
