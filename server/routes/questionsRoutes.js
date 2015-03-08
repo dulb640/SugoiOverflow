@@ -288,7 +288,10 @@ router.put('/:questionId/answer/:answerId/downvote', function(req, res){
  * Add question
  */
 router.post('/', function(req, res){
-  new domain.Question(_.extend(req.body, {author: req.user._id}))
+  var question = new domain.Question(_.extend(req.body, {author: req.user.id}));
+  question.subscribers.push(req.user.id);
+
+  question
     .saveQ()
     .then(function(question){
       return domain.User.findByIdQ(req.user.id)
