@@ -6,7 +6,7 @@
 .tags {
 	margin-top: 5px;
 	margin-bottom: 5px;
-	
+
 	.tag {
 		border: 1px solid $gray-darker;
 		padding: 0 5px 0 5px;
@@ -91,4 +91,10 @@
 		color: $teal;
 	}
 	color: $teal;
+}
+
+.question-header{
+  color: $gray-text-normal;
+  font-size: 36px;
+  margin: 5px;
 }

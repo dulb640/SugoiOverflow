@@ -87,9 +87,35 @@ router.get('/most-wanted', function(req, res){
     //.populate('author', 'name email profilePictureUrl')
     .execQ()
     .then(function(questions){
+      questions.forEach(function(q){
+        q.id = q._id;
+        delete q._id;
+      });
       res
         .status(200)
         .send(questions);
+    })
+    .catch(function(error){
+      logger.error('Error getting questions', error);
+      res
+        .status(500)
+        .send();
+    });
+});
+
+/**
+ * Get all questions by user
+ */
+router.get('/profile/:id', function(req, res){
+  domain.User
+    .findByIdQ(req.params.id)
+    .then(function(user){
+      return user.populateQ('profile.asked', 'id title body answers.author answers.timestamp answers.correct subscribers tags timestamp')
+        .then(function(user){
+          res
+            .status(200)
+            .send(user.profile.asked);
+        });
     })
     .catch(function(error){
       logger.error('Error getting questions', error);
