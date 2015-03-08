@@ -14,7 +14,7 @@ angular.module('sugoiOverflow.controllers')
 
         $scope.answer = '';
 
-        if (question.upVotes.includes($scope.currentUserId) || question.downVotes.includes($scope.currentUserId)){
+        if (question.upVotes.indexOf($scope.currentUserId) !== -1 || question.downVotes.indexOf($scope.currentUserId) !== -1){
           $scope.hasUserVoted = true;
         }
       }
