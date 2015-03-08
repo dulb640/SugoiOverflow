@@ -36,6 +36,10 @@ angular.module('sugoiOverflow.controllers')
           .then(function(user){
             loadUser(user);
             $scope.isOwnProfile = false;
+            questionsDataService.getQuestionsForUser(user.id)
+              .then(function(questions){
+                $scope.questions = questions;
+              });
           });
       }
     }
