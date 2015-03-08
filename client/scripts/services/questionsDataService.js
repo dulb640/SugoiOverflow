@@ -21,7 +21,7 @@ angular.module('sugoiOverflow.services')
         var deferred = $q.defer();
         $http.get('/api/questions/search/' + terms)
         .success(function(data){
-          var questions = _.map(data, mapQuestionForList);
+          var questions = _.map(data, mappingService.mapQuestionForList);
           deferred.resolve(questions);
         })
         .error(function(error){

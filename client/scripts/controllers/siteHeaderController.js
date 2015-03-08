@@ -7,9 +7,12 @@ angular.module('sugoiOverflow.controllers')
         user: {},
         searchTerms: '',
         searchQuestions: function(terms){
-          questionsDataService.searchQuestions(terms)
+          return questionsDataService.searchQuestions(terms)
           .then(function(questionList){
             return questionList;
+          })
+          .catch(function(error){
+            return [];
           });
         }
       });
