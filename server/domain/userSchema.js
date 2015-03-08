@@ -45,7 +45,10 @@ var User = new Schema({
       type: [ObjectId],
       ref: 'Question',
       default:[]
-    }
+    },
+    profilePictureUrl:{
+      type: String
+    },
   }
 
 /*  token:{

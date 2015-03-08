@@ -14,7 +14,7 @@ router.get('/', function(req, res){
   domain.Question
     .find()
     .select('id title body answers.author answers.timestamp answers.correct subscribers tags timestamp author')
-    .populate('author', 'name email')
+    .populate('author', 'name email profilePictureUrl')
     .execQ()
     .then(function(questions){
       res
@@ -35,10 +35,10 @@ router.get('/', function(req, res){
 router.get('/:id', function(req, res){
   domain.Question.findByIdQ(req.params.id)
     .then(function(question){
-      return question.populateQ('author', 'name email');
+      return question.populateQ('author', 'name email profilePictureUrl');
     })
     .then(function(question){
-      return question.populateQ('answers.author', 'name email');
+      return question.populateQ('answers.author', 'name email profilePictureUrl');
     })
     .then(function(question){
       res
