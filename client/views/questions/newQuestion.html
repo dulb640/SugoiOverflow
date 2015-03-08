@@ -21,22 +21,22 @@
         </div>
         <wiz-markdown content="body"></wiz-markdown>
         <div>
-            <tags-input ng-model="tags" display-property="text" add-on-space="true">
-              <auto-complete source="getTagsAutocomlete($query)" placeholder="tags"></auto-complete>
+            <tags-input ng-model="tags" display-property="text" add-on-space="true" placeholder="Add a tag">
+              <auto-complete source="getTagsAutocomlete($query)" ></auto-complete>
             </tags-input>
             <div ng-show="suggestedTags.length > 0">
               <label for="suggestedTags">Suggested tags:</label>
               <span ng-click="addTag(tag)" ng-repeat="tag in suggestedTags">{{tag}}</span>
             </div>
         </div>
-        <!-- <div class="form-control">
-            <tags-input ng-model="suggestedPeople" display-property="name">
-                <auto-complete source="loadPeople(query)" placeholder="Who can answer your question?"></auto-complete>
+        <div>
+            <tags-input ng-model="people" display-property="email" placeholder="Who can answer your question(enter email)?" allowed-tags-pattern="\S+@\S+\.\S+">
+                <auto-complete source="getPeopleAutocomplete($query)" ></auto-complete>
             </tags-input>
-            <label for="suggestedTags">Suggested people:
+            <!-- <label for="suggestedTags">Suggested people:
                 <span ng-repeat="person in suggestedPeople track by $index">{{person.name}}</span>
-            </label>
-        </div> -->
+            </label> -->
+        </div>
         <button class="form-submit" type="submit">Post your question</button>
     </form>
 </div>

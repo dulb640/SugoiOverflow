@@ -74,6 +74,7 @@ angular.module('sugoiOverflow.services')
         return {
           id: profile.id,
           name: profile.name,
+          email: profile.email,
           tags: _.map(profile.selectedTags, service.mapTagForClient),
           karma: profile.karma,
           location: profile.location,

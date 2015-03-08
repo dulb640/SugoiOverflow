@@ -7,11 +7,17 @@ angular.module('sugoiOverflow.controllers')
         title: '',
         body: '',
         tags: [],
+        people: [],
         suggestedPeople: [],
         suggestedTags: [],
         getTagsAutocomlete: function(query){
           return _.filter($scope.availableTags, function(tag){
             return _.str.include(tag.text, query);
+          });
+        },
+        getPeopleAutocomplete: function(query){
+          return _.filter($scope.availablePeople, function(person){
+            return _.str.include(person.email, query);
           });
         },
         addTag: function(tag){
@@ -25,7 +31,8 @@ angular.module('sugoiOverflow.controllers')
           var newQuestion = {
             title: $scope.title,
             body: $scope.body,
-            tags: $scope.tags
+            tags: $scope.tags,
+            people: $scope.people
           };
           questionsDataService.addQuestion(newQuestion)
             .then(function(addedQuestion){
@@ -47,6 +54,10 @@ angular.module('sugoiOverflow.controllers')
       tagsDataService.getAvailableTags()
         .then(function(tags){
             $scope.availableTags = tags;
+        });
+      profilesDataService.getAvailableProfiles()
+        .then(function(people){
+            $scope.availablePeople = people;
         });
 
       function getTagsSuggestions(){

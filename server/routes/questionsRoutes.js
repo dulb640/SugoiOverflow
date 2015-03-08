@@ -331,6 +331,12 @@ router.post('/', function(req, res){
         res
           .status(200)
           .send(question);
+        question.populateQ('proposedPeople', 'feed')
+          .then(function(questionPop){
+            questionPop.proposedPeople.forEach(function(prop){
+              updateUserQuestionsFeed(prop, question, 'You have been proposed to answer the question');
+            });
+          });
       });
     })
     .catch(function(error){

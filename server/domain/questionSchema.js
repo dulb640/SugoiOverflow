@@ -33,6 +33,9 @@ var Question = new Schema({
     ref: 'User',
     required: true
   },
+  proposedPeople:[{
+    type: ObjectId,
+    ref: 'User'}],
   subscribers:[{
     type: ObjectId,
     ref: 'User'}]

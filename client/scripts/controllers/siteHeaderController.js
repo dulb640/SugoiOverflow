@@ -1,5 +1,6 @@
 angular.module('sugoiOverflow.controllers')
-  .controller('siteHeaderController', function ($rootScope, $scope, $location, $routeParams, profilesDataService, tagsDataService) {
+  .controller('siteHeaderController',
+    function ($rootScope, $scope, $location, $routeParams, $interval, profilesDataService, tagsDataService) {
     'use strict';
 
     _.extend($scope, {
@@ -50,10 +51,16 @@ angular.module('sugoiOverflow.controllers')
       $scope.notifications = user.notifications;
     });
 
-    profilesDataService.getCurrentUserNotifications()
-    .then(function(notifications){
-      $scope.notifications = notifications;
-    });
+    function getNotifications(){
+      profilesDataService.getCurrentUserNotifications()
+      .then(function(notifications){
+        $scope.notifications = notifications;
+      });
+    }
+
+    getNotifications();
+
+    $interval(getNotifications, 60000);
 
     $rootScope.$on('$routeChangeSuccess', function(){
       $scope.searchTerms = $routeParams.searchTerms;
