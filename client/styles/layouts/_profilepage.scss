@@ -30,6 +30,7 @@
 	@include flex-justify-content(space-between);
 
 	margin-top: 10px;
+	margin-bottom: 75px;
 
 	.name {
 		font-size: 18px;
@@ -45,11 +46,22 @@
 }
 
 .profile-details {
-	margin-left: 30px;
+	
+
 	.karma {
 		font-size: 16px;
 		color: $green-light;
 	}
+}
+
+.user-questions {
+	border-top: 1px solid #ccc;
+}
+
+.question-header {
+	font-size: 18px;
+	color: $gray-text-normal;
+	margin-bottom: 10px;
 }
 
 
@@ -91,10 +103,4 @@
 		color: $teal;
 	}
 	color: $teal;
-}
-
-.question-header{
-  color: $gray-text-normal;
-  font-size: 36px;
-  margin: 5px;
 }
