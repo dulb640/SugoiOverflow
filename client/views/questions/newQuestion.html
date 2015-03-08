@@ -22,11 +22,12 @@
         <wiz-markdown content="body"></wiz-markdown>
         <div>
             <tags-input ng-model="tags" display-property="text" add-on-space="true">
-              <auto-complete source="getTagsSuggestions($query)" placeholder="tags"></auto-complete>
+              <auto-complete source="getTagsAutocomlete($query)" placeholder="tags"></auto-complete>
             </tags-input>
-            <!-- <label for="suggestedTags">Suggested tags:
-                <span ng-repeat="tag in tags">{{tag.text}}</span>
-            </label> -->
+            <div ng-show="suggestedTags.length > 0">
+              <label for="suggestedTags">Suggested tags:</label>
+              <span ng-click="addTag(tag)" ng-repeat="tag in suggestedTags">{{tag}}</span>
+            </div>
         </div>
         <!-- <div class="form-control">
             <tags-input ng-model="suggestedPeople" display-property="name">
