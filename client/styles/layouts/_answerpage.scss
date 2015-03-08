@@ -1,8 +1,16 @@
 @import 'components/colors';
 @import 'helpers/flexbox';
 
+.markdown-output {
+	word-wrap: break-word;
+}
+
 .question-container {
 	border-bottom: 1px solid #ccc;
+
+	.question-content {
+		width: 100%;
+	}
 
 	.title {
 		font-size: 20px;
@@ -49,7 +57,7 @@
 	}
 
 	.answer-content {
-		
+		word-wrap: break-word;
 
 		width: 75%;
 		padding: 10px;
@@ -61,6 +69,11 @@
 
 	.user-info {
 		width: 15%;
+		@extend %display-flex;
+		@include flex-direction(column);
+		@include flex-align-items(center);
+
+		margin-bottom: 15px;
 
 		.author-name {
 			font-size: 16px;
