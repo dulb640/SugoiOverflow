@@ -30,6 +30,64 @@ router.get('/', function(req, res){
 });
 
 /**
+ * Get suggested questions
+ */
+router.get('/suggested', function(req, res){
+  domain.User
+    .findByIdQ(req.user.id)
+    .then(function(user){
+      var tags = user.profile.selectedTags;
+      domain.Question
+        .find({'tags': {$in : tags}})
+        .select('id title body answers.author answers.timestamp answers.correct subscribers tags timestamp author')
+        .populate('author', 'name email profilePictureUrl')
+        .execQ()
+        .then(function(questions){
+          res
+            .status(200)
+            .send(questions);
+        })
+        .catch(function(error){
+          logger.error('Error getting questions', error);
+          res
+            .status(500)
+            .send();
+        });
+    });
+});
+
+/**
+ * Get most wanted questions
+ */
+router.get('/most-wanted', function(req, res){
+  domain.Question
+    .find({'answers': {
+        $all: [{
+            $elemMatch: {
+              correct: {$ne: true}
+            }
+          }
+        ]
+      }
+    })
+    .sort({'subscribers.length': -1})
+    .select('id title body answers.author answers.timestamp answers.correct subscribers tags timestamp author')
+    .populate('author', 'name email profilePictureUrl')
+    .execQ()
+    .then(function(questions){
+      res
+        .status(200)
+        .send(questions);
+    })
+    .catch(function(error){
+      logger.error('Error getting questions', error);
+      res
+        .status(500)
+        .send();
+    });
+});
+
+/**
  * Get question by id
  */
 router.get('/:id', function(req, res){

@@ -18,6 +18,10 @@ angular
         templateUrl: 'views/questions/newQuestion.html',
         controller: 'newQuestionController'
       })
+      .when('/questions/search/:searchTerms', {
+        templateUrl: 'views/questions/questions.html',
+        controller: 'questionsController'
+      })
       .when('/questions/:questionFilter?', {
         templateUrl: 'views/questions/questions.html',
         controller: 'questionsController'
