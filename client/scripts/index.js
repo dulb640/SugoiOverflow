@@ -7,7 +7,8 @@ angular
 		'sugoiOverflow.settings',
     'sugoiOverflow.services',
 		'sugoiOverflow.controllers',
-		'sugoiOverflow.interceptors'
+		'sugoiOverflow.interceptors',
+    'sugoiOverflow.filters'
 		])
 	.config(function($routeProvider){
 		'use strict';
