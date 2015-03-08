@@ -32,7 +32,8 @@ angular.module('sugoiOverflow.services')
           score:      answer.upVotes.length - answer.downVotes.length,
           body:       answer.body,
           correct:    answer.correct,
-          timestamp:  answer.timestamp
+          timestamp:  answer.timestamp,
+          author:     service.mapAuthorForClient(answer.author)
         };
       },
 
@@ -57,10 +58,18 @@ angular.module('sugoiOverflow.services')
           tags: _.map(question.tags, service.mapTagForApi)
         };
       },
-
+      mapAuthorForClient: function mapProfile(profile){
+        return {
+          id: profile.id,
+          name: profile.name,
+          karma: profile.karma,
+          location: profile.location,
+          profilePictureUrl: profile.profilePictureUrl,
+        };
+      },
       mapProfileForClient: function mapProfile(profile){
         return {
-          userId: profile.id,
+          id: profile.id,
           name: profile.name,
           tags: _.map(profile.selectedTags, service.mapTagForClient),
           karma: profile.karma,
