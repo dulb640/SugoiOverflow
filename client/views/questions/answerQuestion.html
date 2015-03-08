@@ -4,7 +4,7 @@
       <div class="question-content">
         <div class="title" ng-bind-html="title | wizMarkdownFltr"></div>
         <wiz-markdown content="body"></wiz-markdown>
-         <div class="timestamp"  ng-bind="timestamp | date:'medium'"></div>
+        <div class="timestamp"  ng-bind="timestamp | date:'medium'"></div>
         <div class="tags">
             <span class="tag" ng-repeat="tag in tags">{{tag.text}}</span>
         </div>
@@ -19,7 +19,11 @@
       </div>
       <div class="body"  ng-bind-html="answer.body | wizMarkdownFltr"></div>
       <div class="timestamp"  ng-bind="answer.timestamp | date:'medium'"></div>
-      <!-- <div class="score">{{answer.score}}</div> -->
+      <div class="score-container">
+        <button class="upvote-button" type="button" ng-disable="hasUserVoted" ng-click="upvoteAnswer(answer)">Upvote</button>
+        <div class="score">{{answer.score}}</div>
+        <button class="downvote-button" type="button" ng-disable="hasUserVoted" ng-click="downvoteAnswer(answer)">Downvote</button>
+      </div>
     </div>
   </div>
   <div class="answerSection">
