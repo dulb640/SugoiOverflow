@@ -14,7 +14,7 @@ router.get('/', function(req, res){
   domain.Question
     .find()
     .select('id title body answers.author answers.timestamp answers.correct subscribers tags timestamp author')
-    .populate('author', 'id name email profilePictureUrl')
+    .populate('author', 'id name email profilePictureUrl karma')
     .execQ()
     .then(function(questions){
       res
@@ -40,7 +40,7 @@ router.get('/suggested', function(req, res){
       domain.Question
         .find({'tags': {$in : tags}})
         .select('id title body answers.author answers.timestamp answers.correct subscribers tags timestamp author')
-        .populate('author', 'id name email profilePictureUrl')
+        .populate('author', 'id name email profilePictureUrl karma')
         .execQ()
         .then(function(questions){
           res
@@ -106,10 +106,10 @@ router.get('/most-wanted', function(req, res){
 router.get('/:id', function(req, res){
   domain.Question.findByIdQ(req.params.id)
     .then(function(question){
-      return question.populateQ('author', 'id name email profilePictureUrl');
+      return question.populateQ('author', 'id name email profilePictureUrl karma');
     })
     .then(function(question){
-      return question.populateQ('answers.author', 'id name email profilePictureUrl');
+      return question.populateQ('answers.author', 'id name email profilePictureUrl karma');
     })
     .then(function(question){
       res
