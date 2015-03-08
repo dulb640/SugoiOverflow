@@ -286,7 +286,13 @@ router.put('/:questionId/answer/:answerId/upvote', function(req, res){
   domain.Question.findByIdQ(req.params.questionId)
     .then(function (question){
       var answer = question.answers.id(req.params.answerId);
-      answer.upVotes.push(req.user.id);
+      var downVoteIndex = answer.downVotes.indexOf(req.user.id);
+      if (downVoteIndex > -1){
+        answer.downVotes.splice(downVoteIndex, 1);
+      }
+      else if (answer.upVotes.indexOf(req.user.id) === -1){
+        answer.upVotes.push(req.user.id);
+      }
       return question.saveQ();
     })
     .then(function(question){
@@ -309,7 +315,13 @@ router.put('/:questionId/answer/:answerId/downvote', function(req, res){
   domain.Question.findByIdQ(req.params.questionId)
     .then(function (question){
       var answer = question.answers.id(req.params.answerId);
-      answer.downVotes.push(req.user.id);
+      var upVoteIndex = answer.upVotes.indexOf(req.user.id);
+      if (upVoteIndex > -1){
+        answer.upVotes.splice(upVoteIndex, 1);
+      }
+      else if (answer.downVotes.indexOf(req.user.id) === -1){
+        answer.downVotes.push(req.user.id);
+      }
       return question.saveQ();
     })
     .then(function(question){

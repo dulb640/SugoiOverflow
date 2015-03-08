@@ -16,9 +16,9 @@
     </div>
     <div class="answers-container" ng-repeat="answer in answers">
       <div class="score-container">
-        <button class="upvote-button action-button" type="button" ng-disable="hasVoted(answer)" ng-click="upvoteAnswer(answer)"><i class="fa fa-thumbs-up"></i></button>
+        <button class="upvote-button action-button" type="button" ng-disable="votingInProgress || hasUpVoted(answer)" ng-click="upvoteAnswer(answer)"><i class="fa fa-thumbs-up"></i></button>
         <div class="score">{{answer.score}}</div>
-        <button class="downvote-button action-button red" type="button" ng-disable="hasVoted(answer)" ng-click="downvoteAnswer(answer)"><i class="fa fa-thumbs-down"></i></button>
+        <button class="downvote-button action-button red" type="button" ng-disable="votingInProgress || hasDownVoted(answer)" ng-click="downvoteAnswer(answer)"><i class="fa fa-thumbs-down"></i></button>
       </div>
       <div class="answer-content">
         <div class="body"  ng-bind-html="answer.body | wizMarkdownFltr"></div>
@@ -29,7 +29,7 @@
           <img ng-src="{{answer.author.profilePictureUrl || '/content/no-avatar.jpg'}}" />
         </div>
         <div>{{answer.author.name}}</div>
-      </div>      
+      </div>
     </div>
   </div>
   <div class="answerSection">

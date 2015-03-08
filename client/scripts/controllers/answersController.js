@@ -21,18 +21,26 @@ angular.module('sugoiOverflow.controllers')
             .then(loadQuestion);
         },
         upvoteAnswer: function(answer){
-          if ($scope.hasVoted(answer)){
+          if ($scope.hasUpVoted(answer)){
             return;
           }
-          questionsDataService.upvoteAnswer($routeParams.id, answer)
-            .then(loadQuestion);
+          if (!$scope.votingInProgress){
+            $scope.votingInProgress = true;
+            questionsDataService.upvoteAnswer($routeParams.id, answer)
+              .then(loadQuestion)
+              .then(function(){$scope.votingInProgress = false;});
+          }
         },
         downvoteAnswer: function(answer){
-          if ($scope.hasVoted(answer)){
+          if ($scope.hasDownVoted(answer)){
             return;
           }
-          questionsDataService.downvoteAnswer($routeParams.id, answer)
-            .then(loadQuestion);
+          if (!$scope.votingInProgress){
+            $scope.votingInProgress = true;
+            questionsDataService.downvoteAnswer($routeParams.id, answer)
+              .then(loadQuestion)
+              .then(function(){$scope.votingInProgress = false;});
+          }
         },
         subscribeToQuestion: function(){
           questionsDataService.subscribeToQuestion($routeParams.id)
@@ -44,11 +52,15 @@ angular.module('sugoiOverflow.controllers')
           }
           return false;
         },
-        hasVoted: function(answer){
-          return answer.downVotes.indexOf($scope.currentUserId) !== -1 ||
-            answer.upVotes.indexOf($scope.currentUserId) !== -1;
+        hasUpVoted: function(answer){
+          return answer.upVotes.indexOf($scope.currentUserId) !== -1;
+        },
+        hasDownVoted: function(answer){
+          return answer.downVotes.indexOf($scope.currentUserId) !== -1;
         }
       });
+
+      $scope.votingInProgress = false;
 
       $scope.currentUserId = '';
 
