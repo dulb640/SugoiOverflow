@@ -12,9 +12,11 @@ angular.module('sugoiOverflow.controllers')
         $scope.timestamp = question.timestamp;
         $scope.answers = question.answers;
         $scope.subscribers = question.subscribers;
+        $scope.questionComments = question.comments;
         $scope.answer = '';
         $scope.questionComment = '';
         $scope.answerComment = '';
+
       }
 
       _.extend($scope, {

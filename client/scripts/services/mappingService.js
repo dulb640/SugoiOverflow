@@ -36,7 +36,8 @@ angular.module('sugoiOverflow.services')
           body:       answer.body,
           correct:    answer.correct,
           timestamp:  answer.timestamp,
-          author:     service.mapAuthorForClient(answer.author)
+          author:     service.mapAuthorForClient(answer.author),
+          comments:   answer.comments
         };
       },
 
@@ -52,7 +53,8 @@ angular.module('sugoiOverflow.services')
           tags: _.map(question.tags, service.mapTagForClient),
           answers: _.map(question.answers, service.mapAnswerForClient),
           subscribers: question.subscribers,
-          author: question.author
+          author: question.author,
+          comments:  question.comments
         };
       },
 

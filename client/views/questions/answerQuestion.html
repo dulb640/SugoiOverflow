@@ -26,9 +26,9 @@
         <div class="author-karma">{{author.karma}}</div>
       </div>
       <div class="question-comments">
-        <div class="comment" ng-repeat="comment in question.comments">
+        <div class="comment" ng-repeat="comment in questionComments">
           <div class="comment-body">{{comment.body}}</div>
-          <div class="comment-author">{{comment.author.name}}</div>
+          <div class="comment-author">{{comment.author}}</div>
           <div class="comment-timestap"  ng-bind="comment.timestamp | date:'medium'"></div>
         </div>
         <div class="question-add-comment">
@@ -63,12 +63,12 @@
       <div class="answer-comments">
         <div class="comment" ng-repeat="comment in answer.comments">
           <div class="comment-body">{{comment.body}}</div>
-          <div class="comment-author">{{comment.author.name}}</div>
+          <div class="comment-author">{{comment.authorname}}</div>
           <div class="comment-timestap"  ng-bind="comment.timestamp | date:'medium'"></div>
         </div>
         <div class="answer-add-comment">
            <form novalidate class="add-comment-form" name="addCommentForm" ng-submit="submitAnswerComment(answer)">
-              <input type = "text" ng-model="questionComment"></input>
+              <input type = "text" ng-model="answerComment"></input>
               <button class="form-submit action-button" type = "submit">Add Comment</button>
           </form>
         </div>

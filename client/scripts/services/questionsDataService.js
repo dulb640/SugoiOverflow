@@ -146,7 +146,7 @@ angular.module('sugoiOverflow.services')
          var data = {
           body: comment
         };
-         $http.post(_.str.sprintf('/api/questions/%s/answer/%s/comment', questionId, answerId, comment.id), data)
+         $http.post(_.str.sprintf('/api/questions/%s/answer/%s/comment', questionId, answerId), data)
         .success(function(data){
           var updatedAnswer = mappingService.mapAnswerForClient(data);
           deferred.resolve(updatedAnswer);
