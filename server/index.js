@@ -26,7 +26,7 @@ passport.deserializeUser(function(user, done) {
   done(null, user);
 });*/
 
-var ldapConfig = config('ldap');
+/*var ldapConfig = config('ldap');
 if(ldapConfig && config('active-directory')){
   var authCallback = function authCallback(profile, done){
     domain.User.findOneQ({adId: profile.id})
@@ -54,7 +54,7 @@ if(ldapConfig && config('active-directory')){
   };
   var windowsStrategy = new WindowsStrategy({ ldap: ldapConfig }, authCallback);
   passport.use(windowsStrategy);
-}
+}*/
 
 if(config('iis')){
   //var rewriteIis = require('./iisIntegration');
@@ -70,8 +70,24 @@ app.set('trust proxy', 1);
 app.use(passport.initialize());
 
 if(config('windows-auth')){
-  app.use(passport.authenticate('WindowsAuthentication', { session: false }));
+  //app.use(passport.authenticate('WindowsAuthentication', { session: false }));
 }
+
+app.use(function(req, res, next){
+  domain.User.findOneQ({adId:'92af420a-d4c5-47f0-b8eb-d77fa4b39aa0'})
+    .then(function(user){
+      req.user = user;
+    })
+    .finally(function(){
+      next();
+    });
+});
+
+app.use(function(req, res, next){
+  res.cookie('user-id', req.user.id);
+  res.cookie('user-name', req.user.name);
+  next();
+});
 
 app.use(function(req, res, next){
   if(!req.user.feed){
