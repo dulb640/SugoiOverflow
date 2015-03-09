@@ -89,13 +89,19 @@ router.get('/most-wanted', function(req, res){
     //.populate('author', 'name email profilePictureUrl')
     .execQ()
     .then(function(questions){
-      questions.forEach(function(q){
-        q.id = q._id;
-        delete q._id;
-      });
-      res
-        .status(200)
-        .send(questions);
+      domain.User.populateQ(questions, 'author')
+        .then(function(questions){
+          questions.forEach(function(q){
+            q.id = q._id;
+            delete q._id;
+          });
+
+          res
+            .status(200)
+            .send(questions);
+        });
+
+
     })
     .catch(function(error){
       logger.error('Error getting questions', error);
