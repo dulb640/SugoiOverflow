@@ -31,3 +31,4 @@ config*.json
 server/iisnode
 bower_components
 build
+web.config
