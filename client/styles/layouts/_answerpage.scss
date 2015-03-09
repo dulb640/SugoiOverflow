@@ -106,3 +106,43 @@
 		font-weight: bold;
 	}
 }
+
+.subscribe-button,
+.subscribed-label {
+	float: right;
+}
+
+.answer-comments,
+.question-comments {
+	margin-top: 10px;
+
+	textarea {
+		display: block;
+		width: 400px;
+		min-height: 75px;
+	}
+
+	.comment {
+		background-color: #f8f8f8;
+		padding: 10px;
+		margin-bottom: 10px;
+
+		.comment-author {
+			color: $gray-text-normal;
+
+			&:hover {
+				color: $teal;
+			}
+		}
+
+		.comment-body {
+			margin-bottom: 5px;
+		}
+
+		.comment-author,
+		.comment-timestap {
+			font-size: 12px;
+			text-align: right;
+		}
+	}
+}
