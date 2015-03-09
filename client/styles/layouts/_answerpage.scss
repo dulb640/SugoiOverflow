@@ -31,6 +31,10 @@
 
 }
 
+.answerSection {
+	margin-bottom: 20px;
+}
+
 .answers-container {
 	@extend %display-flex;
 	@include flex-direction(row);
@@ -120,6 +124,7 @@
 		display: block;
 		width: 400px;
 		min-height: 75px;
+		margin-bottom: 5px;
 	}
 
 	.comment {
