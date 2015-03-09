@@ -17,6 +17,10 @@ var Comment = new Schema({
     type: String,
     required: true
   },
+  authorname:{
+    type: String,
+    default: 'Anon'
+  },
 });
 
 Comment.set('toJSON', {

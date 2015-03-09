@@ -297,7 +297,8 @@ router.post('/:questionId/comment', function(req, res){
   .then(function(question) {
     question.comments.push({
       author: req.user.id,
-      body: req.body.body
+      body: req.body.body,
+      authorname: req.user.name
     });
     return question.saveQ();
   })
@@ -342,7 +343,8 @@ router.post('/:questionId/answer/:answerId/comment', function(req, res){
 
       answer.comments.push({
         author: req.user.id,
-        body: req.body.body
+        body: req.body.body,
+        authorname: req.user.name
       });
 
       return question.saveQ();
