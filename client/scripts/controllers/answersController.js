@@ -13,6 +13,8 @@ angular.module('sugoiOverflow.controllers')
         $scope.answers = question.answers;
         $scope.subscribers = question.subscribers;
         $scope.answer = '';
+        $scope.questionComment = '';
+        $scope.answerComment = '';
       }
 
       _.extend($scope, {
@@ -57,6 +59,16 @@ angular.module('sugoiOverflow.controllers')
         },
         hasDownVoted: function(answer){
           return answer.downVotes.indexOf($scope.currentUserId) !== -1;
+        },
+        submitQuestionComment : function()
+        {
+           questionsDataService.addQuestionComment($routeParams.id, $scope.questionComment)
+            .then(loadQuestion);
+        },
+        submitAnswerComment : function (answer)
+        {
+           questionsDataService.addAnswerComment($routeParams.id, answer.id, $scope.answerComment)
+            .then(loadQuestion);
         }
       });
 

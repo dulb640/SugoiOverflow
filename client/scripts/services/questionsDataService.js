@@ -124,6 +124,38 @@ angular.module('sugoiOverflow.services')
 
         return deferred.promise;
       },
+
+      addQuestionComment: function(questionId, comment){
+        var deferred = $q.defer();
+        var data = {
+          body: comment
+        };
+
+        $http.post(_.str.sprintf('/api/questions/%s/comment', questionId), data)
+        .success(function(data){
+          var updatedQuestion = mappingService.mapQuestionForClient(data);
+          deferred.resolve(updatedQuestion);
+        })
+        .error(function(error){
+          deferred.reject(error);
+        });
+        return deferred.promise;
+      },
+      addAnswerComment: function(questionId, answerId, comment){
+        var deferred = $q.defer();
+         var data = {
+          body: comment
+        };
+         $http.post(_.str.sprintf('/api/questions/%s/answer/%s/comment', questionId, answerId, comment.id), data)
+        .success(function(data){
+          var updatedAnswer = mappingService.mapAnswerForClient(data);
+          deferred.resolve(updatedAnswer);
+        })
+        .error(function(error){
+          deferred.reject(error);
+        });
+        return deferred.promise;
+      },
       upvoteAnswer: function(questionId, answer){
         var deferred = $q.defer();
         $http.put(_.str.sprintf('/api/questions/%s/answer/%s/upvote', questionId, answer.id))

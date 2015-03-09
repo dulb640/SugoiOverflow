@@ -24,9 +24,31 @@
           <div>{{author.name}}</div>
         </a>
         <div class="author-karma">{{author.karma}}</div>
-    </div>
+      </div>
+      <div class="question-comments">
+        <div class="comment" ng-repeat="comment in question.comments">
+          <div class="comment-body">{{comment.body}}</div>
+          <div class="comment-author">{{comment.author.name}}</div>
+          <div class="comment-timestap"  ng-bind="comment.timestamp | date:'medium'"></div>
+        </div>
+        <div class="question-add-comment">
+          <form novalidate class="add-comment-form" name="addCommentForm" ng-submit="submitQuestionComment()">
+              <input type = "text" ng-model="questionComment"></input>
+              <button class="form-submit action-button" type = "submit">Add Comment</button>
+          </form>
+        </div>
+      </div>
     </div>
     <div class="answers-container" ng-repeat="answer in answers">
+      <div class="score-container">
+        <button class="upvote-button action-button" type="button" ng-disable="votingInProgress || hasUpVoted(answer)" ng-click="upvoteAnswer(answer)"><i class="fa fa-thumbs-up"></i></button>
+        <div class="score">{{answer.score}}</div>
+        <button class="downvote-button action-button red" type="button" ng-disable="votingInProgress || hasDownVoted(answer)" ng-click="downvoteAnswer(answer)"><i class="fa fa-thumbs-down"></i></button>
+      </div>
+      <div class="answer-content">
+        <div class="body"  ng-bind-html="answer.body | wizMarkdownFltr"></div>
+        <div class="timestamp"  ng-bind="answer.timestamp | date:'medium'"></div>
+      </div>
       <div class="user-info">
         <div>
           <a ng-href="/#/profile/{{answer.author.id}}">
@@ -38,15 +60,18 @@
         </a>
         <div class="author-karma">{{answer.author.karma}}</div>
       </div>
-      <div class="answer-content">
-        <div class="body"  ng-bind-html="answer.body | wizMarkdownFltr"></div>
-        <div class="timestamp"  ng-bind="answer.timestamp | date:'medium'"></div>
-      </div>
-      
-      <div class="score-container">
-        <button class="upvote-button action-button" type="button" ng-disable="votingInProgress || hasUpVoted(answer)" ng-click="upvoteAnswer(answer)"><i class="fa fa-thumbs-up"></i></button>
-        <div class="score">{{answer.score}}</div>
-        <button class="downvote-button action-button red" type="button" ng-disable="votingInProgress || hasDownVoted(answer)" ng-click="downvoteAnswer(answer)"><i class="fa fa-thumbs-down"></i></button>
+      <div class="answer-comments">
+        <div class="comment" ng-repeat="comment in answer.comments">
+          <div class="comment-body">{{comment.body}}</div>
+          <div class="comment-author">{{comment.author.name}}</div>
+          <div class="comment-timestap"  ng-bind="comment.timestamp | date:'medium'"></div>
+        </div>
+        <div class="answer-add-comment">
+           <form novalidate class="add-comment-form" name="addCommentForm" ng-submit="submitAnswerComment(answer)">
+              <input type = "text" ng-model="questionComment"></input>
+              <button class="form-submit action-button" type = "submit">Add Comment</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
