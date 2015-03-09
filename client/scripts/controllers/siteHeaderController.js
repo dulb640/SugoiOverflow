@@ -1,6 +1,6 @@
 angular.module('sugoiOverflow.controllers')
   .controller('siteHeaderController',
-    function ($rootScope, $scope, $location, $routeParams, $interval, profilesDataService, tagsDataService) {
+    function ($rootScope, $scope, $location, $routeParams, $interval, $window, profilesDataService, tagsDataService) {
     'use strict';
 
     _.extend($scope, {
@@ -33,8 +33,9 @@ angular.module('sugoiOverflow.controllers')
 
         $location.path(_.str.sprintf('/questions/%s/answers', notification.question));
       },
-      openNotifications: function(){
+      openNotifications: function(event){
         $scope.notificationsOpened = true;
+        event.stopPropagation();
       },
       closeNotifications: function(){
         $scope.notificationsOpened = false;
@@ -44,6 +45,13 @@ angular.module('sugoiOverflow.controllers')
       }
 
     });
+
+    $window.onclick = function(){
+      if ($scope.notificationsOpened){
+        $scope.closeNotifications();
+        $scope.$apply();
+      }
+    };
 
     if($routeParams.searchTerms){
       $scope.searchTerms = $routeParams.searchTerms;
