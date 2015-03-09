@@ -342,6 +342,12 @@ router.post('/:questionId/answer/:answerId/comment', function(req, res){
   domain.Question.findByIdQ(req.params.questionId)
     .then(function (question){
       var answer = question.answers.id(req.params.answerId);
+      if(!answer){
+        res
+        .status(404);
+
+        return;
+      }
 
       answer.comments.push({
         author: req.user.id,
@@ -357,7 +363,7 @@ router.post('/:questionId/answer/:answerId/comment', function(req, res){
         .send(question);
     })
     .catch(function(error){
-      logger.error('Error marking answer as correct', error);
+      logger.error('Error adding comment', error, error.errors);
       res
         .status(500)
         .send();
