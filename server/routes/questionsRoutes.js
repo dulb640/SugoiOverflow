@@ -272,7 +272,9 @@ router.post('/:questionId/answer', function(req, res){
         question.populateQ('subscribers', 'feed')
           .then(function(questionPop){
             questionPop.subscribers.forEach(function(sub){
-              updateUserQuestionsFeed(sub, question, 'Question has been answered');
+              if (sub.id !== req.user.id){
+                updateUserQuestionsFeed(sub, question, 'Question has been answered');
+              }
             });
           });
       });
