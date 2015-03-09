@@ -56,6 +56,20 @@ angular.module('sugoiOverflow.controllers')
           }
           return false;
         },
+        isOwnQuestion: function(){
+          if ($scope.author){
+            if ($scope.currentUserId === $scope.author.id){
+              return true;
+            }
+          }
+          return false;
+        },
+        markAsCorrect: function(answer){
+          if ($scope.isOwnQuestion()){
+            questionsDataService.markAnswerAsCorrect($routeParams.id, answer)
+              .then(loadQuestion);
+          }
+        },
         hasUpVoted: function(answer){
           return answer.upVotes.indexOf($scope.currentUserId) !== -1;
         },

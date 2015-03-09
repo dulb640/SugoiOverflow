@@ -181,6 +181,19 @@ angular.module('sugoiOverflow.services')
         });
 
         return deferred.promise;
+      },
+      markAnswerAsCorrect: function(questionId, answer){
+        var deferred = $q.defer();
+        $http.put(_.str.sprintf('/api/questions/%s/answer/%s/correct', questionId, answer.id))
+        .success(function(data){
+          var updatedQuestion = mappingService.mapQuestionForClient(data);
+          deferred.resolve(updatedQuestion);
+        })
+        .error(function(error){
+          deferred.reject(error);
+        });
+
+        return deferred.promise;
       }
     };
     return service;

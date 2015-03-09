@@ -43,7 +43,7 @@
         </a>
         <div class="author-karma">{{author.karma}}</div>
       </div>
-     
+
     </div>
     <div class="answers-container" ng-repeat="answer in answers">
       <div class="user-info">
@@ -82,8 +82,10 @@
         <button class="upvote-button action-button" type="button" ng-disable="votingInProgress || hasUpVoted(answer)" ng-click="upvoteAnswer(answer)"><i class="fa fa-thumbs-up"></i></button>
         <div class="score">{{answer.score}}</div>
         <button class="downvote-button action-button red" type="button" ng-disable="votingInProgress || hasDownVoted(answer)" ng-click="downvoteAnswer(answer)"><i class="fa fa-thumbs-down"></i></button>
+        <button class="action-button correct" type="button" ng-click="markAsCorrect(answer)" ng-show="isOwnQuestion() && !answer.correct">Mark As Correct</button>
+        <div class="correct-label" ng-show="answer.correct">Correct!</div>
       </div>
-      
+
     </div>
   </div>
   <div class="answerSection">
