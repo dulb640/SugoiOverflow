@@ -9,7 +9,7 @@
   <div class="user">
     <div class="notifications">
       <span class="notices">{{newNotificationsCount()}}</span>
-      <span ng-click="openNotifications()">Notifications</span>
+      <span ng-click="openNotifications($event)">Notifications</span>
     </div>
     <div class="profile">
       <span class="profile-icon">{{user.karma}}</span> <!--TODO: Replace with profile picture url -->
@@ -23,7 +23,7 @@
   </div>
   <div>
     <pageslide class="notification-slider" ps-open="notificationsOpened">
-      <div class="notification-container">
+      <div class="notification-container" ng-click="$event.stopPropagation()">
         <div class="notification-status" ng-hide="hasNewNotifications()">No new notifications</div>
         <div class="notification-entry" ng-class="{'notification-read': notification.read, 'notification-new': !notification.read}" ng-repeat="notification in notifications | orderBy : '-timestamp'" ng-click="readNotification(notification)">
           <div class="notification-body">{{notification.body}}</div>

@@ -69,7 +69,7 @@ angular.module('sugoiOverflow.controllers')
         },
         submitAnswerComment : function (answer)
         {
-           questionsDataService.addAnswerComment($routeParams.id, answer.id, $scope.answerComment)
+           questionsDataService.addAnswerComment($routeParams.id, answer.id, answer.answerComment)
             .then(loadQuestion);
         }
       });

@@ -42,7 +42,23 @@
         </a>
         <div class="author-karma">{{author.karma}}</div>
       </div>
+<<<<<<< HEAD
      
+=======
+      <div class="question-comments">
+        <div class="comment" ng-repeat="comment in questionComments">
+          <div class="comment-body">{{comment.body}}</div>
+          <div class="comment-author">{{comment.authorname}}</div>
+          <div class="comment-timestap"  ng-bind="comment.timestamp | date:'medium'"></div>
+        </div>
+        <div class="question-add-comment">
+          <form novalidate class="add-comment-form" name="addCommentForm" ng-submit="submitQuestionComment()">
+              <input type = "text" ng-model="questionComment"></input>
+              <button class="form-submit action-button" type = "submit">Add Comment</button>
+          </form>
+        </div>
+      </div>
+>>>>>>> fcc491fb833dd35631ebd62999dd79976d22cc70
     </div>
     <div class="answers-container" ng-repeat="answer in answers">
       <div class="user-info">
@@ -56,6 +72,7 @@
         </a>
         <div class="author-karma">{{answer.author.karma}}</div>
       </div>
+<<<<<<< HEAD
       <div class="answer-content">
         <div class="body"  ng-bind-html="answer.body | wizMarkdownFltr"></div>
         <div class="timestamp"  ng-bind="answer.timestamp | date:'medium'"></div>
@@ -75,6 +92,19 @@
                 <button class="form-submit action-button" type = "submit">Add Comment</button>
             </form>
           </div>
+=======
+      <div class="answer-comments">
+        <div class="comment" ng-repeat="comment in answer.comments">
+          <div class="comment-body">{{comment.body}}</div>
+          <div class="comment-author">{{comment.authorname}}</div>
+          <div class="comment-timestap"  ng-bind="comment.timestamp | date:'medium'"></div>
+        </div>
+        <div class="answer-add-comment">
+           <form novalidate class="add-comment-form" name="addCommentForm" ng-submit="submitAnswerComment(answer)">
+              <input type = "text" ng-model="answer.answerComment"></input>
+              <button class="form-submit action-button" type = "submit">Add Comment</button>
+          </form>
+>>>>>>> fcc491fb833dd35631ebd62999dd79976d22cc70
         </div>
       </div>
       <div class="score-container">
