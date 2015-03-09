@@ -28,11 +28,15 @@ angular.module('sugoiOverflow.services')
       },
 
       mapAnswerForClient: function mapAnswerForClient(answer){
+        var score = 0;
+        if(answer.upVotes && answer.downVotes){
+          score = answer.upVotes.length - answer.downVotes.length;
+        }
         return{
           id:         answer.id,
           downVotes:  answer.downVotes,
           upVotes:    answer.upVotes,
-          score:      answer.upVotes.length - answer.downVotes.length,
+          score:      score,
           body:       answer.body,
           correct:    answer.correct,
           timestamp:  answer.timestamp,
