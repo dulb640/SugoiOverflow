@@ -72,6 +72,10 @@ User.set('toJSON', {
 });
 
 User.methods.calculateKarma = function calculateKarma() {
+  if(!this.profile.karmaChanges){
+    return 0;
+  }
+
   var sum = this.profile.karmaChanges
     .map(function(k){return k.value || 0; })
     .reduce(function(prev, next){return prev + next;});
