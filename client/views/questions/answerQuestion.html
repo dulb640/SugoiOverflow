@@ -25,7 +25,6 @@
         </a>
         <div class="author-karma">{{author.karma}}</div>
       </div>
-
       <div class="question-comments">
         <div class="comment" ng-repeat="comment in questionComments">
           <div class="comment-body">{{comment.body}}</div>
@@ -81,7 +80,6 @@
         <button class="action-button correct" type="button" ng-click="markAsCorrect(answer)" ng-show="isOwnQuestion() && !answer.correct">Mark As Correct</button>
         <div class="correct-label" ng-show="answer.correct">Correct!</div>
       </div>
-
     </div>
   </div>
   <div class="answerSection">
