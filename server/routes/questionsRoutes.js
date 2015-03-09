@@ -5,6 +5,8 @@ var logger      = require('../logger');
 
 var _           = require('lodash');
 var express     = require('express');
+var q     = require('Q');
+
 var router      = express.Router();
 
 /**
@@ -87,13 +89,19 @@ router.get('/most-wanted', function(req, res){
     //.populate('author', 'name email profilePictureUrl')
     .execQ()
     .then(function(questions){
-      questions.forEach(function(q){
-        q.id = q._id;
-        delete q._id;
-      });
-      res
-        .status(200)
-        .send(questions);
+      domain.User.populateQ(questions, 'author')
+        .then(function(questions){
+          questions.forEach(function(q){
+            q.id = q._id;
+            delete q._id;
+          });
+
+          res
+            .status(200)
+            .send(questions);
+        });
+
+
     })
     .catch(function(error){
       logger.error('Error getting questions', error);
@@ -358,9 +366,24 @@ router.post('/:questionId/answer/:answerId/comment', function(req, res){
 router.put('/:questionId/answer/:answerId/correct', function(req, res){
   domain.Question.findByIdQ(req.params.questionId)
     .then(function (question){
-      var answer = question.answers.id(req.params.answerId);
-      answer.correct = true;
-      return question.saveQ();
+      return question.populateQ('answers.author', 'id name email profile.karmaChanges feed')
+        .then(function(question){
+          var answer = question.answers.id(req.params.answerId);
+          answer.correct = true;
+          answer.author.profile.karmaChanges.push({
+            value: 5,
+            reason: 'Answer marked as correct',
+            question: question.id
+          });
+
+          return answer.author.saveQ()
+            .then(function(author){
+              return updateUserQuestionsFeed(author, question, 'Your answer marked as correct');
+            })
+            .then(function(){
+              return question.saveQ();
+            });
+        });
     })
     .then(function(question){
       res

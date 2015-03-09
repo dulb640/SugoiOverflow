@@ -1,5 +1,4 @@
 'use strict';
-var logger = require('./logger');
 var rewriteIis = function (req, res, next) {
   var originalUrl = req.headers['x-original-url'];
   if (originalUrl) {

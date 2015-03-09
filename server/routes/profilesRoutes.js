@@ -13,7 +13,7 @@ function mapProfile(user){
     email: user.email,
     location: user.profile.location,
     selectedTags:user.profile.selectedTags,
-    karma: 0 //TODO: Change to use real karma
+    karma: user.calculateKarma()
   };
 }
 

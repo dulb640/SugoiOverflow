@@ -3,6 +3,7 @@
 var mongoose = require('mongoose-q')(require('mongoose'));
 var Schema   = mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId;
+var KarmaChange = require('./karmaChangeSchema');
 
 var User = new Schema({
   adId:{
@@ -46,6 +47,10 @@ var User = new Schema({
     }],
     profilePictureUrl:{
       type: String
+    },
+    karmaChanges:{
+      type: [KarmaChange],
+      'default': []
     }
   },
   feed:{
@@ -65,4 +70,12 @@ User.set('toJSON', {
     delete ret.__v;
   }
 });
+
+User.methods.calculateKarma = function calculateKarma() {
+  var sum = this.profile.karmaChanges
+    .map(function(k){return k.value || 0; })
+    .reduce(function(prev, next){return prev + next;});
+  return sum;
+};
+
 module.exports = User;

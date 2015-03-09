@@ -45,14 +45,16 @@
 	display: inline-block;
 }
 
-.profile-details {
-	
-
-	.karma {
-		font-size: 16px;
-		color: $green-light;
-	}
+.profile{
+  .karma {
+      padding: 4px;
+      font-size: 16px;
+      color: $green-light;
+      font-weight: bold;
+      text-align:center;
+  }
 }
+
 
 .user-questions {
 	border-top: 1px solid #ccc;
