@@ -10,19 +10,22 @@ angular.module('sugoiOverflow.controllers')
         $scope.tags = question.tags;
         $scope.author = question.author;
         $scope.timestamp = question.timestamp;
-        $scope.answers = question.answers;
+        $scope.answers = question.answers ? question.answers :
         $scope.subscribers = question.subscribers;
         $scope.questionComments = question.comments;
         $scope.answer = '';
         $scope.questionComment = '';
         $scope.answerComment = '';
-
+        $scope.isSubscribed = question.subscribers.indexOf($scope.currentUserId) !== -1;
       }
 
       _.extend($scope, {
         submitAnswer: function(){
           questionsDataService.addAnswer($routeParams.id, $scope.answer)
-            .then(loadQuestion);
+            .then(function(){
+              questionsDataService.getQuestion($routeParams.id)
+              .then(loadQuestion);
+            });
         },
         upvoteAnswer: function(answer){
           if ($scope.hasUpVoted(answer)){
@@ -31,8 +34,10 @@ angular.module('sugoiOverflow.controllers')
           if (!$scope.votingInProgress){
             $scope.votingInProgress = true;
             questionsDataService.upvoteAnswer($routeParams.id, answer)
-              .then(loadQuestion)
-              .then(function(){$scope.votingInProgress = false;});
+              .then(function(){
+                questionsDataService.getQuestion($routeParams.id)
+                .then(loadQuestion);
+                $scope.votingInProgress = false;});
           }
         },
         downvoteAnswer: function(answer){
@@ -42,13 +47,19 @@ angular.module('sugoiOverflow.controllers')
           if (!$scope.votingInProgress){
             $scope.votingInProgress = true;
             questionsDataService.downvoteAnswer($routeParams.id, answer)
-              .then(loadQuestion)
-              .then(function(){$scope.votingInProgress = false;});
+              .then(function(){
+                questionsDataService.getQuestion($routeParams.id)
+                .then(loadQuestion);
+                $scope.votingInProgress = false;
+              });
           }
         },
         subscribeToQuestion: function(){
           questionsDataService.subscribeToQuestion($routeParams.id)
-            .then(loadQuestion);
+            .then(function(){
+              questionsDataService.getQuestion($routeParams.id)
+              .then(loadQuestion);
+            });
         },
         isSubscribed: function(){
           if ($scope.subscribers){
@@ -79,12 +90,18 @@ angular.module('sugoiOverflow.controllers')
         submitQuestionComment : function()
         {
            questionsDataService.addQuestionComment($routeParams.id, $scope.questionComment)
-            .then(loadQuestion);
+             .then(function(){
+              questionsDataService.getQuestion($routeParams.id)
+              .then(loadQuestion);
+            });
         },
         submitAnswerComment : function (answer)
         {
            questionsDataService.addAnswerComment($routeParams.id, answer.id, answer.answerComment)
-            .then(loadQuestion);
+            .then(function(){
+              questionsDataService.getQuestion($routeParams.id)
+              .then(loadQuestion);
+            });
         }
       });
 
