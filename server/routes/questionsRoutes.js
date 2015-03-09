@@ -282,6 +282,76 @@ router.post('/:questionId/answer', function(req, res){
     });
 });
 
+
+/* Add comment for question */
+router.post('/:questionId/comment', function(req, res){
+  domain.Question.findByIdQ(req.params.questionId)
+  .then(function(question) {
+    question.comments.push({
+      author: req.user.id,
+      body: req.body.body
+    });
+    return question.saveQ();
+  })
+  .then(function(question){
+      return domain.User.findByIdQ(req.user.id)
+      .then(function(user){
+        user.profile.answered.push(question.id);
+        return user.saveQ();
+      })
+      .then(function(){
+        res
+          .status(200)
+          .send(question);
+
+        question.populateQ('subscribers', 'feed')
+          .then(function(questionPop){
+            questionPop.subscribers.forEach(function(sub){
+              updateUserQuestionsFeed(sub, question, 'Question has new comment');
+            });
+          });
+      });
+    })
+    .then(function(question){
+        res
+          .status(200)
+          .send(question);
+    })
+    .catch(function(error){
+      logger.error('Error posting comment', error);
+      res
+        .status(500)
+        .send();
+    });
+});
+
+
+/* Add comment for answer */
+router.post('/:questionId/answer/:answerId/comment', function(req, res){
+  domain.Question.findByIdQ(req.params.questionId)
+    .then(function (question){
+      var answer = question.answers.id(req.params.answerId);
+
+      answer.comments.push({
+        author: req.user.id,
+        body: req.body.body
+      });
+
+      return question.saveQ();
+    })
+    .then(function(question){
+      res
+        .status(200)
+        .send(question);
+    })
+    .catch(function(error){
+      logger.error('Error marking answer as correct', error);
+      res
+        .status(500)
+        .send();
+    });
+});
+
 /**
  * Mark answer as correct
  */

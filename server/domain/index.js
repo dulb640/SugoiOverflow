@@ -7,5 +7,6 @@ module.exports = {
   User:                   mongoose.model('User', require('./userSchema')),
   Answer:                 mongoose.model('Answer', require('./answerSchema')),
   QuestionNotification:   mongoose.model('QuestionNotification', require('./questionNotificationSchema')),
-  UserFeed:               mongoose.model('UserFeed', require('./userFeedSchema'))
+  UserFeed:               mongoose.model('UserFeed', require('./userFeedSchema')),
+  Comment:                mongoose.model('Comment', require('./commentSchema'))
 };
