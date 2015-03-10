@@ -5,7 +5,6 @@ var logger      = require('../logger');
 
 var _           = require('lodash');
 var express     = require('express');
-var q     = require('Q');
 
 var router      = express.Router();
 
