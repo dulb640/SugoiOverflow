@@ -1,6 +1,8 @@
 angular
 	.module('sugoiOverflow',
 		['ngRoute',
+    'angular-jwt',
+    'ngStorage',
 		'ui.bootstrap',
     'wiz.markdown',
     'ngTagsInput',
@@ -11,10 +13,14 @@ angular
 		'sugoiOverflow.interceptors',
     'sugoiOverflow.filters'
 		])
-	.config(function($routeProvider){
+	.config(function($httpProvider, $routeProvider){
 		'use strict';
 
 		$routeProvider
+      .when('/login', {
+        templateUrl: 'views/auth/login.html',
+        controller: 'loginController'
+      })
       .when('/questions/new/', {
         templateUrl: 'views/questions/newQuestion.html',
         controller: 'newQuestionController'
@@ -48,5 +54,5 @@ angular
       })
       .otherwise({
         redirectTo: '/questions/suggested'
-      });
+      });      
 	});

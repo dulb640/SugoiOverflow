@@ -1,14 +1,26 @@
-angular.module('sugoiOverflow.interceptors', []);
-/*
-.config(function($httpProvider) {
+angular.module('sugoiOverflow.interceptors', [])
+.config(function($httpProvider, jwtInterceptorProvider) {
   'use strict';
+    jwtInterceptorProvider.tokenGetter = function($localStorage, $location, config) {
+      if (config.url.substr(config.url.length - 5) === '.html') {
+        return null;
+      }
 
-  $httpProvider.interceptors.push('logoutOn401Interceptor');
-  $httpProvider.interceptors.push('errorOn403Interceptor');
+      if(!$localStorage.jwt){
+        $location.path('/login');
+        return null;
+      }
+
+      return $localStorage.jwt;
+    };
+
+    $httpProvider.interceptors.push('jwtInterceptor');
+    $httpProvider.interceptors.push('logoutOn401Interceptor');
+/*  $httpProvider.interceptors.push('errorOn403Interceptor');
   $httpProvider.interceptors.push('errorOn404Interceptor');
-  $httpProvider.interceptors.push('errorOn500Interceptor');
+  $httpProvider.interceptors.push('errorOn500Interceptor');*/
 })
-.factory('logoutOn401Interceptor', function ($rootScope, $q, $window) {
+.factory('logoutOn401Interceptor', function ($rootScope, $q, $location, $localStorage) {
   'use strict';
 
   return {
@@ -23,14 +35,16 @@ angular.module('sugoiOverflow.interceptors', []);
     },
     responseError: function (response) {
       if (response && response.status === 401) {
-        $window.location.replace($window.location.pathname + '/login');
+        delete $localStorage.jwt;
+        $location.path('/login');
         return $q.reject(response);
       }
 
       return $q.reject(response);
     }
   };
-})
+});
+/*
 .factory('errorOn403Interceptor', function ($rootScope, $q, $injector) {
   'use strict';
 

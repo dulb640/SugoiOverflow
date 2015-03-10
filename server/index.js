@@ -18,7 +18,7 @@ mongoose.connect(mongoConnectionString);
 var app = express();
 
 var jwtOptions = config('auth:jwt');
-logger.info('==========', jwtOptions);
+jwtOptions.authScheme = 'Bearer';
 passport.use(new JwtStrategy(jwtOptions, function(payload, done) {
   domain.User.findByIdQ(payload.sub)
     .then(function(user){
@@ -107,18 +107,7 @@ app.use(bodyParser());
 app.use(passport.initialize());
 
 app.use(function(req, res, next){
-  domain.User.findOneQ({adId:'92af420a-d4c5-47f0-b8eb-d77fa4b39aa0'})
-    .then(function(user){
-      req.user = user;
-    })
-    .finally(function(){
-      next();
-    });
-});
-
-
-app.use(function(req, res, next){
-  if(!req.user.feed){
+  if(req.user && !req.user.feed){
     var newFeed = new domain.UserFeed();
     newFeed.saveQ()
       .then(function(feed){

@@ -11,14 +11,14 @@ var jwtOptions = config('auth:jwt');
 
 function generateJwt (req, res){
   var payload = {
-    issuer: jwtOptions.issuer,
-    audience: jwtOptions.audience,
+    iss: jwtOptions.issuer,
+    aud: jwtOptions.audience,
     sub: req.user.id
   };
 
   var token = jwt.encode(payload, jwtOptions.secretOrKey);
   var result = {
-    token: token
+    jwt: token
   };
   res
     .status(200)
