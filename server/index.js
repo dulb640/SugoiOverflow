@@ -17,8 +17,8 @@ mongoose.connect(mongoConnectionString);
 
 var app = express();
 
-var jwtOptions = config('jwt');
-
+var jwtOptions = config('auth:jwt');
+logger.info('==========', jwtOptions);
 passport.use(new JwtStrategy(jwtOptions, function(payload, done) {
   domain.User.findByIdQ(payload.sub)
     .then(function(user){
@@ -33,8 +33,38 @@ passport.use(new JwtStrategy(jwtOptions, function(payload, done) {
     });
 }));
 
+if(config('auth:local')){
+  var LocalStrategy = require('passport-local').Strategy;
+  passport.use(new LocalStrategy(
+    function(usernameOrEmail, password, done) {
+      domain.User.findOneQ({ username: usernameOrEmail })
+        .then(function(user) {
+          if(user){
+            return user;
+          } else{
+            return domain.User.findOneQ({ email: usernameOrEmail });
+          }
+        })
+        .then(function(user){
+          if(!user){
+            logger.warn('User is not found for username or email: %s', usernameOrEmail);
+            return done(null, false);
+          }
+          user.verifyPassword(password)
+            .then(function(isValid){
+              if (!isValid) {
+                logger.warn('Wrong password for username or email: %s', usernameOrEmail);
+                return done(null, false);
+              }
+              return done(null, user);
+            });          
+        });
+    }
+  ));
+}
+
 var ldapConfig = config('ldap');
-if(ldapConfig && config('active-directory')){
+if(ldapConfig && config('auth:active-directory')){
   var WindowsStrategy = require('passport-windowsauth');
   var authCallback = function authCallback(profile, done){
     domain.User.findOneQ({adId: profile.id})
@@ -45,6 +75,7 @@ if(ldapConfig && config('active-directory')){
         else{
           new domain.User({
             adId: profile.id,
+            username: profile._json.sAMAccountName,
             email: profile.emails[0].value,
             name: profile.displayName
           }).saveQ()

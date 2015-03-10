@@ -20,10 +20,10 @@ var logger = new winston.Logger({
     new winston.transports.Console({ json: false, timestamp: true, prettyPrint: true, colorize: true }),
     new winston.transports.File({ filename: path.join(fullPath, 'debug.log'), json: false })
   ],
-  exceptionHandlers: [
-    new winston.transports.Console({ json: false, timestamp: true }),
+/*  exceptionHandlers: [
+    new winston.transports.Console({ json: false, timestamp: true, colorize: true, prettyPrint: true }),
     new winston.transports.File({ filename: path.join(fullPath, 'exceptions.log'), json: false })
-  ],
+  ],*/
   exitOnError: false
 });
 

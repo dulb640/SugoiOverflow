@@ -4,11 +4,17 @@ var mongoose = require('mongoose-q')(require('mongoose'));
 var Schema   = mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId;
 var KarmaChange = require('./karmaChangeSchema');
+var config = require('../configuration');
 
 var User = new Schema({
   adId:{
     type: String,
     required: false,
+    index: { unique: true }
+  },
+  username:{
+    type: String,
+    required: true,
     index: { unique: true }
   },
   name:{
@@ -20,10 +26,14 @@ var User = new Schema({
     required: true,
     index: { unique: true }
   },
-/*  password:{
+  password:{
     type: String,
-    required: true
-  },*/
+    required: false
+  },
+  salt:{
+    type: String,
+    required: false
+  },
   registered:{
     type: Date,
     'default': Date.now
@@ -57,11 +67,6 @@ var User = new Schema({
     type: ObjectId,
     ref: 'UserFeed'
   }
-
-/*  token:{
-    data: {type: String},
-    generated: {type: Date}
-  }*/
 });
 User.set('toJSON', {
   transform: function (doc, ret) {
@@ -70,6 +75,34 @@ User.set('toJSON', {
     delete ret.__v;
   }
 });
+
+
+User.methods.setPassword = function setPassword(password) {
+  var pepper = config('auth:pepper');
+  var q = require('q');
+  var bcrypt = require('bcrypt');
+
+  var self = this;
+  return q.nfcall(bcrypt.genSalt, 10, null)
+    .then(function(salt) {
+      self.salt = salt;
+      return q.nfcall(bcrypt.hash, password + pepper, salt);
+    })
+    .then(function(hash){
+      self.password = hash;
+    });
+};
+
+User.methods.verifyPassword = function verifyPassword(password) {
+  var pepper = config('auth:pepper');
+  var q = require('q');
+  var bcrypt = require('bcrypt');
+  
+  return q.nfcall(bcrypt.compare, password + pepper, this.password)
+    .then(function(isValid){
+      return isValid;
+    });
+};
 
 User.methods.calculateKarma = function calculateKarma() {
   if(!this.profile.karmaChanges || this.profile.karmaChanges.length === 0){
