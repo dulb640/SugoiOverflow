@@ -57,7 +57,7 @@
         <div class="author-karma">{{answer.author.karma}}</div>
       </div>
       <div class="answer-content">
-        <div class="body"  ng-bind-html="answer.body | wizMarkdownFltr"></div>
+        <div class="body markdown-output"  ng-bind-html="answer.body | wizMarkdownFltr"></div>
         <div class="timestamp"  ng-bind="answer.timestamp | date:'medium'"></div>
 
         <div class="answer-comments">
@@ -105,7 +105,7 @@
             <wiz-toolbar-button command="img" class="markdown-button"><i class="fa fa-picture-o"></i> Img</wiz-toolbar-button>
         </wiz-markdown-editor>
       </div>
-      <wiz-markdown content="answer"></wiz-markdown>
+      <wiz-markdown content="answer" class="markdown-output"></wiz-markdown>
       <button class="form-submit action-button" type="submit">Post your answer</button>
     </form>
   </div>
