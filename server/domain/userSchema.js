@@ -10,7 +10,7 @@ var User = new Schema({
   adId:{
     type: String,
     required: false,
-    index: { unique: true }
+    index: { unique: true, sparse: true }
   },
   username:{
     type: String,

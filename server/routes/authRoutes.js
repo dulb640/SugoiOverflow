@@ -53,7 +53,7 @@ if(config('auth:local')){
           .status(200)
           .send();
       })
-      .then(function (error) {
+      .catch(function (error) {
         logger.error('Error during registration of new user with username %s', req.body.username, error);
         res
           .status(500)
