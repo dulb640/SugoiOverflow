@@ -15,6 +15,8 @@ var ngAnnotate   = require ('gulp-ng-annotate');
 var minifyCss    = require ('gulp-minify-css');
 var concatCss    = require ('gulp-concat-css');
 var sass         = require ('gulp-sass');
+var sort         = require ('sort-stream');
+
 var fs          = require('fs');
 var path        = require('path');
 var angularFilesort = require ('gulp-angular-filesort');
@@ -98,14 +100,20 @@ gulp.task('styles-app', function(){
 
 gulp.task('templates', function(){
   var cwd = path.resolve(__dirname, './build');
-  var scriptsLib = gulp.src(['scripts/lib/**/*.js'],{
+  var scriptsLib = gulp.src(['scripts/lib/**/jquery.js',
+                              'scripts/lib/**/angular.js',
+                              'scripts/lib/**/bootstrap.js',
+                              'scripts/lib/**/*.js'],{
     cwd: cwd
   });
-
+  
+/*.pipe(sort(function (a, b) {
+  //comparator function, return 1, 0, or -1 
+  //just like Array.sort 
+}))*/
   var scriptsApp = gulp.src(['scripts/app/**/*.js'],{
     cwd: cwd
-  })
-    .pipe(angularFilesort());
+  }).pipe(angularFilesort());
 
   var stylesLib = gulp.src(['styles/lib/**/*.css'],{
     cwd: cwd

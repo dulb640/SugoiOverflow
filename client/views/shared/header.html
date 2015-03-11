@@ -11,9 +11,19 @@
       <span class="notices">{{newNotificationsCount()}}</span>
       <span ng-click="openNotifications($event)">Notifications</span>
     </div>
-    <div class="profile">
-      <span class="profile-icon">{{user.karma}}</span> <!--TODO: Replace with profile picture url -->
-      <a href="#/profile"><span class="profile-name">{{user.name}}</span></a>
+    <div class="profile dropdown">
+      <a dropdown-toggle> 
+        <span class="profile-icon">{{user.karma}}</span> <!--TODO: Replace with profile picture url -->
+        <span class="profile-name">{{user.name}}</span>
+      </a>
+       <ul class="dropdown-menu">
+        <li>
+          <a href>blah</a>
+        </li>
+        <li>
+          <a href>blah</a>
+        </li>
+      </ul>
     </div>
     <div class="ask">
       <a class="ask-button" href="/#/questions/new">
