@@ -1,6 +1,6 @@
 angular.module('sugoiOverflow.controllers')
   .controller('loginController',
-    function($scope, $q, $routeParams, $location, $localStorage, authService){
+    function($scope, $q, $routeParams, $location, authService){
       'use strict';
 
       _.extend($scope, {
@@ -11,8 +11,7 @@ angular.module('sugoiOverflow.controllers')
           };
 
           authService.localLogin(credentials)
-            .then(function(data){
-              $localStorage.jwt = data.jwt;
+            .then(function(){
               $location.path('/questions/suggested');
             });
         }

@@ -143,7 +143,7 @@ gulp.task('build', function(done){
               done);
 });
 
-gulp.task('dev', ['build', 'watch'], function(){
+gulp.task('dev', ['watch'], function(){
   nodemon({
     script: './server/index.js',
     ext: 'js',
@@ -152,7 +152,7 @@ gulp.task('dev', ['build', 'watch'], function(){
   .on('restart', function(){gutil.log('restarted!');});
 });
 
-gulp.task('watch', function(){
+gulp.task('watch', ['build'], function(){
   livereload.listen();
   gulp.watch(['client/**/*.scss'], ['styles-lib', 'styles-app'])
     .on('change', function(event) {

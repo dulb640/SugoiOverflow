@@ -52,6 +52,15 @@ angular
         templateUrl: 'views/profile/viewProfile.html',
         controller: 'viewProfileController'
       })
+      .when('/logout', {
+        template: '',
+        controller: function($location, authService){
+          authService.logout()
+            .then(function(){
+              $location.path('/login');
+            });
+        }
+      })
       .otherwise({
         redirectTo: '/questions/suggested'
       });      
