@@ -1,5 +1,5 @@
 {
-  "name": "SugoiOverflow",
+  "name": "sugoi-overflow",
   "version": "0.0.2",
   "description": "So much sugoi - it overflows",
   "main": "server/index.js",
