@@ -52,7 +52,7 @@ angular
         templateUrl: 'views/profile/editProfile.html',
         controller: 'editProfileController'
       })
-      .when('/profile/:userId', {
+      .when('/profile/:username', {
         templateUrl: 'views/profile/viewProfile.html',
         controller: 'viewProfileController'
       })

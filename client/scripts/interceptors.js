@@ -20,7 +20,7 @@ angular.module('sugoiOverflow.interceptors', [])
   $httpProvider.interceptors.push('errorOn404Interceptor');
   $httpProvider.interceptors.push('errorOn500Interceptor');*/
 })
-.factory('logoutOn401Interceptor', function ($rootScope, $q, $location, $localStorage) {
+.factory('logoutOn401Interceptor', function ($rootScope, $q, $location, $localStorage, currentUser) {
   'use strict';
 
   return {
@@ -36,6 +36,7 @@ angular.module('sugoiOverflow.interceptors', [])
     responseError: function (response) {
       if (response && response.status === 401) {
         delete $localStorage.jwt;
+        currentUser.clear();
         $location.path('/login');
         return $q.reject(response);
       }

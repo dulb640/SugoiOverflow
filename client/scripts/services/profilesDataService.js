@@ -4,9 +4,9 @@ angular.module('sugoiOverflow.services')
       'use strict';
 
       var service = {
-        getUser: function(id) {
+        getUser: function(username) {
             var deferred = $q.defer();
-            $http.get('/api/profiles/' + id)
+            $http.get(_.str.sprintf('/api/profiles/%s', username))
             .success(function(data){
               var profile = mappingService.mapProfileForClient(data);
               deferred.resolve(profile);
@@ -40,9 +40,9 @@ angular.module('sugoiOverflow.services')
             });
           return deferred.promise;
         },
-        markNotificationAsRead: function(id) {
+        markNotificationAsRead: function(username) {
           var deferred = $q.defer();
-          $http.put(_.str.sprintf('/api/profiles/me/feed/%s/read', id))
+          $http.put(_.str.sprintf('/api/profiles/me/feed/%s/read', username))
             .success(function(data){
               deferred.resolve(data.questionNotifications);
             })

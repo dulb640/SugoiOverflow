@@ -18,7 +18,10 @@ function generateJwt (req, res){
 
   var token = jwt.encode(payload, jwtOptions.secretOrKey);
   var result = {
-    jwt: token
+    jwt: token,
+    username: req.user.username,
+    displayName: req.user.displayName,
+    email: req.user.email
   };
   res
     .status(200)
@@ -41,7 +44,7 @@ if(config('auth:local')){
     var newUser = new domain.User({
       username: req.body.username,
       email: req.body.email,
-      name: req.body.displayName || req.body.username,
+      displayName: req.body.displayName || req.body.username,
     });
 
     newUser.setPassword(req.body.password)

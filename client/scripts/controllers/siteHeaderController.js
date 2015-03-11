@@ -1,12 +1,11 @@
 angular.module('sugoiOverflow.controllers')
   .controller('siteHeaderController',
-    function ($rootScope, $scope, $location, $routeParams, $interval, $window, profilesDataService, tagsDataService) {
+    function ($rootScope, $scope, $location, $routeParams, $interval, $window, profilesDataService, currentUser, tagsDataService) {
     'use strict';
-
     _.extend($scope, {
+      user: currentUser,
       notifications: [],
       notificationsOpened: false,
-      user: {},
       searchTerms: '',
       searchQuestions: function(){
         $location.path(_.str.sprintf('/questions/search/%s', $scope.searchTerms));
@@ -57,13 +56,11 @@ angular.module('sugoiOverflow.controllers')
       $scope.searchTerms = $routeParams.searchTerms;
     }
 
-    profilesDataService.getCurrentUserProfile()
-    .then(function(user){
-      $scope.user = user;
-      $scope.notifications = user.notifications;
-    });
-
     function getNotifications(){
+      if(!currentUser.isAuthenticated){
+        return;
+      }
+      
       profilesDataService.getCurrentUserNotifications()
       .then(function(notifications){
         $scope.notifications = notifications;

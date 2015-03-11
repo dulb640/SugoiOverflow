@@ -8,8 +8,7 @@ var router  = express.Router();
 
 function mapProfile(user){
   return {
-    id: user.id,
-    name: user.name,
+    displayName: user.displayName,
     email: user.email,
     location: user.profile.location,
     selectedTags:user.profile.selectedTags,
@@ -20,7 +19,7 @@ function mapProfile(user){
 router.get('/', function(req, res){
   domain.User
     .find()
-    .select('id name email profile')
+    .select('id displayName email profile')
     .execQ()
     .then(function(users){
       var profiles = users.map(mapProfile);
@@ -39,28 +38,14 @@ router.get('/', function(req, res){
 
 
 router.get('/me', function(req, res){
-  domain.User
-    .findByIdQ(req.user.id)
-    .then(function(user){
-      var profile = mapProfile(user);
+  var profile = mapProfile(req.user);
       res
         .status(200)
         .send(profile);
-    })
-    .catch(function(error){
-      logger.error('Error getting profile', error);
-      res
-        .status(500)
-        .send();
-    });
 });
 
 router.get('/me/feed', function(req, res){
-  domain.User
-    .findByIdQ(req.user.id)
-    .then(function(user){
-      return user.populateQ('feed', 'questionNotifications');
-    })
+  req.user.populateQ('feed', 'questionNotifications')
     .then(function(user){
       var feed = user.feed;
       res
@@ -76,11 +61,7 @@ router.get('/me/feed', function(req, res){
 });
 
 router.put('/me/feed/:notificationId/read', function(req, res){
-  domain.User
-    .findByIdQ(req.user.id)
-    .then(function(user){
-      return user.populateQ('feed', 'questionNotifications');
-    })
+  req.user.populateQ('feed', 'questionNotifications')
     .then(function(user){
       var feed = user.feed;
       var notification = feed.questionNotifications.id(req.params.notificationId);
@@ -99,9 +80,9 @@ router.put('/me/feed/:notificationId/read', function(req, res){
     });
 });
 
-router.get('/:id', function(req, res){
+router.get('/:username', function(req, res){
   domain.User
-    .findByIdQ(req.params.id)
+    .findOneQ({username: req.params.username})
     .then(function(user){
       var profile = mapProfile(user);
       res
@@ -117,13 +98,9 @@ router.get('/:id', function(req, res){
 });
 
 router.put('/me', function(req, res){
-  domain.User
-    .findByIdQ(req.user.id)
-    .then(function(user){
-      user.profile.location = req.body.location;
-      user.profile.selectedTags = req.body.selectedTags;
-      return user.saveQ();
-    })
+    req.user.profile.location = req.body.location;
+    req.user.profile.selectedTags = req.body.selectedTags;
+    req.user.saveQ()
     .then(function(profile){
       res
         .status(200)
@@ -140,7 +117,7 @@ router.put('/me', function(req, res){
 router.get('/tag/:tag', function(req, res){
   domain.User
     .find({'profile.selectedTags': req.params.tag})
-    .select('id name email profile')
+    .select('id displayName email profile')
     .execQ()
     .then(function(users){
       var profiles = users.map(mapProfile);

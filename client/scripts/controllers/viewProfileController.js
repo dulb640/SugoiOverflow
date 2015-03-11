@@ -20,7 +20,7 @@ angular.module('sugoiOverflow.controllers')
         $scope.profilePictureUrl = user.profilePictureUrl || '/content/no-avatar.jpg';
       }
 
-      if (!$routeParams.userId || $routeParams.userId === 'me'){
+      if (!$routeParams.username || $routeParams.username === 'me'){
         profilesDataService.getCurrentUserProfile()
           .then(function(user){
             loadUser(user);
@@ -32,7 +32,7 @@ angular.module('sugoiOverflow.controllers')
           });
       }
       else {
-        profilesDataService.getUser($routeParams.userId)
+        profilesDataService.getUser($routeParams.username)
           .then(function(user){
             loadUser(user);
             $scope.isOwnProfile = false;

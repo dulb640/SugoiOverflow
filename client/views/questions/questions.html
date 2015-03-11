@@ -7,7 +7,7 @@
 	</div>
 	<div class="content container">
     <div class="question-suggested-empty" ng-hide='suggestedNotEmpty'>
-      <a href="#/profile">
+      <a href="#/profile/me/edit">
         There are no suggested questions for you. Add more tags on your profile to increase suggestions.
       </a>
     </div>
@@ -21,7 +21,7 @@
   				<div class="tags">
   					<a ng-href="/#/questions/search/{{tag.text}}" class="tag" ng-repeat="tag in question.tags">{{tag.text}}</a>
   				</div>
-          <div class="author"><a ng-href="/#/profile/{{question.author.id}}">Asked by {{question.author.name}} </a></div>
+          <div class="author"><a ng-href="/#/profile/{{question.author.username}}">Asked by {{question.author.displayName}} </a></div>
           <div class="timestamp">
              <span ng-bind="question.timestamp | date:'medium'"></span>
           </div>

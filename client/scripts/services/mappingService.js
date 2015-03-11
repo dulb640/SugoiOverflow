@@ -71,7 +71,7 @@ angular.module('sugoiOverflow.services')
       },
       mapAuthorForClient: function mapProfile(profile){
         return {
-          id: profile.id,
+          username: profile.username,
           name: profile.name,
           karma: profile.karma,
           location: profile.location,
@@ -80,7 +80,7 @@ angular.module('sugoiOverflow.services')
       },
       mapProfileForClient: function mapProfile(profile){
         return {
-          id: profile.id,
+          username: profile.username,
           name: profile.name,
           email: profile.email,
           tags: _.map(profile.selectedTags, service.mapTagForClient),
@@ -94,7 +94,6 @@ angular.module('sugoiOverflow.services')
         return {
           name: profile.name,
           selectedTags: _.map(profile.tags, service.mapTagForApi),
-          karma: profile.karma,
           location: profile.location,
           profilePictureUrl: profile.profilePictureUrl,
         };

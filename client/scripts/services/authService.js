@@ -1,6 +1,6 @@
 angular.module('sugoiOverflow.services')
   .factory('authService',
-    function($http, $q, $localStorage, $timeout) {
+    function($http, $q, $localStorage, $timeout, currentUser) {
       'use strict';
 
       var service = {
@@ -9,6 +9,10 @@ angular.module('sugoiOverflow.services')
             $http.post('/api/auth/local', credentials, { skipAuthorization:true })
             .success(function(data){
               $localStorage.jwt = data.jwt;
+              currentUser.email = data.email;
+              currentUser.username = data.username;
+              currentUser.displayName = data.displayName;
+
               deferred.resolve(data);
             })
             .error(function(error){
@@ -30,6 +34,7 @@ angular.module('sugoiOverflow.services')
         logout: function() {
           return $timeout(function(){
             delete $localStorage.jwt;
+            currentUser.clear();
           });
         }
     };
