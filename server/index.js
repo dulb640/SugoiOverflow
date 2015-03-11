@@ -102,7 +102,7 @@ if(config('iis') && config('path')){
 
 var morganLogger = morgan('short');
 app.use(morganLogger);
-app.use(bodyParser());
+app.use(bodyParser.json());
 
 app.use(passport.initialize());
 
