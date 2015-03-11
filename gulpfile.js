@@ -1,35 +1,31 @@
 'use strict';
 
-var gulp        = require('gulp');
-var nodemon     = require('gulp-nodemon');
-var gutil       = require('gulp-util');
-var sourcemaps  = require('gulp-sourcemaps');
-var runSequence = require('run-sequence');
-var rimraf      = require ('gulp-rimraf');
-var jshint      = require ('gulp-jshint');
-var plumber     = require('gulp-plumber');
-var notify      = require('gulp-notify');
-var concat       = require ('gulp-concat');
-var uglify       = require ('gulp-uglify');
-var ngAnnotate   = require ('gulp-ng-annotate');
-var minifyCss    = require ('gulp-minify-css');
-var concatCss    = require ('gulp-concat-css');
-var sass         = require ('gulp-sass');
-var sort         = require ('sort-stream');
+var gulp =               require('gulp');
+var nodemon =            require('gulp-nodemon');
+var gutil =              require('gulp-util');
+var sourcemaps =         require('gulp-sourcemaps');
+var runSequence =        require('run-sequence');
+var rimraf =             require('gulp-rimraf');
+var jshint =             require('gulp-jshint');
+var plumber =            require('gulp-plumber');
+var notify =             require('gulp-notify');
+var concat =             require('gulp-concat');
+var uglify =             require('gulp-uglify');
+var ngAnnotate =         require('gulp-ng-annotate');
+var minifyCss =          require('gulp-minify-css');
+var concatCss =          require('gulp-concat-css');
+var sass =               require('gulp-sass');
+var path =               require('path');
+var angularFilesort =    require ('gulp-angular-filesort');
+var inject =             require ('gulp-inject');
+var eventStream =        require ('event-stream');
+var connect =            require ('gulp-connect');
+var livereload =         require('gulp-livereload');
+var watch =              require ('gulp-watch');
+var mainBowerFiles =     require ('main-bower-files');
 
-var fs          = require('fs');
-var path        = require('path');
-var angularFilesort = require ('gulp-angular-filesort');
-var inject          = require ('gulp-inject');
-var eventStream     = require ('event-stream');
-var connect         = require ('gulp-connect');
-var livereload = require('gulp-livereload');
-var watch           = require ('gulp-watch');
-var mainBowerFiles  = require ('main-bower-files');
-
-var envType = gutil.env.type || 'debug';
-var isDebug = envType === 'debug';
-var isDebug = true;
+var envType = gutil.env.NODE_ENV || 'development';
+var isDev = envType === 'development';
 
 var paths = {
   scripts        : ['client/scripts/**/*.js'],
@@ -50,15 +46,15 @@ gulp.task('lint', function() {
 
 gulp.task('clean', function(){
   return gulp.src('build')
-          .pipe(rimraf());
+    .pipe(rimraf());
 });
 
 gulp.task('scripts-lib', function(){
   return gulp.src(paths.bowerScripts,{
     base: 'bower_components'
   })
-  .pipe(isDebug ? gutil.noop() : concat('lib.js'))
-  .pipe(isDebug ? gutil.noop() : uglify())
+  .pipe(isDev ? gutil.noop() : concat('lib.js'))
+  .pipe(isDev ? gutil.noop() : uglify())
   .pipe(gulp.dest('build/scripts/lib'));
 });
 
@@ -72,27 +68,27 @@ gulp.task('scripts-app', /*['lint-scripts'],*/ function(){
     }))
     .pipe(ngAnnotate())
     .pipe(angularFilesort())
-/*    .pipe(isDebug ? gutil.noop() : concat('app.js'))
-    .pipe(isDebug ? gutil.noop() : uglify())*/
+    .pipe(isDev ? gutil.noop() : concat('app.js'))
+    .pipe(isDev ? gutil.noop() : uglify())
     .pipe(gulp.dest('build/scripts/app'));
 });
 
 gulp.task('styles-lib', /*['lint-styles'],*/ function(){
   return gulp.src(paths.bowerStyles)
-    .pipe(isDebug ? gutil.noop() : concatCss('lib.css'))
-    .pipe(isDebug ? gutil.noop() : minifyCss())
+    .pipe(isDev ? gutil.noop() : concatCss('lib.css'))
+    .pipe(isDev ? gutil.noop() : minifyCss())
     .pipe(gulp.dest('build/styles/lib'))
     .pipe(livereload());
 });
 
 gulp.task('styles-app', function(){
   return gulp.src(paths.styles)
-    //.pipe(isDebug ? gulp.dest('build'): gutil.noop())
-    .pipe(isDebug ? sourcemaps.init() : gutil.noop())
+    //.pipe(isDev ? gulp.dest('build'): gutil.noop())
+    .pipe(isDev ? sourcemaps.init() : gutil.noop())
     .pipe(sass())
-    .pipe(isDebug ? gutil.noop() : concatCss('app.css'))
-    .pipe(isDebug ? gutil.noop() : minifyCss())
-    .pipe(isDebug ? sourcemaps.write('./') : gutil.noop())
+    .pipe(isDev ? gutil.noop() : concatCss('app.css'))
+    .pipe(isDev ? gutil.noop() : minifyCss())
+    .pipe(isDev ? sourcemaps.write('./') : gutil.noop())
     .pipe(gulp.dest('build/styles/app'))
     .pipe(livereload());
 });
@@ -107,10 +103,6 @@ gulp.task('templates', function(){
     cwd: cwd
   });
   
-/*.pipe(sort(function (a, b) {
-  //comparator function, return 1, 0, or -1 
-  //just like Array.sort 
-}))*/
   var scriptsApp = gulp.src(['scripts/app/**/*.js'],{
     cwd: cwd
   }).pipe(angularFilesort());
@@ -143,13 +135,24 @@ gulp.task('build', function(done){
               done);
 });
 
-gulp.task('dev', ['watch'], function(){
+gulp.task('run', function(){
+  gulp.start(isDev ? 'run-dev' : 'run-prd');
+});
+
+gulp.task('run-dev', ['watch'], function(){
   nodemon({
     script: './server/index.js',
     ext: 'js',
   })
   .on('change')
   .on('restart', function(){gutil.log('restarted!');});
+});
+
+gulp.task('run-prd', ['build'], function(){
+  nodemon({
+    script: './server/index.js',
+    ext: 'js',
+  });
 });
 
 gulp.task('watch', ['build'], function(){

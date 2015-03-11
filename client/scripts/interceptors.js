@@ -1,7 +1,8 @@
 angular.module('sugoiOverflow.interceptors', [])
 .config(function($httpProvider, jwtInterceptorProvider) {
   'use strict';
-    jwtInterceptorProvider.tokenGetter = function($localStorage, $location, config) {
+    jwtInterceptorProvider.tokenGetter = 
+      ['$localStorage', '$location', 'config', function($localStorage, $location, config) {
       if (config.url.substr(config.url.length - 5) === '.html') {
         return null;
       }
@@ -12,7 +13,7 @@ angular.module('sugoiOverflow.interceptors', [])
       }
 
       return $localStorage.jwt;
-    };
+    }];
 
     $httpProvider.interceptors.push('jwtInterceptor');
     $httpProvider.interceptors.push('logoutOn401Interceptor');
