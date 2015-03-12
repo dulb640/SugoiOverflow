@@ -8,6 +8,7 @@ var router  = express.Router();
 
 function mapProfile(user){
   return {
+    username: user.username,
     displayName: user.displayName,
     email: user.email,
     location: user.profile.location,
@@ -19,7 +20,7 @@ function mapProfile(user){
 router.get('/', function(req, res){
   domain.User
     .find()
-    .select('id displayName email profile')
+    .select('username displayName email profile')
     .execQ()
     .then(function(users){
       var profiles = users.map(mapProfile);
@@ -117,7 +118,7 @@ router.put('/me', function(req, res){
 router.get('/tag/:tag', function(req, res){
   domain.User
     .find({'profile.selectedTags': req.params.tag})
-    .select('id displayName email profile')
+    .select('username displayName email profile')
     .execQ()
     .then(function(users){
       var profiles = users.map(mapProfile);

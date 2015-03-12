@@ -15,7 +15,7 @@ router.get('/', function(req, res){
   domain.Question
     .find()
     .select('id title body answers.author answers.timestamp answers.correct subscribers tags timestamp author')
-    .populate('author', 'id name email profilePictureUrl karma')
+    .populate('author', 'username name email karma')
     .execQ()
     .then(function(questions){
       res
@@ -41,7 +41,7 @@ router.get('/suggested', function(req, res){
       domain.Question
         .find({'tags': {$in : tags}})
         .select('id title body answers.author answers.timestamp answers.correct subscribers tags timestamp author')
-        .populate('author', 'id name email profilePictureUrl karma')
+        .populate('author', 'username name email karma')
         .execQ()
         .then(function(questions){
           res
@@ -85,7 +85,7 @@ router.get('/most-wanted', function(req, res){
       {$sort: {'subCount':-1} }])
     //.sort({'subscribers.length': -1})
     //.select('id title body answers.author answers.timestamp answers.correct subscribers tags timestamp author')
-    //.populate('author', 'name email profilePictureUrl')
+    //.populate('author', 'name email')
     .execQ()
     .then(function(questions){
       domain.User.populateQ(questions, 'author')
@@ -139,10 +139,10 @@ router.get('/profile/:id', function(req, res){
 router.get('/:id', function(req, res){
   domain.Question.findByIdQ(req.params.id)
     .then(function(question){
-      return question.populateQ('author', 'id name email profilePictureUrl karma');
+      return question.populateQ('author', 'id name email karma');
     })
     .then(function(question){
-      return question.populateQ('answers.author', 'id name email profilePictureUrl karma');
+      return question.populateQ('answers.author', 'username name email karma');
     })
     .then(function(question){
       res
@@ -249,7 +249,7 @@ router.post('/:questionId/answer', function(req, res){
   domain.Question.findByIdQ(req.params.questionId)
     .then(function (question){
       var answer = new domain.Answer({
-        author: req.user._id,
+        author: req.user.id,
         body: req.body.body
       });
 
@@ -375,7 +375,7 @@ router.post('/:questionId/answer/:answerId/comment', function(req, res){
 router.put('/:questionId/answer/:answerId/correct', function(req, res){
   domain.Question.findByIdQ(req.params.questionId)
     .then(function (question){
-      return question.populateQ('answers.author', 'id name email profile.karmaChanges feed')
+      return question.populateQ('answers.author', 'username name email profile.karmaChanges feed')
         .then(function(question){
           var answer = question.answers.id(req.params.answerId);
           answer.correct = true;
@@ -493,7 +493,7 @@ router.post('/', function(req, res){
       });
     })
     .catch(function(error){
-      logger.error('Error posting question', error);
+      logger.error('Error posting question', error, error.errors);
       res
         .status(500)
         .send();

@@ -1,7 +1,7 @@
 <div class="profile-layout container">
   <div class="user-details">
      <div class="profile">
-        <img ng-src="{{user.profilePictureUrl}}"></img>
+        <img ng-src="/api/files/avatar/{{user.username}}"/>
         <div class="karma">{{user.karma}}</div>
     </div>
     <div class="name">{{user.displayName}}</div>

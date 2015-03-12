@@ -34,7 +34,7 @@
       <div class="user-info">
         <div>
           <a ng-href="/#/profile/{{author.username}}">
-            <img ng-src="{{author.profilePictureUrl || '/content/no-avatar.jpg'}}" />
+            <img ng-src="/api/files/avatar/{{author.username}}" />
           </a>
         </div>
         <a class="profile-link" ng-href="/#/profile/{{author.username}}">
@@ -48,7 +48,7 @@
       <div class="user-info">
         <div>
           <a ng-href="/#/profile/{{answer.author.username}}">
-            <img ng-src="{{answer.author.profilePictureUrl || '/content/no-avatar.jpg'}}" />
+            <img ng-src="/api/files/avatar/{{author.username}}" />
           </a>
         </div>
         <a class="profile-link" ng-href="/#/profile/{{answer.author.username}}">
@@ -89,7 +89,7 @@
     </div>
       <div class="answerSection">
     <div class="answerQuestion-Profile">
-      <img ng-src="{{user.profilePictureUrl}}"></img>
+      <img ng-src="/api/files/avatar/{{user.username}}" ></img>
       <span class="name">{{user.displayName}}</span>
     </div>
     <form novalidate class="answerQuestion-form" name="answerQuestionForm" ng-submit="submitAnswer()">
@@ -108,7 +108,6 @@
       <wiz-markdown content="answer" class="markdown-output"></wiz-markdown>
       <button class="form-submit action-button" type="submit">Post your answer</button>
     </form>
-  </div>
   </div>
 
 </div>

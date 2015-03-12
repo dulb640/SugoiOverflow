@@ -5,7 +5,6 @@ angular.module('sugoiOverflow.controllers')
 
       _.extend($scope, {
         isOwnProfile: false,
-        profilePictureUrl: '',
         user: {},
         tags: [],
         questions: [],
@@ -13,11 +12,11 @@ angular.module('sugoiOverflow.controllers')
 
       function loadUser(user){
         $scope.name = user.name;
+        $scope.username = user.username;
         $scope.email = user.email;
         $scope.tags = user.tags;
         $scope.location = user.location;
         $scope.karma = user.karma;
-        $scope.profilePictureUrl = user.profilePictureUrl || '/content/no-avatar.jpg';
       }
 
       if (!$routeParams.username || $routeParams.username === 'me'){

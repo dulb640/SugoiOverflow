@@ -17,7 +17,7 @@ var User = new Schema({
     required: true,
     index: { unique: true }
   },
-  name:{
+  displayName:{
     type: String,
     required: true
   },
@@ -55,9 +55,6 @@ var User = new Schema({
       type: ObjectId,
       ref: 'Question'
     }],
-    profilePictureUrl:{
-      type: String
-    },
     karmaChanges:{
       type: [KarmaChange],
       'default': []

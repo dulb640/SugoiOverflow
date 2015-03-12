@@ -1,6 +1,6 @@
 <div class="newQuestion-layout container">
   <div class="newQuestion-Profile">
-      <img ng-src="{{user.profilePictureUrl}}"></img>
+      <img ng-src="/api/files/avatar/{{user.username}}"></img>
       <span class="name">{{user.displayName}}</span>
   </div>
   <form novalidate class="newQuestion-form" name="newQuestionForm" ng-submit="submit()">

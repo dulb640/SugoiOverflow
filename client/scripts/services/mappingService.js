@@ -74,8 +74,7 @@ angular.module('sugoiOverflow.services')
           username: profile.username,
           name: profile.name,
           karma: profile.karma,
-          location: profile.location,
-          profilePictureUrl: profile.profilePictureUrl,
+          location: profile.location
         };
       },
       mapProfileForClient: function mapProfile(profile){
@@ -85,8 +84,7 @@ angular.module('sugoiOverflow.services')
           email: profile.email,
           tags: _.map(profile.selectedTags, service.mapTagForClient),
           karma: profile.karma,
-          location: profile.location,
-          profilePictureUrl: profile.profilePictureUrl
+          location: profile.location
         };
       },
 
@@ -94,8 +92,7 @@ angular.module('sugoiOverflow.services')
         return {
           name: profile.name,
           selectedTags: _.map(profile.tags, service.mapTagForApi),
-          location: profile.location,
-          profilePictureUrl: profile.profilePictureUrl,
+          location: profile.location
         };
       }
     };
