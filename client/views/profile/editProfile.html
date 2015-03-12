@@ -12,11 +12,12 @@
       <input class="form-control location" type="text" name="location" ng-model="location">
     </div>
     <div>
-      <div class="form-label specialisations" for="specialisations">Specialisations</div>
+    <div class="form-label specialisations" for="specialisations">Specialisations</div>
       <tags-input ng-model="tags" add-on-space="true">
         <!-- <auto-complete source="loadTags($query)"></auto-complete> -->
       </tags-input>
     </div>
     <button class="form-submit action-button" type="submit">Save Changes</button>
   </form>
+  <div class="button" ng-file-select ng-file-change="uploadAvatar($files)" ng-multiple="false">Select Avatar</div>
 </div>

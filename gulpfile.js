@@ -187,4 +187,4 @@ gulp.task('connect', function(done){
               callBack);
 });
 
-gulp.task('default', ['watch']);
+gulp.task('default', ['run']);

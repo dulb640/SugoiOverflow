@@ -1,0 +1,68 @@
+'use strict';
+
+var domain      = require('../domain');
+var logger      = require('../logger');
+
+var express = require('express');
+var router  = express.Router();
+var Busboy = require('busboy');
+var Grid =   require('gridfs-stream');
+var fs =   require('fs');
+var path =   require('path');
+var config = require('../configuration');
+//ar secure = require('./secure');
+var passport = require('passport');
+
+
+
+var mongoose = require('mongoose-q')(require('mongoose'));
+var Q = require('q');
+
+var gfs = new Grid(mongoose.connection.db, mongoose.mongo);
+
+router.post('/avatar', passport.authenticate('jwt', { session: false}), function(req, res){
+  var busboy = new Busboy({ headers: req.headers });
+  busboy.on('file', function(fieldname, file/*, filename, encoding, mimetype*/) {
+    var writestream = gfs.createWriteStream({
+      root:'avatars',
+      filename: req.user.id,
+    });
+    file.pipe(writestream);
+  });
+  busboy.on('finish', function() {
+    res
+      .status(200)
+      .send();
+  });
+  return req.pipe(busboy);
+});
+
+router.get('/avatar/:username', function(req, res){
+  domain.User.findOneQ({username: req.params.username})
+    .then(function(user){
+      var opts = {
+        filename: user.id,
+        root:'avatars'
+      };
+      Q.ninvoke(gfs, 'exist', opts)
+        .then(function(exists){
+          if(exists){
+            return gfs.createReadStream(opts);
+          } else{
+            var filename = path.resolve(__dirname, '../../content/no-avatar.jpg');
+            return fs.createReadStream(filename);
+          }
+        })
+        .then(function(stream){
+          stream.on('open', function () {
+            stream.pipe(res);
+          });
+        })
+        .catch(function(error){
+          logger.error('Error getting avatar', error);
+        });
+    });
+  
+});
+
+module.exports = router;

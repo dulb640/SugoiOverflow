@@ -10,10 +10,11 @@ var mongoose =          require('mongoose-q')(require('mongoose'));
 var logger =            require('./logger');
 var config =            require('./configuration');
 var domain =            require('./domain');
-var routes =            require('./routes');
 
 var mongoConnectionString = config('mongo');
 mongoose.connect(mongoConnectionString);
+
+var routes =            require('./routes');
 
 var app = express();
 

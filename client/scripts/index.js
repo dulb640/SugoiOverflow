@@ -4,6 +4,7 @@ angular
     'angular-jwt',
     'ngStorage',
 		'ui.bootstrap',
+    'angularFileUpload',
     'wiz.markdown',
     'ngTagsInput',
     'pageslide-directive',
