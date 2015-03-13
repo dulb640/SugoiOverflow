@@ -15,7 +15,7 @@ router.get('/', function(req, res){
   domain.Question
     .find()
     .select('id title body answers.author answers.timestamp answers.correct subscribers tags timestamp author')
-    .populate('author', 'username name email karma')
+    .populate('author subscribers', 'username displayName email karma')
     .execQ()
     .then(function(questions){
       res
@@ -41,7 +41,7 @@ router.get('/suggested', function(req, res){
       domain.Question
         .find({'tags': {$in : tags}})
         .select('id title body answers.author answers.timestamp answers.correct subscribers tags timestamp author')
-        .populate('author', 'username name email karma')
+        .populate('author subscribers', 'username displayName email karma')
         .execQ()
         .then(function(questions){
           res
@@ -139,10 +139,10 @@ router.get('/profile/:id', function(req, res){
 router.get('/:id', function(req, res){
   domain.Question.findByIdQ(req.params.id)
     .then(function(question){
-      return question.populateQ('author', 'id name email karma');
+      return question.populateQ('author subscribers upVotes downVotes', 'username displayName email karma');
     })
     .then(function(question){
-      return question.populateQ('answers.author', 'username name email karma');
+      return question.populateQ('answers.author', 'username displayName email karma');
     })
     .then(function(question){
       res
@@ -375,7 +375,7 @@ router.post('/:questionId/answer/:answerId/comment', function(req, res){
 router.put('/:questionId/answer/:answerId/correct', function(req, res){
   domain.Question.findByIdQ(req.params.questionId)
     .then(function (question){
-      return question.populateQ('answers.author', 'username name email profile.karmaChanges feed')
+      return question.populateQ('answers.author', 'username displayName email profile.karmaChanges feed')
         .then(function(question){
           var answer = question.answers.id(req.params.answerId);
           answer.correct = true;
@@ -419,7 +419,7 @@ router.put('/:questionId/answer/:answerId/upvote', function(req, res){
         answer.downVotes.splice(downVoteIndex, 1);
       }
       else if (answer.upVotes.indexOf(req.user.id) === -1){
-        answer.upVotes.push(req.user.id);
+        answer.upVotes.push(req.user.id);//TODO: Review that 
       }
       return question.saveQ();
     })

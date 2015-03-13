@@ -1,6 +1,6 @@
 angular.module('sugoiOverflow.controllers')
   .controller('answersController',
-    function($scope, $q, $routeParams, questionsDataService, profilesDataService){
+    function($scope, $q, $routeParams, questionsDataService, currentUser){
       'use strict';
 
       function loadQuestion(question){
@@ -16,7 +16,6 @@ angular.module('sugoiOverflow.controllers')
         $scope.answer = '';
         $scope.questionComment = '';
         $scope.answerComment = '';
-        $scope.isSubscribed = question.subscribers.indexOf($scope.currentUserId) !== -1;
       }
 
       _.extend($scope, {
@@ -63,13 +62,15 @@ angular.module('sugoiOverflow.controllers')
         },
         isSubscribed: function(){
           if ($scope.subscribers){
-            return $scope.subscribers.indexOf($scope.currentUserId) !== -1;
+            return _.some($scope.subscribers, function(sub){
+              sub.username = currentUser.username;
+            });
           }
           return false;
         },
         isOwnQuestion: function(){
           if ($scope.author){
-            if ($scope.currentUserId === $scope.author.id){
+            if (currentUser.username === $scope.author.username){
               return true;
             }
           }
@@ -82,10 +83,14 @@ angular.module('sugoiOverflow.controllers')
           }
         },
         hasUpVoted: function(answer){
-          return answer.upVotes.indexOf($scope.currentUserId) !== -1;
+          return _.some(answer.upVotes, function(upVoter){
+            upVoter.username = currentUser.username;
+          });
         },
         hasDownVoted: function(answer){
-          return answer.downVotes.indexOf($scope.currentUserId) !== -1;
+          return _.some(answer.downVotes, function(downVoter){
+            downVoter.username = currentUser.username;
+          });          
         },
         submitQuestionComment : function()
         {
@@ -108,8 +113,6 @@ angular.module('sugoiOverflow.controllers')
       $scope.votingInProgress = false;
 
       $scope.currentUserId = '';
-
-      profilesDataService.getCurrentUserProfile().then(function(user){$scope.currentUserId = user.id;});
 
       questionsDataService.getQuestion($routeParams.id)
         .then(loadQuestion);
