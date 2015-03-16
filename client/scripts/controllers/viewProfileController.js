@@ -11,12 +11,16 @@ angular.module('sugoiOverflow.controllers')
       });
 
       function loadUser(user){
-        $scope.name = user.name;
+        $scope.displayName = user.displayName;
         $scope.username = user.username;
         $scope.email = user.email;
-        $scope.tags = user.tags;
-        $scope.location = user.location;
-        $scope.karma = user.karma;
+        $scope.tags = _.map(user.profile.selectedTags, function mapTags (tag) {
+          return {
+            text: tag
+          };
+        });
+        $scope.location = user.profile.location;
+        $scope.karma = user.profile.karma;
       }
 
       if (!$routeParams.username || $routeParams.username === 'me'){

@@ -143,7 +143,7 @@ router.get('/:id', function(req, res){
       return question.populateQ('author subscribers upVotes downVotes', 'username displayName email');
     })
     .then(function(question){
-      return question.populateQ('answers.author', 'username displayName email');
+      return question.populateQ('answers.author comments.author answers.comments.author', 'username displayName email');
     })
     .then(function(question){
       res

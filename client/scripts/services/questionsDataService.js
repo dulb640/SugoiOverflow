@@ -1,6 +1,6 @@
 angular.module('sugoiOverflow.services')
   .factory('questionsDataService',
-  function($http, $q, mappingService){
+  function($http, $q){
     'use strict';
 
     var service = {
@@ -8,8 +8,7 @@ angular.module('sugoiOverflow.services')
         var deferred = $q.defer();
         $http.get('/api/questions/')
         .success(function(data){
-          var questions = _.map(data, mappingService.mapQuestionForList);
-          deferred.resolve(questions);
+          deferred.resolve(data);
         })
         .error(function(error){
           deferred.reject(error);
@@ -21,8 +20,7 @@ angular.module('sugoiOverflow.services')
         var deferred = $q.defer();
         $http.get('/api/questions/suggested')
         .success(function(data){
-          var questions = _.map(data, mappingService.mapQuestionForList);
-          deferred.resolve(questions);
+          deferred.resolve(data);
         })
         .error(function(error){
           deferred.reject(error);
@@ -34,8 +32,7 @@ angular.module('sugoiOverflow.services')
         var deferred = $q.defer();
         $http.get('/api/questions/most-wanted')
         .success(function(data){
-          var questions = _.map(data, mappingService.mapQuestionForList);
-          deferred.resolve(questions);
+          deferred.resolve(data);
         })
         .error(function(error){
           deferred.reject(error);
@@ -47,8 +44,7 @@ angular.module('sugoiOverflow.services')
         var deferred = $q.defer();
         $http.get(_.str.sprintf('/api/questions/profile/%s', userId))
         .success(function(data){
-          var questions = _.map(data, mappingService.mapQuestionForList);
-          deferred.resolve(questions);
+          deferred.resolve(data);
         })
         .error(function(error){
           deferred.reject(error);
@@ -60,8 +56,7 @@ angular.module('sugoiOverflow.services')
         var deferred = $q.defer();
         $http.get(_.str.sprintf('/api/questions/search/%s', terms))
         .success(function(data){
-          var questions = _.map(data, mappingService.mapQuestionForList);
-          deferred.resolve(questions);
+          deferred.resolve(data);
         })
         .error(function(error){
           deferred.reject(error);
@@ -73,8 +68,7 @@ angular.module('sugoiOverflow.services')
         var deferred = $q.defer();
         $http.get(_.str.sprintf('/api/questions/%s', id))
         .success(function(data){
-          var question = mappingService.mapQuestionForClient(data);
-          deferred.resolve(question);
+          deferred.resolve(data);
         })
         .error(function(error){
           deferred.reject(error);
@@ -84,8 +78,7 @@ angular.module('sugoiOverflow.services')
       },
       addQuestion: function(question){
         var deferred = $q.defer();
-        var data = mappingService.mapQuestionForApi(question);
-        $http.post('/api/questions/', data)
+        $http.post('/api/questions/', question)
         .success(function(addedQuestion){
           deferred.resolve(addedQuestion);
         })
@@ -99,8 +92,7 @@ angular.module('sugoiOverflow.services')
         var deferred = $q.defer();
         $http.put(_.str.sprintf('/api/questions/%s/subscribe', questionId))
         .success(function(data){
-          var updatedQuestion = mappingService.mapQuestionForClient(data);
-          deferred.resolve(updatedQuestion);
+          deferred.resolve(data);
         })
         .error(function(error){
           deferred.reject(error);
@@ -115,8 +107,7 @@ angular.module('sugoiOverflow.services')
         };
         $http.post(_.str.sprintf('/api/questions/%s/answer', questionId), data)
         .success(function(data){
-          var updatedQuestion = mappingService.mapQuestionForClient(data);
-          deferred.resolve(updatedQuestion);
+          deferred.resolve(data);
         })
         .error(function(error){
           deferred.reject(error);
@@ -133,8 +124,7 @@ angular.module('sugoiOverflow.services')
 
         $http.post(_.str.sprintf('/api/questions/%s/comment', questionId), data)
         .success(function(data){
-          var updatedQuestion = mappingService.mapQuestionForClient(data);
-          deferred.resolve(updatedQuestion);
+          deferred.resolve(data);
         })
         .error(function(error){
           deferred.reject(error);
@@ -148,8 +138,7 @@ angular.module('sugoiOverflow.services')
         };
          $http.post(_.str.sprintf('/api/questions/%s/answer/%s/comment', questionId, answerId), data)
         .success(function(data){
-          var updatedAnswer = mappingService.mapAnswerForClient(data);
-          deferred.resolve(updatedAnswer);
+          deferred.resolve(data);
         })
         .error(function(error){
           deferred.reject(error);
@@ -160,8 +149,7 @@ angular.module('sugoiOverflow.services')
         var deferred = $q.defer();
         $http.put(_.str.sprintf('/api/questions/%s/answer/%s/upvote', questionId, answer.id))
         .success(function(data){
-          var updatedQuestion = mappingService.mapQuestionForClient(data);
-          deferred.resolve(updatedQuestion);
+          deferred.resolve(data);
         })
         .error(function(error){
           deferred.reject(error);
@@ -173,8 +161,7 @@ angular.module('sugoiOverflow.services')
         var deferred = $q.defer();
         $http.put(_.str.sprintf('/api/questions/%s/answer/%s/downvote', questionId, answer.id))
         .success(function(data){
-          var updatedQuestion = mappingService.mapQuestionForClient(data);
-          deferred.resolve(updatedQuestion);
+          deferred.resolve(data);
         })
         .error(function(error){
           deferred.reject(error);
@@ -186,8 +173,7 @@ angular.module('sugoiOverflow.services')
         var deferred = $q.defer();
         $http.put(_.str.sprintf('/api/questions/%s/answer/%s/correct', questionId, answer.id))
         .success(function(data){
-          var updatedQuestion = mappingService.mapQuestionForClient(data);
-          deferred.resolve(updatedQuestion);
+          deferred.resolve(data);
         })
         .error(function(error){
           deferred.reject(error);

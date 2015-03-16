@@ -94,6 +94,7 @@ User.methods.setPassword = function setPassword(password) {
     })
     .then(function(hash){
       self.password = hash;
+      return self;
     });
 };
 

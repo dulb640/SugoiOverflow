@@ -7,7 +7,11 @@ angular.module('sugoiOverflow.controllers')
         $scope.questionId = question.questionId;
         $scope.title = question.title;
         $scope.body = question.body;
-        $scope.tags = question.tags;
+        $scope.tags = _.map(question.tags, function mapTags (tag) {
+          return {
+            text: tag
+          };
+        });
         $scope.author = question.author;
         $scope.timestamp = question.timestamp;
         $scope.answers = question.answers ? question.answers :
@@ -84,13 +88,13 @@ angular.module('sugoiOverflow.controllers')
         },
         hasUpVoted: function(answer){
           return _.some(answer.upVotes, function(upVoter){
-            upVoter.username = currentUser.username;
+            return upVoter.username === currentUser.username;
           });
         },
         hasDownVoted: function(answer){
           return _.some(answer.downVotes, function(downVoter){
-            downVoter.username = currentUser.username;
-          });          
+            return downVoter.username === currentUser.username;
+          });
         },
         submitQuestionComment : function()
         {

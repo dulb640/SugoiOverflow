@@ -1,0 +1,14 @@
+{
+	"folders":
+	[
+		{
+			"folder_exclude_patterns":
+			[
+				"client",
+				"server"
+			],
+			"follow_symlinks": true,
+			"path": "."
+		}
+	]
+}

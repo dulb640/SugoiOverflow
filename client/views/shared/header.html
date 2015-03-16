@@ -6,14 +6,14 @@
     <input class="search-bar" type="text" ng-model="searchTerms" placeholder="Search Questions" class="form-control" ng-keyup="$event.keyCode === 13 && searchQuestions()"/>
     <!-- <input class="search-bar" type="text" ng-model="searchTerms" placeholder="Search Questions" typeahead="question for questions in getTypeahead($viewValue)"  class="form-control" typeahead-loading="typeaheadLoading" typeahead-append-to-body="true" typeahead-wait-ms="150" ng-keyup="$event.keyCode === 13 && searchQuestions($value)"/> -->
   </div>
-  <div class="user" ng-show="user.isAuthenticated">
+  <div class="user" ng-show="currentUser.isAuthenticated">
     <div class="notifications">
       <span class="notices">{{newNotificationsCount()}}</span>
       <span ng-click="openNotifications($event)">Notifications</span>
     </div>
      <span class="profile dropdown" dropdown >
       <a href class="dropdown-toggle" dropdown-toggle>
-      <span class="profile-icon">{{user.karma}}</span>
+      <span class="profile-icon">{{user.profile.karma}}</span>
         <span class="profile-name">{{user.displayName || user.username}}</span>
       </a>
       <ul class="dropdown-menu">

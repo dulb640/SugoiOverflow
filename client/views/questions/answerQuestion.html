@@ -15,7 +15,7 @@
          <div class="question-comments">
           <div class="comment" ng-repeat="comment in questionComments">
             <div class="comment-body">{{comment.body}}</div>
-            <a class="comment-author" ng-href="/#/profile/{{comment.author}}">
+            <a class="comment-author" ng-href="/#/profile/{{comment.author.username}}">
               <div>{{comment.author.displayName}}</div>
             </a>
             <div class="comment-timestap"  ng-bind="comment.timestamp | date:'medium'"></div>

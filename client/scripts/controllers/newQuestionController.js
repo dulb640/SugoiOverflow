@@ -35,7 +35,7 @@ angular.module('sugoiOverflow.controllers')
           var newQuestion = {
             title: $scope.title,
             body: $scope.body,
-            tags: $scope.tags,
+            tags: _.pluck($scope.tags, 'text'),
             people: $scope.people
           };
           questionsDataService.addQuestion(newQuestion)

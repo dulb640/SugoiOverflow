@@ -1,6 +1,6 @@
 angular.module('sugoiOverflow.services')
   .factory('profilesDataService',
-    function($http, $q, mappingService) {
+    function($http, $q) {
       'use strict';
 
       var service = {
@@ -8,8 +8,7 @@ angular.module('sugoiOverflow.services')
             var deferred = $q.defer();
             $http.get(_.str.sprintf('/api/profiles/%s', username))
             .success(function(data){
-              var profile = mappingService.mapProfileForClient(data);
-              deferred.resolve(profile);
+              deferred.resolve(data);
             })
             .error(function(error){
               deferred.reject(error);
@@ -21,8 +20,7 @@ angular.module('sugoiOverflow.services')
           var deferred = $q.defer();
           $http.get('/api/profiles/me')
             .success(function(data){
-              var profile = mappingService.mapProfileForClient(data);
-              deferred.resolve(profile);
+              deferred.resolve(data);
             })
             .error(function(error){
               deferred.reject(error);
@@ -52,12 +50,10 @@ angular.module('sugoiOverflow.services')
           return deferred.promise;
         },
         editProfile: function(data) {
-          var profile = mappingService.mapProfileForApi(data);
           var deferred = $q.defer();
-          $http.put('/api/profiles/me', profile)
-            .success(function(data){
-              var profile = mappingService.mapProfileForClient(data);
-              deferred.resolve(profile);
+          $http.put('/api/profiles/me', data)
+            .success(function(saved){
+              deferred.resolve(saved);
             })
             .error(function(error){
               deferred.reject(error);
@@ -67,8 +63,7 @@ angular.module('sugoiOverflow.services')
         getAvailableProfiles: function() {
           var deferred = $q.defer();
           $http.get('/api/profiles')
-          .success(function(people){
-            var profiles = _.map(people, mappingService.mapProfileForClient);
+          .success(function(profiles){
             deferred.resolve(profiles);
           })
           .error(function(error){

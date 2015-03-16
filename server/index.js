@@ -58,7 +58,7 @@ if(config('auth:local')){
                 return done(null, false);
               }
               return done(null, user);
-            });          
+            });
         });
     }
   ));
@@ -74,12 +74,18 @@ if(ldapConfig && config('auth:active-directory')){
           done(null, user);
         }
         else{
-          new domain.User({
-            adId: profile.id,
-            username: profile._json.sAMAccountName,
-            email: profile.emails[0].value,
-            name: profile.displayName
-          }).saveQ()
+          new domain.UserFeed().saveQ()
+            .then(function (feed) {
+              var newUser = new domain.User({
+                adId: profile.id,
+                username: profile._json.sAMAccountName,
+                email: profile.emails[0].value,
+                name: profile.displayName,
+                feed: feed.id
+              });
+
+              return newUser.saveQ();
+            })
             .then(function(newUser){
               done(null, newUser);
             })

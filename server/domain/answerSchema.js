@@ -44,6 +44,26 @@ Answer.set('toJSON', {
     ret.id = ret._id;
     delete ret._id;
     delete ret.__v;
+  },
+  virtuals: true
+});
+
+Answer.set('toObject', {
+  virtuals: true
+});
+
+
+Answer.virtual('score').get(function calculateScore() {
+  var score = 0;
+
+  if(this.upVotes && this.upVotes.length > 0){
+    score += this.upVotes.length;
   }
+
+  if(this.downVotes && this.downVotes.length > 0){
+    score -= this.downVotes.length;
+  }
+
+  return score;
 });
 module.exports = Answer;

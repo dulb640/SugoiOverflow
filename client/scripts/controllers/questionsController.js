@@ -37,6 +37,13 @@ angular.module('sugoiOverflow.controllers')
         promise
           .then(function(questions){
             $scope.questions = questions;
+            _.each($scope.questions, function(question){
+              question.tags = _.map(question.tags, function(tag){
+                return {
+                  text: tag
+                };
+              });
+            });
             $scope.suggestedIsEmpty();
           });
       };

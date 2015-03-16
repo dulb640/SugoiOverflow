@@ -7,7 +7,7 @@ angular.module('sugoiOverflow.controllers')
         submit: function(){
           var profile = {
             location: $scope.location,
-            tags: $scope.tags
+            selectedTags: _.pluck($scope.tags, 'text')
           };
 
           profilesDataService.editProfile(profile)
@@ -36,8 +36,12 @@ angular.module('sugoiOverflow.controllers')
         .then(function(user){
 /*          $scope.name = user.name;
           $scope.email = user.email;*/
-          $scope.tags = user.tags;
-          $scope.location = user.location;
+          $scope.tags = _.map(user.profile.selectedTags, function mapTags (tag) {
+            return{
+              text: tag
+            };
+          });
+          $scope.location = user.profile.location;
         });
     }
   );

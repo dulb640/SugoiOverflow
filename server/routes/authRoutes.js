@@ -25,7 +25,7 @@ function generateJwt (req, res){
   };
   res
     .status(200)
-    .send(result);  
+    .send(result);
 }
 
 if(config('ldap') && config('auth:active-directory')){
@@ -41,27 +41,31 @@ if(config('ldap') && config('auth:active-directory')){
 if(config('auth:local')){
   router.post('/local', passport.authenticate('local', { session: false }), generateJwt);
   router.post('/local/register', function (req, res) {
-    var newUser = new domain.User({
-      username: req.body.username,
-      email: req.body.email,
-      displayName: req.body.displayName || req.body.username,
-    });
-
-    newUser.setPassword(req.body.password)
-      .then(function() {
-        return newUser.saveQ();
-      })
-      .then(function () {
-        res
-          .status(200)
-          .send();
-      })
-      .catch(function (error) {
-        logger.error('Error during registration of new user with username %s', req.body.username, error);
-        res
-          .status(500)
-          .send();
+    new domain.UserFeed().saveQ()
+    .then(function (feed) {
+      var newUser = new domain.User({
+        username: req.body.username,
+        email: req.body.email,
+        displayName: req.body.displayName || req.body.username,
+        feed: feed.id
       });
+
+      return newUser.setPassword(req.body.password);
+    })
+    .then(function (newUser) {
+      return newUser.saveQ();
+    })
+    .then(function () {
+      res
+        .status(200)
+        .send();
+    })
+    .catch(function (error) {
+      logger.error('Error during registration of new user with username %s', req.body.username, error);
+      res
+        .status(500)
+        .send();
+    });
   });
 } else {
   var disabledHandler = function (req, res){
