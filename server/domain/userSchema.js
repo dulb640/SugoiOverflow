@@ -67,10 +67,17 @@ var User = new Schema({
 });
 User.set('toJSON', {
   transform: function (doc, ret) {
-    ret.id = ret._id;
     delete ret._id;
+    delete ret.salt;
+    delete ret.password;
+    delete ret.feed;
     delete ret.__v;
-  }
+  },
+  virtuals: true
+});
+
+User.set('toObject', {
+  virtuals: true
 });
 
 
@@ -94,14 +101,14 @@ User.methods.verifyPassword = function verifyPassword(password) {
   var pepper = config('auth:pepper');
   var q = require('q');
   var bcrypt = require('bcrypt');
-  
+
   return q.nfcall(bcrypt.compare, password + pepper, this.password)
     .then(function(isValid){
       return isValid;
     });
 };
 
-User.methods.calculateKarma = function calculateKarma() {
+User.virtual('profile.karma').get(function calculateKarma() {
   if(!this.profile.karmaChanges || this.profile.karmaChanges.length === 0){
     return 0;
   }
@@ -110,6 +117,6 @@ User.methods.calculateKarma = function calculateKarma() {
     .map(function(k){return k.value || 0; })
     .reduce(function(prev, next){return prev + next;});
   return sum;
-};
+});
 
 module.exports = User;

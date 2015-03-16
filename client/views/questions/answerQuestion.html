@@ -16,7 +16,7 @@
           <div class="comment" ng-repeat="comment in questionComments">
             <div class="comment-body">{{comment.body}}</div>
             <a class="comment-author" ng-href="/#/profile/{{comment.author}}">
-              <div>{{comment.authorname}}</div>
+              <div>{{comment.author.displayName}}</div>
             </a>
             <div class="comment-timestap"  ng-bind="comment.timestamp | date:'medium'"></div>
           </div>
@@ -63,9 +63,9 @@
         <div class="answer-comments">
           <div class="comment" ng-repeat="comment in answer.comments">
             <div class="comment-body">{{comment.body}}</div>
-            <!-- <div class="comment-author">{{comment.authorname}}</div> -->
+            <!-- <div class="comment-author">{{comment.author.displayName}}</div> -->
             <a class="comment-author" ng-href="/#/profile/{{comment.author}}">
-              <div>{{comment.authorname}}</div>
+              <div>{{comment.author.displayName}}</div>
             </a>
             <div class="comment-timestap"  ng-bind="comment.timestamp | date:'medium'"></div>
           </div>

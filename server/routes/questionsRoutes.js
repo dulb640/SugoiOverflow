@@ -8,6 +8,7 @@ var express     = require('express');
 
 var router      = express.Router();
 
+
 /**
  * Get all questions
  */
@@ -15,7 +16,7 @@ router.get('/', function(req, res){
   domain.Question
     .find()
     .select('id title body answers.author answers.timestamp answers.correct subscribers tags timestamp author')
-    .populate('author subscribers', 'username displayName email karma')
+    .populate('author subscribers answers.author', 'username displayName email')
     .execQ()
     .then(function(questions){
       res
@@ -41,7 +42,7 @@ router.get('/suggested', function(req, res){
       domain.Question
         .find({'tags': {$in : tags}})
         .select('id title body answers.author answers.timestamp answers.correct subscribers tags timestamp author')
-        .populate('author subscribers', 'username displayName email karma')
+        .populate('author subscribers answers.author', 'username displayName email')
         .execQ()
         .then(function(questions){
           res
@@ -88,7 +89,7 @@ router.get('/most-wanted', function(req, res){
     //.populate('author', 'name email')
     .execQ()
     .then(function(questions){
-      domain.User.populateQ(questions, 'author')
+      domain.User.populateQ(questions, {path:'author subscribers answers.author', select: 'username displayName email'})
         .then(function(questions){
           questions.forEach(function(q){
             q.id = q._id;
@@ -139,10 +140,10 @@ router.get('/profile/:id', function(req, res){
 router.get('/:id', function(req, res){
   domain.Question.findByIdQ(req.params.id)
     .then(function(question){
-      return question.populateQ('author subscribers upVotes downVotes', 'username displayName email karma');
+      return question.populateQ('author subscribers upVotes downVotes', 'username displayName email');
     })
     .then(function(question){
-      return question.populateQ('answers.author', 'username displayName email karma');
+      return question.populateQ('answers.author', 'username displayName email');
     })
     .then(function(question){
       res
@@ -298,8 +299,7 @@ router.post('/:questionId/comment', function(req, res){
   .then(function(question) {
     question.comments.push({
       author: req.user.id,
-      body: req.body.body,
-      authorname: req.user.name
+      body: req.body.body
     });
     return question.saveQ();
   })
@@ -350,8 +350,7 @@ router.post('/:questionId/answer/:answerId/comment', function(req, res){
 
       answer.comments.push({
         author: req.user.id,
-        body: req.body.body,
-        authorname: req.user.name
+        body: req.body.body
       });
 
       return question.saveQ();
@@ -419,7 +418,7 @@ router.put('/:questionId/answer/:answerId/upvote', function(req, res){
         answer.downVotes.splice(downVoteIndex, 1);
       }
       else if (answer.upVotes.indexOf(req.user.id) === -1){
-        answer.upVotes.push(req.user.id);//TODO: Review that 
+        answer.upVotes.push(req.user.id);//TODO: Review that
       }
       return question.saveQ();
     })

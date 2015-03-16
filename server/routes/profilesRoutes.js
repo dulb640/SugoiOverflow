@@ -2,20 +2,10 @@
 
 var domain      = require('../domain');
 var logger      = require('../logger');
-
 var express = require('express');
 var router  = express.Router();
 
-function mapProfile(user){
-  return {
-    username: user.username,
-    displayName: user.displayName,
-    email: user.email,
-    location: user.profile.location,
-    selectedTags:user.profile.selectedTags,
-    karma: user.calculateKarma()
-  };
-}
+
 
 router.get('/', function(req, res){
   domain.User
@@ -23,10 +13,9 @@ router.get('/', function(req, res){
     .select('username displayName email profile')
     .execQ()
     .then(function(users){
-      var profiles = users.map(mapProfile);
       res
         .status(200)
-        .send(profiles);
+        .send(users);
     })
     .catch(function(error){
       logger.error('Error getting profiles', error);
@@ -39,10 +28,9 @@ router.get('/', function(req, res){
 
 
 router.get('/me', function(req, res){
-  var profile = mapProfile(req.user);
       res
         .status(200)
-        .send(profile);
+        .send(req.user);
 });
 
 router.get('/me/feed', function(req, res){
@@ -85,10 +73,9 @@ router.get('/:username', function(req, res){
   domain.User
     .findOneQ({username: req.params.username})
     .then(function(user){
-      var profile = mapProfile(user);
       res
         .status(200)
-        .send(profile);
+        .send(user);
     })
     .catch(function(error){
       logger.error('Error getting profile', error);
@@ -121,10 +108,9 @@ router.get('/tag/:tag', function(req, res){
     .select('username displayName email profile')
     .execQ()
     .then(function(users){
-      var profiles = users.map(mapProfile);
       res
         .status(200)
-        .send(profiles);
+        .send(users);
     })
     .catch(function(error){
       logger.error('Error getting profile for tag', error);

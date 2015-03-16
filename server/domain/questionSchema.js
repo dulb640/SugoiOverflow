@@ -17,8 +17,7 @@ var Question = new Schema({
   },
   answers:{
     type:[Answer],
-    default: [],
-    index: true
+    default: []
   },
   comments:{
     type:[Comment],
@@ -46,7 +45,13 @@ var Question = new Schema({
     ref: 'User'}]
 });
 
-Question.index({ body: 'text', title:'text', tags:'text', 'answers.body':'text' });
+Question.index({
+  'body': 'text',
+  'title':'text',
+  'tags':'text',
+  'answers.body':'text',
+  'answers.comments.body':'text',
+  'comments.body':'text' });
 
 Question.set('toJSON', {
   transform: function (doc, ret) {
