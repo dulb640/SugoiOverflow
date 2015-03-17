@@ -29,6 +29,18 @@ function generateJwt (req, res){
 }
 
 if(config('ldap') && config('auth:active-directory')){
+  router.get('/active-directory', function (req, res) {
+    var adHeader = req.headers['x-iisnode-logon_user'];
+    if(adHeader){
+      res
+        .send({
+          user: adHeader
+        });
+    } else{
+      res
+        .send();
+    }
+  });
   router.post('/active-directory', passport.authenticate('WindowsAuthentication', { session: false }), generateJwt);
 } else {
   router.post('/active-directory', function(req, res){
