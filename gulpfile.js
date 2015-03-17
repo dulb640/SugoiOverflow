@@ -102,7 +102,7 @@ gulp.task('templates', function(){
                               'scripts/lib/**/*.js'],{
     cwd: cwd
   });
-  
+
   var scriptsApp = gulp.src(['scripts/app/**/*.js'],{
     cwd: cwd
   }).pipe(angularFilesort());
@@ -151,7 +151,7 @@ gulp.task('run-dev', ['watch'], function(){
 gulp.task('run-prd', ['build'], function(){
   nodemon({
     script: './server/index.js',
-    ext: 'js',
+    ext: 'js css html yaml json',
   });
 });
 

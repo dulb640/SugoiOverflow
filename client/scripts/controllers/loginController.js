@@ -3,6 +3,11 @@ angular.module('sugoiOverflow.controllers')
     function($scope, $q, $routeParams, $location, authService){
       'use strict';
 
+      authService.adCheck()
+        .then(function(data){
+          $scope.adUser = data.user;
+        });
+
       _.extend($scope, {
         submit: function(){
           var credentials = {
@@ -11,6 +16,12 @@ angular.module('sugoiOverflow.controllers')
           };
 
           authService.localLogin(credentials)
+            .then(function(){
+              $location.path('/questions/suggested');
+            });
+        },
+        adLogin: function(){
+          authService.adLogin()
             .then(function(){
               $location.path('/questions/suggested');
             });

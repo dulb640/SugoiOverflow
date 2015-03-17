@@ -32,7 +32,7 @@ function adIsDisabledResponse(req, res){
     .status(400)
     .send('Active directory integration is disabled in configuration');
 }
-if(config('ldap') && config('auth:active-directory')){
+if(config('auth:ldap') && config('auth:active-directory')){
   router.get('/active-directory', function (req, res) {
     var adHeader = req.headers['x-iisnode-logon_user'];
     if(adHeader){

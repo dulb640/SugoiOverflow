@@ -3,6 +3,11 @@ angular.module('sugoiOverflow.controllers')
     function($scope, $q, $routeParams, $location, authService){
       'use strict';
 
+      authService.adCheck()
+        .then(function(data){
+          $scope.adUser = data.user;
+        });
+
       _.extend($scope, {
         submit: function(){
           var userDetails = {
@@ -14,6 +19,12 @@ angular.module('sugoiOverflow.controllers')
           authService.localRegister(userDetails)
             .then(function(){
               $scope.registered = true;
+            });
+        },
+        adLogin: function(){
+          authService.adLogin()
+            .then(function(){
+              $location.path('/questions/suggested');
             });
         }
       });
