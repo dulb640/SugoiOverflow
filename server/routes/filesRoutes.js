@@ -10,7 +10,6 @@ var Grid =   require('gridfs-stream');
 var fs =   require('fs');
 var path =   require('path');
 var config = require('../configuration');
-//ar secure = require('./secure');
 var passport = require('passport');
 
 
@@ -62,7 +61,7 @@ router.get('/avatar/:username', function(req, res){
           logger.error('Error getting avatar', error);
         });
     });
-  
+
 });
 
 module.exports = router;

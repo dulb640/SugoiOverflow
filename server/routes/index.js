@@ -2,8 +2,6 @@
 
 var express = require('express');
 var passport = require('passport');
-var secure = require('./secure');
-
 
 var router  = express.Router();
 router.use('/auth', 		                                                require('./authRoutes'));
