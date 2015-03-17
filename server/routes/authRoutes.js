@@ -27,7 +27,11 @@ function generateJwt (req, res){
     .status(200)
     .send(result);
 }
-
+function adIsDisabledResponse(req, res){
+  res
+    .status(400)
+    .send('Active directory integration is disabled in configuration');
+}
 if(config('ldap') && config('auth:active-directory')){
   router.get('/active-directory', function (req, res) {
     var adHeader = req.headers['x-iisnode-logon_user'];
@@ -43,11 +47,8 @@ if(config('ldap') && config('auth:active-directory')){
   });
   router.post('/active-directory', passport.authenticate('WindowsAuthentication', { session: false }), generateJwt);
 } else {
-  router.post('/active-directory', function(req, res){
-    res
-      .status(400)
-      .send('Active directory integration is disabled in configuration');
-  });
+  router.get('/active-directory', adIsDisabledResponse);
+  router.post('/active-directory', adIsDisabledResponse);
 }
 
 if(config('auth:local')){
