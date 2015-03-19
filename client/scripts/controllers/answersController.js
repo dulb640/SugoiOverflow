@@ -116,7 +116,7 @@ angular.module('sugoiOverflow.controllers')
 
       $scope.votingInProgress = false;
 
-      $scope.currentUserId = '';
+      $scope.user = currentUser;
 
       questionsDataService.getQuestion($routeParams.id)
         .then(loadQuestion);
