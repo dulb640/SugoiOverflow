@@ -11,8 +11,7 @@ var fs =   require('fs');
 var path =   require('path');
 var config = require('../configuration');
 var passport = require('passport');
-
-
+var gm = require('gm');
 
 var mongoose = require('mongoose-q')(require('mongoose'));
 var Q = require('q');
@@ -26,7 +25,17 @@ router.post('/avatar', passport.authenticate('jwt', { session: false}), function
       root:'avatars',
       filename: req.user.id,
     });
-    file.pipe(writestream);
+
+    var avatarsConfig = config('avatars');
+
+    gm(file)
+      .resize(avatarsConfig.size.x, avatarsConfig.size.y, '^')
+      .gravity('Center')
+      .crop(avatarsConfig.size.x, avatarsConfig.size.y)
+      .compress(avatarsConfig.format)
+      .quality(avatarsConfig.quality)
+      .stream()
+      .pipe(writestream);
   });
   busboy.on('finish', function() {
     res

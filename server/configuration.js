@@ -27,6 +27,14 @@ nconf
     port: 3000,
     'log-folder': 'logs',
     iis: false,
+    avatars:{
+      size:{
+        x:320,
+        y:320
+      },
+      format: 'jpeg',
+      quality: 90
+    },
     auth:{
       'active-directory': false,
       local: true,

@@ -84,9 +84,6 @@ router.get('/most-wanted', function(req, res){
         }
       },
       {$sort: {'subCount':-1} }])
-    //.sort({'subscribers.length': -1})
-    //.select('id title body answers.author answers.timestamp answers.correct subscribers tags timestamp author')
-    //.populate('author', 'name email')
     .execQ()
     .then(function(questions){
       domain.User.populateQ(questions, {path:'author subscribers answers.author', select: 'username displayName email'})
@@ -100,8 +97,6 @@ router.get('/most-wanted', function(req, res){
             .status(200)
             .send(questions);
         });
-
-
     })
     .catch(function(error){
       logger.error('Error getting questions', error);
