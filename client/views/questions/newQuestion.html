@@ -3,9 +3,9 @@
       <img ng-src="/api/files/avatar/{{user.username}}"></img>
       <span class="name">{{user.displayName}}</span>
   </div>
-  <form novalidate class="newQuestion-form" name="newQuestionForm" ng-submit="submit()">
+  <form novalidate class="newQuestion-form" name="newQuestionForm" ng-submit="newQuestionForm.$valid && submit()">
     <div class="form-group">
-        <input class="form-control" type="text" name="title" placeholder="Title" ng-model="title"></input>
+        <input class="form-control" required minlength="10" type="text" name="title" placeholder="Title" ng-model="title"></input>
     </div>
     <div>
       <wiz-markdown-editor content="body">
@@ -18,10 +18,11 @@
         <wiz-toolbar-button command="link" class="markdown-button"><i class="fa fa-link"></i> Link</wiz-toolbar-button>
         <wiz-toolbar-button command="img" class="markdown-button"><i class="fa fa-picture-o"></i> Img</wiz-toolbar-button>
       </wiz-markdown-editor>
+      <input type="text" name="body" ng-model="body" class="hidden" required minlength="30"></input>
     </div>
     <wiz-markdown content="body"></wiz-markdown>
     <div>
-      <tags-input ng-model="tags" display-property="text" add-on-space="true" placeholder="Add a tag">
+      <tags-input name="tags" min-tags="3" ng-model="tags" required display-property="text" add-on-space="true" placeholder="Add a tag">
         <auto-complete source="getTagsAutocomlete($query)" ></auto-complete>
       </tags-input>
       <div class="tags suggested" ng-show="suggestedTags.length > 0">
@@ -38,6 +39,29 @@
         <span class="tag" ng-click="addPerson(person)" ng-repeat="person in suggestedPeople track by $index">{{person.email}} <i class="fa fa-plus"></i></span>
       </div>
     </div>
-    <button class="form-submit action-button" type="submit">Post your question</button>
+      <div class="validation-messages" ng-show="!newQuestionForm.$valid && newQuestionForm.$submitted">
+        <ng-messages for="newQuestionForm.title.$error">
+          <ng-message when="required">
+            <p>Please enter title</p>
+          </ng-message>
+          <ng-message when="minlength">
+            <p>Title is too short</p>
+          </ng-message>
+        </ng-messages>
+        <ng-messages for="newQuestionForm.body.$error">
+          <ng-message when="required">
+            <p>Please enter your question</p>
+          </ng-message>
+          <ng-message when="minlength">
+            <p>Your question is too short</p>
+          </ng-message>
+        </ng-messages>
+        <ng-messages for="newQuestionForm.tags.$error">
+          <ng-message when="minTags">
+            <p>Please enter at least three tags</p>
+          </ng-message>
+        </ng-messages>
+      </div>
+    <button class="form-submit action-button" ng-disabled="newQuestionForm.$submitted && newQuestionForm.$invalid" type="submit">Post your question</button>
   </form>
 </div>

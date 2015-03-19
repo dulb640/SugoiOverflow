@@ -3,6 +3,7 @@ angular
 		['ngRoute',
     'angular-jwt',
     'ngStorage',
+    'ngMessages',
 		'ui.bootstrap',
     'angularFileUpload',
     'wiz.markdown',
@@ -68,5 +69,5 @@ angular
       })
       .otherwise({
         redirectTo: '/questions/suggested'
-      });      
+      });
 	});

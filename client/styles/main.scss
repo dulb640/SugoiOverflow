@@ -108,3 +108,11 @@ body {
     }
   }
 }
+
+tags-input.ng-invalid .tags{
+  box-shadow: none;
+}
+
+.validation-messages{
+  color: rgb(228,0,31);
+}
