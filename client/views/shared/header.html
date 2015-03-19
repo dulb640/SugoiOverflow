@@ -16,12 +16,12 @@
       <span class="profile-icon">{{user.profile.karma}}</span>
         <span class="profile-name">{{user.displayName || user.username}}</span>
       </a>
-      <ul class="dropdown-menu">
+      <ul class="dropdown-menu profile-menu">
         <li>
-          <a ng-href="/#/profile/me">Profile</a>
+          <a class="menu-link" ng-href="/#/profile/me">Profile</a>
         </li>
         <li>
-          <a ng-href="/#/logout">Logout</a>
+          <a class="menu-link" ng-href="/#/logout">Logout</a>
         </li>
       </ul>
     </span>
