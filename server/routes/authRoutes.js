@@ -33,12 +33,11 @@ function adIsDisabledResponse(req, res){
     .send('Active directory integration is disabled in configuration');
 }
 if(config('auth:ldap') && config('auth:active-directory')){
-  router.get('/active-directory', function (req, res) {
-    var adHeader = req.headers['x-iisnode-logon_user'];
-    if(adHeader){
+  router.get('/active-directory', passport.authenticate('WindowsAuthentication', { session: false }), function (req, res) {
+    if(req.user){
       res
         .send({
-          user: adHeader
+          user: req.user.email
         });
     } else{
       res

@@ -64,7 +64,7 @@ if(config('auth:local')){
   ));
 }
 
-var ldapConfig = config('ldap');
+var ldapConfig = config('auth:ldap');
 if(ldapConfig && config('auth:active-directory')){
   var WindowsStrategy = require('passport-windowsauth');
   var authCallback = function authCallback(profile, done){
@@ -80,7 +80,7 @@ if(ldapConfig && config('auth:active-directory')){
                 adId: profile.id,
                 username: profile._json.sAMAccountName,
                 email: profile.emails[0].value,
-                name: profile.displayName,
+                displayName: profile.displayName,
                 feed: feed.id
               });
 
@@ -90,6 +90,7 @@ if(ldapConfig && config('auth:active-directory')){
               done(null, newUser);
             })
             .catch(function(error){
+              done(null, false);
               logger.error('Error saving new user to database', error);
             });
         }
@@ -109,10 +110,9 @@ if(config('iis') && config('path')){
 
 var morganLogger = morgan('short');
 app.use(morganLogger);
-app.use(bodyParser.json());
-
 app.use(passport.initialize());
 
+app.use(bodyParser.json());
 app.use(function(req, res, next){
   if(req.user && !req.user.feed){
     var newFeed = new domain.UserFeed();
