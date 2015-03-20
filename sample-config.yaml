@@ -6,9 +6,15 @@ log-folder: "logs"
 mongo: "mongodb://username:password@localhost:10000/dbname"
 #Indicates if website is being hosted inside of Interent Information Services
 iis: false
-auth: 
+avatars:
+  size:
+    x: 320
+    y: 320
+  quality: 90
+  format: 'jpeg'
+auth:
   active-directory: false
-  ldap: 
+  ldap:
     url: "ldap://server.domain.com/DC=domain,DC=com"
     base: "DC=domain,DC=com"
     bindDN: "user@domain.com"
@@ -18,7 +24,7 @@ auth:
   #This should not be changed after users collection in database was populated with records
   pepper: "c6ca435e-8d90-11e4-b116-123b93f75cba"
   #Read more about jwt http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html
-  jwt: 
+  jwt:
     secretOrKey: "secret"
     issuer: "host.com"
     audience: "users.host.com"
