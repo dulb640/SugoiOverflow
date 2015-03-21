@@ -5,3 +5,6 @@
 
 # SugoiOverflow
 So much sugoi - it overflows
+
+### For contributors
+Please read the [contribution guide][./contribute.md]
