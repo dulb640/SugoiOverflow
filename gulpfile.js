@@ -185,6 +185,9 @@ gulp.task('connect', function(done){
 
 gulp.task('pack', ['clean', 'build'], function () {
   var buildNumber = gutil.env.TRAVIS_BUILD_NUMBER || args.buildNumber;
+  console.log('========== ' + buildNumber);
+  console.log('========== ');
+  console.log(gutil.env);
   var includeEnv = args.includeEnv || false;
 
   var packageJson = require('./package.json');
