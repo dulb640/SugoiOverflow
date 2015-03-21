@@ -34,3 +34,4 @@ server/iisnode
 bower_components
 build
 *.sublime-workspace
+dist

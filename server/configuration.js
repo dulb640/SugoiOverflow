@@ -1,7 +1,6 @@
 'use strict';
 
 var nconf = require('nconf');
-var util = require('util');
 
 var path  = require('path');
 var yaml = require('nconf-yaml');

@@ -1,6 +1,7 @@
 'use strict';
 
 var gulp =               require('gulp');
+var util =               require('util');
 var nodemon =            require('gulp-nodemon');
 var gutil =              require('gulp-util');
 var sourcemaps =         require('gulp-sourcemaps');
@@ -23,8 +24,15 @@ var connect =            require ('gulp-connect');
 var livereload =         require('gulp-livereload');
 var watch =              require ('gulp-watch');
 var mainBowerFiles =     require ('main-bower-files');
+var tar =                require('gulp-tar');
+var gzip =               require('gulp-gzip');
+var copy =               require('gulp-copy');
+var filter =             require('gulp-filter');
+var install =            require('gulp-install');
+var run =                require('gulp-run');
+var args =               require('yargs').argv;
 
-var envType = gutil.env.NODE_ENV || 'development';
+var envType = gutil.env.NODE_ENV || args.env || 'development';
 var isDev = envType === 'development';
 
 var paths = {
@@ -45,7 +53,7 @@ gulp.task('lint', function() {
 });
 
 gulp.task('clean', function(){
-  return gulp.src('build')
+  return gulp.src(['build', 'dist'])
     .pipe(rimraf());
 });
 
@@ -99,21 +107,13 @@ gulp.task('templates', function(){
   var scriptsLib = gulp.src(['scripts/lib/**/jquery.js',
                               'scripts/lib/**/angular.js',
                               'scripts/lib/**/bootstrap.js',
-                              'scripts/lib/**/*.js'],{
-    cwd: cwd
-  });
+                              'scripts/lib/**/*.js'],{ cwd: cwd });
 
-  var scriptsApp = gulp.src(['scripts/app/**/*.js'],{
-    cwd: cwd
-  }).pipe(angularFilesort());
+  var scriptsApp = gulp.src(['scripts/app/**/*.js'],{ cwd: cwd })
+    .pipe(angularFilesort());
 
-  var stylesLib = gulp.src(['styles/lib/**/*.css'],{
-    cwd: cwd
-  });
-
-  var stylesApp = gulp.src(['styles/app/**/*.css'],{
-    cwd: cwd
-  });
+  var stylesLib = gulp.src(['styles/lib/**/*.css'],{ cwd: cwd });
+  var stylesApp = gulp.src(['styles/app/**/*.css'],{ cwd: cwd });
 
   var index = gulp.src(paths.index, {base: 'client'})
           .pipe(inject(scriptsLib, {name: 'lib'}))
@@ -142,7 +142,7 @@ gulp.task('run', function(){
 gulp.task('run-dev', ['watch'], function(){
   nodemon({
     script: './server/index.js',
-    ext: 'js',
+    ext: 'js css html yaml json',
   })
   .on('change')
   .on('restart', function(){gutil.log('restarted!');});
@@ -185,6 +185,33 @@ gulp.task('connect', function(done){
   runSequence('build',
               'watch',
               callBack);
+});
+
+gulp.task('pack', ['clean', 'build'], function () {
+
+  var packageJson = require('./package.json');
+  var devDependencies = Object.keys(packageJson.devDependencies).map(function(dep){
+    return util.format('!./node_modules/%s/**/*.*', dep);
+  });
+
+  var srcList = ['./**/*.*',
+                 '!./bower_components/**/*.*',
+                 '!*.log',
+                 '!logs/**/*.*',
+                 '!client/**/*.*',
+                 '!gulpfile.js',
+                 '!./**/.*',
+                 '!./**/*.sublime-project',
+                 '!./**/*.sublime-workspace',
+                 '!./package.json',
+                 '!./bower.json',
+                 '!./config.yaml'].concat(devDependencies);
+
+  var name = util.format('sugoi-overflow-%s-%s[%s]', packageJson.version, Date.now(), envType);
+  return gulp.src(srcList)
+    .pipe(tar(util.format('%s.tar', name)))
+    .pipe(gzip())
+    .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('default', ['run']);
