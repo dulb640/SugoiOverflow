@@ -28,7 +28,7 @@ var tar =                require('gulp-tar');
 var gzip =               require('gulp-gzip');
 var args =               require('yargs').argv;
 
-var envType = gutil.env.NODE_ENV || args.env || 'development';
+var envType = process.env.NODE_ENV ||args.NODE_ENV || args.env || 'development';
 var isDev = envType === 'development';
 
 var paths = {
@@ -184,10 +184,8 @@ gulp.task('connect', function(done){
 });
 
 gulp.task('pack', ['clean', 'build'], function () {
-  var buildNumber = gutil.env.TRAVIS_BUILD_NUMBER || args.buildNumber;
-  console.log('========== ' + buildNumber);
-  console.log('========== ');
-  console.log(gutil.env);
+  var buildNumber = process.env.TRAVIS_BUILD_NUMBER || args.buildNumber;
+  var branch = process.env.TRAVIS_BRANCH || args.branch;
   var includeEnv = args.includeEnv || false;
 
   var packageJson = require('./package.json');
@@ -211,6 +209,10 @@ gulp.task('pack', ['clean', 'build'], function () {
   var name = util.format('sugoi-overflow-%s', packageJson.version);
   if(buildNumber){
     name = util.format('%s-%s', name, buildNumber);
+  }
+
+  if(branch){
+    name = util.format('%s[%s]', name, branch);
   }
 
   if(includeEnv){
