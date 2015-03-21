@@ -6,12 +6,20 @@ var passport =          require('passport');
 var JwtStrategy =       require('passport-jwt').Strategy;
 var path =              require('path');
 var morgan =            require('morgan');
-var mongoose =          require('mongoose-q')(require('mongoose'));
 var logger =            require('./logger');
 var config =            require('./configuration');
-var domain =            require('./domain');
 
 var mongoConnectionString = config('mongo');
+
+if(mongoConnectionString.substring(0, 7) ===('tingodb')){
+  global.TUNGUS_DB_OPTIONS =  { nativeObjectID: true, searchInArray: true };
+  require('tungus');
+}
+
+var mongoose =          require('mongoose-q')(require('mongoose'));
+var domain =            require('./domain');
+
+
 mongoose.connect(mongoConnectionString);
 
 var routes =            require('./routes');
