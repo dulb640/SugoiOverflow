@@ -26,10 +26,6 @@ var watch =              require ('gulp-watch');
 var mainBowerFiles =     require ('main-bower-files');
 var tar =                require('gulp-tar');
 var gzip =               require('gulp-gzip');
-var copy =               require('gulp-copy');
-var filter =             require('gulp-filter');
-var install =            require('gulp-install');
-var run =                require('gulp-run');
 var args =               require('yargs').argv;
 
 var envType = gutil.env.NODE_ENV || args.env || 'development';
