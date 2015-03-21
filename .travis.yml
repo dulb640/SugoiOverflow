@@ -6,8 +6,10 @@ node_js:
   - "0.6"
 env:
   - NODE_ENV=production
+before_script:
+  - npm install -g gulp
 script: gulp pack
 addons:
   artifacts:
     paths:
-      - $(ls ./dist/*.tar.gz)
+      - $(ls $TRAVIS_BUILD_DIR/dist/*.tar.gz)

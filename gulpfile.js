@@ -188,6 +188,8 @@ gulp.task('connect', function(done){
 });
 
 gulp.task('pack', ['clean', 'build'], function () {
+  var buildNumber = gutil.env.TRAVIS_BUILD_NUMBER || args.buildNumber;
+  var includeEnv = args.includeEnv || false;
 
   var packageJson = require('./package.json');
   var devDependencies = Object.keys(packageJson.devDependencies).map(function(dep){
@@ -207,7 +209,14 @@ gulp.task('pack', ['clean', 'build'], function () {
                  '!./bower.json',
                  '!./config.yaml'].concat(devDependencies);
 
-  var name = util.format('sugoi-overflow-%s-%s[%s]', packageJson.version, Date.now(), envType);
+  var name = util.format('sugoi-overflow-%s', packageJson.version);
+  if(buildNumber){
+    name = util.format('%s-%s', name, buildNumber);
+  }
+
+  if(includeEnv){
+    name = util.format('%s[%s]', name, envType);
+  }
   return gulp.src(srcList)
     .pipe(tar(util.format('%s.tar', name)))
     .pipe(gzip())
