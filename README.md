@@ -7,4 +7,4 @@
 So much sugoi - it overflows
 
 ### For contributors
-Please read the [contribution guide][./contribute.md]
+Please read the [contribution guide](./contribute.md)
