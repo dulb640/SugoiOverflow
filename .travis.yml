@@ -4,6 +4,8 @@ node_js:
   - "0.10"
 env:
   - NODE_ENV=production
+install:
+  - npm install --production=false
 before_script:
   - npm install -g gulp
 script: gulp pack
