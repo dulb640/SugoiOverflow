@@ -17,16 +17,19 @@ var minifyCss =          require('gulp-minify-css');
 var concatCss =          require('gulp-concat-css');
 var sass =               require('gulp-sass');
 var path =               require('path');
-var angularFilesort =    require ('gulp-angular-filesort');
-var inject =             require ('gulp-inject');
-var eventStream =        require ('event-stream');
-var connect =            require ('gulp-connect');
+var angularFilesort =    require('gulp-angular-filesort');
+var inject =             require('gulp-inject');
+var eventStream =        require('event-stream');
+var connect =            require('gulp-connect');
 var livereload =         require('gulp-livereload');
-var watch =              require ('gulp-watch');
-var mainBowerFiles =     require ('main-bower-files');
+var watch =              require('gulp-watch');
+var mainBowerFiles =     require('main-bower-files');
 var tar =                require('gulp-tar');
 var gzip =               require('gulp-gzip');
 var args =               require('yargs').argv;
+var coffee =             require('gulp-coffee');
+var mocha =              require('gulp-mocha');
+
 
 var envType = process.env.NODE_ENV ||args.NODE_ENV || args.env || 'development';
 var isDev = envType === 'development';
@@ -49,7 +52,7 @@ gulp.task('lint', function() {
 });
 
 gulp.task('clean', function(){
-  return gulp.src(['build', 'dist'])
+  return gulp.src(['build', 'dist', './serverTests/specs/.compiled'])
     .pipe(rimraf());
 });
 
@@ -222,6 +225,15 @@ gulp.task('pack', ['clean', 'build'], function () {
     .pipe(tar(util.format('%s.tar', name)))
     .pipe(gzip())
     .pipe(gulp.dest('./dist'));
+});
+
+gulp.task('test-server', ['clean'], function(){
+  gulp.src('./serverTests/specs/**/*.coffee')
+    .pipe(sourcemaps.init())
+    .pipe(coffee({bare: true}).on('error', gutil.log))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('./serverTests/specs/.compiled'))
+    .pipe(mocha({reporter: 'spec'}));
 });
 
 gulp.task('default', ['run']);

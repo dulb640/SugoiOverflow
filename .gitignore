@@ -36,3 +36,4 @@ build
 *.sublime-workspace
 dist
 data
+serverTests/specs/.compiled
