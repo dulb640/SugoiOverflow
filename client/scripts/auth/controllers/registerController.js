@@ -1,4 +1,4 @@
-angular.module('sugoiOverflow.shared')
+angular.module('sugoiOverflow.auth')
   .controller('registerController',
     function($scope, $q, $routeParams, $location, authService){
       'use strict';
@@ -19,6 +19,9 @@ angular.module('sugoiOverflow.shared')
           authService.localRegister(userDetails)
             .then(function(){
               $scope.registered = true;
+            })
+            .then(function(){
+              $location.path('/login');
             });
         },
         adLogin: function(){

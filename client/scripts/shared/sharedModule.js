@@ -8,4 +8,5 @@ angular.module('sugoiOverflow.shared', [
     'ngTagsInput',
     'pageslide-directive',
     'sugoiOverflow.settings',
-    'sugoiOverflow.templates']);
+    'sugoiOverflow.templates',
+    'sugoiOverflow.auth']);

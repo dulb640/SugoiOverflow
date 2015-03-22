@@ -1,4 +1,4 @@
-angular.module('sugoiOverflow.shared')
+angular.module('sugoiOverflow.auth')
   .factory('authService',
     function($http, $q, $localStorage, $timeout, currentUser) {
       'use strict';

@@ -14,20 +14,13 @@ angular
     'sugoiOverflow.shared',
 		'sugoiOverflow.interceptors',
     'sugoiOverflow.questionDetails',
-    'sugoiOverflow.profile'
+    'sugoiOverflow.profile',
+    'sugoiOverflow.auth'
 		])
 	.config(function($httpProvider, $routeProvider){
 		'use strict';
 
 		$routeProvider
-      .when('/login', {
-        templateUrl: 'scripts/shared/templates/auth/login.html',
-        controller: 'loginController'
-      })
-      .when('/register', {
-        templateUrl: 'scripts/shared/templates/auth/register.html',
-        controller: 'registerController'
-      })
       .when('/questions/new/', {
         templateUrl: 'scripts/shared/templates/questions/newQuestion.html',
         controller: 'newQuestionController'

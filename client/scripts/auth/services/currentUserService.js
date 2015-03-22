@@ -1,4 +1,4 @@
-angular.module('sugoiOverflow.shared')
+angular.module('sugoiOverflow.auth')
   .factory('currentUser',
     function($localStorage) {
       'use strict';

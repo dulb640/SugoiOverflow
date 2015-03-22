@@ -10,7 +10,8 @@ angular.module('sugoiOverflow.questionDetails', [
   'pageslide-directive',
   'sugoiOverflow.settings',
   'sugoiOverflow.shared',
-  'sugoiOverflow.templates'])
+  'sugoiOverflow.templates',
+  'sugoiOverflow.auth'])
 .config(function($httpProvider, $routeProvider){
     'use strict';
 
