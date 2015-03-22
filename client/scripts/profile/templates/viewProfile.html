@@ -1,0 +1,49 @@
+<div class="profile-layout container">
+  <div class="user-details">
+    <div class="profile-details">
+      <div class="name">{{name}}</div>
+      <div class="email">{{email}}</div>
+      <div class="location">{{location}}</div>
+      <div class="tags">
+        <a href="/#/questions/search/{{tag.text}}" class="tag" ng-repeat="tag in tags">{{tag.text}}</a>
+      </div>
+      <div class="edit-profile" ng-show="isOwnProfile">
+        <i class="fa fa-pencil"></i><a class="button" href="#/profile/me/edit" >Edit</a>
+      </div>
+
+      <div class="my-subcribed">
+
+      </div>
+    </div>
+    <div class="profile">
+        <img ng-src="/api/files/avatar/{{username}}" ></img>
+        <div class="karma">{{karma}}</div>
+    </div>
+  </div>
+
+  <div class="question-header">{{displayName}}'s Questions</div>
+  <div class="user-questions">
+
+
+    <div class="question-container" ng-repeat="question in questions">
+
+        <div class="question-content">
+
+          <div class="title">
+            <a ng-href = '/#/questions/{{question.id}}/answers'>{{question.title}}</a>
+          </div>
+          <div class="tags">
+            <a ng-href="/#/questions/search/{{tag.text}}" class="tag" ng-repeat="tag in question.tags">{{tag.text}}</a>
+          </div>
+          <div class="timestap">
+             <span ng-bind="question.timestamp | date:'medium'"></span>
+          </div>
+        </div>
+        <div class="question-status">
+
+          <div class="answers"><span>{{question.answerCount}}</span><span>answers</span></div>
+          <div class="subs"><span>{{question.subCount}}</span><span>subs</span></div>
+        </div>
+    </div>
+  </div>
+</div>

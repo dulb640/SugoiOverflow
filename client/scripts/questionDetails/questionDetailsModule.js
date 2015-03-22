@@ -10,4 +10,14 @@ angular.module('sugoiOverflow.questionDetails', [
   'pageslide-directive',
   'sugoiOverflow.settings',
   'sugoiOverflow.shared',
-  'sugoiOverflow.templates']);
+  'sugoiOverflow.templates'])
+.config(function($httpProvider, $routeProvider){
+    'use strict';
+
+    $routeProvider
+      .when('/questions/:id/answers', {
+        templateUrl: 'scripts/questionDetails/templates/questionDetails.html',
+        controller: 'questionDetailsController'
+      });
+  });
+

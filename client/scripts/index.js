@@ -13,7 +13,8 @@ angular
 		'sugoiOverflow.settings',
     'sugoiOverflow.shared',
 		'sugoiOverflow.interceptors',
-    'sugoiOverflow.questionDetails'
+    'sugoiOverflow.questionDetails',
+    'sugoiOverflow.profile'
 		])
 	.config(function($httpProvider, $routeProvider){
 		'use strict';
@@ -38,25 +39,6 @@ angular
       .when('/questions/:questionFilter?', {
         templateUrl: 'scripts/shared/templates/questions/questions.html',
         controller: 'questionsController'
-      })
-      .when('/questions/:id/answers', {
-        templateUrl: 'scripts/questionDetails/templates/questionDetails.html',
-        controller: 'questionDetailsController'
-      })
-      .when('/profile', {
-        redirectTo: '/profile/me'
-      })
-      .when('/profile/me', {
-        templateUrl: 'scripts/shared/templates/profile/viewProfile.html',
-        controller: 'viewProfileController'
-      })
-      .when('/profile/me/edit', {
-        templateUrl: 'scripts/shared/templates/profile/editProfile.html',
-        controller: 'editProfileController'
-      })
-      .when('/profile/:username', {
-        templateUrl: 'scripts/shared/templates/profile/viewProfile.html',
-        controller: 'viewProfileController'
       })
       .when('/logout', {
         template: '',
