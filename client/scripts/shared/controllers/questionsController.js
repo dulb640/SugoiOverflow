@@ -1,4 +1,4 @@
-angular.module('sugoiOverflow.controllers')
+angular.module('sugoiOverflow.shared')
   .controller('questionsController',
     function($scope, $q, $routeParams, $route, questionsDataService){
       'use strict';

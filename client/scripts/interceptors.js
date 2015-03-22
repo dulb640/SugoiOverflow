@@ -1,7 +1,7 @@
-angular.module('sugoiOverflow.interceptors', [])
+angular.module('sugoiOverflow.interceptors', ['sugoiOverflow.shared'])
 .config(function($httpProvider, jwtInterceptorProvider) {
   'use strict';
-    jwtInterceptorProvider.tokenGetter = 
+    jwtInterceptorProvider.tokenGetter =
       ['$localStorage', '$location', 'config', function($localStorage, $location, config) {
       if (config.url.substr(config.url.length - 5) === '.html') {
         return null;

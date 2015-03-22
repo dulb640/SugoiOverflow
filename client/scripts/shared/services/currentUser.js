@@ -1,4 +1,4 @@
-angular.module('sugoiOverflow.services')
+angular.module('sugoiOverflow.shared')
   .factory('currentUser',
     function($localStorage) {
       'use strict';
@@ -36,7 +36,7 @@ angular.module('sugoiOverflow.services')
 
     if(!service.isPopulated){
       service.clear();
-    }    
+    }
 
     return service;
 });

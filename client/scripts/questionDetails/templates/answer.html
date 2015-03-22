@@ -1,0 +1,39 @@
+<div class="answer">
+  <div class="user-info">
+    <div>
+      <a ng-href="/#/profile/{{answer.author.username}}">
+        <img ng-src="/api/files/avatar/{{answer.author.username}}" alt="avatar" />
+      </a>
+    </div>
+    <a class="profile-link" ng-href="/#/profile/{{answer.author.username}}">
+      <span>{{answer.author.displayName}}</span>
+    </a>
+    <div class="author-karma">{{answer.author.karma}}</div>
+  </div>
+  <div class="answer-content">
+    <div class="body markdown-output"  ng-bind-html="answer.body | wizMarkdownFltr"></div>
+    <div class="timestamp"  ng-bind="answer.timestamp | date:'medium'"></div>
+    <div class="answer-comments">
+      <div class="comment" ng-repeat="comment in answer.comments">
+        <div class="comment-body">{{comment.body}}</div>
+        <a class="comment-author" ng-href="/#/profile/{{comment.author}}">
+          <span>{{comment.author.displayName}}</span>
+        </a>
+        <div class="comment-timestap" ng-bind="comment.timestamp | date:'medium'"></div>
+      </div>
+      <div class="answer-add-comment">
+        <form novalidate class="add-comment-form" name="addCommentForm" ng-submit="submitComment()">
+          <textarea type = "text" ng-model="commentBody"></textarea>
+          <button class="form-submit action-button" type = "submit">Add Comment</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="score-container">
+    <button class="upvote-button action-button" type="button" ng-disable="votingInProgress || hasUpVoted()" ng-click="upvote()"><span class="fa fa-thumbs-up"></span></button>
+    <div class="score">{{answer.score}}</div>
+    <button class="downvote-button action-button red" type="button" ng-disable="votingInProgress || hasDownVoted()" ng-click="downvote()"><i class="fa fa-thumbs-down"></i></button>
+    <button class="action-button correct" type="button" ng-click="markAsCorrect()" ng-show="isOwnQuestion() && !answer.correct">Mark As Correct</button>
+    <div class="correct-label" ng-show="answer.correct">Correct!</div>
+  </div>
+</div>

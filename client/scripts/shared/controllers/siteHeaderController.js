@@ -1,4 +1,4 @@
-angular.module('sugoiOverflow.controllers')
+angular.module('sugoiOverflow.shared')
   .controller('siteHeaderController',
     function ($rootScope,
       $scope,

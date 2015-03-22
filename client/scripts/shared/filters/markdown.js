@@ -1,4 +1,4 @@
-/*angular.module('sugoiOverflow.filters').filter('markdown', function($sanitize) {
+/*angular.module('sugoiOverflow.shared').filter('markdown', function($sanitize) {
   'use strict';
   marked.setOptions({
     sanitize: true,

@@ -1,4 +1,4 @@
-angular.module('sugoiOverflow.controllers')
+angular.module('sugoiOverflow.shared')
   .controller('viewProfileController',
     function($scope, $q, $routeParams, tagsDataService, profilesDataService, questionsDataService){
       'use strict';

@@ -29,7 +29,7 @@ var gzip =               require('gulp-gzip');
 var args =               require('yargs').argv;
 var coffee =             require('gulp-coffee');
 var mocha =              require('gulp-mocha');
-
+var templateCache =      require('gulp-angular-templatecache');
 
 var envType = process.env.NODE_ENV ||args.NODE_ENV || args.env || 'development';
 var isDev = envType === 'development';
@@ -38,7 +38,7 @@ var paths = {
   scripts        : ['client/scripts/**/*.js'],
   css            : [],
   styles         : ['client/styles/**/*.scss'],
-  html           : ['client/views/**/*.html'],
+  html           : ['client/**/*.html'],
   index          : ['client/index.html'],
   bowerScripts   : mainBowerFiles({filter:/.*\.js$/i}),
   bowerStyles    : mainBowerFiles({filter:/.*\.css$/i}),
@@ -100,8 +100,13 @@ gulp.task('styles-app', function(){
     .pipe(livereload());
 });
 
-
 gulp.task('templates', function(){
+  gulp.src(paths.html)
+    .pipe(templateCache({standalone: true, module:'sugoiOverflow.templates'}))
+    .pipe(gulp.dest('build/scripts/app'));
+});
+
+gulp.task('inject-index', ['scripts-lib', 'scripts-app', 'styles-lib', 'styles-app', 'templates'], function(){
   var cwd = path.resolve(__dirname, './build');
   var scriptsLib = gulp.src(['scripts/lib/**/jquery.js',
                               'scripts/lib/**/angular.js',
@@ -114,23 +119,17 @@ gulp.task('templates', function(){
   var stylesLib = gulp.src(['styles/lib/**/*.css'],{ cwd: cwd });
   var stylesApp = gulp.src(['styles/app/**/*.css'],{ cwd: cwd });
 
-  var index = gulp.src(paths.index, {base: 'client'})
-          .pipe(inject(scriptsLib, {name: 'lib'}))
-          .pipe(inject(scriptsApp, {name: 'app'}))
-          .pipe(inject(stylesLib, {name: 'lib'}))
-          .pipe(inject(stylesApp, {name: 'app'}))
-          .pipe(gulp.dest('build'));
-
-  var html = gulp.src(paths.html, {base: 'client'})
-          .pipe(gulp.dest('build'));
-
-  return eventStream.merge(index, html);
+  return gulp.src(paths.index, {base: 'client'})
+    .pipe(inject(scriptsLib, {name: 'lib'}))
+    .pipe(inject(scriptsApp, {name: 'app'}))
+    .pipe(inject(stylesLib, {name: 'lib'}))
+    .pipe(inject(stylesApp, {name: 'app'}))
+    .pipe(gulp.dest('build'));
 });
 
 gulp.task('build', function(done){
   runSequence('clean',
-              ['scripts-lib', 'scripts-app', 'styles-lib', 'styles-app'],
-              'templates',
+              'inject-index',
               done);
 });
 

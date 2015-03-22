@@ -1,4 +1,4 @@
-angular.module('sugoiOverflow.controllers')
+angular.module('sugoiOverflow.shared')
   .controller('loginController',
     function($scope, $q, $routeParams, $location, authService){
       'use strict';

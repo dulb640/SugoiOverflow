@@ -9,53 +9,53 @@ angular
     'wiz.markdown',
     'ngTagsInput',
     'pageslide-directive',
+    'sugoiOverflow.templates',
 		'sugoiOverflow.settings',
-    'sugoiOverflow.services',
-		'sugoiOverflow.controllers',
+    'sugoiOverflow.shared',
 		'sugoiOverflow.interceptors',
-    'sugoiOverflow.filters'
+    'sugoiOverflow.questionDetails'
 		])
 	.config(function($httpProvider, $routeProvider){
 		'use strict';
 
 		$routeProvider
       .when('/login', {
-        templateUrl: 'views/auth/login.html',
+        templateUrl: 'scripts/shared/templates/auth/login.html',
         controller: 'loginController'
       })
       .when('/register', {
-        templateUrl: 'views/auth/register.html',
+        templateUrl: 'scripts/shared/templates/auth/register.html',
         controller: 'registerController'
       })
       .when('/questions/new/', {
-        templateUrl: 'views/questions/newQuestion.html',
+        templateUrl: 'scripts/shared/templates/questions/newQuestion.html',
         controller: 'newQuestionController'
       })
       .when('/questions/search/:searchTerms', {
-        templateUrl: 'views/questions/questions.html',
+        templateUrl: 'scripts/shared/templates/questions/questions.html',
         controller: 'questionsController'
       })
       .when('/questions/:questionFilter?', {
-        templateUrl: 'views/questions/questions.html',
+        templateUrl: 'scripts/shared/templates/questions/questions.html',
         controller: 'questionsController'
       })
       .when('/questions/:id/answers', {
-        templateUrl: 'views/questions/answerQuestion.html',
-        controller: 'answersController'
+        templateUrl: 'scripts/questionDetails/templates/questionDetails.html',
+        controller: 'questionDetailsController'
       })
       .when('/profile', {
         redirectTo: '/profile/me'
       })
       .when('/profile/me', {
-        templateUrl: 'views/profile/viewProfile.html',
+        templateUrl: 'scripts/shared/templates/profile/viewProfile.html',
         controller: 'viewProfileController'
       })
       .when('/profile/me/edit', {
-        templateUrl: 'views/profile/editProfile.html',
+        templateUrl: 'scripts/shared/templates/profile/editProfile.html',
         controller: 'editProfileController'
       })
       .when('/profile/:username', {
-        templateUrl: 'views/profile/viewProfile.html',
+        templateUrl: 'scripts/shared/templates/profile/viewProfile.html',
         controller: 'viewProfileController'
       })
       .when('/logout', {

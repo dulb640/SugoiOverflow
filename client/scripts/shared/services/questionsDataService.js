@@ -1,4 +1,4 @@
-angular.module('sugoiOverflow.services')
+angular.module('sugoiOverflow.shared')
   .factory('questionsDataService',
   function($http, $q){
     'use strict';
@@ -145,9 +145,9 @@ angular.module('sugoiOverflow.services')
         });
         return deferred.promise;
       },
-      upvoteAnswer: function(questionId, answer){
+      upvoteAnswer: function(questionId, answerId){
         var deferred = $q.defer();
-        $http.put(_.str.sprintf('/api/questions/%s/answer/%s/upvote', questionId, answer.id))
+        $http.put(_.str.sprintf('/api/questions/%s/answer/%s/upvote', questionId, answerId))
         .success(function(data){
           deferred.resolve(data);
         })
@@ -157,9 +157,9 @@ angular.module('sugoiOverflow.services')
 
         return deferred.promise;
       },
-      downvoteAnswer: function(questionId, answer){
+      downvoteAnswer: function(questionId, answerId){
         var deferred = $q.defer();
-        $http.put(_.str.sprintf('/api/questions/%s/answer/%s/downvote', questionId, answer.id))
+        $http.put(_.str.sprintf('/api/questions/%s/answer/%s/downvote', questionId, answerId))
         .success(function(data){
           deferred.resolve(data);
         })
@@ -169,9 +169,9 @@ angular.module('sugoiOverflow.services')
 
         return deferred.promise;
       },
-      markAnswerAsCorrect: function(questionId, answer){
+      markAnswerAsCorrect: function(questionId, answerId){
         var deferred = $q.defer();
-        $http.put(_.str.sprintf('/api/questions/%s/answer/%s/correct', questionId, answer.id))
+        $http.put(_.str.sprintf('/api/questions/%s/answer/%s/correct', questionId, answerId))
         .success(function(data){
           deferred.resolve(data);
         })

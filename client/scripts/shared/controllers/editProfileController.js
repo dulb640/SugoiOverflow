@@ -1,4 +1,4 @@
-angular.module('sugoiOverflow.controllers')
+angular.module('sugoiOverflow.shared')
   .controller('editProfileController',
     function($scope, $q, $routeParams, $location, $upload, tagsDataService, profilesDataService, $localStorage){
       'use strict';
