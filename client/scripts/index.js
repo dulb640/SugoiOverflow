@@ -13,7 +13,7 @@ angular
 		'sugoiOverflow.settings',
     'sugoiOverflow.shared',
 		'sugoiOverflow.interceptors',
-    'sugoiOverflow.questionDetails',
+    'sugoiOverflow.questions',
     'sugoiOverflow.profile',
     'sugoiOverflow.auth'
 		])

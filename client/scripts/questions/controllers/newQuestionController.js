@@ -1,4 +1,4 @@
-angular.module('sugoiOverflow.shared')
+angular.module('sugoiOverflow.questions')
   .controller('newQuestionController',
     function($scope, $q, $location, $timeout, questionsDataService, tagsDataService, profilesDataService, suggestionsDataService) {
       'use strict';

@@ -1,4 +1,4 @@
-angular.module('sugoiOverflow.questionDetails')
+angular.module('sugoiOverflow.questions')
   .controller('questionDetailsController',
     function($scope, $q, $routeParams, questionsDataService, currentUser){
       'use strict';

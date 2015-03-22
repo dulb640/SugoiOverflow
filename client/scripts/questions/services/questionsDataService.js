@@ -1,4 +1,4 @@
-angular.module('sugoiOverflow.shared')
+angular.module('sugoiOverflow.questions')
   .factory('questionsDataService',
   function($http, $q){
     'use strict';

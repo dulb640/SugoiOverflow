@@ -1,4 +1,4 @@
-angular.module('sugoiOverflow.questionDetails')
+angular.module('sugoiOverflow.questions')
   .directive('soAnswer', function(){
     'use strict';
 

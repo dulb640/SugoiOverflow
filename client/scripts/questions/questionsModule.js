@@ -1,4 +1,4 @@
-angular.module('sugoiOverflow.questionDetails', [
+angular.module('sugoiOverflow.questions', [
   'sugoiOverflow.shared',
   'angular-jwt',
   'ngStorage',
