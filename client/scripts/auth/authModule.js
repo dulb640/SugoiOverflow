@@ -17,5 +17,14 @@ angular.module('sugoiOverflow.auth', [
       .when('/register', {
         templateUrl: 'scripts/auth/templates/register.html',
         controller: 'registerController'
+      })
+      .when('/logout', {
+        template: '',
+        controller: function($location, authService){
+          authService.logout()
+            .then(function(){
+              $location.path('/login');
+            });
+        }
       });
   });

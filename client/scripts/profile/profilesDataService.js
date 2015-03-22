@@ -1,4 +1,4 @@
-angular.module('sugoiOverflow.shared')
+angular.module('sugoiOverflow.profile')
   .factory('profilesDataService',
     function($http, $q) {
       'use strict';

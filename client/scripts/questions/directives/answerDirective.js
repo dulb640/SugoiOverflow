@@ -4,7 +4,7 @@ angular.module('sugoiOverflow.questions')
 
     return {
       restrict: 'A',
-      templateUrl: 'scripts/questionDetails/templates/answer.html',
+      templateUrl: 'scripts/questions/templates/answer.html',
       scope: {
         answer: '=soAnswer',
         questionId: '=soAnswerQuestionId',
