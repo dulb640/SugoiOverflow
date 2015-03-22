@@ -228,12 +228,13 @@ gulp.task('pack', ['clean', 'build'], function () {
 });
 
 gulp.task('test-server', ['clean'], function(){
+  var reporter = process.env.CI ? 'spec' : 'nyan';
   gulp.src('./serverTests/specs/**/*.coffee')
     .pipe(sourcemaps.init())
     .pipe(coffee({bare: true}).on('error', gutil.log))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('./serverTests/specs/.compiled'))
-    .pipe(mocha({reporter: 'spec'}));
+    .pipe(mocha({reporter: reporter}));
 });
 
 gulp.task('default', ['run']);

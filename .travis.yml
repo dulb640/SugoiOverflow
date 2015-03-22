@@ -9,6 +9,7 @@ before_install:
   - npm install -g bower
   - bower install
   - npm install -g gulp
+before_script: gulp test-server
 script: gulp pack
 addons:
   artifacts:
