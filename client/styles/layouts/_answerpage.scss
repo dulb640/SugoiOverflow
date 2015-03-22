@@ -2,166 +2,172 @@
 @import 'helpers/flexbox';
 
 .markdown-output {
-	word-wrap: break-word;
-	a {
-	color: #428bca;
-	text-decoration: none;
-	}
+  word-wrap: break-word;
+
+  a {
+    color: $blue-darker;
+    text-decoration: none;
+  }
 }
 
-.questionSection .question-container {
-	border-bottom: 1px solid #ccc;
+.question-section .question-container {
+  border-bottom: 1px solid $gray-darker;
 
-	.question-content {
-		width: 100%;
-	}
+  .question-content {
+    width: 100%;
+  }
 
-	.title {
-		font-size: 20px;
-	}
+  .title {
+    font-size: 20px;
+  }
 
-	.subscribed-label {
-		color: $green-light;
-		font-size: 16px;
-		margin-top: 10px;
-		display: block;
-	}
+  .subscribed-label {
+    color: $green-light;
+    display: block;
+    font-size: 16px;
+    margin-top: 10px;
+  }
 
-	.answer-count {
-		font-size: 20px;
-		margin-top: 50px;
-	}
-
-
+  .answer-count {
+    font-size: 20px;
+    margin-top: 50px;
+  }
 }
 
-.answerSection {
-	margin-bottom: 20px;
+.answer-section {
+  margin-bottom: 20px;
 }
 
-.answers-container {
-	@extend %display-flex;
-	@include flex-direction(row);
+.answer {
+  @extend %display-flex;
+  @include flex-direction(row);
 
-	border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid $gray-darker;
 
-	margin-bottom: 10px;
-	margin-top: 10px;
+  margin-bottom: 10px;
+  margin-top: 10px;
 
-	.score-container {
-		@extend %display-flex;
-		@include flex-direction(column);
-		@include flex-align-items(center);
+  .score-container {
+    @extend %display-flex;
+    @include flex-direction(column);
+    @include flex-align-items(center);
 
-		width: 10%;
-		text-align: center;
+    text-align: center;
+    width: 10%;
 
-		.score, .correct-label {
-			font-size: 18px;
-			padding: 10px;
-		}
+    .score,
+    .correct-label {
+      font-size: 18px;
+      padding: 10px;
+    }
 
+    .action-button {
+      width: 50px;
 
-		.action-button {
-			width: 50px;
-
-      &.correct{
+      &.correct {
         width: 80px;
       }
-		}
-	}
+    }
+  }
 
-	.answer-content {
-		word-wrap: break-word;
+  .answer-content {
+    padding: 5px;
+    padding-left: 20px;
+    width: 75%;
+    word-wrap: break-word;
 
-		width: 75%;
-		padding: 5px;
-		padding-left: 20px;
-
-		h1, h2, h3, h4, h5 {
-			margin-top: 5px;
-		}
-	}
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      margin-top: 5px;
+    }
+  }
 }
 
 .user-info {
-	display: flex;
 
-	@include flex-direction(column);
-	@include flex-align-items(center);
+  @include flex-direction(column);
+  @include flex-align-items(center);
 
-	width: 15%;
-	min-width: 170px;
-	background-color: #f8f8f8;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	height: 210px;
-	margin-bottom: 15px;
+  background-color: $light;
+  display: flex;
+  height: 210px;
+  margin-bottom: 15px;
+  min-width: 170px;
+  padding-top: 10px;
+  width: 15%;
 
-	.profile-link {
-		font-size: 16px;
-		margin: 5px 0 5px 0;
-		display: block;
+  .profile-link {
+    display: block;
+    font-size: 16px;
+    margin: 5px 0;
 
-		&:hover {
-			color: $teal;
-		}
-	}
+    &:hover {
+      color: $teal;
+    }
+  }
 
-	.author-name {
-		font-size: 16px;
-	}
+  .author-name {
+    font-size: 16px;
+  }
 
-	.author-karma {
-		padding: 4px;
-		font-size: 16px;
-		color: $green-light;
-		font-weight: bold;
-	}
+  .author-karma {
+    color: $green-light;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 4px;
+  }
 
-	img {
-		max-width: 150px;
-		max-height: 150px;
-	}
+  img {
+    max-height: 150px;
+    max-width: 150px;
+  }
 }
 
 .subscribe-button,
 .subscribed-label {
-	float: right;
+  float: right;
 }
 
 .answer-comments,
 .question-comments {
-	margin-top: 10px;
+  margin-top: 10px;
 
-	textarea {
-		display: block;
-		width: 400px;
-		min-height: 75px;
-		margin-bottom: 5px;
-	}
+  textarea {
+    display: block;
+    margin-bottom: 5px;
+    min-height: 75px;
+    width: 400px;
+  }
 
-	.comment {
-		background-color: #f8f8f8;
-		padding: 10px;
-		margin-bottom: 10px;
+  .comment {
+    background-color: $light;
+    margin-bottom: 10px;
+    padding: 10px;
 
-		.comment-author {
-			color: $gray-text-normal;
+    .comment-footer {
+      text-align: right;
+      width: 100%;
+    }
 
-			&:hover {
-				color: $teal;
-			}
-		}
+    .comment-author {
+      color: $gray-text-normal;
 
-		.comment-body {
-			margin-bottom: 5px;
-		}
+      &:hover {
+        color: $teal;
+      }
+    }
 
-		.comment-author,
-		.comment-timestap {
-			font-size: 12px;
-			text-align: right;
-		}
-	}
+    .comment-body {
+      margin-bottom: 5px;
+    }
+
+    .comment-author,
+    .comment-timestap {
+      font-size: 12px;
+      text-align: right;
+    }
+  }
 }

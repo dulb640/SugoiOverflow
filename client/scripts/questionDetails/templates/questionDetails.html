@@ -1,5 +1,5 @@
 <div class="answerQuestion-layout container">
-  <div class="questionSection">
+  <div class="question-section">
     <div class="question-container">
       <div class="question-content">
         <div class="title" ng-bind-html="title | wizMarkdownFltr"></div>
@@ -49,12 +49,8 @@
        so-answer-on-update="loadQuestion"></div>
     </div>
   </div>
-  <div class="answerSection">
-    <div class="answerQuestion-Profile">
-      <img ng-src="/api/files/avatar/{{user.username}}"></img>
-      <span class="name">{{user.displayName}}</span>
-    </div>
-    <form novalidate class="answerQuestion-form" name="answerQuestionForm" ng-submit="submitAnswer()">
+  <div class="answer-section">
+    <form novalidate class="answer-question-form" name="answer-question-form" ng-submit="submitAnswer()">
       <div>
         <wiz-markdown-editor content="answer">
         <wiz-toolbar-button command="bold" class="markdown-button"><i class="fa fa-bold"></i> Bold</wiz-toolbar-button>
