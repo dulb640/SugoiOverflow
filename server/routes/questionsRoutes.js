@@ -163,6 +163,12 @@ router.put('/:id/subscribe', function(req, res){
       return question.saveQ();
     })
     .then(function(question){
+      return question.populateQ('author subscribers upVotes downVotes', 'username displayName email');
+    })
+    .then(function(question){
+      return question.populateQ('answers.author comments.author answers.comments.author', 'username displayName email');
+    })
+    .then(function(question){
       res
         .status(200)
         .send(question);
@@ -222,10 +228,6 @@ router.get('/tag/:tag', function(req, res){
     });
 });
 
-/**
- * Add answer
- */
-
 function updateUserQuestionsFeed(user, question, message){
   return user.populateQ('feed', 'questionNotifications')
     .then(function(user){
@@ -241,6 +243,9 @@ function updateUserQuestionsFeed(user, question, message){
     });
 }
 
+/**
+ * Add answer
+ */
 router.post('/:questionId/answer', function(req, res){
   domain.Question.findByIdQ(req.params.questionId)
     .then(function (question){
@@ -252,6 +257,12 @@ router.post('/:questionId/answer', function(req, res){
       question.answers.push(answer);
 
       return question.saveQ();
+    })
+    .then(function(question){
+      return question.populateQ('author subscribers upVotes downVotes', 'username displayName email');
+    })
+    .then(function(question){
+      return question.populateQ('answers.author comments.author answers.comments.author', 'username displayName email');
     })
     .then(function(question){
       return domain.User.findByIdQ(req.user.id)
@@ -297,6 +308,12 @@ router.post('/:questionId/comment', function(req, res){
       body: req.body.body
     });
     return question.saveQ();
+  })
+  .then(function(question){
+      return question.populateQ('author subscribers upVotes downVotes', 'username displayName email');
+    })
+  .then(function(question){
+    return question.populateQ('answers.author comments.author answers.comments.author', 'username displayName email');
   })
   .then(function(question){
       return domain.User.findByIdQ(req.user.id)
@@ -351,6 +368,12 @@ router.post('/:questionId/answer/:answerId/comment', function(req, res){
       return question.saveQ();
     })
     .then(function(question){
+      return question.populateQ('author subscribers upVotes downVotes', 'username displayName email');
+    })
+    .then(function(question){
+      return question.populateQ('answers.author comments.author answers.comments.author', 'username displayName email');
+    })
+    .then(function(question){
       res
         .status(200)
         .send(question);
@@ -389,6 +412,12 @@ router.put('/:questionId/answer/:answerId/correct', function(req, res){
         });
     })
     .then(function(question){
+      return question.populateQ('author subscribers upVotes downVotes', 'username displayName email');
+    })
+    .then(function(question){
+      return question.populateQ('answers.author comments.author answers.comments.author', 'username displayName email');
+    })
+    .then(function(question){
       res
         .status(200)
         .send(question);
@@ -418,6 +447,12 @@ router.put('/:questionId/answer/:answerId/upvote', function(req, res){
       return question.saveQ();
     })
     .then(function(question){
+      return question.populateQ('author subscribers upVotes downVotes', 'username displayName email');
+    })
+    .then(function(question){
+      return question.populateQ('answers.author comments.author answers.comments.author', 'username displayName email');
+    })
+    .then(function(question){
       res
         .status(200)
         .send(question);
@@ -445,6 +480,12 @@ router.put('/:questionId/answer/:answerId/downvote', function(req, res){
         answer.downVotes.push(req.user.id);
       }
       return question.saveQ();
+    })
+    .then(function(question){
+      return question.populateQ('author subscribers upVotes downVotes', 'username displayName email');
+    })
+    .then(function(question){
+      return question.populateQ('answers.author comments.author answers.comments.author', 'username displayName email');
     })
     .then(function(question){
       res
