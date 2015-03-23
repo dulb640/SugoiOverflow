@@ -16,7 +16,7 @@ angular.module('sugoiOverflow.questions')
         $scope.timestamp = question.timestamp;
         $scope.answers = question.answers;
         $scope.subscribers = question.subscribers;
-        $scope.questionComments = question.comments;
+        $scope.comments = question.comments;
         $scope.answer = '';
         $scope.questionComment = '';
       }
