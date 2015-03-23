@@ -11,7 +11,7 @@ mongoose = mongooseQ mongoose
 chai.use sinonChai
 
 config = sinon.stub().returns ''
-UserSchema = proxyquire '../../../server/domain/userSchema.js',
+UserSchema = proxyquire '../../server/domain/userSchema.js',
                         '../configuration': config
 UserModel = mongoose.model 'User', UserSchema
 

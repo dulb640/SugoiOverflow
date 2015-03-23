@@ -2,6 +2,7 @@ angular.module('sugoiOverflow.auth', [
   'angular-jwt',
   'ngStorage',
   'ngMessages',
+  'ngRoute',
   'ui.bootstrap',
   'sugoiOverflow.settings',
   'sugoiOverflow.shared',

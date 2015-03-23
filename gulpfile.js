@@ -30,6 +30,7 @@ var args =               require('yargs').argv;
 var coffee =             require('gulp-coffee');
 var mocha =              require('gulp-mocha');
 var templateCache =      require('gulp-angular-templatecache');
+var karma =              require('karma').server;
 
 var envType = process.env.NODE_ENV ||args.NODE_ENV || args.env || 'development';
 var isDev = envType === 'development';
@@ -228,12 +229,18 @@ gulp.task('pack', ['clean', 'build'], function () {
 
 gulp.task('test-server', ['clean'], function(){
   var reporter = process.env.CI ? 'spec' : 'nyan';
-  gulp.src('./serverTests/specs/**/*.coffee')
-    .pipe(sourcemaps.init())
-    .pipe(coffee({bare: true}).on('error', gutil.log))
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./serverTests/specs/.compiled'))
+  return gulp.src('./serverTests/specs/**/*.spec.coffee')
     .pipe(mocha({reporter: reporter}));
+});
+
+gulp.task('test-client', ['clean'], function(done) {
+  var reporter = process.env.CI ? 'spec' : 'nyan';
+  karma.start({
+    configFile: __dirname + '/karma.conf.coffee',
+    singleRun: true,
+    action: 'run',
+    reporters: [reporter]
+  }, done);
 });
 
 gulp.task('default', ['run']);

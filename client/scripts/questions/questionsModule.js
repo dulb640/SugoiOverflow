@@ -1,6 +1,7 @@
 angular.module('sugoiOverflow.questions', [
   'sugoiOverflow.shared',
   'angular-jwt',
+  'ngRoute',
   'ngStorage',
   'ngMessages',
   'ui.bootstrap',

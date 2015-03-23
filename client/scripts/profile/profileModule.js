@@ -2,6 +2,7 @@ angular.module('sugoiOverflow.profile', [
   'sugoiOverflow.shared',
   'angular-jwt',
   'ngStorage',
+  'ngRoute',
   'ngMessages',
   'ui.bootstrap',
   'angularFileUpload',
