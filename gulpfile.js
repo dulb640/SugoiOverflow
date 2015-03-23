@@ -227,13 +227,13 @@ gulp.task('pack', ['clean', 'build'], function () {
     .pipe(gulp.dest('./dist'));
 });
 
-gulp.task('test-server', ['clean'], function(){
+gulp.task('test-server', function(){
   var reporter = process.env.CI ? 'spec' : 'nyan';
   return gulp.src('./serverTests/specs/**/*.spec.coffee')
     .pipe(mocha({reporter: reporter}));
 });
 
-gulp.task('test-client', ['clean'], function(done) {
+gulp.task('test-client', function(done) {
   var reporter = process.env.CI ? 'spec' : 'nyan';
   karma.start({
     configFile: __dirname + '/karma.conf.coffee',
@@ -242,5 +242,7 @@ gulp.task('test-client', ['clean'], function(done) {
     reporters: [reporter]
   }, done);
 });
+
+gulp.task('test', ['test-server', 'test-client']);
 
 gulp.task('default', ['run']);
