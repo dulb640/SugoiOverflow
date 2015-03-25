@@ -142,5 +142,36 @@ app.use(function(req, res, next){
 app.use('/api', routes);
 app.use('/content', express.static(path.join(__dirname, '../content')));
 app.use(express.static(path.join(__dirname, '../build')));
+app.use(function(error, req, res, next) {
+  switch(error.name){
+    case 'JsonSchemaValidation':
+      logger.warn('Validation failed for user %s trying to %s %s',
+        req.user.username,
+        req.method,
+        req.url,
+      error);
+
+      res
+        .status(400)
+        .send({
+          statusText: 'Bad Request',
+          jsonSchemaValidation: true,
+          validations: error.validations
+        });
+
+      return next();
+
+    default:
+    console.error('Unexpected error!', error);
+      res
+        .status(500)
+        .send({
+          statusText: 'Internal server error'
+        });
+
+      return next();
+    }
+    next(error);
+});
 
 app.listen(config('PORT') || config('port'));

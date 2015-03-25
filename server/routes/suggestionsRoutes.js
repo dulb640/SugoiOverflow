@@ -8,7 +8,7 @@ var router  = express.Router();
 var logger      = require('../logger');
 
 
-router.post('/tags', function(req, res){
+router.post('/tags', function(req, res, next){
   var text = req.body.question;
   //bad bad bad bad sync call
   var words = gramophone.extract(text, {limit: 6, min: 2});
@@ -30,16 +30,15 @@ router.post('/tags', function(req, res){
       res
         .status(200)
         .send(tags);
+      next();
     })
     .catch(function(error){
       logger.error('Error getting tags suggestion', error);
-      res
-        .status(500)
-        .send();
+      next(error);
     });
 });
 
-router.post('/people', function(req, res){
+router.post('/people', function(req, res, next){
   var text = req.body.question;
   //bad bad bad bad sync call
   var words = gramophone.extract(text, {limit: 6, min: 2});
@@ -75,12 +74,11 @@ router.post('/people', function(req, res){
       res
         .status(200)
         .send(people);
+      next();
     })
     .catch(function(error){
       logger.error('Error getting people suggestion', error);
-      res
-        .status(500)
-        .send();
+      next(error);
     });
 
 });

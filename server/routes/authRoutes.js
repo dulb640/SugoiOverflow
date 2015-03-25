@@ -9,7 +9,7 @@ var config = require('../configuration');
 var router = express.Router();
 var jwtOptions = config('auth:jwt');
 
-function generateJwt (req, res){
+function generateJwt (req, res, next){
   var payload = {
     iss: jwtOptions.issuer,
     aud: jwtOptions.audience,
@@ -26,14 +26,17 @@ function generateJwt (req, res){
   res
     .status(200)
     .send(result);
+
+  next();
 }
-function adIsDisabledResponse(req, res){
+function adIsDisabledResponse(req, res, next){
   res
     .status(400)
     .send('Active directory integration is disabled in configuration');
+  next();
 }
 if(config('auth:ldap') && config('auth:active-directory')){
-  router.get('/active-directory', passport.authenticate('WindowsAuthentication', { session: false }), function (req, res) {
+  router.get('/active-directory', passport.authenticate('WindowsAuthentication', { session: false }), function (req, res, next) {
     if(req.user){
       res
         .send({
@@ -43,6 +46,7 @@ if(config('auth:ldap') && config('auth:active-directory')){
       res
         .send();
     }
+    next();
   });
   router.post('/active-directory', passport.authenticate('WindowsAuthentication', { session: false }), generateJwt);
 } else {
@@ -52,7 +56,7 @@ if(config('auth:ldap') && config('auth:active-directory')){
 
 if(config('auth:local')){
   router.post('/local', passport.authenticate('local', { session: false }), generateJwt);
-  router.post('/local/register', function (req, res) {
+  router.post('/local/register', function (req, res, next) {
     new domain.UserFeed().saveQ()
     .then(function (feed) {
       var newUser = new domain.User({
@@ -71,19 +75,20 @@ if(config('auth:local')){
       res
         .status(200)
         .send();
+
+      next();
     })
     .catch(function (error) {
       logger.error('Error during registration of new user with username %s', req.body.username, error);
-      res
-        .status(500)
-        .send();
+      next(error);
     });
   });
 } else {
-  var disabledHandler = function (req, res){
+  var disabledHandler = function (req, res, next){
     res
       .status(400)
       .send('Local authentication is disabled in configuration');
+    next();
   };
 
   router.post('/local', disabledHandler);

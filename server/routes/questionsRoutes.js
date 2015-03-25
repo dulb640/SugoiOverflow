@@ -5,14 +5,14 @@ var logger      = require('../logger');
 
 var _           = require('lodash');
 var express     = require('express');
-
+var validate    = require('express-jsonschema').validate;
 var router      = express.Router();
-
+var schemas     = require('./schemas');
 
 /**
  * Get all questions
  */
-router.get('/', function(req, res){
+router.get('/', function(req, res, next){
   domain.Question
     .find()
     .select('id title body answers.author answers.timestamp answers.correct subscribers tags timestamp author')
@@ -22,19 +22,18 @@ router.get('/', function(req, res){
       res
         .status(200)
         .send(questions);
+      next();
     })
     .catch(function(error){
       logger.error('Error getting questions', error);
-      res
-        .status(500)
-        .send();
+      next(error);
     });
 });
 
 /**
  * Get suggested questions
  */
-router.get('/suggested', function(req, res){
+router.get('/suggested', function(req, res, next){
   domain.User
     .findByIdQ(req.user.id)
     .then(function(user){
@@ -48,12 +47,11 @@ router.get('/suggested', function(req, res){
           res
             .status(200)
             .send(questions);
+          next();
         })
         .catch(function(error){
           logger.error('Error getting questions', error);
-          res
-            .status(500)
-            .send();
+          next(error);
         });
     });
 });
@@ -61,7 +59,7 @@ router.get('/suggested', function(req, res){
 /**
  * Get most wanted questions
  */
-router.get('/most-wanted', function(req, res){
+router.get('/most-wanted', function(req, res, next){
   domain.Question
     .aggregate([{
         $match:{ 'answers.correct': {$ne: true}}},{
@@ -96,20 +94,19 @@ router.get('/most-wanted', function(req, res){
           res
             .status(200)
             .send(questions);
+          next();
         });
     })
     .catch(function(error){
       logger.error('Error getting questions', error);
-      res
-        .status(500)
-        .send();
+      next(error);
     });
 });
 
 /**
  * Get all questions by user
  */
-router.get('/profile/:id', function(req, res){
+router.get('/profile/:id', function(req, res, next){
   domain.User
     .findByIdQ(req.params.id)
     .then(function(user){
@@ -118,13 +115,12 @@ router.get('/profile/:id', function(req, res){
           res
             .status(200)
             .send(user.profile.asked);
+            next();
         });
     })
     .catch(function(error){
       logger.error('Error getting questions', error);
-      res
-        .status(500)
-        .send();
+      next(error);
     });
 });
 
@@ -132,7 +128,7 @@ router.get('/profile/:id', function(req, res){
 /**
  * Get question by id
  */
-router.get('/:id', function(req, res){
+router.get('/:id', function(req, res, next){
   domain.Question.findByIdQ(req.params.id)
     .then(function(question){
       return question.populateQ('author subscribers upVotes downVotes', 'username displayName email');
@@ -144,19 +140,18 @@ router.get('/:id', function(req, res){
       res
         .status(200)
         .send(question);
+      next();
     })
     .catch(function(error){
       logger.error('Error getting answer', error);
-      res
-        .status(500)
-        .send();
+      next(error);
     });
 });
 
 /**
  * Subscribe to question
  */
-router.put('/:id/subscribe', function(req, res){
+router.put('/:id/subscribe', function(req, res, next){
   domain.Question.findByIdQ(req.params.id)
     .then(function(question){
       question.subscribers.push(req.user.id);
@@ -172,19 +167,18 @@ router.put('/:id/subscribe', function(req, res){
       res
         .status(200)
         .send(question);
+      next();
     })
     .catch(function(error){
       logger.error('Error getting answer', error);
-      res
-        .status(500)
-        .send();
+      next(error);
     });
 });
 
 /**
  * Fulltext search for questions
  */
-router.get('/search/:term', function(req, res){
+router.get('/search/:term', function(req, res, next){
   domain.Question
     .find(
         { $text : { $search : req.params.term } },
@@ -197,19 +191,18 @@ router.get('/search/:term', function(req, res){
       res
         .status(200)
         .send(questions);
+      next();
     })
     .catch(function(error){
       logger.error('Error getting questions', error);
-      res
-        .status(500)
-        .send();
+      next(error);
     });
 });
 
 /**
  * Get questions by tag
  */
-router.get('/tag/:tag', function(req, res){
+router.get('/tag/:tag', function(req, res, next){
   domain.Question
     .find(
       { tags : req.params.tag }
@@ -219,12 +212,11 @@ router.get('/tag/:tag', function(req, res){
       res
         .status(200)
         .send(questions);
+      next();
     })
     .catch(function(error){
       logger.error('Error getting questions by tag', error);
-      res
-        .status(500)
-        .send();
+      next(error);
     });
 });
 
@@ -246,7 +238,7 @@ function updateUserQuestionsFeed(user, question, message){
 /**
  * Add answer
  */
-router.post('/:questionId/answer', function(req, res){
+router.post('/:questionId/answer', function(req, res, next){
   domain.Question.findByIdQ(req.params.questionId)
     .then(function (question){
       var answer = new domain.Answer({
@@ -274,6 +266,7 @@ router.post('/:questionId/answer', function(req, res){
         res
           .status(200)
           .send(question);
+        next();
 
         question.populateQ('subscribers', 'feed')
           .then(function(questionPop){
@@ -289,18 +282,17 @@ router.post('/:questionId/answer', function(req, res){
         res
           .status(200)
           .send(question);
+        next();
     })
     .catch(function(error){
       logger.error('Error posting answer', error);
-      res
-        .status(500)
-        .send();
+      next(error);
     });
 });
 
 
 /* Add comment for question */
-router.post('/:questionId/comment', function(req, res){
+router.post('/:questionId/comment', function(req, res, next){
   domain.Question.findByIdQ(req.params.questionId)
   .then(function(question) {
     question.comments.push({
@@ -325,6 +317,7 @@ router.post('/:questionId/comment', function(req, res){
         res
           .status(200)
           .send(question);
+        next();
 
         question.populateQ('subscribers', 'feed')
           .then(function(questionPop){
@@ -338,18 +331,17 @@ router.post('/:questionId/comment', function(req, res){
         res
           .status(200)
           .send(question);
+        next();
     })
     .catch(function(error){
       logger.error('Error posting comment', error);
-      res
-        .status(500)
-        .send();
+      next(error);
     });
 });
 
 
 /* Add comment for answer */
-router.post('/:questionId/answer/:answerId/comment', function(req, res){
+router.post('/:questionId/answer/:answerId/comment', function(req, res, next){
   domain.Question.findByIdQ(req.params.questionId)
     .then(function (question){
       var answer = question.answers.id(req.params.answerId);
@@ -377,19 +369,18 @@ router.post('/:questionId/answer/:answerId/comment', function(req, res){
       res
         .status(200)
         .send(question);
+      next();
     })
     .catch(function(error){
       logger.error('Error adding comment', error, error.errors);
-      res
-        .status(500)
-        .send();
+      next(error);
     });
 });
 
 /**
  * Mark answer as correct
  */
-router.put('/:questionId/answer/:answerId/correct', function(req, res){
+router.put('/:questionId/answer/:answerId/correct', function(req, res, next){
   domain.Question.findByIdQ(req.params.questionId)
     .then(function (question){
       return question.populateQ('answers.author', 'username displayName email profile.karmaChanges feed')
@@ -421,19 +412,18 @@ router.put('/:questionId/answer/:answerId/correct', function(req, res){
       res
         .status(200)
         .send(question);
+      next();
     })
     .catch(function(error){
       logger.error('Error marking answer as correct', error);
-      res
-        .status(500)
-        .send();
+      next(error);
     });
 });
 
 /**
  * Upvote answer
  */
-router.put('/:questionId/answer/:answerId/upvote', function(req, res){
+router.put('/:questionId/answer/:answerId/upvote', function(req, res, next){
   domain.Question.findByIdQ(req.params.questionId)
     .then(function (question){
       var answer = question.answers.id(req.params.answerId);
@@ -456,19 +446,18 @@ router.put('/:questionId/answer/:answerId/upvote', function(req, res){
       res
         .status(200)
         .send(question);
+      next();
     })
     .catch(function(error){
       logger.error('Error upvoting an answer', error);
-      res
-        .status(500)
-        .send();
+      next(error);
     });
 });
 
 /**
  * Downvote answer
  */
-router.put('/:questionId/answer/:answerId/downvote', function(req, res){
+router.put('/:questionId/answer/:answerId/downvote', function(req, res, next){
   domain.Question.findByIdQ(req.params.questionId)
     .then(function (question){
       var answer = question.answers.id(req.params.answerId);
@@ -491,48 +480,21 @@ router.put('/:questionId/answer/:answerId/downvote', function(req, res){
       res
         .status(200)
         .send(question);
+      next();
     })
     .catch(function(error){
       logger.error('Error upvoting an answer', error);
-      res
-        .status(500)
-        .send();
+      next(error);
     });
 });
 
 /**
  * Add question
  */
-router.post('/', function(req, res){
-  var question = new domain.Question(_.extend(req.body, {author: req.user.id}));
-  question.subscribers.push(req.user.id);
-
-  question
-    .saveQ()
-    .then(function(question){
-      return domain.User.findByIdQ(req.user.id)
-      .then(function(user){
-        user.profile.asked.push(question.id);
-        return user.saveQ();
-      })
-      .then(function(){
-        res
-          .status(200)
-          .send(question);
-        question.populateQ('proposedPeople', 'feed')
-          .then(function(questionPop){
-            questionPop.proposedPeople.forEach(function(prop){
-              updateUserQuestionsFeed(prop, question, 'You have been proposed to answer the question');
-            });
-          });
-      });
-    })
-    .catch(function(error){
-      logger.error('Error posting question', error, error.errors);
-      res
-        .status(500)
-        .send();
-    });
+router.post('/', validate({body: schemas.addOrEditQuestionSchema}), function(req, res, next){
+  res
+          .status(200).send();
+next();
 });
 
 

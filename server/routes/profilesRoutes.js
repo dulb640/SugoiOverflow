@@ -7,7 +7,7 @@ var router  = express.Router();
 
 
 
-router.get('/', function(req, res){
+router.get('/', function(req, res, next){
   domain.User
     .find()
     .select('username displayName email profile')
@@ -16,40 +16,42 @@ router.get('/', function(req, res){
       res
         .status(200)
         .send(users);
+
+      next();
     })
     .catch(function(error){
       logger.error('Error getting profiles', error);
-      res
-        .status(500)
-        .send();
+      next(error);
     });
 });
 
 
 
-router.get('/me', function(req, res){
-      res
-        .status(200)
-        .send(req.user);
+router.get('/me', function(req, res, next){
+    res
+      .status(200)
+      .send(req.user);
+
+    next();
 });
 
-router.get('/me/feed', function(req, res){
+router.get('/me/feed', function(req, res, next){
   req.user.populateQ('feed', 'questionNotifications')
     .then(function(user){
       var feed = user.feed;
       res
         .status(200)
         .send(feed);
+
+      next();
     })
     .catch(function(error){
       logger.error('Error getting user feed', error);
-      res
-        .status(500)
-        .send();
+      next(error);
     });
 });
 
-router.put('/me/feed/:notificationId/read', function(req, res){
+router.put('/me/feed/:notificationId/read', function(req, res, next){
   req.user.populateQ('feed', 'questionNotifications')
     .then(function(user){
       var feed = user.feed;
@@ -59,33 +61,31 @@ router.put('/me/feed/:notificationId/read', function(req, res){
         res
           .status(200)
           .send(feed);
+        next();
       });
     })
     .catch(function(error){
       logger.error('Error getting user feed', error);
-      res
-        .status(500)
-        .send();
+      next(error);
     });
 });
 
-router.get('/:username', function(req, res){
+router.get('/:username', function(req, res, next){
   domain.User
     .findOneQ({username: req.params.username})
     .then(function(user){
       res
         .status(200)
         .send(user);
+      next();
     })
     .catch(function(error){
       logger.error('Error getting profile', error);
-      res
-        .status(500)
-        .send();
+      next(error);
     });
 });
 
-router.put('/me', function(req, res){
+router.put('/me', function(req, res, next){
     req.user.profile.location = req.body.location;
     req.user.profile.selectedTags = req.body.selectedTags;
     req.user.saveQ()
@@ -93,16 +93,15 @@ router.put('/me', function(req, res){
       res
         .status(200)
         .send(profile);
+        next();
     })
     .catch(function(error){
       logger.error('Error updating profile', error);
-      res
-        .status(500)
-        .send();
+      next(error);
     });
 });
 
-router.get('/tag/:tag', function(req, res){
+router.get('/tag/:tag', function(req, res, next){
   domain.User
     .find({'profile.selectedTags': req.params.tag})
     .select('username displayName email profile')
@@ -111,12 +110,11 @@ router.get('/tag/:tag', function(req, res){
       res
         .status(200)
         .send(users);
+        next();
     })
     .catch(function(error){
       logger.error('Error getting profile for tag', error);
-      res
-        .status(500)
-        .send();
+      next(error);
     });
 });
 
