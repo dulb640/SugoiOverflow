@@ -22,14 +22,17 @@ angular.module('sugoiOverflow.profile', [
       })
       .when('/profile/me', {
         templateUrl: 'scripts/profile/templates/viewProfile.html',
-        controller: 'viewProfileController'
+        controller: 'viewProfileController',
+        isSecured: true
       })
       .when('/profile/me/edit', {
         templateUrl: 'scripts/profile/templates/editProfile.html',
-        controller: 'editProfileController'
+        controller: 'editProfileController',
+        isSecured: true
       })
       .when('/profile/:username', {
         templateUrl: 'scripts/profile/templates/viewProfile.html',
-        controller: 'viewProfileController'
+        controller: 'viewProfileController',
+        isSecured: true
       });
   });

@@ -26,6 +26,7 @@ angular.module('sugoiOverflow.auth', [
             .then(function(){
               $location.path('/login');
             });
-        }
+        },
+        isSecured: true
       });
   });
