@@ -7,7 +7,7 @@ angular.module('sugoiOverflow.profile')
         submit: function(){
           var profile = {
             location: $scope.location,
-            selectedTags: _.pluck($scope.tags, 'text')
+            selectedTags: _.pluck($scope.selectedTags, 'text')
           };
 
           profilesDataService.editProfile(profile)
@@ -36,7 +36,7 @@ angular.module('sugoiOverflow.profile')
         .then(function(user){
 /*          $scope.name = user.name;
           $scope.email = user.email;*/
-          $scope.tags = _.map(user.profile.selectedTags, function mapTags (tag) {
+          $scope.selectedTags = _.map(user.profile.selectedTags, function mapTags (tag) {
             return{
               text: tag
             };

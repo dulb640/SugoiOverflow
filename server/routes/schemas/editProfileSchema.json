@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "location": {
+      "type": "string",
+      "maxLength": 170
+    },
+    "selectedTags": {
+      "type": "array",
+      "maxItems": 30,
+      "required": true,
+      "items": {
+        "type": "string",
+        "menLength": 3,
+        "maxLength": 30
+      }
+    }
+  }
+}

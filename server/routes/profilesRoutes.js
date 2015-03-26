@@ -7,8 +7,6 @@ var router  = express.Router();
 var validate    = require('express-jsonschema').validate;
 var schemas     = require('./schemas');
 
-
-
 router.get('/', function(req, res, next){
   domain.User
     .find()
@@ -24,8 +22,6 @@ router.get('/', function(req, res, next){
       return next(error);
     });
 });
-
-
 
 router.get('/me', function(req, res){
     res

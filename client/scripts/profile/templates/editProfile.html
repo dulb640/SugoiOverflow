@@ -9,14 +9,26 @@
   <form novalidate class="profile-form" name="profileForm" ng-submit="submit()">
     <div class="form-group">
       <div class="form-label location" for="location">Location</div>
-      <input class="form-control location" type="text" name="location" ng-model="location">
+      <input class="form-control location" type="text" name="location" maxlength="170" ng-model="location">
     </div>
     <div>
-    <div class="form-label specialisations" for="specialisations">Specialisations</div>
-      <tags-input ng-model="tags" add-on-space="true">
+    <div class="form-label specialisations" for="selectedTags">Specialisations</div>
+      <tags-input ng-model="selectedTags" name="selectedTags" max-tags="30" add-on-space="true">
         <!-- <auto-complete source="loadTags($query)"></auto-complete> -->
       </tags-input>
     </div>
+    <div class="validation-messages" ng-show="!profileForm.$valid && profileForm.$submitted">
+        <ng-messages for="profileForm.location.$error">
+          <ng-message when="maxlength">
+            <p>Location is too long</p>
+          </ng-message>
+        </ng-messages>
+        <ng-messages for="profileForm.selectedTags.$error">
+          <ng-message when="maxTags">
+            <p>Too many tags</p>
+          </ng-message>
+        </ng-messages>
+      </div>
     <button class="form-submit action-button" type="submit">Save Changes</button>
   </form>
   <div class="button" ng-file-select ng-file-change="uploadAvatar($files)" ng-multiple="false">Select Avatar</div>
