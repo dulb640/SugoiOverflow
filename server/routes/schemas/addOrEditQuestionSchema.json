@@ -17,7 +17,8 @@
       "required": true,
       "items": {
         "type": "string",
-        "menLength": 3
+        "menLength": 3,
+        "maxLength": 10
       }
     }
   }

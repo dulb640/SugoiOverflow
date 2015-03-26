@@ -43,11 +43,10 @@ router.get('/top', function(req, res, next){
       res
         .status(200)
         .send(tags);
-      next();
     })
     .catch(function(error){
       logger.error('Error getting top tags', error);
-      next(error);
+      return next(error);
     });
 });
 

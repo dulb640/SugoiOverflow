@@ -42,12 +42,12 @@ router.post('/avatar', passport.authenticate('jwt', { session: false}), function
     res
       .status(200)
       .send();
-    next();
+    return next();
   });
 
   busboy.on('error', function(error) {
     logger.error('Error uploading avatar', error);
-    next(error);
+    return next(error);
   });
 
   return req.pipe(busboy);
@@ -72,12 +72,12 @@ router.get('/avatar/:username', function(req, res, next){
         .then(function(stream){
           stream.on('open', function () {
             stream.pipe(res);
-            next();
+            return next();
           });
         })
         .catch(function(error){
           logger.error('Error getting avatar', error);
-          next(error);
+          return next(error);
         });
     });
 

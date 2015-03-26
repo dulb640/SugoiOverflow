@@ -139,10 +139,13 @@ app.use(function(req, res, next){
   }
 });
 
-app.use('/api', routes);
 app.use('/content', express.static(path.join(__dirname, '../content')));
 app.use(express.static(path.join(__dirname, '../build')));
+app.use('/api', routes);
 app.use(function(error, req, res, next) {
+  if(!error){
+    return next();
+  }
   switch(error.name){
     case 'JsonSchemaValidation':
       logger.warn('Validation failed for user %s trying to %s %s',
@@ -162,7 +165,7 @@ app.use(function(error, req, res, next) {
       return next();
 
     default:
-    console.error('Unexpected error!', error);
+    logger.error('Unexpected error!', error);
       res
         .status(500)
         .send({
@@ -171,7 +174,7 @@ app.use(function(error, req, res, next) {
 
       return next();
     }
-    next(error);
+    return next(error);
 });
 
 app.listen(config('PORT') || config('port'));

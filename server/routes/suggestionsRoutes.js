@@ -30,11 +30,10 @@ router.post('/tags', function(req, res, next){
       res
         .status(200)
         .send(tags);
-      next();
     })
     .catch(function(error){
       logger.error('Error getting tags suggestion', error);
-      next(error);
+      return next(error);
     });
 });
 
@@ -74,13 +73,11 @@ router.post('/people', function(req, res, next){
       res
         .status(200)
         .send(people);
-      next();
     })
     .catch(function(error){
       logger.error('Error getting people suggestion', error);
-      next(error);
+      return next(error);
     });
-
 });
 
 

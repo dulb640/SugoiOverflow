@@ -22,11 +22,10 @@ router.get('/', function(req, res, next){
       res
         .status(200)
         .send(questions);
-      next();
     })
     .catch(function(error){
       logger.error('Error getting questions', error);
-      next(error);
+      return next(error);
     });
 });
 
@@ -47,11 +46,10 @@ router.get('/suggested', function(req, res, next){
           res
             .status(200)
             .send(questions);
-          next();
         })
         .catch(function(error){
           logger.error('Error getting questions', error);
-          next(error);
+          return next(error);
         });
     });
 });
@@ -94,12 +92,11 @@ router.get('/most-wanted', function(req, res, next){
           res
             .status(200)
             .send(questions);
-          next();
         });
     })
     .catch(function(error){
       logger.error('Error getting questions', error);
-      next(error);
+      return next(error);
     });
 });
 
@@ -115,12 +112,11 @@ router.get('/profile/:id', function(req, res, next){
           res
             .status(200)
             .send(user.profile.asked);
-            next();
         });
     })
     .catch(function(error){
       logger.error('Error getting questions', error);
-      next(error);
+      return next(error);
     });
 });
 
@@ -140,11 +136,10 @@ router.get('/:id', function(req, res, next){
       res
         .status(200)
         .send(question);
-      next();
     })
     .catch(function(error){
       logger.error('Error getting answer', error);
-      next(error);
+      return next(error);
     });
 });
 
@@ -167,11 +162,10 @@ router.put('/:id/subscribe', function(req, res, next){
       res
         .status(200)
         .send(question);
-      next();
     })
     .catch(function(error){
       logger.error('Error getting answer', error);
-      next(error);
+      return next(error);
     });
 });
 
@@ -191,11 +185,10 @@ router.get('/search/:term', function(req, res, next){
       res
         .status(200)
         .send(questions);
-      next();
     })
     .catch(function(error){
       logger.error('Error getting questions', error);
-      next(error);
+      return next(error);
     });
 });
 
@@ -212,11 +205,10 @@ router.get('/tag/:tag', function(req, res, next){
       res
         .status(200)
         .send(questions);
-      next();
     })
     .catch(function(error){
       logger.error('Error getting questions by tag', error);
-      next(error);
+      return next(error);
     });
 });
 
@@ -266,7 +258,7 @@ router.post('/:questionId/answer', function(req, res, next){
         res
           .status(200)
           .send(question);
-        next();
+
 
         question.populateQ('subscribers', 'feed')
           .then(function(questionPop){
@@ -282,11 +274,10 @@ router.post('/:questionId/answer', function(req, res, next){
         res
           .status(200)
           .send(question);
-        next();
     })
     .catch(function(error){
       logger.error('Error posting answer', error);
-      next(error);
+      return next(error);
     });
 });
 
@@ -317,7 +308,6 @@ router.post('/:questionId/comment', function(req, res, next){
         res
           .status(200)
           .send(question);
-        next();
 
         question.populateQ('subscribers', 'feed')
           .then(function(questionPop){
@@ -331,11 +321,10 @@ router.post('/:questionId/comment', function(req, res, next){
         res
           .status(200)
           .send(question);
-        next();
     })
     .catch(function(error){
       logger.error('Error posting comment', error);
-      next(error);
+      return next(error);
     });
 });
 
@@ -369,11 +358,10 @@ router.post('/:questionId/answer/:answerId/comment', function(req, res, next){
       res
         .status(200)
         .send(question);
-      next();
     })
     .catch(function(error){
       logger.error('Error adding comment', error, error.errors);
-      next(error);
+      return next(error);
     });
 });
 
@@ -412,11 +400,10 @@ router.put('/:questionId/answer/:answerId/correct', function(req, res, next){
       res
         .status(200)
         .send(question);
-      next();
     })
     .catch(function(error){
       logger.error('Error marking answer as correct', error);
-      next(error);
+      return next(error);
     });
 });
 
@@ -446,11 +433,10 @@ router.put('/:questionId/answer/:answerId/upvote', function(req, res, next){
       res
         .status(200)
         .send(question);
-      next();
     })
     .catch(function(error){
       logger.error('Error upvoting an answer', error);
-      next(error);
+      return next(error);
     });
 });
 
@@ -480,11 +466,10 @@ router.put('/:questionId/answer/:answerId/downvote', function(req, res, next){
       res
         .status(200)
         .send(question);
-      next();
     })
     .catch(function(error){
       logger.error('Error upvoting an answer', error);
-      next(error);
+      return next(error);
     });
 });
 
@@ -492,9 +477,34 @@ router.put('/:questionId/answer/:answerId/downvote', function(req, res, next){
  * Add question
  */
 router.post('/', validate({body: schemas.addOrEditQuestionSchema}), function(req, res, next){
-  res
-          .status(200).send();
-next();
+  var question = new domain.Question(_.extend(req.body, {author: req.user.id}));
+  question.subscribers.push(req.user.id);
+
+  question
+    .saveQ()
+    .then(function(question){
+      return domain.User.findByIdQ(req.user.id)
+      .then(function(user){
+        user.profile.asked.push(question.id);
+        return user.saveQ();
+      })
+      .then(function(){
+        res
+          .status(200)
+          .send(question);
+
+        question.populateQ('proposedPeople', 'feed')
+          .then(function(questionPop){
+            questionPop.proposedPeople.forEach(function(prop){
+              updateUserQuestionsFeed(prop, question, 'You have been proposed to answer the question');
+            });
+          });
+      });
+    })
+    .catch(function(error){
+      logger.error('Error posting question', error, error.errors);
+      next(error);
+    });
 });
 
 

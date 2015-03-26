@@ -16,23 +16,19 @@ router.get('/', function(req, res, next){
       res
         .status(200)
         .send(users);
-
-      next();
     })
     .catch(function(error){
       logger.error('Error getting profiles', error);
-      next(error);
+      return next(error);
     });
 });
 
 
 
-router.get('/me', function(req, res, next){
+router.get('/me', function(req, res){
     res
       .status(200)
       .send(req.user);
-
-    next();
 });
 
 router.get('/me/feed', function(req, res, next){
@@ -42,12 +38,10 @@ router.get('/me/feed', function(req, res, next){
       res
         .status(200)
         .send(feed);
-
-      next();
     })
     .catch(function(error){
       logger.error('Error getting user feed', error);
-      next(error);
+      return next(error);
     });
 });
 
@@ -61,12 +55,11 @@ router.put('/me/feed/:notificationId/read', function(req, res, next){
         res
           .status(200)
           .send(feed);
-        next();
       });
     })
     .catch(function(error){
       logger.error('Error getting user feed', error);
-      next(error);
+      return next(error);
     });
 });
 
@@ -77,11 +70,10 @@ router.get('/:username', function(req, res, next){
       res
         .status(200)
         .send(user);
-      next();
     })
     .catch(function(error){
       logger.error('Error getting profile', error);
-      next(error);
+      return next(error);
     });
 });
 
@@ -93,11 +85,10 @@ router.put('/me', function(req, res, next){
       res
         .status(200)
         .send(profile);
-        next();
     })
     .catch(function(error){
       logger.error('Error updating profile', error);
-      next(error);
+      return next(error);
     });
 });
 
@@ -110,11 +101,10 @@ router.get('/tag/:tag', function(req, res, next){
       res
         .status(200)
         .send(users);
-        next();
     })
     .catch(function(error){
       logger.error('Error getting profile for tag', error);
-      next(error);
+      return next(error);
     });
 });
 
