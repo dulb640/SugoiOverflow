@@ -23,10 +23,19 @@ angular.module('sugoiOverflow.questions')
 
       _.extend($scope, {
         submitAnswer: function(){
+          if($scope.answerQuestionForm.$invalid || $scope.sendingAnswer){
+            return;
+          }
+
+          $scope.sendingAnswer = true;
           questionsDataService.addAnswer($routeParams.id, $scope.answer)
+            .then(loadQuestion)
             .then(function(){
-              questionsDataService.getQuestion($routeParams.id)
-              .then(loadQuestion);
+              $scope.answer = '';
+              $scope.answerQuestionForm.$submitted = false;
+            })
+            .finally(function(){
+              $scope.sendingAnswer = false;
             });
         },
         subscribeToQuestion: function(){

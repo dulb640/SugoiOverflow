@@ -34,7 +34,7 @@
     </div>
   </div>
   <div class="answer-section">
-    <form novalidate class="answer-question-form" name="answer-question-form" ng-submit="submitAnswer()">
+    <form novalidate class="answer-question-form" name="answerQuestionForm" ng-submit="submitAnswer()">
       <div>
         <wiz-markdown-editor content="answer">
         <wiz-toolbar-button command="bold" class="markdown-button"><i class="fa fa-bold"></i> Bold</wiz-toolbar-button>
@@ -48,6 +48,20 @@
       </wiz-markdown-editor>
     </div>
     <wiz-markdown content="answer" class="markdown-output"></wiz-markdown>
+    <input type="text" name="answer" ng-model="answer" class="hidden" required minlength="30" maxlength=10000/>
+    <div class="validation-messages" ng-show="!answerQuestionForm.$valid && answerQuestionForm.$submitted">
+        <ng-messages for="answerQuestionForm.answer.$error">
+          <ng-message when="required">
+            <p>Please enter answer</p>
+          </ng-message>
+          <ng-message when="minlength">
+            <p>Answer is too short</p>
+          </ng-message>
+          <ng-message when="maxlength">
+            <p>Answer is too long</p>
+          </ng-message>
+        </ng-messages>
+      </div>
     <button class="form-submit action-button" type="submit">Post your answer</button>
   </form>
 </div>
