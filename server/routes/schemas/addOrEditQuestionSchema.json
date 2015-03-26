@@ -11,7 +11,7 @@
       "type": "string",
       "required": true,
       "minLength": 10,
-      "maxLength": 70
+      "maxLength": 170
     },
     "tags": {
       "type": "array",

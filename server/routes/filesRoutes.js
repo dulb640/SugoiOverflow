@@ -42,7 +42,6 @@ router.post('/avatar', passport.authenticate('jwt', { session: false}), function
     res
       .status(200)
       .send();
-    return next();
   });
 
   busboy.on('error', function(error) {
@@ -72,7 +71,6 @@ router.get('/avatar/:username', function(req, res, next){
         .then(function(stream){
           stream.on('open', function () {
             stream.pipe(res);
-            return next();
           });
         })
         .catch(function(error){

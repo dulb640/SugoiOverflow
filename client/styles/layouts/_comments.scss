@@ -1,0 +1,39 @@
+.comments {
+  margin-top: 10px;
+
+  textarea {
+    display: block;
+    margin-bottom: 5px;
+    min-height: 75px;
+    width: 400px;
+  }
+
+  .comment {
+    background-color: $light;
+    margin-bottom: 10px;
+    padding: 10px;
+
+    .comment-footer {
+      text-align: right;
+      width: 100%;
+    }
+
+    .comment-author {
+      color: $gray-text-normal;
+
+      &:hover {
+        color: $teal;
+      }
+    }
+
+    .comment-body {
+      margin-bottom: 5px;
+    }
+
+    .comment-author,
+    .comment-timestap {
+      font-size: 12px;
+      text-align: right;
+    }
+  }
+}

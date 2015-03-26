@@ -52,9 +52,9 @@ angular.module('sugoiOverflow.questions')
           }
           return false;
         },
-        submitQuestionComment : function()
+        submitQuestionComment : function(body)
         {
-           questionsDataService.addQuestionComment($routeParams.id, $scope.questionComment)
+           return questionsDataService.addQuestionComment($routeParams.id, body)
              .then(function(){
               questionsDataService.getQuestion($routeParams.id)
               .then(loadQuestion);

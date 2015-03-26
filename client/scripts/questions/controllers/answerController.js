@@ -4,8 +4,8 @@ angular.module('sugoiOverflow.questions')
       'use strict';
 
       _.extend($scope, {
-        submitComment : function () {
-          questionsDataService.addAnswerComment($scope.questionId, $scope.answer.id, $scope.commentBody)
+        submitComment : function (body) {
+          return questionsDataService.addAnswerComment($scope.questionId, $scope.answer.id, body)
             .then($scope.update);
         },
         markAsCorrect: function(){
