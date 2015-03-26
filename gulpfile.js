@@ -43,6 +43,7 @@ var paths = {
   index          : ['client/index.html'],
   bowerScripts   : mainBowerFiles({filter:/.*\.js$/i}),
   bowerStyles    : mainBowerFiles({filter:/.*\.css$/i}),
+  bowerFonts     : mainBowerFiles({filter:/.*\.(eot|ttf|woff|woff2|otf)$/i})
 };
 
 gulp.task('lint', function() {
@@ -101,13 +102,18 @@ gulp.task('styles-app', function(){
     .pipe(livereload());
 });
 
+gulp.task('fonts', function(){
+  return gulp.src(paths.bowerFonts)
+    .pipe(gulp.dest('build/styles/fonts'));
+});
+
 gulp.task('templates', function(){
   gulp.src(paths.html)
     .pipe(templateCache({standalone: true, module:'sugoiOverflow.templates'}))
     .pipe(gulp.dest('build/scripts/app'));
 });
 
-gulp.task('inject-index', ['scripts-lib', 'scripts-app', 'styles-lib', 'styles-app', 'templates'], function(){
+gulp.task('inject-index', ['scripts-lib', 'scripts-app', 'styles-lib', 'styles-app', 'templates', 'fonts'], function(){
   var cwd = path.resolve(__dirname, './build');
   var scriptsLib = gulp.src(['scripts/lib/**/jquery.js',
                               'scripts/lib/**/angular.js',
