@@ -25,8 +25,7 @@ describe 'sugoiOverflow.questions', ->
         @scope.answer =
           id: '321'
 
-        @scope.commentBody = 'Test body'
-        @scope.submitComment()
+        @scope.submitComment('Test body')
 
         expect @questionsDataService.addAnswerComment
           .to.be.called

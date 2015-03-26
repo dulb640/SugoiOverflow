@@ -50,7 +50,7 @@
     },
     "no_implicit_braces": {
         "name": "no_implicit_braces",
-        "level": "warn",
+        "level": "ignore",
         "strict": true
     },
     "no_plusplus": {
@@ -67,7 +67,7 @@
     },
     "no_implicit_parens": {
         "name": "no_implicit_parens",
-        "level": "warn"
+        "level": "ignore"
     },
     "no_empty_param_list": {
         "name": "no_empty_param_list",
@@ -109,6 +109,6 @@
     },
     "non_empty_constructor_needs_parens": {
         "name": "non_empty_constructor_needs_parens",
-        "level": "warn"
+        "level": "ignore"
     }
 }

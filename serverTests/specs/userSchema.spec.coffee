@@ -23,7 +23,7 @@ describe 'UserSchema', ->
       email: 'test@test.te'
       password: 'testpassword'
       profile:
-        karmaChanges:[]
+        karmaChanges: []
     @user = new UserModel @userData
     @setKarma = (values...) =>
       @user.profile.karmaChanges = values.map (v) -> value: v
