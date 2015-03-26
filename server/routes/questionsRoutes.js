@@ -144,32 +144,6 @@ router.get('/:id', function(req, res, next){
 });
 
 /**
- * Subscribe to question
- */
-router.put('/:id/subscribe', function(req, res, next){
-  domain.Question.findByIdQ(req.params.id)
-    .then(function(question){
-      question.subscribers.push(req.user.id);
-      return question.saveQ();
-    })
-    .then(function(question){
-      return question.populateQ('author subscribers upVotes downVotes', 'username displayName email');
-    })
-    .then(function(question){
-      return question.populateQ('answers.author comments.author answers.comments.author', 'username displayName email');
-    })
-    .then(function(question){
-      res
-        .status(200)
-        .send(question);
-    })
-    .catch(function(error){
-      logger.error('Error getting answer', error);
-      return next(error);
-    });
-});
-
-/**
  * Fulltext search for questions
  */
 router.get('/search/:term', function(req, res, next){
@@ -230,7 +204,7 @@ function updateUserQuestionsFeed(user, question, message){
 /**
  * Add answer
  */
-router.post('/:questionId/answer', function(req, res, next){
+router.post('/:questionId/answer', validate({body: schemas.addOrEditAnswerSchema}), function(req, res, next){
   domain.Question.findByIdQ(req.params.questionId)
     .then(function (question){
       var answer = new domain.Answer({
@@ -283,7 +257,7 @@ router.post('/:questionId/answer', function(req, res, next){
 
 
 /* Add comment for question */
-router.post('/:questionId/comment', function(req, res, next){
+router.post('/:questionId/comment', validate({body: schemas.addOrEditCommentSchema}), function(req, res, next){
   domain.Question.findByIdQ(req.params.questionId)
   .then(function(question) {
     question.comments.push({
@@ -330,7 +304,7 @@ router.post('/:questionId/comment', function(req, res, next){
 
 
 /* Add comment for answer */
-router.post('/:questionId/answer/:answerId/comment', function(req, res, next){
+router.post('/:questionId/answer/:answerId/comment', validate({body: schemas.addOrEditCommentSchema}), function(req, res, next){
   domain.Question.findByIdQ(req.params.questionId)
     .then(function (question){
       var answer = question.answers.id(req.params.answerId);
@@ -419,7 +393,7 @@ router.put('/:questionId/answer/:answerId/upvote', function(req, res, next){
         answer.downVotes.splice(downVoteIndex, 1);
       }
       else if (answer.upVotes.indexOf(req.user.id) === -1){
-        answer.upVotes.push(req.user.id);//TODO: Review that
+        answer.upVotes.push(req.user.id);
       }
       return question.saveQ();
     })
@@ -469,6 +443,32 @@ router.put('/:questionId/answer/:answerId/downvote', function(req, res, next){
     })
     .catch(function(error){
       logger.error('Error upvoting an answer', error);
+      return next(error);
+    });
+});
+
+/**
+ * Subscribe to question
+ */
+router.put('/:id/subscribe', function(req, res, next){
+  domain.Question.findByIdQ(req.params.id)
+    .then(function(question){
+      question.subscribers.push(req.user.id);
+      return question.saveQ();
+    })
+    .then(function(question){
+      return question.populateQ('author subscribers upVotes downVotes', 'username displayName email');
+    })
+    .then(function(question){
+      return question.populateQ('answers.author comments.author answers.comments.author', 'username displayName email');
+    })
+    .then(function(question){
+      res
+        .status(200)
+        .send(question);
+    })
+    .catch(function(error){
+      logger.error('Error getting answer', error);
       return next(error);
     });
 });

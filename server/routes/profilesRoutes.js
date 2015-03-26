@@ -4,6 +4,8 @@ var domain      = require('../domain');
 var logger      = require('../logger');
 var express = require('express');
 var router  = express.Router();
+var validate    = require('express-jsonschema').validate;
+var schemas     = require('./schemas');
 
 
 
@@ -77,7 +79,7 @@ router.get('/:username', function(req, res, next){
     });
 });
 
-router.put('/me', function(req, res, next){
+router.put('/me', validate({body: schemas.editProfileSchema}), function(req, res, next){
     req.user.profile.location = req.body.location;
     req.user.profile.selectedTags = req.body.selectedTags;
     req.user.saveQ()

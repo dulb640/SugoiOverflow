@@ -1,3 +1,5 @@
 module.exports = {
-  addOrEditQuestionSchema: require('./addOrEditQuestionSchema')
+  addOrEditQuestionSchema: require('./addOrEditQuestionSchema'),
+  addOrEditAnswerSchema: require('./addOrEditAnswerSchema'),
+  addOrEditCommentSchema: require('./addOrEditCommentSchema')
 };
