@@ -9,22 +9,6 @@ angular.module('sugoiOverflow.questions')
         comments: '=soComments',
         addComment: '=soCommentsAdd'
       },
-      controller: function($scope){
-        $scope.submit = function(){
-          if($scope.addCommentForm.$invalid || $scope.sending){
-            return;
-          }
-
-          $scope.sending = true;
-          $scope.addComment($scope.body)
-            .then(function(){
-              $scope.body = '';
-              $scope.addCommentForm.$setPristine();
-            })
-            .finally(function(){
-              $scope.sending = false;
-            });
-        };
-      }
+      controller: 'commentsController'
     };
   });
