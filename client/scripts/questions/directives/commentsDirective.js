@@ -19,7 +19,7 @@ angular.module('sugoiOverflow.questions')
           $scope.addComment($scope.body)
             .then(function(){
               $scope.body = '';
-              $scope.addCommentForm.$submitted = false;
+              $scope.addCommentForm.$setPristine();
             })
             .finally(function(){
               $scope.sending = false;

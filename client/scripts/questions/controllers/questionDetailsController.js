@@ -32,7 +32,7 @@ angular.module('sugoiOverflow.questions')
             .then(loadQuestion)
             .then(function(){
               $scope.answer = '';
-              $scope.answerQuestionForm.$submitted = false;
+              $scope.answerQuestionForm.$setPristine();
             })
             .finally(function(){
               $scope.sendingAnswer = false;
