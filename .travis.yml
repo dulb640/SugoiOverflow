@@ -4,11 +4,11 @@ node_js:
   - "0.10"
 env:
   - NODE_ENV=production
-before_script:
+before_install:
   - npm install --production=false
   - npm install -g bower
   - npm install -g gulp
-  - bower install
+install: npm install
 script: gulp test
 after_success: gulp pack
 addons:
