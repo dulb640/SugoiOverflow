@@ -253,15 +253,11 @@ gulp.task('test-client', function(done) {
 
 gulp.task('test', ['test-server', 'test-client']);
 
-gulp.task('apidoc', function(){
+gulp.task('apidocs', function(){
           apidoc.exec({
             src: 'server/',
-            dest: 'docs/'
+            dest: 'apidocs/'
           });
-});
-
-gulp.task('apidoc-md', function(){
-    apidoc2md.generate(process.cwd() + '/docs/', process.cwd() + '/docs/docs.md');
 });
 
 gulp.task('default', ['run']);

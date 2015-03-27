@@ -96,8 +96,9 @@
     "yargs": "^3.5.4"
   },
   "scripts": {
-    "test": "echo \"No tests yet\"",
-    "start": "node server/index.js"
+    "test": "gulp test",
+    "postinstall": "bower install && gulp build",
+    "start": "gulp"
   },
   "repository": {
     "type": "git",
