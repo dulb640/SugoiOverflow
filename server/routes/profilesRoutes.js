@@ -7,6 +7,27 @@ var router  = express.Router();
 var validate    = require('express-jsonschema').validate;
 var schemas     = require('./schemas');
 
+/**
+ * @apiName GetProfiles
+ * @api {get} /api/profiles/
+ * @apiDescription Get all users profiles
+ * @apiGroup Profiles
+ * @apiSuccess {Object[]}   .                                   List of users with populated profiles.
+ * @apiSuccess {string}     .username                          Username.
+ * @apiSuccess {string}     .email                             User email.
+ * @apiSuccess {string}     .displayName                       Display name.
+ * @apiSuccess {object}     .profile                           User profile.
+ * @apiSuccess {string[]}   .profile.answered                  Ids of questions user answered
+ * @apiSuccess {string[]}   .profile.asked                     Ids of questions user asked
+ * @apiSuccess {string[]}   .profile.selectedTags              Tags user is following
+ * @apiSuccess {string}     .profile.location                  User's location
+ * @apiSuccess {number}     .profile.karma                     User's karma
+ * @apiSuccess {object[]}   .profile.karmaChanges              Detailed info about changes applied to user's karma.
+ * @apiSuccess {string}     .profile.karmaChanges.question     Id of question related to karma change.
+ * @apiSuccess {date}       .profile.karmaChanges.timestamp    Date when karma change was applied
+ * @apiSuccess {string}     .profile.karmaChanges.reason       Reason why karma change was applied
+ * @apiSuccess {number}     .profile.karmaChanges.value        Value of karma change
+ */
 router.get('/', function(req, res, next){
   domain.User
     .find()
@@ -29,6 +50,26 @@ router.get('/me', function(req, res){
       .send(req.user);
 });
 
+/**
+ * @apiDefine FeedSuccess
+ * @apiSuccess {string}     id                                     Id of a feed
+ * @apiSuccess {object[]}   questionNotifications                  Notifications related to questions
+ * @apiSuccess {string}     questionNotifications.id               Id of notification
+ * @apiSuccess {string}     questionNotifications.body             Text of notification
+ * @apiSuccess {string}     questionNotifications.question         Id of a question notification is related to
+ * @apiSuccess {string}     questionNotifications.questionTitle    Title of a question notification is related to
+ * @apiSuccess {bool}       questionNotifications.read             Is notification read by user
+ * @apiSuccess {date}       questionNotifications.timestamp        Date of notification
+ */
+
+/**
+ * @apiName GetOwnFeed
+ * @api {get} /api/profiles/me/feed
+ * @apiDescription Get own notifications feed
+ * @apiGroup Profiles
+ * @apiUse FeedSuccess
+ */
+
 router.get('/me/feed', function(req, res, next){
   req.user.populateQ('feed', 'questionNotifications')
     .then(function(user){
@@ -43,6 +84,14 @@ router.get('/me/feed', function(req, res, next){
     });
 });
 
+/**
+ * @apiName PutOwnFeedNotificationToRead
+ * @api {put} /api/profiles/me/feed/:notificationId/read
+ * @apiParam {string} notificationId Notification's id
+ * @apiDescription Mark notification as read
+ * @apiGroup Profiles
+ * @apiUse FeedSuccess
+ */
 router.put('/me/feed/:notificationId/read', function(req, res, next){
   req.user.populateQ('feed', 'questionNotifications')
     .then(function(user){

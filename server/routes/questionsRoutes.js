@@ -9,8 +9,44 @@ var validate    = require('express-jsonschema').validate;
 var router      = express.Router();
 var schemas     = require('./schemas');
 
+
 /**
- * Get all questions
+ * @apiDefine QuestionSuccess
+ * @apiSuccess {string}     id                                     Id of a question
+ * @apiSuccess {string}     title                                  Title of a question
+ * @apiSuccess {object[]}   body                                   Body of a question
+ * @apiSuccess {object}     author                                 Author of a question
+ * @apiSuccess {string}     author.username                        Question's author's username
+ * @apiSuccess {string}     author.email                           Question's author's email
+ * @apiSuccess {string}     author.displayName                     Question's author's display name
+ * @apiSuccess {number}     author.profile                         Question's author's profile
+ * @apiSuccess {number}     author.profile.karma                   Question's author's karma
+ * @apiSuccess {object[]}   answers                                Answers to question
+ * @apiSuccess {bool}       answers.correct                        Is answer marked as correct
+ * @apiSuccess {date}       answers.timestamp                      Date and time of an answer
+ * @apiSuccess {number}     answers.score                          Score of an answer
+ * @apiSuccess {object}     answers.author                         Author of a answer
+ * @apiSuccess {string}     answers.author.username                Answer's author's username
+ * @apiSuccess {string}     answers.author.email                   Answer's author's email
+ * @apiSuccess {string}     answers.author.displayName             Answer's author's display name
+ * @apiSuccess {number}     answers.author.profile                 Answer's author's profile
+ * @apiSuccess {number}     answers.author.profile.karma           Answer's author's karma
+ * @apiSuccess {object[]}   subscribers                            Users subscribed to question
+ * @apiSuccess {string}     subscribers.username                   Subscriber's username
+ * @apiSuccess {string}     subscribers.email                      Subscriber's email
+ * @apiSuccess {string}     subscribers.displayName                Subscriber's display name
+ * @apiSuccess {number}     subscribers.profile                    Subscriber's profile
+ * @apiSuccess {number}     subscribers.profile.karma              Subscriber's karma
+ * @apiSuccess {date}       timestamp                              Date and time when question was asked
+ * @apiSuccess {string[]}   tags                                   Tags assigned to question
+ */
+
+/**
+ * @apiName GetAllQuestions
+ * @api {get} /api/questions/
+ * @apiDescription Get all questions
+ * @apiGroup Questions
+ * @apiUse QuestionSuccess
  */
 router.get('/', function(req, res, next){
   domain.Question
@@ -30,7 +66,11 @@ router.get('/', function(req, res, next){
 });
 
 /**
- * Get suggested questions
+ * @apiName GetSuggestedQuestions
+ * @api {get} /api/questions/suggested
+ * @apiDescription Get a list of suggested questions
+ * @apiGroup Questions
+ * @apiUse QuestionSuccess
  */
 router.get('/suggested', function(req, res, next){
   domain.User
@@ -55,7 +95,11 @@ router.get('/suggested', function(req, res, next){
 });
 
 /**
- * Get most wanted questions
+ * @apiName GetMostWantedQuestions
+ * @api {get} /api/questions/most-wanted
+ * @apiDescription Get a list of most wanted(subscribed) questions
+ * @apiGroup Questions
+ * @apiUse QuestionSuccess
  */
 router.get('/most-wanted', function(req, res, next){
   domain.Question
@@ -101,11 +145,16 @@ router.get('/most-wanted', function(req, res, next){
 });
 
 /**
- * Get all questions by user
+ * @apiName GetAllQuestionsForUser
+ * @api {get} /api/questions/profile/:username
+ * @apiParam {string} username User's username
+ * @apiDescription Get a list of questions asked by user
+ * @apiGroup Questions
+ * @apiUse QuestionSuccess
  */
-router.get('/profile/:id', function(req, res, next){
+router.get('/profile/:username', function(req, res, next){
   domain.User
-    .findByIdQ(req.params.id)
+    .findOneQ({username:req.params.username})
     .then(function(user){
       return user.populateQ('profile.asked', 'id title body answers.author answers.timestamp answers.correct subscribers tags timestamp')
         .then(function(user){

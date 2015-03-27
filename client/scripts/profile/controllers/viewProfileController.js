@@ -28,7 +28,7 @@ angular.module('sugoiOverflow.profile')
           .then(function(user){
             loadUser(user);
             $scope.isOwnProfile = true;
-            questionsDataService.getQuestionsForUser(user.id)
+            questionsDataService.getQuestionsForUser(user.username)
               .then(function(questions){
                 $scope.questions = questions;
                 _.each($scope.questions, function(question){
@@ -46,7 +46,7 @@ angular.module('sugoiOverflow.profile')
           .then(function(user){
             loadUser(user);
             $scope.isOwnProfile = false;
-            questionsDataService.getQuestionsForUser(user.id)
+            questionsDataService.getQuestionsForUser(user.username)
               .then(function(questions){
                 $scope.questions = questions;
               });

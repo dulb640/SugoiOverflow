@@ -40,9 +40,9 @@ angular.module('sugoiOverflow.questions')
         return deferred.promise;
       },
 
-      getQuestionsForUser: function(userId){
+      getQuestionsForUser: function(username){
         var deferred = $q.defer();
-        $http.get(_.str.sprintf('/api/questions/profile/%s', userId))
+        $http.get(_.str.sprintf('/api/questions/profile/%s', username))
         .success(function(data){
           deferred.resolve(data);
         })

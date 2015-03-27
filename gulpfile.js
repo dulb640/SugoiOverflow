@@ -31,6 +31,8 @@ var coffee =             require('gulp-coffee');
 var mocha =              require('gulp-mocha');
 var templateCache =      require('gulp-angular-templatecache');
 var karma =              require('karma').server;
+var apidoc =             require('gulp-apidoc');
+var apidoc2md =          require('gulp-apidoc-to-markdown');
 
 var envType = process.env.NODE_ENV ||args.NODE_ENV || args.env || 'development';
 var isDev = envType === 'development';
@@ -250,5 +252,16 @@ gulp.task('test-client', function(done) {
 });
 
 gulp.task('test', ['test-server', 'test-client']);
+
+gulp.task('apidoc', function(){
+          apidoc.exec({
+            src: 'server/',
+            dest: 'docs/'
+          });
+});
+
+gulp.task('apidoc-md', function(){
+    apidoc2md.generate(process.cwd() + '/docs/', process.cwd() + '/docs/docs.md');
+});
 
 gulp.task('default', ['run']);
