@@ -120,6 +120,7 @@ gulp.task('inject-index', ['scripts-lib', 'scripts-app', 'styles-lib', 'styles-a
   var scriptsLib = gulp.src(['scripts/lib/**/jquery.js',
                               'scripts/lib/**/angular.js',
                               'scripts/lib/**/bootstrap.js',
+                              'scripts/lib/**/lodash.js',
                               'scripts/lib/**/*.js'],{ cwd: cwd });
 
   var scriptsApp = gulp.src(['scripts/app/**/*.js'],{ cwd: cwd })
