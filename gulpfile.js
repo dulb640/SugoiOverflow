@@ -86,7 +86,7 @@ gulp.task('scripts-app', /*['lint-scripts'],*/ function(){
 
 gulp.task('styles-lib', /*['lint-styles'],*/ function(){
   return gulp.src(paths.bowerStyles)
-    .pipe(isDev ? gutil.noop() : concatCss('lib.css'))
+    .pipe(isDev ? gutil.noop() : concatCss('lib.css', { rebaseUrls: false }))
     .pipe(isDev ? gutil.noop() : minifyCss())
     .pipe(gulp.dest('build/styles/lib'))
     .pipe(livereload());
@@ -94,10 +94,9 @@ gulp.task('styles-lib', /*['lint-styles'],*/ function(){
 
 gulp.task('styles-app', function(){
   return gulp.src(paths.styles)
-    //.pipe(isDev ? gulp.dest('build'): gutil.noop())
     .pipe(isDev ? sourcemaps.init() : gutil.noop())
     .pipe(sass())
-    .pipe(isDev ? gutil.noop() : concatCss('app.css'))
+    .pipe(isDev ? gutil.noop() : concatCss('app.css', { rebaseUrls: false }))
     .pipe(isDev ? gutil.noop() : minifyCss())
     .pipe(isDev ? sourcemaps.write('./') : gutil.noop())
     .pipe(gulp.dest('build/styles/app'))
