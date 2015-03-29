@@ -65,11 +65,11 @@ gulp.task('scripts-lib', function(){
   return gulp.src(paths.bowerScripts,{
     base: 'bower_components'
   })
-  .pipe(order(['scripts/lib/**/jquery.js',
-    'scripts/lib/**/angular.js',
-    'scripts/lib/**/bootstrap.js',
-    'scripts/lib/**/lodash.js',
-    'scripts/lib/**/*.js']))
+  .pipe(order(['**/jquery.js',
+    '**/angular.js',
+    '**/bootstrap.js',
+    '**/lodash.js',
+    '**/*.js']))
   .pipe(isDev ? gutil.noop() : concat('lib.js'))
   .pipe(isDev ? gutil.noop() : uglify())
   .pipe(gulp.dest('build/scripts/lib'));
