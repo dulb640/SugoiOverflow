@@ -33,6 +33,7 @@ var templateCache =      require('gulp-angular-templatecache');
 var karma =              require('karma').server;
 var apidoc =             require('gulp-apidoc');
 var apidoc2md =          require('gulp-apidoc-to-markdown');
+var order =              require("gulp-order");
 
 var envType = process.env.NODE_ENV ||args.NODE_ENV || args.env || 'development';
 var isDev = envType === 'development';
@@ -64,6 +65,11 @@ gulp.task('scripts-lib', function(){
   return gulp.src(paths.bowerScripts,{
     base: 'bower_components'
   })
+  .pipe(order(['scripts/lib/**/jquery.js',
+    'scripts/lib/**/angular.js',
+    'scripts/lib/**/bootstrap.js',
+    'scripts/lib/**/lodash.js',
+    'scripts/lib/**/*.js']))
   .pipe(isDev ? gutil.noop() : concat('lib.js'))
   .pipe(isDev ? gutil.noop() : uglify())
   .pipe(gulp.dest('build/scripts/lib'));
