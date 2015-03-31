@@ -32,11 +32,8 @@ var mocha =              require('gulp-mocha');
 var templateCache =      require('gulp-angular-templatecache');
 var karma =              require('karma').server;
 var apidoc =             require('gulp-apidoc');
-var apidoc2md =          require('gulp-apidoc-to-markdown');
-var ngdocs =             require('gulp-ngdocs');
 var order =              require('gulp-order');
 var Dgeni =              require('dgeni');
-var jsdoc =              require('gulp-jsdoc');
 var shell = require('gulp-shell');
 var envType = process.env.NODE_ENV ||args.NODE_ENV || args.env || 'development';
 var isDev = envType === 'development';
@@ -267,12 +264,6 @@ gulp.task('apidocs', function(){
             src: 'server/',
             dest: 'apidocs/'
           });
-});
-
-gulp.task('ngdocs', ['clean'], function () {
-  return gulp.src('client/**/*.js')
-    .pipe(ngdocs.process())
-    .pipe(gulp.dest('clientdocs'));
 });
 
 gulp.task('dgeni', function(){
