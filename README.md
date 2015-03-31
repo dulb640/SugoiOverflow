@@ -8,6 +8,7 @@ So much sugoi - it overflows
 
 # Overview
 SugoiOverflow was started as StackOverflow clone with focus on internal use by other companies. Hovewer it can perform as external Q & A system as well.
+[See demo](http://sugoi-overflow.herokuapp.com/) - you can register and than use it as you like.
 
 ##Currently implemented features include:
 - Questions and answers(surprisingly)
