@@ -6,5 +6,25 @@
 # SugoiOverflow
 So much sugoi - it overflows
 
-### For contributors
+# Overview
+SugoiOverflow was started as StackOverflow clone with focus on internal use by other companies. Hovewer it can perform as external Q & A system as well.
+
+##Currently implemented features include:
+- Questions and answers(surprisingly)
+- Comments
+- Active Directory integration
+- Integrated Windows Authentication
+- Tags suggestions based on question text's analysis
+- Suggestions of people who can answer the question based on users who answered similar questions
+- Avatars
+
+##Features planned to be implemented in the nearest future:
+- Mentioning
+- Questions, answers and comments editing
+- Moderation
+
+#General direction of the project
+It is planned to split project into separate packages which could be potentially replaced by other packages. E.g there will be separate server and client packages and most of the functionality will be implemented through plugin system. In short: Unix philosofy.
+
+# For contributors
 Please read the [contribution guide](./CONTRIBUTING.md)
