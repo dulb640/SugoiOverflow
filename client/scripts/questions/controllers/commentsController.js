@@ -1,3 +1,13 @@
+/**
+ * @ngdoc controller
+ * @name commentsController
+ * @memberOf sugoiOverflow.questions
+ * @description
+ * This controller is being used by comments directive.
+ * $scope will have comments injected and addComment function
+ * which will be bound to submitting comments logic
+ * expects to have addComment function on the scope
+ */
 angular.module('sugoiOverflow.questions')
   .controller('commentsController',
     function($scope){

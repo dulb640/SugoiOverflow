@@ -1,3 +1,8 @@
+ /**
+  * @function questionsDataService
+  * @memberOf sugoiOverflow.questions
+  * @description Questions data service.
+  */
 angular.module('sugoiOverflow.questions')
   .factory('questionsDataService',
   function($http, $q){

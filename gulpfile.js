@@ -33,8 +33,11 @@ var templateCache =      require('gulp-angular-templatecache');
 var karma =              require('karma').server;
 var apidoc =             require('gulp-apidoc');
 var apidoc2md =          require('gulp-apidoc-to-markdown');
-var order =              require("gulp-order");
-
+var ngdocs =             require('gulp-ngdocs');
+var order =              require('gulp-order');
+var Dgeni =              require('dgeni');
+var jsdoc =              require('gulp-jsdoc');
+var shell = require('gulp-shell');
 var envType = process.env.NODE_ENV ||args.NODE_ENV || args.env || 'development';
 var isDev = envType === 'development';
 
@@ -57,7 +60,7 @@ gulp.task('lint', function() {
 });
 
 gulp.task('clean', function(){
-  return gulp.src(['build', 'dist', './serverTests/specs/.compiled'])
+  return gulp.src(['build', 'dist', './serverTests/specs/.compiled', 'clientdocs', 'apidocs'])
     .pipe(rimraf());
 });
 
@@ -265,5 +268,34 @@ gulp.task('apidocs', function(){
             dest: 'apidocs/'
           });
 });
+
+gulp.task('ngdocs', ['clean'], function () {
+  return gulp.src('client/**/*.js')
+    .pipe(ngdocs.process())
+    .pipe(gulp.dest('clientdocs'));
+});
+
+gulp.task('dgeni', function(){
+  var dgeni = new Dgeni([require('./dgeniConf')]);
+  return dgeni.generate();
+});
+
+// gulp.task('clientdocs', function(){
+//   var conf = require('angular-jsdoc/conf.json');
+//   var template = {
+//     path: 'node_modules/angular-jsdoc/template',
+//   };
+
+//   return gulp.src('./client/**/*.js')
+//     .pipe(jsdoc.generator('./clientdocs/', template, conf));
+// });
+
+gulp.task('clientdocs', shell.task([
+ 'node_modules/jsdoc/jsdoc.js '+
+   '-c node_modules/angular-jsdoc/conf.json '+   // config file
+   '-t node_modules/angular-jsdoc/template '+    // template file
+   '-d clientdocs '+                             // output directory
+   '-r client'                              // source code directory
+]));
 
 gulp.task('default', ['run']);

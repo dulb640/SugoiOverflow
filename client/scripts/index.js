@@ -1,3 +1,6 @@
+/**
+  * @namespace sugoiOverflow
+  */
 angular
 	.module('sugoiOverflow',
 		['ngRoute',
