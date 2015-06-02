@@ -63,7 +63,7 @@
 		.tags {
 			margin-top: 5px;
 			margin-bottom: 5px;
-			
+
 			.tag {
 				border: 1px solid $gray-darker;
 				padding: 0 5px 0 5px;
@@ -94,7 +94,7 @@
 			border: 1px solid $gray-darker;
 			margin-right: 10px;
 
-			
+
 			@extend %display-flex;
 			@include flex-direction(column);
 			@include flex-vertical-aligns(center);
@@ -112,11 +112,25 @@
 		}
 
 		.answers span:first-child {
-			color: $teal;			
+			color: $teal;
 		}
 
 		.subs span:first-child {
 			color: $green-light;
 		}
 	}
+}
+
+.question-suggested-empty{
+  font-size: 16pt;
+  a {
+    color: $blue-light;
+    text-decoration: underline;
+    &:hover{
+      font-weight: bold;
+      text-decoration: underline;
+      color: $blue-light;
+      cursor: pointer;
+    }
+  }
 }
