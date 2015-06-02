@@ -4,6 +4,7 @@
 angular
 	.module('sugoiOverflow',
 		['ngRoute',
+    'ngAnimate',
     'angular-jwt',
     'ngStorage',
     'ngMessages',
