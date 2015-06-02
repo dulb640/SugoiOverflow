@@ -13,10 +13,18 @@
 @import 'layouts/registerpage';
 @import 'layouts/comments';
 
+html, body{
+	height: 100%;
+}
+
 body {
 	padding: 0;
 	margin: 0;
 	font-family: 'Segoe Ui Light', arial, sans-serif;
+}
+
+.body-container{
+	min-height: 96vh;
 }
 
 .header {
@@ -159,4 +167,20 @@ tags-input.ng-invalid .tags{
 
 .validation-messages{
   color: rgb(228,0,31);
+}
+
+footer{
+  z-index: 10;
+	color: $gray-text-normal;
+	height: 3em;
+	margin-top: 1em;
+	line-height:3em;
+	background-color: $gray-darker;
+	text-align: center;
+	a{
+		text-decoration: underline;
+		&:hover{
+			color:$gray-text-light;
+		}
+	}
 }
