@@ -1,16 +1,15 @@
 'use strict';
 
-var domain = require('../domain');
-var _      = require('lodash');
-var express = require('express');
-var gramophone = require('gramophone');
-var router  = express.Router();
+var domain =      require('../domain');
+var _      =      require('lodash');
+var express =     require('express');
+var gramophone =  require('gramophone');
 var logger      = require('../logger');
 
+var router  =     express.Router();
 
 router.post('/tags', function(req, res, next){
   var text = req.body.question;
-  //bad bad bad bad sync call
   var words = gramophone.extract(text, {limit: 6, min: 2});
   var search = words.join(' ');
   domain.Question
@@ -39,7 +38,6 @@ router.post('/tags', function(req, res, next){
 
 router.post('/people', function(req, res, next){
   var text = req.body.question;
-  //bad bad bad bad sync call
   var words = gramophone.extract(text, {limit: 6, min: 2});
   var search = words.join(' ');
   domain.Question
