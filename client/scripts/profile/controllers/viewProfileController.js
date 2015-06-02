@@ -21,35 +21,31 @@ angular.module('sugoiOverflow.profile')
         });
         $scope.location = user.profile.location;
         $scope.karma = user.profile.karma;
+        return questionsDataService.getQuestionsForUser(user.username)
+          .then(function(questions){
+            $scope.questions = questions;
+            _.each($scope.questions, function(question){
+              question.tags = _.map(question.tags, function(tag){
+                return {
+                  text: tag
+                };
+              });
+            });
+          });
       }
 
       if (!$routeParams.username || $routeParams.username === 'me'){
         profilesDataService.getCurrentUserProfile()
-          .then(function(user){
-            loadUser(user);
+          .then(loadUser)
+          .then(function(){
             $scope.isOwnProfile = true;
-            questionsDataService.getQuestionsForUser(user.username)
-              .then(function(questions){
-                $scope.questions = questions;
-                _.each($scope.questions, function(question){
-                  question.tags = _.map(question.tags, function(tag){
-                    return {
-                      text: tag
-                    };
-                  });
-                });
-              });
           });
       }
       else {
         profilesDataService.getUser($routeParams.username)
-          .then(function(user){
-            loadUser(user);
+          .then(loadUser)
+          .then(function(){
             $scope.isOwnProfile = false;
-            questionsDataService.getQuestionsForUser(user.username)
-              .then(function(questions){
-                $scope.questions = questions;
-              });
           });
       }
     }
