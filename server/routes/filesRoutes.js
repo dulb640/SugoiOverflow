@@ -21,21 +21,29 @@ var gfs = new Grid(mongoose.connection.db, mongoose.mongo);
 router.post('/avatar', passport.authenticate('jwt', { session: false}), function(req, res, next){
   var busboy = new Busboy({ headers: req.headers });
   busboy.on('file', function(fieldname, file/*, filename, encoding, mimetype*/) {
-    var writestream = gfs.createWriteStream({
-      root:'avatars',
+    var opts = {
       filename: req.user.id,
-    });
+      root:'avatars'
+    };
+    Q.ninvoke(gfs, 'exist', opts)
+      .then(function(exists){
+        if(exists){
+          return Q.ninvoke(gfs, 'remove', opts);
+        }
+      })
+      .then(function(){
+        var writestream = gfs.createWriteStream(opts);
+        var avatarsConfig = config('avatars');
 
-    var avatarsConfig = config('avatars');
-
-    gm(file)
-      .resize(avatarsConfig.size.x, avatarsConfig.size.y, '^')
-      .gravity('Center')
-      .crop(avatarsConfig.size.x, avatarsConfig.size.y)
-      .compress(avatarsConfig.format)
-      .quality(avatarsConfig.quality)
-      .stream()
-      .pipe(writestream);
+        gm(file)
+          .resize(avatarsConfig.size.x, avatarsConfig.size.y, '^')
+          .gravity('Center')
+          .crop(avatarsConfig.size.x, avatarsConfig.size.y)
+          .compress(avatarsConfig.format)
+          .quality(avatarsConfig.quality)
+          .stream()
+          .pipe(writestream);
+      });
   });
 
   busboy.on('finish', function() {
