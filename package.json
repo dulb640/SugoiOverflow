@@ -17,7 +17,7 @@
     "gramophone": "0.0.3",
     "gridfs-stream": "^1.1.0",
     "jwt-simple": "^0.2.0",
-    "lodash": "^3.3.1",
+    "lodash": "^3.9.3",
     "moment": "^2.9.0",
     "mongoose": "~3.8.24",
     "mongoose-q": "~0.0.16",
