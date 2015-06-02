@@ -1,7 +1,41 @@
+@import '../components/colors';
+
 .register-form {
 	.username,
 	.password,
 	.email {
 		width: 50%;
 	}
+}
+
+.ad-suggestion{
+  font-size:16pt;
+  color: $blue-light;
+  text-decoration: underline;
+  &:hover{
+    font-weight: bold;
+    text-decoration: underline;
+    color: $blue-light;
+    cursor: pointer;
+  }
+
+
+  .ad-username{
+
+
+  }
+}
+
+.register-suggestion{
+  font-size:12pt;
+  a{
+    color: $blue-light;
+    text-decoration: underline;
+    &:hover{
+      font-weight: bold;
+      text-decoration: underline;
+      color: $blue-light;
+      cursor: pointer;
+    }
+  }
 }

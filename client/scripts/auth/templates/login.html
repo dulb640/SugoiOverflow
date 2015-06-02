@@ -10,6 +10,6 @@
     </div>
     <button class="form-submit action-button" type="submit">Login</button>
   </form>
-  <a ng-show="adUser" ng-click="adLogin()">Login as Active Directory user: {{adUser}}</a>
-  <div>Or you can <a href="/#/register"><strong>register</strong></a></div>
+  <a class="ad-suggestion" ng-show="adUser" ng-click="adLogin()">Login as Active Directory user: <span class="ad-username">{{adUser}}</span></a>
+  <div class="register-suggestion" >Or you can <a href="/#/register">register</a></div>
 </div>
