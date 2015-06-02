@@ -1,6 +1,6 @@
 angular.module('sugoiOverflow.profile')
   .controller('editProfileController',
-    function($scope, $q, $routeParams, $location, $upload, tagsDataService, profilesDataService, $localStorage){
+    function($scope, $q, $routeParams, $location, $upload, $timeout, tagsDataService, profilesDataService, $localStorage){
       'use strict';
 
       _.extend($scope, {
@@ -17,6 +17,9 @@ angular.module('sugoiOverflow.profile')
         },
         uploadAvatar: function (files) {
           var file = files[0];
+          if(!file){
+            return;
+          }
           $upload.upload({
               url: '/api/files/avatar',
               headers: {'Authorization': 'Bearer ' + $localStorage.jwt},
@@ -28,21 +31,37 @@ angular.module('sugoiOverflow.profile')
           }).success(function (data, status, headers, config) {
               console.log('file ' + config.file.name + 'uploaded. Response: ' +
                           JSON.stringify(data));
+              $timeout(function(){
+                generateAvatarSrc();
+              }, 300);
           });
         }
       });
 
       profilesDataService.getCurrentUserProfile()
         .then(function(user){
-/*          $scope.name = user.name;
-          $scope.email = user.email;*/
-          $scope.selectedTags = _.map(user.profile.selectedTags, function mapTags (tag) {
-            return{
+          $scope.displayName = user.displayName;
+          $scope.username = user.username;
+          $scope.email = user.email;
+          $scope.tags = _.map(user.profile.selectedTags, function mapTags (tag) {
+            return {
               text: tag
             };
           });
           $scope.location = user.profile.location;
+          $scope.karma = user.profile.karma;
+          $scope.selectedTags = _.map(user.profile.selectedTags, function mapTags (tag) {
+              return{
+                text: tag
+              };
+            });
+          $scope.location = user.profile.location;
+          generateAvatarSrc();
         });
+
+      function generateAvatarSrc(){
+        $scope.avatarUrl =_.str.sprintf('/api/files/avatar/%s?%s', $scope.username, new Date().getTime());
+      }
     }
   );
 
