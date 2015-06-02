@@ -10,15 +10,11 @@
   </head>
   <body id="ng-app" ng-app="sugoiOverflow" ng-di-strict>
     <div class="body-container container-fluid">
-        <div ng-include="'scripts/shared/templates/header.html'">
-        </div>
-
+        <header ng-include="'scripts/shared/templates/header.html'"></header>
         <div ng-view class="content-container-view"></div>
+        <footer ng-include="'scripts/shared/templates/footer.html'"></footer>
     </div>
-    <footer>
-      <span>This is a beta version of application. Submit bugs and feature requrest at </span>
-      <a href="https://github.com/Deadarius/SugoiOverflow/issues">Github issue tracker</a>
-    </footer>
+
     <!-- lib:js -->
     <!-- endinject -->
     <!-- app:js -->
