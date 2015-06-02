@@ -20,8 +20,8 @@
       "required": true,
       "items": {
         "type": "string",
-        "menLength": 3,
-        "maxLength": 10
+        "minLength": 3,
+        "maxLength": 30
       }
     }
   }

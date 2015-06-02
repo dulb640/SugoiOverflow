@@ -30,7 +30,16 @@ router.get('/top', function(req, res, next){
   domain.Question
     .mapReduceQ(mapReduceOptions)
     .then(function(results){
+      if(results.length === 0 ){
+        return res
+          .status(200)
+          .send([]);
+      }
+
       var tags = _.chain(results)
+        .filter(function(result){
+          return result;
+        })
         .map(function(result){
           return {
             text: result._id,

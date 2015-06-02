@@ -13,7 +13,7 @@
     </div>
     <div>
     <div class="form-label specialisations" for="selectedTags">Specialisations</div>
-      <tags-input ng-model="selectedTags" name="selectedTags" max-tags="30" add-on-space="true">
+      <tags-input ng-model="selectedTags" name="selectedTags" max-tags="30" min-length="3" max-length="30" add-on-space="true">
         <!-- <auto-complete source="loadTags($query)"></auto-complete> -->
       </tags-input>
     </div>
@@ -25,7 +25,13 @@
         </ng-messages>
         <ng-messages for="profileForm.selectedTags.$error">
           <ng-message when="maxTags">
-            <p>Too many tags</p>
+            <p>Please enter at most thirty tags</p>
+          </ng-message>
+          <ng-message when="minLength">
+            <p>Your tag is too short</p>
+          </ng-message>
+          <ng-message when="maxLength">
+            <p>Your tag is too long</p>
           </ng-message>
         </ng-messages>
       </div>
