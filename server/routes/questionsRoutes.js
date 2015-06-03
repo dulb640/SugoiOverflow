@@ -53,7 +53,7 @@ router.get('/', function(req, res, next){
   domain.Question
     .find()
     .select('id title body answers.author answers.timestamp answers.correct subscribers tags timestamp author')
-    .populate('author subscribers answers.author', 'username displayName email')
+    .populate('author subscribers answers.author', 'profile username displayName email')
     .execQ()
     .then(function(questions){
       res
@@ -81,7 +81,7 @@ router.get('/suggested', function(req, res, next){
       domain.Question
         .find({'tags': {$in : tags}})
         .select('id title body answers.author answers.timestamp answers.correct subscribers tags timestamp author')
-        .populate('author subscribers answers.author', 'username displayName email')
+        .populate('author subscribers answers.author', 'profile username displayName email')
         .execQ()
         .then(function(questions){
           res
@@ -127,7 +127,7 @@ router.get('/most-wanted', function(req, res, next){
       {$sort: {'subCount':-1} }])
     .execQ()
     .then(function(questions){
-      domain.User.populateQ(questions, {path:'author subscribers answers.author', select: 'username displayName email'})
+      domain.User.populateQ(questions, {path:'author subscribers answers.author', select: 'profile username displayName email'})
         .then(function(populatedQuestions){
           populatedQuestions.forEach(function(q){
             q.id = q._id;
@@ -197,7 +197,7 @@ router.get('/profile/:username/subscribed', function(req, res, next){
       domain.Question
         .find({'subscribers': {$elemMatch : { $eq: new ObjectId(user.id)}} })
         .select('id title body answers.author answers.timestamp answers.correct subscribers tags timestamp author')
-        .populate('author subscribers answers.author', 'username displayName email')
+        .populate('author subscribers answers.author', 'profile username displayName email')
         .execQ()
         .then(function(questions){
           res
@@ -222,10 +222,10 @@ router.get('/profile/:username/subscribed', function(req, res, next){
 router.get('/:id', function(req, res, next){
   domain.Question.findByIdQ(req.params.id)
     .then(function(question){
-      return question.populateQ('author subscribers upVotes downVotes', 'username displayName email');
+      return question.populateQ('author subscribers upVotes downVotes', 'profile username displayName email');
     })
     .then(function(question){
-      return question.populateQ('answers.author comments.author answers.comments.author', 'username displayName email');
+      return question.populateQ('answers.author comments.author answers.comments.author', 'profile username displayName email');
     })
     .then(function(question){
       res
@@ -312,10 +312,10 @@ router.post('/:questionId/answer', validate({body: schemas.addOrEditAnswerSchema
       return question.saveQ();
     })
     .then(function(question){
-      return question.populateQ('author subscribers upVotes downVotes', 'username displayName email');
+      return question.populateQ('author subscribers upVotes downVotes', 'profile username displayName email');
     })
     .then(function(question){
-      return question.populateQ('answers.author comments.author answers.comments.author', 'username displayName email');
+      return question.populateQ('answers.author comments.author answers.comments.author', 'profile username displayName email');
     })
     .then(function(question){
       return domain.User.findByIdQ(req.user.id)
@@ -362,10 +362,10 @@ router.post('/:questionId/comment', validate({body: schemas.addOrEditCommentSche
     return question.saveQ();
   })
   .then(function(question){
-      return question.populateQ('author subscribers upVotes downVotes', 'username displayName email');
+      return question.populateQ('author subscribers upVotes downVotes', 'profile username displayName email');
     })
   .then(function(question){
-    return question.populateQ('answers.author comments.author answers.comments.author', 'username displayName email');
+    return question.populateQ('answers.author comments.author answers.comments.author', 'profile username displayName email');
   })
   .then(function(question){
       return domain.User.findByIdQ(req.user.id)
@@ -418,10 +418,10 @@ router.post('/:questionId/answer/:answerId/comment', validate({body: schemas.add
       return question.saveQ();
     })
     .then(function(question){
-      return question.populateQ('author subscribers upVotes downVotes', 'username displayName email');
+      return question.populateQ('author subscribers upVotes downVotes', 'profile username displayName email');
     })
     .then(function(question){
-      return question.populateQ('answers.author comments.author answers.comments.author', 'username displayName email');
+      return question.populateQ('answers.author comments.author answers.comments.author', 'profile username displayName email');
     })
     .then(function(question){
       res
@@ -440,7 +440,7 @@ router.post('/:questionId/answer/:answerId/comment', validate({body: schemas.add
 router.put('/:questionId/answer/:answerId/correct', function(req, res, next){
   domain.Question.findByIdQ(req.params.questionId)
     .then(function (question){
-      return question.populateQ('answers.author', 'username displayName email profile.karmaChanges feed')
+      return question.populateQ('answers.author', 'profile username displayName email profile.karmaChanges feed')
         .then(function(populatedQuestion){
           var answer = populatedQuestion.answers.id(req.params.answerId);
           answer.correct = true;
@@ -460,10 +460,10 @@ router.put('/:questionId/answer/:answerId/correct', function(req, res, next){
         });
     })
     .then(function(question){
-      return question.populateQ('author subscribers upVotes downVotes', 'username displayName email');
+      return question.populateQ('author subscribers upVotes downVotes', 'profile username displayName email');
     })
     .then(function(question){
-      return question.populateQ('answers.author comments.author answers.comments.author', 'username displayName email');
+      return question.populateQ('answers.author comments.author answers.comments.author', 'profile username displayName email');
     })
     .then(function(question){
       res
@@ -493,10 +493,10 @@ router.put('/:questionId/answer/:answerId/upvote', function(req, res, next){
       return question.saveQ();
     })
     .then(function(question){
-      return question.populateQ('author subscribers upVotes downVotes', 'username displayName email');
+      return question.populateQ('author subscribers upVotes downVotes', 'profile username displayName email');
     })
     .then(function(question){
-      return question.populateQ('answers.author comments.author answers.comments.author', 'username displayName email');
+      return question.populateQ('answers.author comments.author answers.comments.author', 'profile username displayName email');
     })
     .then(function(question){
       res
@@ -526,10 +526,10 @@ router.put('/:questionId/answer/:answerId/downvote', function(req, res, next){
       return question.saveQ();
     })
     .then(function(question){
-      return question.populateQ('author subscribers upVotes downVotes', 'username displayName email');
+      return question.populateQ('author subscribers upVotes downVotes', 'profile username displayName email');
     })
     .then(function(question){
-      return question.populateQ('answers.author comments.author answers.comments.author', 'username displayName email');
+      return question.populateQ('answers.author comments.author answers.comments.author', 'profile username displayName email');
     })
     .then(function(question){
       res
@@ -552,10 +552,10 @@ router.put('/:id/subscribe', function(req, res, next){
       return question.saveQ();
     })
     .then(function(question){
-      return question.populateQ('author subscribers upVotes downVotes', 'username displayName email');
+      return question.populateQ('author subscribers upVotes downVotes', 'profile username displayName email');
     })
     .then(function(question){
-      return question.populateQ('answers.author comments.author answers.comments.author', 'username displayName email');
+      return question.populateQ('answers.author comments.author answers.comments.author', 'profile username displayName email');
     })
     .then(function(question){
       res
