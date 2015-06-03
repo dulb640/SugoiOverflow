@@ -29,6 +29,8 @@ node_modules
 
 config*.json
 config*.yaml
+web.config
+web.*.config
 !sample-config.yaml
 server/iisnode
 bower_components
