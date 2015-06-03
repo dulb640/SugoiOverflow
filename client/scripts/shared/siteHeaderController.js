@@ -125,7 +125,7 @@ If you click on tag it will automatically transfer you to search page for this t
           selector: '.content.container',
           heading: 'Suggested questions',
           text: 'Keep in mind that suggested page will be empty unless you specify favourite tags on your profile page',
-          placement: 'top',
+          placement: 'bottom',
           scroll: false,
           attachToBody: true
         }, {
@@ -236,7 +236,7 @@ If you click on tag it will automatically transfer you to search page for this t
         }, {
           type: 'function',
           fn: function () {
-            angular.element('.question-content:first .title a:first').click();
+            angular.element('.question-container.has-answers:first .title a:first').click();
           }
         }, {
           type: 'title',
@@ -271,6 +271,17 @@ If you were the author of the question you can also mark them as correct',
           placement: 'bottom',
           scroll: true,
           attachToBody: true
+        }, {
+          type: 'element',
+          selector: 'header .branding a',
+          heading: 'Home',
+          text: 'You can go to home page by clicking on logo',
+          placement: 'right',
+          scroll: true,
+          attachToBody: true
+        }, {
+          type: 'location_change',
+          path: '/questions/all'
         }]
       });
 
