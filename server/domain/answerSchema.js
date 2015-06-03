@@ -36,7 +36,7 @@ var Answer = new Schema({
     type: [Schema.Types.ObjectId],
     ref: 'User',
     default: []
-  },
+  }
 });
 
 Answer.set('toJSON', {

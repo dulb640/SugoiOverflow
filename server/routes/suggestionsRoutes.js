@@ -22,7 +22,7 @@ router.post('/tags', function(req, res, next){
     .execQ()
     .then(function(questions){
       var tags = _.chain(questions)
-                  .map(function(q) {return q.tags;})
+                  .map(function(q) {return q.tags; })
                   .flatten()
                   .uniq()
                   .value();
@@ -61,7 +61,7 @@ router.post('/people', function(req, res, next){
     .then(function(questions){
       var people = _.chain(questions)
                   .map(function(q) {
-                    var correctAnswers = _.filter(q.answers, function(x){return x.correct;});
+                    var correctAnswers = _.filter(q.answers, function(x){return x.correct; });
                     return correctAnswers;
                   })
                   .flatten()

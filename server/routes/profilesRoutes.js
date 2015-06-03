@@ -98,10 +98,10 @@ router.put('/me/feed/:notificationId/read', function(req, res, next){
       var feed = user.feed;
       var notification = feed.questionNotifications.id(req.params.notificationId);
       notification.read = true;
-      feed.saveQ().then(function(feed){
+      feed.saveQ().then(function(savedFeed){
         res
           .status(200)
-          .send(feed);
+          .send(savedFeed);
       });
     })
     .catch(function(error){

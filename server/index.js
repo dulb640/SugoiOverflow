@@ -11,7 +11,7 @@ var config =            require('./configuration');
 
 var mongoConnectionString = config('mongo');
 
-if(mongoConnectionString.substring(0, 7) ===('tingodb')){
+if(mongoConnectionString.substring(0, 7) === ('tingodb')){
   global.TUNGUS_DB_OPTIONS =  { nativeObjectID: true, searchInArray: true };
   require('tungus');
 }

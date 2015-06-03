@@ -10,7 +10,8 @@ var logger      = require('../logger');
 router.get('/top', function(req, res, next){
 
   var mapReduceOptions = {
-    /* jshint ignore:start */
+    //have to disable eslint because mapreduce is executed on mongodb server
+    /*eslint-disable */
     map: function(){
       this.tags.forEach(function(tag){
         emit(tag, 1);
@@ -24,7 +25,7 @@ router.get('/top', function(req, res, next){
       inline: 1,
       reduce: 'questionsTagsTotal'
     }
-    /* jshint ignore:end */
+    /*eslint-enable */
   };
 
   domain.Question

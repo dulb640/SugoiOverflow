@@ -118,7 +118,7 @@ User.virtual('profile.karma').get(function calculateKarma() {
 
   var sum = this.profile.karmaChanges
     .map(function(k){return k.value || 0; })
-    .reduce(function(prev, next){return prev + next;});
+    .reduce(function(prev, next){return prev + next; });
   return sum;
 });
 

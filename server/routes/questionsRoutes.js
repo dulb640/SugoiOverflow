@@ -105,7 +105,7 @@ router.get('/suggested', function(req, res, next){
 router.get('/most-wanted', function(req, res, next){
   domain.Question
     .aggregate([{
-        $match:{ 'answers.correct': {$ne: true}}},{
+        $match:{ 'answers.correct': {$ne: true}}}, {
         $project : {
           subCount: {
             $size: {
@@ -128,15 +128,15 @@ router.get('/most-wanted', function(req, res, next){
     .execQ()
     .then(function(questions){
       domain.User.populateQ(questions, {path:'author subscribers answers.author', select: 'username displayName email'})
-        .then(function(questions){
-          questions.forEach(function(q){
+        .then(function(populatedQuestions){
+          populatedQuestions.forEach(function(q){
             q.id = q._id;
             delete q._id;
           });
 
           res
             .status(200)
-            .send(questions);
+            .send(populatedQuestions);
         });
     })
     .catch(function(error){
@@ -158,10 +158,10 @@ router.get('/profile/:username/asked', function(req, res, next){
     .findOneQ({username:req.params.username})
     .then(function(user){
       return user.populateQ('profile.asked', 'id title body answers.author answers.timestamp answers.correct subscribers tags timestamp')
-        .then(function(user){
+        .then(function(populatedUser){
           res
             .status(200)
-            .send(user.profile.asked);
+            .send(populatedUser.profile.asked);
         });
     })
     .catch(function(error){
@@ -175,10 +175,10 @@ router.get('/profile/:username/answered', function(req, res, next){
     .findOneQ({username:req.params.username})
     .then(function(user){
       return user.populateQ('profile.answered', 'id title body answers.author answers.timestamp answers.correct subscribers tags timestamp')
-        .then(function(user){
+        .then(function(populatedUser){
           res
             .status(200)
-            .send(user.profile.answered);
+            .send(populatedUser.profile.answered);
         });
     })
     .catch(function(error){
@@ -283,13 +283,13 @@ router.get('/tag/:tag', function(req, res, next){
 
 function updateUserQuestionsFeed(user, question, message){
   return user.populateQ('feed', 'questionNotifications')
-    .then(function(user){
-      user.feed.questionNotifications.push({
+    .then(function(populatedUser){
+      populatedUser.feed.questionNotifications.push({
         body:message,
         question: question.id,
         questionTitle: question.title
       });
-      return user.feed.saveQ()
+      return populatedUser.feed.saveQ()
         .catch(function(error){
           logger.error('Error updating user feed', error);
         });
@@ -405,9 +405,9 @@ router.post('/:questionId/answer/:answerId/comment', validate({body: schemas.add
       var answer = question.answers.id(req.params.answerId);
       if(!answer){
         res
-        .status(404);
+          .status(404);
 
-        return;
+        return next('Answer was not found');
       }
 
       answer.comments.push({
@@ -441,8 +441,8 @@ router.put('/:questionId/answer/:answerId/correct', function(req, res, next){
   domain.Question.findByIdQ(req.params.questionId)
     .then(function (question){
       return question.populateQ('answers.author', 'username displayName email profile.karmaChanges feed')
-        .then(function(question){
-          var answer = question.answers.id(req.params.answerId);
+        .then(function(populatedQuestion){
+          var answer = populatedQuestion.answers.id(req.params.answerId);
           answer.correct = true;
           answer.author.profile.karmaChanges.push({
             value: 5,
@@ -577,10 +577,10 @@ router.post('/', validate({body: schemas.addOrEditQuestionSchema}), function(req
 
   question
     .saveQ()
-    .then(function(question){
+    .then(function(savedQuestion){
       return domain.User.findByIdQ(req.user.id)
       .then(function(user){
-        user.profile.asked.push(question.id);
+        user.profile.asked.push(savedQuestion.id);
         return user.saveQ();
       })
       .then(function(){
