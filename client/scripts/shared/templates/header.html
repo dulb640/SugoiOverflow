@@ -1,6 +1,6 @@
 <div class="header" ng-controller="siteHeaderController">
   <div class="branding">
-    <a href="#/">Sugoi<strong>Overflow</strong></a>
+    <a href="#/">{{config.branding.title}}</a>
   </div>
   <div class="search">
     <input class="search-bar" type="text" ng-model="searchTerms" placeholder="Search Questions" class="form-control" ng-keyup="$event.keyCode === 13 && searchQuestions()"/>

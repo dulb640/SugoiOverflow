@@ -8,9 +8,11 @@ angular.module('sugoiOverflow.shared')
       $window,
       profilesDataService,
       currentUser,
-      tagsDataService) {
-    'use strict';
-    _.extend($scope, {
+      tagsDataService,
+      config) {
+      'use strict';
+      config($scope);
+      _.extend($scope, {
         currentUser: currentUser,
         user: {},
         notifications: [],
