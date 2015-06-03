@@ -64,7 +64,14 @@ header > div{
 		}
 
 	}
+	.help-tour {
+		margin-right: 20px;
+		font-size: 30px;
 
+		a{
+			cursor: pointer;
+		}
+	}
 	.user {
 		@extend %display-flex;
 		@include flex-vertical-aligns(center);
@@ -187,6 +194,17 @@ footer{
 		&:hover{
 			color:$gray-text-light;
       text-decoration: underline;
+		}
+	}
+}
+
+.intro-banner, .ng-joyride{
+	.popover-content{
+		padding: 1em;
+		.skipBtn{
+			&:hover{
+				cursor: pointer;
+			}
 		}
 	}
 }

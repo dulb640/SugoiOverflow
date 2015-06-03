@@ -13,6 +13,7 @@ angular
     'wiz.markdown',
     'ngTagsInput',
     'pageslide-directive',
+		'ngJoyRide',
     'sugoiOverflow.templates',
 		'sugoiOverflow.settings',
     'sugoiOverflow.shared',

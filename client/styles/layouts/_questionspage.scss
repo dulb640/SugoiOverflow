@@ -55,6 +55,14 @@
 
 		.title {
 			font-size: 18px;
+			a{
+				text-decoration: underline;
+				color:$blue-light;
+				&:hover{
+					text-decoration: underline;
+					color: $blue-lighter;
+				}
+			}
 		}
 		.description {
 			color: darken($gray-darker,20%);

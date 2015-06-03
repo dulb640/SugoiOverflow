@@ -7,6 +7,9 @@
     <!-- <input class="search-bar" type="text" ng-model="searchTerms" placeholder="Search Questions" typeahead="question for questions in getTypeahead($viewValue)"  class="form-control" typeahead-loading="typeaheadLoading" typeahead-append-to-body="true" typeahead-wait-ms="150" ng-keyup="$event.keyCode === 13 && searchQuestions($value)"/> -->
   </div>
   <div class="user" ng-show="currentUser.isAuthenticated">
+    <div class="help-tour">
+      <a ng-click="startJoyRide()"><span class="fa fa-question"></span></a>
+    </div>
     <div class="notifications">
       <span class="notices">{{newNotificationsCount()}}</span>
       <span ng-click="openNotifications($event)">Notifications</span>
@@ -31,6 +34,7 @@
       </a>
     </div>
   </div>
+  <div ng-joy-ride="joyRideStarted" config="joyRideConfig" on-finish="onFinish()"  on-skip="onFinish()"></div>
   <div>
     <pageslide class="notification-slider" ps-open="notificationsOpened">
       <div class="notification-container" ng-click="$event.stopPropagation()">

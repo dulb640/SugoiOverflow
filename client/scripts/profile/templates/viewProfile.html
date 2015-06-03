@@ -22,69 +22,71 @@
     </div>
   </div>
 
-  <div class="question-header">Asked:</div>
-  <div class="user-questions">
-    <div class="question-container" ng-repeat="question in asked">
-        <div class="question-content">
-          <div class="title">
-            <a ng-href = '/#/questions/{{question.id}}/answers'>{{question.title}}</a>
+  <div class="profile-questions">
+    <div class="question-header">Asked:</div>
+    <div class="user-questions">
+      <div class="question-container" ng-repeat="question in asked">
+          <div class="question-content">
+            <div class="title">
+              <a ng-href = '/#/questions/{{question.id}}/answers'>{{question.title}}</a>
+            </div>
+            <div class="tags">
+              <a ng-href="/#/questions/search/{{tag.text}}" class="tag" ng-repeat="tag in question.tags">{{tag.text}}</a>
+            </div>
+            <div class="timestap">
+               <span ng-bind="question.timestamp | date:'medium'"></span>
+            </div>
           </div>
-          <div class="tags">
-            <a ng-href="/#/questions/search/{{tag.text}}" class="tag" ng-repeat="tag in question.tags">{{tag.text}}</a>
-          </div>
-          <div class="timestap">
-             <span ng-bind="question.timestamp | date:'medium'"></span>
-          </div>
-        </div>
-        <div class="question-status">
+          <div class="question-status">
 
-          <div class="answers"><span>{{question.answers.length}}</span><span>answers</span></div>
-          <div class="subs"><span>{{question.subscribers.length}}</span><span>subs</span></div>
-        </div>
+            <div class="answers"><span>{{question.answers.length}}</span><span>answers</span></div>
+            <div class="subs"><span>{{question.subscribers.length}}</span><span>subs</span></div>
+          </div>
+      </div>
     </div>
-  </div>
 
-  <div class="question-header">Answered:</div>
-  <div class="user-questions">
-    <div class="question-container" ng-repeat="question in answered">
-        <div class="question-content">
-          <div class="title">
-            <a ng-href = '/#/questions/{{question.id}}/answers'>{{question.title}}</a>
+    <div class="question-header">Answered:</div>
+    <div class="user-questions">
+      <div class="question-container" ng-repeat="question in answered">
+          <div class="question-content">
+            <div class="title">
+              <a ng-href = '/#/questions/{{question.id}}/answers'>{{question.title}}</a>
+            </div>
+            <div class="tags">
+              <a ng-href="/#/questions/search/{{tag.text}}" class="tag" ng-repeat="tag in question.tags">{{tag.text}}</a>
+            </div>
+            <div class="timestap">
+               <span ng-bind="question.timestamp | date:'medium'"></span>
+            </div>
           </div>
-          <div class="tags">
-            <a ng-href="/#/questions/search/{{tag.text}}" class="tag" ng-repeat="tag in question.tags">{{tag.text}}</a>
-          </div>
-          <div class="timestap">
-             <span ng-bind="question.timestamp | date:'medium'"></span>
-          </div>
-        </div>
-        <div class="question-status">
+          <div class="question-status">
 
-          <div class="answers"><span>{{question.answers.length}}</span><span>answers</span></div>
-          <div class="subs"><span>{{question.subscribers.length}}</span><span>subs</span></div>
-        </div>
+            <div class="answers"><span>{{question.answers.length}}</span><span>answers</span></div>
+            <div class="subs"><span>{{question.subscribers.length}}</span><span>subs</span></div>
+          </div>
+      </div>
     </div>
-  </div>
 
-  <div class="question-header">Subcribed to:</div>
-  <div class="user-questions">
-    <div class="question-container" ng-repeat="question in subcribed">
-        <div class="question-content">
-          <div class="title">
-            <a ng-href = '/#/questions/{{question.id}}/answers'>{{question.title}}</a>
+    <div class="question-header">Subcribed to:</div>
+    <div class="user-questions">
+      <div class="question-container" ng-repeat="question in subcribed">
+          <div class="question-content">
+            <div class="title">
+              <a ng-href = '/#/questions/{{question.id}}/answers'>{{question.title}}</a>
+            </div>
+            <div class="tags">
+              <a ng-href="/#/questions/search/{{tag.text}}" class="tag" ng-repeat="tag in question.tags">{{tag.text}}</a>
+            </div>
+            <div class="timestap">
+               <span ng-bind="question.timestamp | date:'medium'"></span>
+            </div>
           </div>
-          <div class="tags">
-            <a ng-href="/#/questions/search/{{tag.text}}" class="tag" ng-repeat="tag in question.tags">{{tag.text}}</a>
-          </div>
-          <div class="timestap">
-             <span ng-bind="question.timestamp | date:'medium'"></span>
-          </div>
-        </div>
-        <div class="question-status">
+          <div class="question-status">
 
-          <div class="answers"><span>{{question.answers.length}}</span><span>answers</span></div>
-          <div class="subs"><span>{{question.subscribers.length}}</span><span>subs</span></div>
-        </div>
+            <div class="answers"><span>{{question.answers.length}}</span><span>answers</span></div>
+            <div class="subs"><span>{{question.subscribers.length}}</span><span>subs</span></div>
+          </div>
+      </div>
     </div>
   </div>
 </div>
