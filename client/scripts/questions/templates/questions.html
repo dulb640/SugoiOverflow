@@ -20,7 +20,7 @@
   				<div class="tags">
   					<a ng-href="/#/questions/search/{{tag.text}}" class="tag" ng-repeat="tag in question.tags">{{tag.text}}</a>
   				</div>
-          <div class="author"><a ng-href="/#/profile/{{question.author.username}}">Asked by {{question.author.displayName}} </a></div>
+          <div class="author">Asked by <a ng-href="/#/profile/{{question.author.username}}">{{question.author.displayName}} </a></div>
           <div class="timestamp">
              <span ng-bind="question.timestamp | date:'medium'"></span>
           </div>

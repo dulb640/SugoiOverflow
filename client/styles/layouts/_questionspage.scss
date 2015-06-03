@@ -78,6 +78,15 @@
 				border-color: $teal;
 			}
 		}
+    .author{
+      a{
+        text-decoration: underline;
+        &:hover{
+          color:$gray-text-light;
+          text-decoration: underline;
+        }
+      }
+    }
 	}
 
 	.question-status {
