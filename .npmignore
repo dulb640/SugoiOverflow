@@ -11,6 +11,9 @@ bower_components
 .lock-wscript
 config*.json
 config*.yaml
+web.config
+web.*.config
 !sample-config.yaml
+!sample-web.config
 server/iisnode
 build
