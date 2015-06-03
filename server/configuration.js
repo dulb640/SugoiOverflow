@@ -22,6 +22,9 @@ nconf
   .use('memory')
   .defaults({
     domain: 'localhost',
+    branding:{
+      title: 'SugoiOverflow'
+    },
     path: '',
     port: 3000,
     'log-folder': 'logs',
