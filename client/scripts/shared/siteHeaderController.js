@@ -8,10 +8,17 @@ angular.module('sugoiOverflow.shared')
       $window,
       profilesDataService,
       currentUser,
+      $localStorage,
       tagsDataService,
       config) {
       'use strict';
       config($scope);
+
+      function showTour() {
+        $scope.joyRideStarted = true;
+        $localStorage.visitedTour = new Date();
+      }
+
       _.extend($scope, {
         currentUser: currentUser,
         user: {},
@@ -54,9 +61,7 @@ angular.module('sugoiOverflow.shared')
           return $scope.newNotificationsCount() > 0;
         },
         joyRideStarted: false,
-        startJoyRide: function() {
-          $scope.joyRideStarted = true;
-        },
+        startJoyRide: showTour,
         joyRideConfig: [{
           type: 'location_change',
           path: '/questions/all'
@@ -304,5 +309,11 @@ If you were the author of the question you can also mark them as correct',
 
     $rootScope.$on('$routeChangeSuccess', function(){
       $scope.searchTerms = $routeParams.searchTerms;
+    });
+
+    $scope.$watch('currentUser.isAuthenticated', function() {
+      if($scope.currentUser.isAuthenticated && !$localStorage.visitedTour){
+        showTour();
+      }
     });
   });
