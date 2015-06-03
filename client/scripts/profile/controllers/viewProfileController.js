@@ -10,6 +10,17 @@ angular.module('sugoiOverflow.profile')
         questions: [],
       });
 
+      function mapTags(questions){
+        _.each(questions, function(question){
+            question.tags = _.map(question.tags, function(tag){
+              return {
+                text: tag
+              };
+            });
+          });
+        return questions;
+      }
+
       function loadUser(user){
         $scope.displayName = user.displayName;
         $scope.username = user.username;
@@ -21,17 +32,23 @@ angular.module('sugoiOverflow.profile')
         });
         $scope.location = user.profile.location;
         $scope.karma = user.profile.karma;
-        return questionsDataService.getQuestionsForUser(user.username)
+
+        var getAskedPromise = questionsDataService.getQuestionsAskedByUser(user.username)
           .then(function(questions){
-            $scope.questions = questions;
-            _.each($scope.questions, function(question){
-              question.tags = _.map(question.tags, function(tag){
-                return {
-                  text: tag
-                };
-              });
-            });
+            $scope.asked =  mapTags(questions);
           });
+
+        var getAnsweredPromise = questionsDataService.getQuestionsAnsweredByUser(user.username)
+          .then(function(questions){
+            $scope.answered = mapTags(questions);
+          });
+
+        var getSubscribedPromise = questionsDataService.getQuestionsSubscribedByUser(user.username)
+          .then(function(questions){
+            $scope.subcribed = mapTags(questions);
+          });
+
+        return $q.all([getAskedPromise, getAnsweredPromise, getSubscribedPromise]);
       }
 
       if (!$routeParams.username || $routeParams.username === 'me'){
