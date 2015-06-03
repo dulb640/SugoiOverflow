@@ -42,7 +42,7 @@ angular.module('sugoiOverflow.questions')
             .then(function(addedQuestion){
               $location.path(_.str.sprintf('/questions/%s/answers', addedQuestion.id));
             });
-        },
+        }
       });
 
       profilesDataService.getCurrentUserProfile()
@@ -68,7 +68,7 @@ angular.module('sugoiOverflow.questions')
         suggestionsDataService.getTags($scope.body, $scope.title)
           .then(function(tags){
             var existing = _.pluck($scope.tags, 'text');
-            $scope.suggestedTags = _.filter(tags, function(t){return !_.includes(existing, t);});
+            $scope.suggestedTags = _.filter(tags, function(t) { return !_.includes(existing, t); });
           });
       }
 
@@ -76,7 +76,7 @@ angular.module('sugoiOverflow.questions')
         suggestionsDataService.getPeople($scope.body, $scope.title)
           .then(function(people){
             var existing = _.pluck($scope.people, 'email');
-            $scope.suggestedPeople = _.filter(people, function(t){return !_.includes(existing, t);});
+            $scope.suggestedPeople = _.filter(people, function(t) { return !_.includes(existing, t); });
           });
       }
       var timer;

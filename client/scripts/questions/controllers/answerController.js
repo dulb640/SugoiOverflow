@@ -42,7 +42,8 @@ angular.module('sugoiOverflow.questions')
               .then(function(){
                 questionsDataService.getQuestion($scope.questionId)
                 .then($scope.update);
-                $scope.votingInProgress = false;});
+                $scope.votingInProgress = false;
+              });
           }
         },
         downvote: function(){
@@ -58,7 +59,7 @@ angular.module('sugoiOverflow.questions')
                 $scope.votingInProgress = false;
               });
           }
-        },
+        }
       });
     }
   );

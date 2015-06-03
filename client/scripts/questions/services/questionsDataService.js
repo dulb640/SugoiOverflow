@@ -135,12 +135,12 @@ angular.module('sugoiOverflow.questions')
           body: answer
         };
         $http.post(_.str.sprintf('/api/questions/%s/answer', questionId), data)
-        .success(function(data){
-          deferred.resolve(data);
-        })
-        .error(function(error){
-          deferred.reject(error);
-        });
+          .success(function(responseData) {
+            deferred.resolve(responseData);
+          })
+          .error(function(error){
+            deferred.reject(error);
+          });
 
         return deferred.promise;
       },
@@ -152,8 +152,8 @@ angular.module('sugoiOverflow.questions')
         };
 
         $http.post(_.str.sprintf('/api/questions/%s/comment', questionId), data)
-        .success(function(data){
-          deferred.resolve(data);
+        .success(function(responseData){
+          deferred.resolve(responseData);
         })
         .error(function(error){
           deferred.reject(error);
@@ -166,8 +166,8 @@ angular.module('sugoiOverflow.questions')
           body: comment
         };
          $http.post(_.str.sprintf('/api/questions/%s/answer/%s/comment', questionId, answerId), data)
-        .success(function(data){
-          deferred.resolve(data);
+        .success(function(responseData){
+          deferred.resolve(responseData);
         })
         .error(function(error){
           deferred.reject(error);
@@ -213,5 +213,3 @@ angular.module('sugoiOverflow.questions')
     };
     return service;
   });
-
-

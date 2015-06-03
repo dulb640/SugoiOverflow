@@ -7,7 +7,7 @@ angular.module('sugoiOverflow.profile')
         isOwnProfile: false,
         user: {},
         tags: [],
-        questions: [],
+        questions: []
       });
 
       function mapTags(questions){
@@ -67,4 +67,3 @@ angular.module('sugoiOverflow.profile')
       }
     }
   );
-

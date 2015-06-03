@@ -9,3 +9,4 @@ env:
 
 globals:
   angular: true
+  _: true

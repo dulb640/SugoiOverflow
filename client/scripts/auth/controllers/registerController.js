@@ -13,7 +13,7 @@ angular.module('sugoiOverflow.auth')
           var userDetails = {
             username: $scope.username,
             email: $scope.email,
-            password: $scope.password,
+            password: $scope.password
           };
 
           authService.localRegister(userDetails)
@@ -33,4 +33,3 @@ angular.module('sugoiOverflow.auth')
       });
     }
   );
-
