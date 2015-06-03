@@ -1,5 +1,5 @@
 <div class="container">
-  <form class="login-form" ng-submit="submit()">
+  <form class="login-form" ng-show="config.auth.local" ng-submit="submit()">
     <div class="form-group username">
       <label class="form-label" for="usernameOrEmail">Username or email</label>
       <input class="form-control" type="text" name="usernameOrEmail" ng-model="usernameOrEmail">
@@ -10,6 +10,6 @@
     </div>
     <button class="form-submit action-button" type="submit">Login</button>
   </form>
-  <a class="ad-suggestion" ng-show="adUser" ng-click="adLogin()">Login as Active Directory user: <span class="ad-username">{{adUser}}</span></a>
-  <div class="register-suggestion" >Or you can <a href="/#/register">register</a></div>
+  <a class="ad-suggestion" ng-show="config.auth.activeDirectory && adUser" ng-click="adLogin()">Login as Active Directory user: <span class="ad-username">{{adUser}}</span></a>
+  <div class="register-suggestion" ng-show="config.auth.local" >Or you can <a href="/#/register">register</a></div>
 </div>

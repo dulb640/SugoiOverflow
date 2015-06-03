@@ -1,7 +1,9 @@
 angular.module('sugoiOverflow.auth')
   .controller('registerController',
-    function($scope, $q, $routeParams, $location, authService){
+    function($scope, $q, $routeParams, $location, authService, config){
       'use strict';
+
+      config($scope);
 
       authService.adCheck()
         .then(function(data){
