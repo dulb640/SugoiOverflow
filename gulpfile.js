@@ -7,7 +7,7 @@ var gutil =              require('gulp-util');
 var sourcemaps =         require('gulp-sourcemaps');
 var runSequence =        require('run-sequence');
 var rimraf =             require('gulp-rimraf');
-var jshint =             require('gulp-jshint');
+var eslint =             require('gulp-eslint');
 var plumber =            require('gulp-plumber');
 var notify =             require('gulp-notify');
 var concat =             require('gulp-concat');
@@ -19,7 +19,6 @@ var sass =               require('gulp-sass');
 var path =               require('path');
 var angularFilesort =    require('gulp-angular-filesort');
 var inject =             require('gulp-inject');
-var eventStream =        require('event-stream');
 var connect =            require('gulp-connect');
 var livereload =         require('gulp-livereload');
 var watch =              require('gulp-watch');
@@ -27,7 +26,6 @@ var mainBowerFiles =     require('main-bower-files');
 var tar =                require('gulp-tar');
 var gzip =               require('gulp-gzip');
 var args =               require('yargs').argv;
-var coffee =             require('gulp-coffee');
 var mocha =              require('gulp-mocha');
 var templateCache =      require('gulp-angular-templatecache');
 var karma =              require('karma').server;
@@ -35,7 +33,7 @@ var apidoc =             require('gulp-apidoc');
 var order =              require('gulp-order');
 var Dgeni =              require('dgeni');
 var shell = require('gulp-shell');
-var envType = process.env.NODE_ENV ||args.NODE_ENV || args.env || 'development';
+var envType = process.env.NODE_ENV || args.NODE_ENV || args.env || 'development';
 var isDev = envType === 'development';
 
 var paths = {
@@ -52,8 +50,8 @@ var paths = {
 gulp.task('lint', function() {
   return gulp.src(['server/**/*.js', 'client/**/*.js'])
     .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
-    .pipe(jshint())
-    .pipe(jshint.reporter('jshint-stylish'));
+    .pipe(eslint())
+    .pipe(eslint.format());
 });
 
 gulp.task('clean', function(){
@@ -62,7 +60,7 @@ gulp.task('clean', function(){
 });
 
 gulp.task('scripts-lib', function(){
-  return gulp.src(paths.bowerScripts,{
+  return gulp.src(paths.bowerScripts, {
     base: 'bower_components'
   })
   .pipe(order(['**/jquery.js',
@@ -126,13 +124,13 @@ gulp.task('inject-index', ['scripts-lib', 'scripts-app', 'styles-lib', 'styles-a
                               'scripts/lib/**/angular.js',
                               'scripts/lib/**/bootstrap.js',
                               'scripts/lib/**/lodash.js',
-                              'scripts/lib/**/*.js'],{ cwd: cwd });
+                              'scripts/lib/**/*.js'], { cwd: cwd });
 
-  var scriptsApp = gulp.src(['scripts/app/**/*.js'],{ cwd: cwd })
+  var scriptsApp = gulp.src(['scripts/app/**/*.js'], { cwd: cwd })
     .pipe(angularFilesort());
 
-  var stylesLib = gulp.src(['styles/lib/**/*.css'],{ cwd: cwd });
-  var stylesApp = gulp.src(['styles/app/**/*.css'],{ cwd: cwd });
+  var stylesLib = gulp.src(['styles/lib/**/*.css'], { cwd: cwd });
+  var stylesApp = gulp.src(['styles/app/**/*.css'], { cwd: cwd });
 
   return gulp.src(paths.index, {base: 'client'})
     .pipe(inject(scriptsLib, {name: 'lib'}))
@@ -155,16 +153,16 @@ gulp.task('run', function(){
 gulp.task('run-dev', ['watch'], function(){
   nodemon({
     script: './server/index.js',
-    ext: 'js css html yaml json',
+    ext: 'js css html yaml json'
   })
   .on('change')
-  .on('restart', function(){gutil.log('restarted!');});
+  .on('restart', function(){ gutil.log('restarted!'); });
 });
 
 gulp.task('run-prd', ['build'], function(){
   nodemon({
     script: './server/index.js',
-    ext: 'js css html yaml json',
+    ext: 'js css html yaml json'
   });
 });
 
@@ -250,7 +248,7 @@ gulp.task('test-server', function(){
 gulp.task('test-client', function(done) {
   var reporter = process.env.CI ? 'spec' : 'nyan';
   karma.start({
-    configFile: __dirname + '/karma.conf.coffee',
+    configFile: path.join(__dirname, '/karma.conf.coffee'),
     singleRun: true,
     action: 'run',
     reporters: [reporter]
@@ -282,11 +280,11 @@ gulp.task('dgeni', function(){
 // });
 
 gulp.task('clientdocs', shell.task([
- 'node_modules/jsdoc/jsdoc.js '+
-   '-c node_modules/angular-jsdoc/conf.json '+   // config file
-   '-t node_modules/angular-jsdoc/template '+    // template file
-   '-d clientdocs '+                             // output directory
-   '-r client'                              // source code directory
+ 'node_modules/jsdoc/jsdoc.js ' +
+  '-c node_modules/angular-jsdoc/conf.json ' +   // config file
+  '-t node_modules/angular-jsdoc/template ' +    // template file
+  '-d clientdocs ' +                             // output directory
+  '-r client'                                    // source code directory
 ]));
 
 gulp.task('default', ['run']);

@@ -2,7 +2,8 @@ rules:
   quotes: [1, "single", "avoid-escape"]
   no-multi-spaces: 0
   no-underscore-dangle: 0
-
+  key-spacing: 0
+  no-multi-str: 0
 env:
   node: true
   browser: false
