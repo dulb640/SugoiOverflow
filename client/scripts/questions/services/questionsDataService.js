@@ -45,9 +45,33 @@ angular.module('sugoiOverflow.questions')
         return deferred.promise;
       },
 
-      getQuestionsForUser: function(username){
+      getQuestionsAskedByUser: function(username){
         var deferred = $q.defer();
-        $http.get(_.str.sprintf('/api/questions/profile/%s', username))
+        $http.get(_.str.sprintf('/api/questions/profile/%s/asked', username))
+        .success(function(data){
+          deferred.resolve(data);
+        })
+        .error(function(error){
+          deferred.reject(error);
+        });
+        return deferred.promise;
+      },
+
+      getQuestionsAnsweredByUser: function(username){
+        var deferred = $q.defer();
+        $http.get(_.str.sprintf('/api/questions/profile/%s/answered', username))
+        .success(function(data){
+          deferred.resolve(data);
+        })
+        .error(function(error){
+          deferred.reject(error);
+        });
+        return deferred.promise;
+      },
+
+      getQuestionsSubscribedByUser: function(username){
+        var deferred = $q.defer();
+        $http.get(_.str.sprintf('/api/questions/profile/%s/answered', username))
         .success(function(data){
           deferred.resolve(data);
         })
