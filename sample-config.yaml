@@ -1,4 +1,6 @@
 domain: "localhost"
+branding:
+  title: 'SugoiOverflow'
 #Leave empty if your app is hosted at root
 path: ""
 port: 3000
