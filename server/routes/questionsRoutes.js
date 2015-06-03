@@ -1,6 +1,7 @@
 'use strict';
 
 var domain      = require('../domain');
+var ObjectId =   require('mongoose').Types.ObjectId;
 var logger      = require('../logger');
 
 var _           = require('lodash');
@@ -152,7 +153,7 @@ router.get('/most-wanted', function(req, res, next){
  * @apiGroup Questions
  * @apiUse QuestionSuccess
  */
-router.get('/profile/:username', function(req, res, next){
+router.get('/profile/:username/asked', function(req, res, next){
   domain.User
     .findOneQ({username:req.params.username})
     .then(function(user){
@@ -161,6 +162,51 @@ router.get('/profile/:username', function(req, res, next){
           res
             .status(200)
             .send(user.profile.asked);
+        });
+    })
+    .catch(function(error){
+      logger.error('Error getting questions', error);
+      return next(error);
+    });
+});
+
+router.get('/profile/:username/answered', function(req, res, next){
+  domain.User
+    .findOneQ({username:req.params.username})
+    .then(function(user){
+      return user.populateQ('profile.answered', 'id title body answers.author answers.timestamp answers.correct subscribers tags timestamp')
+        .then(function(user){
+          res
+            .status(200)
+            .send(user.profile.answered);
+        });
+    })
+    .catch(function(error){
+      logger.error('Error getting questions', error);
+      return next(error);
+    });
+});
+
+router.get('/profile/:username/subscribed', function(req, res, next){
+  domain.User
+    .findOneQ({username:req.params.username})
+    .then(function(user){
+      logger.error('8================3');
+      logger.error(user.id);
+
+      domain.Question
+        .find({'subscribers': {$elemMatch : { $eq: new ObjectId(user.id)}} })
+        .select('id title body answers.author answers.timestamp answers.correct subscribers tags timestamp author')
+        .populate('author subscribers answers.author', 'username displayName email')
+        .execQ()
+        .then(function(questions){
+          res
+            .status(200)
+            .send(questions);
+        })
+        .catch(function(error){
+          logger.error('Error getting questions', error);
+          return next(error);
         });
     })
     .catch(function(error){
