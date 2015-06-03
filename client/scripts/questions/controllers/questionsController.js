@@ -43,6 +43,7 @@ angular.module('sugoiOverflow.questions')
                   text: tag
                 };
               });
+              question.hasAnswers = question.answers && question.answers.length > 0;
             });
             $scope.suggestedIsEmpty();
           });
