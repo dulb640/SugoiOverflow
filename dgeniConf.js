@@ -9,7 +9,7 @@ module.exports = new Package('dgeni-example', [
  // require('dgeni-packages/jsdoc'),
  // require('dgeni-packages/nunjucks'),
   require('dgeni-packages/ngdoc'),
-  require('dgeni-packages/nunjucks'),
+  require('dgeni-packages/nunjucks')
   //require('dgeni-packages/examples')
 ])
 
