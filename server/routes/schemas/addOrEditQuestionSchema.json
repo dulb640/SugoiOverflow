@@ -23,6 +23,18 @@
         "minLength": 3,
         "maxLength": 30
       }
+    },
+    "people": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 5,
+      "required": false,
+      "items": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 30,
+        "pattern": "\\S+@\\S+\\.\\S+"
+      }
     }
   }
 }
