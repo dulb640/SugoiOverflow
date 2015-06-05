@@ -32,6 +32,7 @@ var karma =              require('karma').server;
 var apidoc =             require('gulp-apidoc');
 var order =              require('gulp-order');
 var Dgeni =              require('dgeni');
+var nodeDebug =          require('gulp-node-debug');
 var shell = require('gulp-shell');
 var envType = process.env.NODE_ENV || args.NODE_ENV || args.env || 'development';
 var isDev = envType === 'development';
@@ -44,7 +45,8 @@ var paths = {
   index          : ['client/index.html'],
   bowerScripts   : mainBowerFiles({filter:/.*\.js$/i}),
   bowerStyles    : mainBowerFiles({filter:/.*\.css$/i}),
-  bowerFonts     : mainBowerFiles({filter:/.*\.(eot|ttf|woff|woff2|otf)$/i})
+  bowerFonts     : mainBowerFiles({filter:/.*\.(eot|ttf|woff|woff2|otf)$/i}),
+  server         : ['server/index.js']
 };
 
 gulp.task('lint', function() {
@@ -286,5 +288,13 @@ gulp.task('clientdocs', shell.task([
   '-d clientdocs ' +                             // output directory
   '-r client'                                    // source code directory
 ]));
+
+gulp.task('debug', function() {
+  gulp.src(paths.server)
+    .pipe(nodeDebug({
+      debugBrk: true,
+      preload: true
+    }));
+});
 
 gulp.task('default', ['run']);
