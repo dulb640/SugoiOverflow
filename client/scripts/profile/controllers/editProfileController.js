@@ -32,6 +32,11 @@ angular.module('sugoiOverflow.profile')
           .success(function () {
             generateAvatarSrc();
           });
+        },
+        getTagsAutocomlete: function(query){
+          return _.filter($scope.availableTags, function(tag){
+            return _.str.include(tag.text, query);
+          });
         }
       });
 
@@ -54,6 +59,11 @@ angular.module('sugoiOverflow.profile')
             });
           $scope.location = user.profile.location;
           generateAvatarSrc();
+        });
+
+      tagsDataService.getAvailableTags()
+        .then(function(tags){
+          $scope.availableTags = tags;
         });
     }
   );

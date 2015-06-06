@@ -14,7 +14,7 @@
     <div>
     <div class="form-label specialisations" for="selectedTags">Specialisations</div>
       <tags-input ng-model="selectedTags" name="selectedTags" max-tags="30" min-length="3" max-length="30" add-on-space="true">
-        <!-- <auto-complete source="loadTags($query)"></auto-complete> -->
+        <auto-complete source="getTagsAutocomlete($query)"></auto-complete>
       </tags-input>
     </div>
     <div class="validation-messages" ng-show="!profileForm.$valid && profileForm.$submitted">

@@ -57,11 +57,11 @@ angular.module('sugoiOverflow.questions')
 
       tagsDataService.getAvailableTags()
         .then(function(tags){
-            $scope.availableTags = tags;
+          $scope.availableTags = tags;
         });
       profilesDataService.getAvailableProfiles()
         .then(function(people){
-            $scope.availablePeople = people;
+          $scope.availablePeople = people;
         });
 
       function getTagsSuggestions(){
