@@ -1,6 +1,5 @@
 'use strict';
 
-var _           = require('lodash');
 var domain      = require('../../domain');
 
 var express     = require('express');
@@ -45,7 +44,7 @@ router.post('/:questionId/answer',
             return sub.id !== req.user.id;
           })
           .map(function(sub){
-            return updateUserQuestionsFeed(sub, req.question, 'Question has a new answer');
+            return userService.updateQuestionsFeed(sub, req.question, 'Question has a new answer');
           });
         return Promise.all(promises);
       })
@@ -74,7 +73,7 @@ router.post('/:questionId/answer/:answerId/comment',
   middleWares.saveQuestionAndSend,
 
   function updateFeed(req, res, next){
-    userService.updateUserQuestionsFeed(req.answer.author, req.question, 'Answer has a new comment')
+    userService.updateQuestionsFeed(req.answer.author, req.question, 'Answer has a new comment')
       .then(function(){
         next();
       });
@@ -97,7 +96,7 @@ router.put('/:questionId/answer/:answerId/correct',
   middleWares.saveQuestionAndSend,
 
   function updateFeed(req, res, next){
-    userService.updateUserQuestionsFeed(req.answer.author, req.question, 'Answer marked as correct', 5)
+    userService.updateQuestionsFeed(req.answer.author, req.question, 'Answer marked as correct', 5)
       .then(function(){
         next();
       });
@@ -132,7 +131,7 @@ router.put('/:questionId/answer/:answerId/upvote',
       return next();
     }
 
-    userService.updateUserQuestionsFeed(req.answer.author, req.question, 'Answer is upvoted', 1)
+    userService.updateQuestionsFeed(req.answer.author, req.question, 'Answer is upvoted', 1)
       .then(function(){
         next();
       });
@@ -167,7 +166,7 @@ router.put('/:questionId/answer/:answerId/downvote',
       return next();
     }
 
-    userService.updateUserQuestionsFeed(req.answer.author, req.question, 'Answer is downvoted', -1)
+    userService.updateQuestionsFeed(req.answer.author, req.question, 'Answer is downvoted', -1)
       .then(function(){
         next();
       });
