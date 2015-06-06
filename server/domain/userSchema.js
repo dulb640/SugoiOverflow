@@ -1,8 +1,9 @@
 'use strict';
-
-var mongoose = require('mongoose-q')(require('mongoose'));
+var Promise =  require('bluebird');
+var mongoose = Promise.promisifyAll(require('mongoose'));
 var Schema   = mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId;
+var bcrypt = Promise.promisifyAll(require('bcrypt'));
 var KarmaChange = require('./karmaChangeSchema');
 var config = require('../configuration');
 
@@ -85,14 +86,12 @@ User.set('toObject', {
 
 User.methods.setPassword = function setPassword(password) {
   var pepper = config('auth:pepper');
-  var q = require('q');
-  var bcrypt = require('bcrypt');
 
   var self = this;
-  return q.nfcall(bcrypt.genSalt, 10, null)
+  return bcrypt.genSaltAsync(10, null)
     .then(function(salt) {
       self.salt = salt;
-      return q.nfcall(bcrypt.hash, password + pepper, salt);
+      return bcrypt.hashAsync(password + pepper, salt);
     })
     .then(function(hash){
       self.password = hash;
@@ -102,10 +101,8 @@ User.methods.setPassword = function setPassword(password) {
 
 User.methods.verifyPassword = function verifyPassword(password) {
   var pepper = config('auth:pepper');
-  var q = require('q');
-  var bcrypt = require('bcrypt');
 
-  return q.nfcall(bcrypt.compare, password + pepper, this.password)
+  return bcrypt.compareAsync(password + pepper, this.password)
     .then(function(isValid){
       return isValid;
     });
@@ -117,7 +114,7 @@ User.virtual('profile.karma').get(function calculateKarma() {
   }
 
   var sum = this.profile.karmaChanges
-    .map(function(k){return k.value || 0; })
+    .map(function(k){ return k.value || 0; })
     .reduce(function(prev, next){return prev + next; });
   return sum;
 });

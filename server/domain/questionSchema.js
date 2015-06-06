@@ -1,10 +1,10 @@
 'use strict';
-
-var mongoose = require('mongoose-q')(require('mongoose'));
-var Schema = mongoose.Schema;
+var Promise =  require('bluebird');
+var mongoose = Promise.promisifyAll(require('mongoose'));
+var Schema =   mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId;
-var Answer = require('./answerSchema');
-var Comment = require('./commentSchema');
+var Answer =   require('./answerSchema');
+var Comment =  require('./commentSchema');
 
 var Question = new Schema({
   title:{

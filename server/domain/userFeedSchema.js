@@ -1,7 +1,8 @@
 'use strict';
 
-var mongoose = require('mongoose-q')(require('mongoose'));
-var Schema = mongoose.Schema;
+var Promise =              require('bluebird');
+var mongoose =             Promise.promisifyAll(require('mongoose'));
+var Schema =               mongoose.Schema;
 var QuestionNotification = require('./questionNotificationSchema');
 
 var UserFeed = new Schema({
