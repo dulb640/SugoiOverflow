@@ -3,7 +3,7 @@
     <div class="profile-details">
       <div class="name">{{displayName}}</div>
       <div class="email"><a href="mailto:{{email}}">{{email}}</a></div>
-      <div class="location" ng-show="location"><h4>Can be found at:</h4>{{location}}</div>
+      <div class="location" ng-show="location"><h4>Location:</h4>{{location}}</div>
       <h4>Follows tags:</h4>
       <div class="tags">
         <a href="/#/questions/search/{{tag.text}}" class="tag" ng-repeat="tag in tags">{{tag.text}}</a>
