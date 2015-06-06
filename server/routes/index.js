@@ -4,10 +4,10 @@ var express = require('express');
 var passport = require('passport');
 
 var router  = express.Router();
-router.use('/config', 		                                                    require('./configRoutes'));
+router.use('/config', 	                                                    require('./configRoutes'));
 
 router.use('/auth', 		                                                    require('./authRoutes'));
-router.use('/files', 	   /*passport.authenticate('jwt', { session: false}),*/ require('./filesRoutes'));
+router.use('/files', 	 /*passport.authenticate('jwt', { session: false}),*/ require('./filesRoutes'));
 
 router.use('/questions',   passport.authenticate('jwt', { session: false}), require('./questionsRoutes'));
 router.use('/profiles',    passport.authenticate('jwt', { session: false}), require('./profilesRoutes'));
