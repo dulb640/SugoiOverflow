@@ -21,12 +21,15 @@ function updateQuestionsFeed(user, question, message, karmaAdd){
           reason: message,
           question: question.id
         });
-        return populatedUser.saveAsync();
+        return populatedUser.saveAsync()
+          .then(function(){
+            return populatedUser.feed;
+          });
       }
-      return populatedUser;
+      return populatedUser.feed;
     })
-    .then(function(populatedUser) {
-      return populatedUser.feed.saveAsync()
+    .then(function(feed) {
+      return feed.saveAsync()
         .catch(function(error){
           logger.error('Error updating user feed', error);
         });
