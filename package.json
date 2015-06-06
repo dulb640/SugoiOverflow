@@ -20,8 +20,7 @@
     "jwt-simple": "^0.2.0",
     "lodash": "^3.9.3",
     "moment": "^2.9.0",
-    "mongoose": "~3.8.24",
-    "mongoose-bird": "0.0.1",
+    "mongoose": "^4.0.5",
     "mongoose-text-search": "~0.0.2",
     "morgan": "^1.5.1",
     "nconf": "^0.7.1",
@@ -32,7 +31,7 @@
     "passport-windowsauth": "^0.4.1",
     "tmp": "0.0.25",
     "tungus": "0.0.4",
-    "winston": "^0.9.0"
+    "winston": "^1.0.0"
   },
   "devDependencies": {
     "angular-jsdoc": "^0.3.2",
@@ -43,6 +42,7 @@
     "del": "^1.1.1",
     "dgeni": "^0.4.1",
     "dgeni-packages": "^0.10.12",
+    "eslint": "^0.22.1",
     "growl": "^1.8.1",
     "gulp": "^3.8.11",
     "gulp-angular-filesort": "^1.1.1",
@@ -77,8 +77,6 @@
     "gulp-util": "^3.0.4",
     "gulp-watch": "^4.1.1",
     "jsdoc": "^3.3.0-beta3",
-    "jshint-checkstyle-file-reporter": "0.0.1",
-    "jshint-stylish": "^1.0.1",
     "karma": "^0.12.31",
     "karma-coffee-preprocessor": "^0.2.1",
     "karma-mocha": "^0.1.10",
