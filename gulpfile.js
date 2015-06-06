@@ -33,6 +33,7 @@ var apidoc =             require('gulp-apidoc');
 var order =              require('gulp-order');
 var Dgeni =              require('dgeni');
 var nodeDebug =          require('gulp-node-debug');
+var autoprefixer =       require('gulp-autoprefixer');
 var shell = require('gulp-shell');
 var envType = process.env.NODE_ENV || args.NODE_ENV || args.env || 'development';
 var isDev = envType === 'development';
@@ -94,6 +95,7 @@ gulp.task('styles-lib', /*['lint-styles'],*/ function(){
   return gulp.src(paths.bowerStyles)
     .pipe(isDev ? gutil.noop() : concatCss('lib.css', { rebaseUrls: false }))
     .pipe(isDev ? gutil.noop() : minifyCss())
+    .pipe(autoprefixer())
     .pipe(gulp.dest('build/styles/lib'))
     .pipe(livereload());
 });
@@ -104,6 +106,7 @@ gulp.task('styles-app', function(){
     .pipe(sass())
     .pipe(isDev ? gutil.noop() : concatCss('app.css', { rebaseUrls: false }))
     .pipe(isDev ? gutil.noop() : minifyCss())
+    .pipe(autoprefixer())
     .pipe(isDev ? sourcemaps.write('./') : gutil.noop())
     .pipe(gulp.dest('build/styles/app'))
     .pipe(livereload());
