@@ -314,7 +314,7 @@ If you were the author of the question you can also mark them as correct',
 
     getUpdates();
 
-    $interval(getUpdates, 60000);
+    $interval(getUpdates, 30000);
 
     $scope.$watch('currentUser.isAuthenticated', getUpdates);
 
