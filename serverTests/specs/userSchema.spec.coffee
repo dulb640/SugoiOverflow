@@ -4,9 +4,7 @@ chai = require 'chai'
 expect = chai.expect
 sinon = require 'sinon'
 sinonChai = require 'sinon-chai'
-mongooseQ = require 'mongoose-q'
 mongoose = require 'mongoose'
-mongoose = mongooseQ mongoose
 
 chai.use sinonChai
 
