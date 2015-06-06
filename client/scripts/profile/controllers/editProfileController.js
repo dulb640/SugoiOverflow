@@ -30,9 +30,7 @@ angular.module('sugoiOverflow.profile')
             file: file
           })
           .success(function () {
-            $timeout(function(){
-              generateAvatarSrc();
-            }, 300);
+            generateAvatarSrc();
           });
         }
       });
