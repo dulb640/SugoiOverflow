@@ -3,8 +3,9 @@
 var express     = require('express');
 var router      = express.Router();
 
-var domain      = require('../domain');
-var logger      = require('../logger');
+var domain      = require('../../domain');
+var logger      = require('../../logger');
+var middleWares = require('./middleWares');
 
 /**
  * @apiName GetAllQuestions
@@ -18,11 +19,12 @@ router.get('/', function(req, res, next){
     .find()
     .select('id title body answers.author answers.timestamp answers.correct subscribers tags timestamp author')
     .populate('author subscribers answers.author', 'profile username displayName email')
-    .execQ()
+    .execAsync()
     .then(function(questions){
       res
         .status(200)
         .send(questions);
+      next();
     })
     .catch(function(error){
       logger.error('Error getting questions', error);
@@ -39,18 +41,19 @@ router.get('/', function(req, res, next){
  */
 router.get('/suggested', function(req, res, next){
   domain.User
-    .findByIdQ(req.user.id)
+    .findByIdAsync(req.user.id)
     .then(function(user){
       var tags = user.profile.selectedTags;
       domain.Question
         .find({'tags': {$in : tags}})
         .select('id title body answers.author answers.timestamp answers.correct subscribers tags timestamp author')
         .populate('author subscribers answers.author', 'profile username displayName email')
-        .execQ()
+        .execAsync()
         .then(function(questions){
           res
             .status(200)
             .send(questions);
+          next();
         })
         .catch(function(error){
           logger.error('Error getting questions', error);
@@ -68,7 +71,7 @@ router.get('/suggested', function(req, res, next){
  */
 router.get('/most-wanted', function(req, res, next){
   domain.Question
-    .aggregate([{
+    .aggregateAsync([{
         $match:{ 'answers.correct': {$ne: true}}}, {
         $project : {
           subCount: {
@@ -89,9 +92,8 @@ router.get('/most-wanted', function(req, res, next){
         }
       },
       {$sort: {'subCount':-1} }])
-    .execQ()
     .then(function(questions){
-      domain.User.populateQ(questions, {path:'author subscribers answers.author', select: 'profile username displayName email'})
+      domain.User.populateAsync(questions, {path:'author subscribers answers.author', select: 'profile username displayName email'})
         .then(function(populatedQuestions){
           populatedQuestions.forEach(function(q){
             q.id = q._id;
@@ -101,6 +103,7 @@ router.get('/most-wanted', function(req, res, next){
           res
             .status(200)
             .send(populatedQuestions);
+          next();
         });
     })
     .catch(function(error){
@@ -113,20 +116,23 @@ router.get('/most-wanted', function(req, res, next){
 /**
  * Get question by id
  */
-router.get('/:id', function(req, res, next){
-  domain.Question.findByIdQ(req.params.id)
-    .then(function(question){
-      return question.populateQ('author subscribers upVotes downVotes answers.author comments.author answers.comments.author', 'profile username displayName email feed');
-    })
-    .then(function(question){
-      res
-        .status(200)
-        .send(question);
-    })
-    .catch(function(error){
-      logger.error('Error getting answer', error);
-      return next(error);
-    });
+router.get('/one/:questionId',
+
+  middleWares.getQuestion,
+
+  function sendQuestion(req, res, next){
+    req.question
+      .populateAsync('author subscribers upVotes downVotes answers.author comments.author answers.comments.author', 'profile username displayName email feed')
+      .then(function(question){
+        res
+          .status(200)
+          .send(question);
+        next();
+      })
+      .catch(function(error){
+        logger.error('Error getting question', error);
+        return next(error);
+      });
 });
 
 /**
@@ -140,11 +146,12 @@ router.get('/search/:term', function(req, res, next){
         { limit: 50 }
     )
     .sort({ score : { $meta : 'textScore' } })
-    .execQ()
+    .execAsync()
     .then(function(questions){
       res
         .status(200)
         .send(questions);
+      next();
     })
     .catch(function(error){
       logger.error('Error getting questions', error);
@@ -160,14 +167,17 @@ router.get('/tag/:tag', function(req, res, next){
     .find(
       { tags : req.params.tag }
     )
-    .execQ()
+    .execAsync()
     .then(function(questions){
       res
         .status(200)
         .send(questions);
+      next();
     })
     .catch(function(error){
       logger.error('Error getting questions by tag', error);
       return next(error);
     });
 });
+
+module.exports = router;
