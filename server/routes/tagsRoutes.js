@@ -30,7 +30,7 @@ router.get('/top', function(req, res, next){
 
   domain.Question
     .mapReduceAsync(mapReduceOptions)
-    .then(function(results){
+    .spread(function(results){
       if(results.length === 0 ){
         return res
           .status(200)
