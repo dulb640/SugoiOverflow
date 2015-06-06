@@ -8,6 +8,7 @@ var path =              require('path');
 var morgan =            require('morgan');
 var logger =            require('./logger');
 var config =            require('./configuration');
+var Promise =           require('bluebird');
 
 var mongoConnectionString = config('mongo');
 
@@ -16,7 +17,7 @@ if(mongoConnectionString.substring(0, 7) === ('tingodb')){
   require('tungus');
 }
 
-var mongoose =          require('mongoose-q')(require('mongoose'));
+var mongoose =          Promise.promisifyAll(require('mongoose'));
 var domain =            require('./domain');
 
 
@@ -29,7 +30,7 @@ var app = express();
 var jwtOptions = config('auth:jwt');
 jwtOptions.authScheme = 'Bearer';
 passport.use(new JwtStrategy(jwtOptions, function(payload, done) {
-  domain.User.findByIdQ(payload.sub)
+  domain.User.findByIdAsync(payload.sub)
     .then(function(user){
       if(user){
         done(null, user);
@@ -46,12 +47,12 @@ if(config('auth:local')){
   var LocalStrategy = require('passport-local').Strategy;
   passport.use(new LocalStrategy(
     function(usernameOrEmail, password, done) {
-      domain.User.findOneQ({ username: usernameOrEmail })
+      domain.User.findOneAsync({ username: usernameOrEmail })
         .then(function(user) {
           if(user){
             return user;
           } else{
-            return domain.User.findOneQ({ email: usernameOrEmail });
+            return domain.User.findOneAsync({ email: usernameOrEmail });
           }
         })
         .then(function(user){
@@ -76,13 +77,13 @@ var ldapConfig = config('auth:ldap');
 if(ldapConfig && config('auth:active-directory')){
   var WindowsStrategy = require('passport-windowsauth');
   var authCallback = function authCallback(profile, done){
-    domain.User.findOneQ({adId: profile.id})
+    domain.User.findOneAsync({adId: profile.id})
       .then(function(user){
         if(user){
           done(null, user);
         }
         else{
-          new domain.UserFeed().saveQ()
+          new domain.UserFeed().saveAsync()
             .then(function (feed) {
               var newUser = new domain.User({
                 adId: profile.id,
@@ -92,7 +93,7 @@ if(ldapConfig && config('auth:active-directory')){
                 feed: feed.id
               });
 
-              return newUser.saveQ();
+              return newUser.saveAsync();
             })
             .then(function(newUser){
               done(null, newUser);
@@ -124,10 +125,10 @@ app.use(bodyParser.json());
 app.use(function(req, res, next){
   if(req.user && !req.user.feed){
     var newFeed = new domain.UserFeed();
-    newFeed.saveQ()
+    newFeed.saveAsync()
       .then(function(feed){
         req.user.feed = feed.id;
-        return req.user.saveQ()
+        return req.user.saveAsync()
           .then(function(updatedUser){
             req.user = updatedUser;
             next();
@@ -142,30 +143,60 @@ app.use(function(req, res, next){
 app.use('/content', express.static(path.join(__dirname, '../content')));
 app.use(express.static(path.join(__dirname, '../build')));
 app.use('/api', routes);
+
+function handleGenericError(error){
+  switch(error.name){
+    case 'ValidationError':
+      logger.error('Mongoose Validation failed', error.errors);
+  }
+}
 app.use(function(error, req, res, next) {
   if(!error){
     return next();
   }
   switch(error.name){
     case 'JsonSchemaValidation':
-      logger.warn('Validation failed for user %s trying to %s %s',
+      logger.warn('Validation failed when user %s tried to %s %s',
         req.user.username,
         req.method,
         req.url,
-      error);
+      error.validations);
 
       res
         .status(400)
         .send({
-          statusText: 'Bad Request',
+          statusText: 'Bad request',
           jsonSchemaValidation: true,
           validations: error.validations
         });
 
       return next();
 
-    default:
-    logger.error('Unexpected error!', error);
+    case 'NotFoundError':
+      logger.warn('%s when user %s tried to %s %s',
+        error.message,
+        req.user.username,
+        req.method,
+        req.url);
+
+      res
+        .status(404)
+        .send({
+          statusText: 'Not found'
+        });
+
+      return next();
+
+    case 'GenericError':
+      logger.error('Generic Error: %s when user %s tried to %s %s',
+        error.message,
+        req.user.username,
+        req.method,
+        req.url,
+        error.inner);
+
+      handleGenericError(error.inner);
+
       res
         .status(500)
         .send({
@@ -173,8 +204,23 @@ app.use(function(error, req, res, next) {
         });
 
       return next();
-    }
-    return next(error);
+    default:
+      logger.error('Unexpected error when user %s tried to %s %s',
+        req.user.username,
+        req.method,
+        req.url,
+        error);
+
+      res
+        .status(500)
+        .send({
+          statusText: 'Internal server error'
+        });
+
+      return next();
+  }
+  return next(error);
 });
 
+//PORT is iis specific
 app.listen(config('PORT') || config('port'));
