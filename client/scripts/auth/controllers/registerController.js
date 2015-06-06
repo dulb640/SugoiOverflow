@@ -5,10 +5,14 @@ angular.module('sugoiOverflow.auth')
 
       config($scope);
 
-      authService.adCheck()
-        .then(function(data){
-          $scope.adUser = data.user;
-        });
+      $scope.$watch('config.auth.activeDirectory', function(){
+        if($scope.config.auth.activeDirectory){
+          authService.adCheck()
+            .then(function(data){
+              $scope.adUser = data.user;
+            });
+        }
+      });
 
       _.extend($scope, {
         submit: function(){
