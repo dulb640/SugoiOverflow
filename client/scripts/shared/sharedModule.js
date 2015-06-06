@@ -24,7 +24,7 @@ angular.module('sugoiOverflow.shared', [
 
     return function($scope){
       $scope.config = defaultConfig;
-      $http.get('/api/config')
+      $http.get('/api/config', { skipAuthorization: true })
         .success(function(configResponse){
           $scope.config = _.extend($scope.config, configResponse);
         });
