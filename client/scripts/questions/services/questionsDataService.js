@@ -71,7 +71,7 @@ angular.module('sugoiOverflow.questions')
 
       getQuestionsSubscribedByUser: function(username){
         var deferred = $q.defer();
-        $http.get(_.str.sprintf('/api/questions/profile/%s/answered', username))
+        $http.get(_.str.sprintf('/api/questions/profile/%s/subscribed', username))
         .success(function(data){
           deferred.resolve(data);
         })
@@ -95,7 +95,7 @@ angular.module('sugoiOverflow.questions')
 
       getQuestion: function(id) {
         var deferred = $q.defer();
-        $http.get(_.str.sprintf('/api/questions/%s', id))
+        $http.get(_.str.sprintf('/api/questions/one/%s', id))
         .success(function(data){
           deferred.resolve(data);
         })
