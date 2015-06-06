@@ -187,6 +187,20 @@ app.use(function(error, req, res, next) {
 
       return next();
 
+    case 'ArgumentError':
+      logger.warn('Argument "%s" didn\'t meet requirements: %s',
+        error.argumentName,
+        error.message,
+        error.stack);
+
+      res
+        .status(404)
+        .send({
+          statusText: 'Not found'
+        });
+
+      return next();
+
     case 'GenericError':
       logger.error('Generic Error: %s when user %s tried to %s %s',
         error.message,
