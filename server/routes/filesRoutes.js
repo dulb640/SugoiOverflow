@@ -14,7 +14,7 @@ var passport = require('passport');
 var gm =       require('gm');
 var Promise =  require('bluebird');
 
-var mongoose = Promise.promisifyAll(require('mongoose'));
+var mongoose = require('mongoose');
 
 var gfs = new Grid(mongoose.connection.db, mongoose.mongo);
 gfs = Promise.promisifyAll(gfs);

@@ -2,8 +2,8 @@
 
 var domain      = require('../domain');
 var logger      = require('../logger');
-var express = require('express');
-var router  = express.Router();
+var express     = require('express');
+var router      = express.Router();
 var validate    = require('express-jsonschema').validate;
 var schemas     = require('./schemas');
 
@@ -98,7 +98,7 @@ router.put('/me/feed/:notificationId/read', function(req, res, next){
       var feed = user.feed;
       var notification = feed.questionNotifications.id(req.params.notificationId);
       notification.read = true;
-      feed.saveAsync().then(function(savedFeed){
+      return feed.saveAsync().spread(function(savedFeed){ //have to use spread because of non-standard callback
         res
           .status(200)
           .send(savedFeed);
@@ -128,7 +128,7 @@ router.put('/me', validate({body: schemas.editProfileSchema}), function(req, res
     req.user.profile.location = req.body.location;
     req.user.profile.selectedTags = req.body.selectedTags;
     req.user.saveAsync()
-    .then(function(profile){
+    .spread(function(profile){
       res
         .status(200)
         .send(profile);

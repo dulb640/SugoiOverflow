@@ -58,7 +58,7 @@ if(config('auth:local')){
   router.post('/local', passport.authenticate('local', { session: false }), generateJwt);
   router.post('/local/register', function (req, res, next) {
     new domain.UserFeed().saveAsync()
-    .then(function (feed) {
+    .spread(function (feed) {
       var newUser = new domain.User({
         username: req.body.username,
         email: req.body.email,

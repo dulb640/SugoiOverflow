@@ -17,8 +17,9 @@ if(mongoConnectionString.substring(0, 7) === ('tingodb')){
   require('tungus');
 }
 
-var mongoose =          Promise.promisifyAll(require('mongoose'));
+var mongoose =          require('mongoose');
 var domain =            require('./domain');
+Promise.promisifyAll(mongoose);
 
 
 mongoose.connect(mongoConnectionString);
@@ -84,7 +85,7 @@ if(ldapConfig && config('auth:active-directory')){
         }
         else{
           new domain.UserFeed().saveAsync()
-            .then(function (feed) {
+            .spread(function (feed) {
               var newUser = new domain.User({
                 adId: profile.id,
                 username: profile._json.sAMAccountName,
@@ -95,7 +96,7 @@ if(ldapConfig && config('auth:active-directory')){
 
               return newUser.saveAsync();
             })
-            .then(function(newUser){
+            .spread(function(newUser){
               done(null, newUser);
             })
             .catch(function(error){
@@ -126,10 +127,10 @@ app.use(function(req, res, next){
   if(req.user && !req.user.feed){
     var newFeed = new domain.UserFeed();
     newFeed.saveAsync()
-      .then(function(feed){
+      .spread(function(feed){
         req.user.feed = feed.id;
         return req.user.saveAsync()
-          .then(function(updatedUser){
+          .spread(function(updatedUser){
             req.user = updatedUser;
             next();
           });

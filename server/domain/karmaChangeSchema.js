@@ -1,6 +1,6 @@
 'use strict';
-var Promise =  require('bluebird');
-var mongoose = Promise.promisifyAll(require('mongoose'));
+
+var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var KarmaChange = new Schema({
