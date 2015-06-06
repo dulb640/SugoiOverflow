@@ -1,6 +1,6 @@
 angular.module('sugoiOverflow.profile')
   .controller('editProfileController',
-    function($scope, $q, $routeParams, $location, $upload, $timeout, tagsDataService, profilesDataService, $localStorage){
+    function($scope, $q, $routeParams, $location, $upload, $timeout, tagsDataService, profilesDataService, $localStorage, autocompleteService){
       'use strict';
 
       function generateAvatarSrc(){
@@ -34,9 +34,7 @@ angular.module('sugoiOverflow.profile')
           });
         },
         getTagsAutocomlete: function(query){
-          return _.filter($scope.availableTags, function(tag){
-            return _.str.include(tag.text, query);
-          });
+          return autocompleteService(query, $scope.availableTags);
         }
       });
 

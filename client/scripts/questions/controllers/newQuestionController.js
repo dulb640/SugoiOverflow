@@ -1,6 +1,6 @@
 angular.module('sugoiOverflow.questions')
   .controller('newQuestionController',
-    function($scope, $q, $location, $timeout, questionsDataService, tagsDataService, profilesDataService, suggestionsDataService) {
+    function($scope, $q, $location, $timeout, questionsDataService, tagsDataService, profilesDataService, suggestionsDataService, autocompleteService) {
       'use strict';
       _.extend($scope, {
         user: {},
@@ -11,9 +11,7 @@ angular.module('sugoiOverflow.questions')
         suggestedPeople: [],
         suggestedTags: [],
         getTagsAutocomlete: function(query){
-          return _.filter($scope.availableTags, function(tag){
-            return _.str.include(tag.text, query);
-          });
+          return autocompleteService(query, $scope.availableTags);
         },
         getPeopleAutocomplete: function(query){
           return _.filter($scope.availablePeople, function(person){
