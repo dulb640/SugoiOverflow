@@ -57,7 +57,7 @@ if(config('auth:ldap') && config('auth:active-directory')){
 if(config('auth:local')){
   router.post('/local', passport.authenticate('local', { session: false }), generateJwt);
   router.post('/local/register', function (req, res, next) {
-    new domain.UserFeed().saveQ()
+    new domain.UserFeed().saveAsync()
     .then(function (feed) {
       var newUser = new domain.User({
         username: req.body.username,
@@ -69,7 +69,7 @@ if(config('auth:local')){
       return newUser.setPassword(req.body.password);
     })
     .then(function (newUser) {
-      return newUser.saveQ();
+      return newUser.saveAsync();
     })
     .then(function () {
       res

@@ -19,7 +19,7 @@ router.post('/tags', function(req, res, next){
         { limit: 5 }
     )
     .select('tags')
-    .execQ()
+    .execAsync()
     .then(function(questions){
       var tags = _.chain(questions)
                   .map(function(q) {return q.tags; })
@@ -57,7 +57,7 @@ router.post('/people', function(req, res, next){
     )
     .select('answers')
     .populate('answers.author', 'name email id')
-    .execQ()
+    .execAsync()
     .then(function(questions){
       var people = _.chain(questions)
                   .map(function(q) {

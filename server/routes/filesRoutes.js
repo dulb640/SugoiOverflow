@@ -1,22 +1,23 @@
 'use strict';
 
-var domain      = require('../domain');
-var logger      = require('../logger');
+var domain =   require('../domain');
+var logger =   require('../logger');
 
-var express = require('express');
-var router  = express.Router();
-var Busboy = require('busboy');
-var Grid =   require('gridfs-stream');
-var fs =   require('fs');
-var path =   require('path');
-var config = require('../configuration');
+var express =  require('express');
+var router  =  express.Router();
+var Busboy =   require('busboy');
+var Grid =     require('gridfs-stream');
+var fs =       require('fs');
+var path =     require('path');
+var config =   require('../configuration');
 var passport = require('passport');
-var gm = require('gm');
+var gm =       require('gm');
+var Promise =  require('bluebird');
 
-var mongoose = require('mongoose-q')(require('mongoose'));
-var Q = require('q');
+var mongoose = Promise.promisifyAll(require('mongoose'));
 
 var gfs = new Grid(mongoose.connection.db, mongoose.mongo);
+gfs = Promise.promisifyAll(gfs);
 
 router.post('/avatar', passport.authenticate('jwt', { session: false}), function(req, res, next){
   var busboy = new Busboy({ headers: req.headers });
@@ -25,14 +26,26 @@ router.post('/avatar', passport.authenticate('jwt', { session: false}), function
       filename: req.user.id,
       root:'avatars'
     };
-    Q.ninvoke(gfs, 'exist', opts)
+    gfs.existAsync(opts)
       .then(function(exists){
         if(exists){
-          return Q.ninvoke(gfs, 'remove', opts);
+          return gfs.removeAsync(opts);
         }
       })
       .then(function(){
         var writestream = gfs.createWriteStream(opts);
+
+        writestream.on('close', function() {
+          res
+            .status(200)
+            .send();
+        });
+
+        writestream.on('error', function(error) {
+          logger.error('Error processing avatar', error);
+          return next(error);
+        });
+
         var avatarsConfig = config('avatars');
 
         gm(file)
@@ -46,12 +59,6 @@ router.post('/avatar', passport.authenticate('jwt', { session: false}), function
       });
   });
 
-  busboy.on('finish', function() {
-    res
-      .status(200)
-      .send();
-  });
-
   busboy.on('error', function(error) {
     logger.error('Error uploading avatar', error);
     return next(error);
@@ -61,13 +68,13 @@ router.post('/avatar', passport.authenticate('jwt', { session: false}), function
 });
 
 router.get('/avatar/:username', function(req, res, next){
-  domain.User.findOneQ({username: req.params.username})
+  domain.User.findOneAsync({username: req.params.username})
     .then(function(user){
       var opts = {
         filename: user.id,
         root:'avatars'
       };
-      Q.ninvoke(gfs, 'exist', opts)
+      gfs.existAsync(opts)
         .then(function(exists){
           if(exists){
             return gfs.createReadStream(opts);

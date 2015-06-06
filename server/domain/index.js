@@ -1,6 +1,7 @@
 'use strict';
 
-var mongoose = require('mongoose-q')(require('mongoose'));
+var Promise =  require('bluebird');
+var mongoose = Promise.promisifyAll(require('mongoose'));
 
 module.exports = {
   Question:               mongoose.model('Question', require('./questionSchema')),

@@ -32,7 +32,7 @@ router.get('/', function(req, res, next){
   domain.User
     .find()
     .select('username displayName email profile')
-    .execQ()
+    .execAsync()
     .then(function(users){
       res
         .status(200)
@@ -71,7 +71,7 @@ router.get('/me', function(req, res){
  */
 
 router.get('/me/feed', function(req, res, next){
-  req.user.populateQ('feed', 'questionNotifications')
+  req.user.populateAsync('feed', 'questionNotifications')
     .then(function(user){
       var feed = user.feed;
       res
@@ -93,12 +93,12 @@ router.get('/me/feed', function(req, res, next){
  * @apiUse FeedSuccess
  */
 router.put('/me/feed/:notificationId/read', function(req, res, next){
-  req.user.populateQ('feed', 'questionNotifications')
+  req.user.populateAsync('feed', 'questionNotifications')
     .then(function(user){
       var feed = user.feed;
       var notification = feed.questionNotifications.id(req.params.notificationId);
       notification.read = true;
-      feed.saveQ().then(function(savedFeed){
+      feed.saveAsync().then(function(savedFeed){
         res
           .status(200)
           .send(savedFeed);
@@ -112,7 +112,7 @@ router.put('/me/feed/:notificationId/read', function(req, res, next){
 
 router.get('/:username', function(req, res, next){
   domain.User
-    .findOneQ({username: req.params.username})
+    .findOneAsync({username: req.params.username})
     .then(function(user){
       res
         .status(200)
@@ -127,7 +127,7 @@ router.get('/:username', function(req, res, next){
 router.put('/me', validate({body: schemas.editProfileSchema}), function(req, res, next){
     req.user.profile.location = req.body.location;
     req.user.profile.selectedTags = req.body.selectedTags;
-    req.user.saveQ()
+    req.user.saveAsync()
     .then(function(profile){
       res
         .status(200)
@@ -143,7 +143,7 @@ router.get('/tag/:tag', function(req, res, next){
   domain.User
     .find({'profile.selectedTags': req.params.tag})
     .select('username displayName email profile')
-    .execQ()
+    .execAsync()
     .then(function(users){
       res
         .status(200)

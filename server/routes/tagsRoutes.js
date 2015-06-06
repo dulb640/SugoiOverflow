@@ -29,7 +29,7 @@ router.get('/top', function(req, res, next){
   };
 
   domain.Question
-    .mapReduceQ(mapReduceOptions)
+    .mapReduceAsync(mapReduceOptions)
     .then(function(results){
       if(results.length === 0 ){
         return res
