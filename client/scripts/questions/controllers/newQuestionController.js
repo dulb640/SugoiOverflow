@@ -36,7 +36,7 @@ angular.module('sugoiOverflow.questions')
             title: $scope.title,
             body: $scope.body,
             tags: _.pluck($scope.tags, 'text'),
-            people: $scope.people
+            people: _.pluck($scope.people, 'email')
           };
           questionsDataService.addQuestion(newQuestion)
             .then(function(addedQuestion){
