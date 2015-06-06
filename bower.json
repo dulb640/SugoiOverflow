@@ -17,7 +17,6 @@
   "dependencies": {
     "jquery": "^2.0",
     "angular-bootstrap": "^0.12.0",
-    "underscore.string": "~2.4.0",
     "angular": "^1.3.16",
     "bootstrap": "~3.2.0",
     "moment": "~2.8.4",
@@ -25,7 +24,6 @@
     "angular-route": "~1.3.14",
     "angular-sanitize": "~1.3.14",
     "ng-tags-input": "~2.2.0",
-    "sugoi-mark-down": "*",
     "highlightjs": "~8.4.0",
     "angular-pageslide-directive": "~0.1.8",
     "angular-jwt": "~0.0.6",
@@ -34,7 +32,9 @@
     "angular-messages": "~1.3.15",
     "components-font-awesome": "~4.3.0",
     "angular-animate": "~1.4.0",
-    "ng-joyride": "~0.1.15"
+    "ng-joyride": "~0.1.15",
+    "underscore.string": "~3.1.1",
+    "wiz-markdown": "*"
   },
   "resolutions": {
     "angular": "1.4.0",
@@ -42,5 +42,10 @@
   },
   "devDependencies": {
     "angular-mocks": "~1.3.15"
+  },
+  "overrides": {
+    "wiz-markdown": {
+      "main": "./wizMarkdown/wizMarkdown.js"
+    }
   }
 }

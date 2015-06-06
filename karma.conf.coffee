@@ -21,7 +21,7 @@ module.exports = (config) ->
       './bower_components/ng-file-upload/angular-file-upload.js'
       './bower_components/ng-tags-input/ng-tags-input.js'
       './bower_components/ngstorage/ngStorage.js'
-      './bower_components/sugoi-mark-down/wizMarkdown/wizMarkdown.js'
+      './bower_components/wizMarkdown/wizMarkdown/wizMarkdown.js'
       './bower_components/angular-mocks/angular-mocks.js'
       './client/scripts/**/*Module.js'
       './client/scripts/settings.js'
