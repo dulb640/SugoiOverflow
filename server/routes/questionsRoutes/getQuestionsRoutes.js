@@ -19,6 +19,8 @@ router.get('/', function(req, res, next){
     .find()
     .select('id title body answers.author answers.timestamp answers.correct subscribers tags timestamp author')
     .populate('author subscribers answers.author', 'profile username displayName email')
+    .sort({'timestamp':-1})
+    .limit(100)
     .execAsync()
     .then(function(questions){
       res
@@ -48,6 +50,8 @@ router.get('/suggested', function(req, res, next){
         .find({'tags': {$in : tags}})
         .select('id title body answers.author answers.timestamp answers.correct subscribers tags timestamp author')
         .populate('author subscribers answers.author', 'profile username displayName email')
+        .sort({'timestamp':-1})
+        .limit(100)
         .execAsync()
         .then(function(questions){
           res
@@ -146,6 +150,8 @@ router.get('/search/:term', function(req, res, next){
         { limit: 50 }
     )
     .sort({ score : { $meta : 'textScore' } })
+    .sort({'timestamp':-1})
+    .limit(100)
     .execAsync()
     .then(function(questions){
       res
