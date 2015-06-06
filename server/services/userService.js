@@ -2,10 +2,14 @@
 
 var logger = require('../logger');
 var domain = require('../domain');
+var errors = require('../errors');
 function updateQuestionsFeed(user, question, message, karmaAdd){
+  if(!user.feed){
+    throw new errors.ArgumentError('Feed id should be fetched from db before being updated', 'user');
+  }
+
   return domain.User.populateAsync(user, { path:'feed', select: 'questionNotifications'})
     .then(function(populatedUser){
-      populatedUser = populatedUser[0];
       populatedUser.feed.questionNotifications.push({
         body:message,
         question: question.id,

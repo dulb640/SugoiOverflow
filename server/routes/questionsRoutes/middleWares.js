@@ -16,14 +16,13 @@ function getQuestion(req, res, next){
 
 function saveQuestionAndSend(req, res, next) {
   req.question.saveAsync()
-    .then(function(savedQuestion) {
+    .spread(function(savedQuestion) { //have to use spread because callback has two arguments
       return domain.Question.populateAsync(savedQuestion, {
         path: 'author subscribers upVotes downVotes answers.author comments.author answers.comments.author',
-        select: 'profile username displayName email'
+        select: 'profile username displayName email feed'
       });
     })
     .then(function(populatedQuestion){
-      populatedQuestion = populatedQuestion[0];//TODO: figure why is it returned as array
       res
         .status(200)
         .send(populatedQuestion);

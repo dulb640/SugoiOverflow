@@ -31,22 +31,23 @@ router.post('/',
     req.user.profile.asked.push(req.question.id);
     req.user.saveAsync()
       .then(function() {
-        var promises = req.body.people.map(function(email) {
-          return domain.User.findAsync({email: email})
-            .then(function(person) {
-              if(!person) {
-                return;
-              }
-              userService.updateQuestionsFeed(person, req.question, 'You have been proposed to answer the question');
+        return domain.User.find({email: {$in: req.body.people} })
+          .select('feed')
+          .execAsync()
+          .then(function(people) {
+            if(!people) {
+              return;
+            }
+            var promises = people.map(function(person){
+              return userService.updateQuestionsFeed(person, req.question, 'You have been proposed to answer the question');
             });
-        });
-        return Promise.all(promises);
+            return Promise.all(promises);
+          });
       })
       .then(function(){
         next();
       })
       .catch(function(error) {
-        logger.error('Error updating user or feed', error, error.errors);
         next(error);
       });
 });
