@@ -10,8 +10,7 @@
       <p>There are no suggested questions for you. Add more tags on <a href="#/profile/me/edit">your profile</a> to increase suggestions.</p>
       <p>Or take a look at <a href="#/questions/all">all questions</a></p>
     </div>
-		<div class="question-container" ng-class="{'has-answers': question.hasAnswers}" ng-repeat="question in questions">
-
+		<div class="question-container" ng-class="{'has-answers': question.hasAnswers}" ng-repeat="question in questions track by $index">
   			<div class="question-content">
 
   				<div class="title">

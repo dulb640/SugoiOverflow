@@ -25,7 +25,6 @@
     "angular-sanitize": "~1.3.14",
     "ng-tags-input": "~2.2.0",
     "highlightjs": "~8.4.0",
-    "angular-pageslide-directive": "~0.1.8",
     "angular-jwt": "~0.0.6",
     "ngstorage": "~0.3.0",
     "ng-file-upload": "~3.2.4",
@@ -34,7 +33,8 @@
     "angular-animate": "~1.4.0",
     "ng-joyride": "~0.1.15",
     "underscore.string": "~3.1.1",
-    "wiz-markdown": "*"
+    "wiz-markdown": "*",
+    "angular-pageslide-directive": "~1.0.3"
   },
   "resolutions": {
     "angular": "1.4.0",

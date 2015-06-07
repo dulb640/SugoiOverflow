@@ -36,14 +36,14 @@
   </div>
   <div ng-joy-ride="joyRideStarted" config="joyRideConfig" on-finish="onFinish()"  on-skip="onFinish()"></div>
   <div>
-    <pageslide class="notification-slider" ps-open="notificationsOpened">
+    <pageslide class="notification-slider" ps-open="notificationsOpened" ps-cloak="false" ps-push="true" ps-squeeze="true" ps-auto-close="true">
       <div class="notification-container" ng-click="$event.stopPropagation()">
+        <button class="close-button action-button" ng-click="closeNotifications()">Close</button>
         <div class="notification-status" ng-hide="hasNewNotifications()">No new notifications</div>
         <div class="notification-entry" ng-class="{'notification-read': notification.read, 'notification-new': !notification.read}" ng-repeat="notification in notifications | orderBy : '-timestamp'" ng-click="readNotification(notification)">
           <div class="notification-body">{{notification.body}}</div>
           <div class="notification-question-title">{{notification.questionTitle}}</div>
         </div>
-        <button class="close-button action-button" ng-click="closeNotifications()">Close</button>
       </div>
     </pageslide>
   </div>
