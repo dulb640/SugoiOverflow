@@ -32,7 +32,8 @@ angular
 	})
   .run(function($rootScope, $location, currentUser) {
     'use strict';
-    $rootScope.$on( '$routeChangeStart', function(event, next) {
+
+    $rootScope.$on('$routeChangeStart', function(event, next) {
       if (!currentUser.isAuthenticated && next.isSecured) {
         $location.path( '/login' );
       }

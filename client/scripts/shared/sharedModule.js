@@ -10,25 +10,18 @@ angular.module('sugoiOverflow.shared', [
     'sugoiOverflow.settings',
     'sugoiOverflow.templates',
     'sugoiOverflow.auth'])
-      .factory('config', function ($http) {
+      .factory('config', function ($q, $http) {
         'use strict';
-        var defaultConfig = {
-          branding: {
-            title:''
-          },
-          auth: {
-            local: false,
-            activeDirectory: false
-          }
-        };
 
-        return function($scope){
-          $scope.config = defaultConfig;
+        return $q(function(resolve, reject) {
           $http.get('/api/config', { skipAuthorization: true })
-            .success(function(configResponse){
-              $scope.config = _.extend($scope.config, configResponse);
+            .success(function(config){
+              resolve(config);
+            })
+            .error(function(err){
+              reject(err);
             });
-        };
+        });
       })
       .value('autocompleteService', function(query, availableTags){
         'use strict';

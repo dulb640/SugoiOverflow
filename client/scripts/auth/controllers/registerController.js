@@ -3,7 +3,9 @@ angular.module('sugoiOverflow.auth')
     function($scope, $q, $routeParams, $location, authService, config){
       'use strict';
 
-      config($scope);
+      config.then(function(conf){
+        $scope.config = conf;
+      });
 
       $scope.$watch('config.auth.activeDirectory', function(){
         if($scope.config.auth.activeDirectory){

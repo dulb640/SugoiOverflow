@@ -12,7 +12,10 @@ angular.module('sugoiOverflow.shared')
       tagsDataService,
       config) {
       'use strict';
-      config($scope);
+
+      config.then(function(conf){
+        $scope.config = conf;
+      });
 
       function showTour() {
         $scope.joyRideStarted = true;
