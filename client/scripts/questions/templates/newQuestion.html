@@ -31,7 +31,7 @@
       </div>
     </div>
     <div>
-      <tags-input name="people" max-tags="5" min-length="3" max-length="30" ng-model="people" display-property="email" placeholder="Who can answer your question(enter email)?" allowed-tags-pattern="\S+@\S+\.\S+">
+      <tags-input name="people" max-tags="5" min-length="3" max-length="30" ng-model="people" display-property="email" placeholder="Emails of people who you think can answer (optional)" allowed-tags-pattern="\S+@\S+\.\S+">
         <auto-complete source="getPeopleAutocomplete($query)" ></auto-complete>
       </tags-input>
       <div class="tags suggested" ng-show="suggestedPeople.length > 0">
