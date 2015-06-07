@@ -1,10 +1,10 @@
 angular.module('sugoiOverflow.auth')
   .controller('registerController',
-    function($scope, $q, $routeParams, $location, authService, config){
+    function($scope, $q, $routeParams, $location, authService, configService){
       'use strict';
 
-      config.then(function(conf){
-        $scope.config = conf;
+      configService.then(function(config){
+        $scope.config = config;
       });
 
       $scope.$watch('config.auth.activeDirectory', function(){

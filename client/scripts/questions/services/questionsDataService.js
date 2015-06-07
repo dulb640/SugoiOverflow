@@ -47,7 +47,7 @@ angular.module('sugoiOverflow.questions')
 
       getQuestionsAskedByUser: function(username){
         var deferred = $q.defer();
-        $http.get(_.str.sprintf('/api/questions/profile/%s/asked', username))
+        $http.get(s.sprintf('/api/questions/profile/%s/asked', username))
         .success(function(data){
           deferred.resolve(data);
         })
@@ -59,7 +59,7 @@ angular.module('sugoiOverflow.questions')
 
       getQuestionsAnsweredByUser: function(username){
         var deferred = $q.defer();
-        $http.get(_.str.sprintf('/api/questions/profile/%s/answered', username))
+        $http.get(s.sprintf('/api/questions/profile/%s/answered', username))
         .success(function(data){
           deferred.resolve(data);
         })
@@ -71,7 +71,7 @@ angular.module('sugoiOverflow.questions')
 
       getQuestionsSubscribedByUser: function(username){
         var deferred = $q.defer();
-        $http.get(_.str.sprintf('/api/questions/profile/%s/subscribed', username))
+        $http.get(s.sprintf('/api/questions/profile/%s/subscribed', username))
         .success(function(data){
           deferred.resolve(data);
         })
@@ -83,7 +83,7 @@ angular.module('sugoiOverflow.questions')
 
       getQuestionsListSearch: function(terms){
         var deferred = $q.defer();
-        $http.get(_.str.sprintf('/api/questions/search/%s', terms))
+        $http.get(s.sprintf('/api/questions/search/%s', terms))
         .success(function(data){
           deferred.resolve(data);
         })
@@ -95,7 +95,7 @@ angular.module('sugoiOverflow.questions')
 
       getQuestion: function(id) {
         var deferred = $q.defer();
-        $http.get(_.str.sprintf('/api/questions/one/%s', id))
+        $http.get(s.sprintf('/api/questions/one/%s', id))
         .success(function(data){
           deferred.resolve(data);
         })
@@ -119,7 +119,7 @@ angular.module('sugoiOverflow.questions')
       },
       subscribeToQuestion: function(questionId){
         var deferred = $q.defer();
-        $http.put(_.str.sprintf('/api/questions/%s/subscribe', questionId))
+        $http.put(s.sprintf('/api/questions/%s/subscribe', questionId))
         .success(function(data){
           deferred.resolve(data);
         })
@@ -134,7 +134,7 @@ angular.module('sugoiOverflow.questions')
         var data = {
           body: answer
         };
-        $http.post(_.str.sprintf('/api/questions/%s/answer', questionId), data)
+        $http.post(s.sprintf('/api/questions/%s/answer', questionId), data)
           .success(function(responseData) {
             deferred.resolve(responseData);
           })
@@ -151,7 +151,7 @@ angular.module('sugoiOverflow.questions')
           body: comment
         };
 
-        $http.post(_.str.sprintf('/api/questions/%s/comment', questionId), data)
+        $http.post(s.sprintf('/api/questions/%s/comment', questionId), data)
         .success(function(responseData){
           deferred.resolve(responseData);
         })
@@ -165,7 +165,7 @@ angular.module('sugoiOverflow.questions')
          var data = {
           body: comment
         };
-         $http.post(_.str.sprintf('/api/questions/%s/answer/%s/comment', questionId, answerId), data)
+         $http.post(s.sprintf('/api/questions/%s/answer/%s/comment', questionId, answerId), data)
         .success(function(responseData){
           deferred.resolve(responseData);
         })
@@ -176,7 +176,7 @@ angular.module('sugoiOverflow.questions')
       },
       upvoteAnswer: function(questionId, answerId){
         var deferred = $q.defer();
-        $http.put(_.str.sprintf('/api/questions/%s/answer/%s/upvote', questionId, answerId))
+        $http.put(s.sprintf('/api/questions/%s/answer/%s/upvote', questionId, answerId))
         .success(function(data){
           deferred.resolve(data);
         })
@@ -188,7 +188,7 @@ angular.module('sugoiOverflow.questions')
       },
       downvoteAnswer: function(questionId, answerId){
         var deferred = $q.defer();
-        $http.put(_.str.sprintf('/api/questions/%s/answer/%s/downvote', questionId, answerId))
+        $http.put(s.sprintf('/api/questions/%s/answer/%s/downvote', questionId, answerId))
         .success(function(data){
           deferred.resolve(data);
         })
@@ -200,7 +200,7 @@ angular.module('sugoiOverflow.questions')
       },
       markAnswerAsCorrect: function(questionId, answerId){
         var deferred = $q.defer();
-        $http.put(_.str.sprintf('/api/questions/%s/answer/%s/correct', questionId, answerId))
+        $http.put(s.sprintf('/api/questions/%s/answer/%s/correct', questionId, answerId))
         .success(function(data){
           deferred.resolve(data);
         })

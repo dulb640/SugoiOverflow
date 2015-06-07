@@ -13,11 +13,13 @@ angular.module('sugoiOverflow.auth', [
     $routeProvider
       .when('/login', {
         templateUrl: 'scripts/auth/templates/login.html',
-        controller: 'loginController'
+        controller: 'loginController',
+        title: 'Login'
       })
       .when('/register', {
         templateUrl: 'scripts/auth/templates/register.html',
-        controller: 'registerController'
+        controller: 'registerController',
+        title: 'Register'
       })
       .when('/logout', {
         template: '',

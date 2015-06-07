@@ -24,22 +24,26 @@ angular.module('sugoiOverflow.questions', [
       .when('/questions/new/', {
         templateUrl: 'scripts/questions/templates/newQuestion.html',
         controller: 'newQuestionController',
-        isSecured: true
+        isSecured: true,
+        title: 'New Question'
       })
       .when('/questions/search/:searchTerms', {
         templateUrl: 'scripts/questions/templates/questions.html',
         controller: 'questionsController',
-        isSecured: true
+        isSecured: true,
+        title: 'Search'
       })
       .when('/questions/:questionFilter?', {
         templateUrl: 'scripts/questions/templates/questions.html',
         controller: 'questionsController',
-        isSecured: true
+        isSecured: true,
+        title: 'Filtered'
       })
       .when('/questions/:id/answers', {
         templateUrl: 'scripts/questions/templates/questionDetails.html',
         controller: 'questionDetailsController',
-        isSecured: true
+        isSecured: true,
+        title: 'Answers'
       });
   });
 

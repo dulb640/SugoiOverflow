@@ -15,7 +15,7 @@ angular.module('sugoiOverflow.questions')
         },
         getPeopleAutocomplete: function(query){
           return _.filter($scope.availablePeople, function(person){
-            return _.str.include(person.email, query);
+            return s.include(person.email, query);
           });
         },
         addTag: function(tag){
@@ -38,7 +38,7 @@ angular.module('sugoiOverflow.questions')
           };
           questionsDataService.addQuestion(newQuestion)
             .then(function(addedQuestion){
-              $location.path(_.str.sprintf('/questions/%s/answers', addedQuestion.id));
+              $location.path(s.sprintf('/questions/%s/answers', addedQuestion.id));
             });
         }
       });

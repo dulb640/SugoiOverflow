@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html id="ng-app" ng-app="sugoiOverflow" ng-di-strict ng-controller="rootController">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Sugoi Overflow</title>
+    <title>{{title}}</title>
     <!-- lib:css -->
     <!-- endinject -->
     <!-- app:css -->
     <!-- endinject -->
   </head>
-  <body id="ng-app" ng-app="sugoiOverflow" ng-di-strict>
+  <body>
     <div class="body-container container-fluid">
         <header ng-include="'scripts/shared/templates/header.html'"></header>
         <div ng-view class="content-container-view"></div>

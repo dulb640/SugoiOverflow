@@ -23,16 +23,19 @@ angular.module('sugoiOverflow.profile', [
       .when('/profile/me', {
         templateUrl: 'scripts/profile/templates/viewProfile.html',
         controller: 'viewProfileController',
-        isSecured: true
+        isSecured: true,
+        title: 'My profile'
       })
       .when('/profile/me/edit', {
         templateUrl: 'scripts/profile/templates/editProfile.html',
         controller: 'editProfileController',
-        isSecured: true
+        isSecured: true,
+        title: 'Edit my profile'
       })
       .when('/profile/:username', {
         templateUrl: 'scripts/profile/templates/viewProfile.html',
         controller: 'viewProfileController',
-        isSecured: true
+        isSecured: true,
+        title: 'Profile'
       });
   });

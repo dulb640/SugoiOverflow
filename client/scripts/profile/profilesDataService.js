@@ -6,7 +6,7 @@ angular.module('sugoiOverflow.profile')
       var service = {
         getUser: function(username) {
             var deferred = $q.defer();
-            $http.get(_.str.sprintf('/api/profiles/%s', username))
+            $http.get(s.sprintf('/api/profiles/%s', username))
             .success(function(data){
               deferred.resolve(data);
             })
@@ -40,7 +40,7 @@ angular.module('sugoiOverflow.profile')
         },
         markNotificationAsRead: function(username) {
           var deferred = $q.defer();
-          $http.put(_.str.sprintf('/api/profiles/me/feed/%s/read', username))
+          $http.put(s.sprintf('/api/profiles/me/feed/%s/read', username))
             .success(function(data){
               deferred.resolve(data.questionNotifications);
             })

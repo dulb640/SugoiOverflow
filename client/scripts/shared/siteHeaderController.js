@@ -10,10 +10,10 @@ angular.module('sugoiOverflow.shared')
       currentUser,
       $localStorage,
       tagsDataService,
-      config) {
+      configService) {
       'use strict';
 
-      config.then(function(conf){
+      configService.then(function(conf){
         $scope.config = conf;
       });
 
@@ -29,7 +29,7 @@ angular.module('sugoiOverflow.shared')
         notificationsOpened: false,
         searchTerms: '',
         searchQuestions: function(){
-          $location.path(_.str.sprintf('/questions/search/%s', $scope.searchTerms));
+          $location.path(s.sprintf('/questions/search/%s', $scope.searchTerms));
         },
         getTypeahead: function(){
           $scope.typeaheadLoading = true;
@@ -51,7 +51,7 @@ angular.module('sugoiOverflow.shared')
               $scope.notifications = notifications;
             });
 
-          $location.path(_.str.sprintf('/questions/%s/answers', notification.question));
+          $location.path(s.sprintf('/questions/%s/answers', notification.question));
         },
         openNotifications: function(event){
           $scope.notificationsOpened = true;

@@ -4,7 +4,7 @@ angular.module('sugoiOverflow.profile')
       'use strict';
 
       function generateAvatarSrc(){
-        $scope.avatarUrl = _.str.sprintf('/api/files/avatar/%s?%s', $scope.username, new Date().getTime());
+        $scope.avatarUrl = s.sprintf('/api/files/avatar/%s?%s', $scope.username, new Date().getTime());
       }
 
       _.extend($scope, {
