@@ -22,7 +22,7 @@
     </div>
     <wiz-markdown content="body"></wiz-markdown>
     <div>
-      <tags-input name="tags" min-tags="3" max-tags="10" ng-model="tags" min-length="3" max-length="30" required display-property="text" add-on-space="true" placeholder="Add a tag">
+      <tags-input name="tags" min-tags="3" max-tags="10" ng-model="tags" min-length="3" max-length="30" required display-property="text" on-tag-added="formatTag($tag)" placeholder="Add a tag">
         <auto-complete source="getTagsAutocomlete($query)" ></auto-complete>
       </tags-input>
       <div class="tags suggested" ng-show="suggestedTags.length > 0">

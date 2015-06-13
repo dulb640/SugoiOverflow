@@ -1,6 +1,6 @@
 angular.module('sugoiOverflow.questions')
   .controller('newQuestionController',
-    function($scope, $q, $location, $timeout, questionsDataService, tagsDataService, profilesDataService, suggestionsDataService, autocompleteService) {
+    function($scope, $q, $location, $timeout, questionsDataService, tagsDataService, profilesDataService, suggestionsDataService, autocompleteService, changeCase) {
       'use strict';
       _.extend($scope, {
         user: {},
@@ -28,6 +28,9 @@ angular.module('sugoiOverflow.questions')
         addPerson: function(person){
           $scope.people.push(person);
           $scope.suggestedPeople = _.without($scope.suggestedPeople, person);
+        },
+        formatTag: function(tag){
+          tag.text = changeCase.paramCase(tag.text);
         },
         submit: function() {
           var newQuestion = {
