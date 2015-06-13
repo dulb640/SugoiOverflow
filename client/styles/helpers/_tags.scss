@@ -6,7 +6,7 @@
 	-moz-appearance: none;
 
 	.input {
-		font-family: 'Segoe Ui Light', arial, sans-serif;
+		font-family: 'Segoe UI', 'Lucida Grande', 'Helvetica Neue', arial, sans-serif;
 	}
 }
 
@@ -14,7 +14,7 @@
 	border: 1px solid #ccc;
 	background: #fff !important;
 	color: $gray-text-light;
-	font-family: 'Segoe Ui Light', arial, sans-serif !important;
+	font-family: 'Segoe UI', 'Lucida Grande', 'Helvetica Neue', arial, sans-serif !important;
 
 	&:hover {
 		color: red;
