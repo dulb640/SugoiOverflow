@@ -1,8 +1,13 @@
 'use strict';
 
+var config = require('../configuration');
 var logger = require('../logger');
 var domain = require('../domain');
 var errors = require('../errors');
+var util = require('util');
+
+var notificationsService = require('./notificationsService');
+
 function updateQuestionsFeed(user, question, message, karmaAdd){
   if(!user.feed){
     throw new errors.ArgumentError('Feed id should be fetched from db before being updated', 'user');
@@ -33,6 +38,10 @@ function updateQuestionsFeed(user, question, message, karmaAdd){
         .catch(function(error){
           logger.error('Error updating user feed', error);
         });
+    })
+    .then(function(){
+      var subject = util.format('New notification on %s', config('branding:title'));
+      notificationsService(subject, message, user);
     });
 }
 
