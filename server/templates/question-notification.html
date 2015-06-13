@@ -14,18 +14,17 @@
       margin:auto;
       background-color: white;
       height: 100%;
-
     }
-    .content > div, .content > h2 {
+    .title{
+      text-align: center;
+    }
+    .content > * {
       padding: 0 0.5em;
-    }
-    .brand{
-      font-weight: bold;
     }
     .notification{
       font-size: 16pt;
     }
-    .visit-suggestion{
+    .question-link{
       font-size: 15pt;
       text-align: right
     }
@@ -33,11 +32,12 @@
 </head>
 <body>
   <div class="content">
-    <h2>You have a new notification from <span class="brand">{{branding.title}}</span></h2>
+    <h1 class="title">{{branding.title}}</h1>
+    <h2>You have a new notification for question:</h2>
+    <a class="question-link" href="{{question.url}}">{{question.title}}</a>
     <div class="notification">
       <p>{{notification}}</p>
     </div>
-    <div class="visit-suggestion"> Visit question: <a href="{{question.url}}">{{question.title}}</a></div>
   </div>
 </body>
 </html>
