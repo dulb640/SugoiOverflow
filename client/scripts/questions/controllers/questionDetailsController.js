@@ -40,15 +40,12 @@ angular.module('sugoiOverflow.questions')
         },
         subscribeToQuestion: function(){
           questionsDataService.subscribeToQuestion($routeParams.id)
-            .then(function(){
-              questionsDataService.getQuestion($routeParams.id)
-              .then(loadQuestion);
-            });
+            .then(loadQuestion);
         },
         isSubscribed: function(){
           if ($scope.subscribers){
             return _.some($scope.subscribers, function(sub){
-              sub.username = currentUser.username;
+              return sub.username === currentUser.username;
             });
           }
           return false;

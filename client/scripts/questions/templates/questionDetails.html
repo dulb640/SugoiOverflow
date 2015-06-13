@@ -4,8 +4,8 @@
       <div class="question-content">
         <div class="title" ng-bind-html="title | wizMarkdownFltr"></div>
         <wiz-markdown content="body"></wiz-markdown>
-        <button ng-hide="isSubscribed" class="subscribe-button action-button" ng-click="subscribeToQuestion()">Subscribe to Question</button>
-        <span class="subscribed-label" ng-show="isSubscribed">Subscribed!</span>
+        <button ng-hide="isSubscribed()" class="subscribe-button action-button" ng-click="subscribeToQuestion()">Subscribe to Question</button>
+        <span class="subscribed-label" ng-show="isSubscribed()">Subscribed!</span>
         <div class="timestamp"  ng-bind="timestamp | date:'medium'"></div>
         <div class="tags">
           <span class="tag" ng-repeat="tag in tags">{{tag.text}}</span>
