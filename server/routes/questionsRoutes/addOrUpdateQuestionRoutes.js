@@ -1,6 +1,8 @@
 'use strict';
 
 var domain          = require('../../domain');
+var errors          = require('../../errors');
+
 var logger          = require('../../logger');
 
 var _               = require('lodash');
@@ -100,6 +102,9 @@ router.put('/:questionId/subscribe',
   middleWares.getQuestion,
 
   function addSubscriber(req, res, next) {
+    if(_.includes(req.question.subscribers, req.user.id)) {
+      next(new errors.InvalidOperationError('Already subscribed to this question'));
+    }
     req.question.subscribers.push(req.user.id);
     next();
   },
