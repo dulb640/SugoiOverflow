@@ -46,6 +46,9 @@ nconf
         issuer: 'sugoioverflow',
         audience: 'people.sugoioverflow'
       }
+    },
+    notifications: {
+      smtp: false
     }
   });
 

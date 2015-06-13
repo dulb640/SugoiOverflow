@@ -30,3 +30,11 @@ auth:
     secretOrKey: "secret"
     issuer: "host.com"
     audience: "users.host.com"
+#Uncomment and edit to add email notifications
+# notifications:
+#   smtp:
+#     host: "localhost"
+#     port: 25
+#     auth:
+#       username: "sugoioverflow"
+#       password: "secret"
