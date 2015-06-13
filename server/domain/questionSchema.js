@@ -1,10 +1,12 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var Schema =   mongoose.Schema;
-var ObjectId = Schema.Types.ObjectId;
-var Answer =   require('./answerSchema');
-var Comment =  require('./commentSchema');
+var mongoose =   require('mongoose');
+var Schema =     mongoose.Schema;
+var ObjectId =   Schema.Types.ObjectId;
+var Answer =     require('./answerSchema');
+var Comment =    require('./commentSchema');
+var _ =          require('lodash');
+var changeCase = require('change-case');
 
 var Question = new Schema({
   title:{
@@ -61,4 +63,8 @@ Question.set('toJSON', {
   }
 });
 
+Question.pre('save', function(next) {
+    this.tags = _.map(this.tags, function(t){return changeCase.paramCase(t); });
+    next(this);
+});
 module.exports = Question;
