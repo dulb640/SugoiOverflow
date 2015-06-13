@@ -4,9 +4,11 @@ var mongoose = require('mongoose');
 var Schema   = mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId;
 var bcrypt = Promise.promisifyAll(require('bcrypt'));
+var _ =          require('lodash');
+var changeCase = require('change-case');
+
 var KarmaChange = require('./karmaChangeSchema');
 var config = require('../configuration');
-
 var User = new Schema({
   adId:{
     type: String,
@@ -117,6 +119,11 @@ User.virtual('profile.karma').get(function calculateKarma() {
     .map(function(k){ return k.value || 0; })
     .reduce(function(prev, next){return prev + next; });
   return sum;
+});
+
+User.pre('save', function(next) {
+    this.profile.selectedTags = _.map(this.profile.selectedTags, function(t){return changeCase.paramCase(t); });
+    next(this);
 });
 
 module.exports = User;
