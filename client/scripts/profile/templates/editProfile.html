@@ -13,7 +13,7 @@
     </div>
     <div>
     <div class="form-label specialisations" for="selectedTags">Specialisations</div>
-      <tags-input ng-model="selectedTags" name="selectedTags" max-tags="30" min-length="3" max-length="30" add-on-space="true">
+      <tags-input ng-model="selectedTags" name="selectedTags" max-tags="30" min-length="3" max-length="30" on-tag-added="formatTag($tag)">
         <auto-complete source="getTagsAutocomlete($query)"></auto-complete>
       </tags-input>
     </div>

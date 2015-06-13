@@ -1,6 +1,6 @@
 angular.module('sugoiOverflow.profile')
   .controller('editProfileController',
-    function($scope, $q, $routeParams, $location, $upload, $timeout, tagsDataService, profilesDataService, $localStorage, autocompleteService){
+    function($scope, $q, $routeParams, $location, $upload, $timeout, tagsDataService, profilesDataService, $localStorage, autocompleteService, changeCase){
       'use strict';
 
       function generateAvatarSrc(){
@@ -35,6 +35,9 @@ angular.module('sugoiOverflow.profile')
         },
         getTagsAutocomlete: function(query){
           return autocompleteService(query, $scope.availableTags);
+        },
+        formatTag: function(tag) {
+          tag.text = changeCase.paramCase(tag.text);
         }
       });
 
