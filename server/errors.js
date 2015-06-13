@@ -15,6 +15,13 @@ function GenericError(message, inner) {
 }
 GenericError.prototype = Error.prototype;
 
+function InvalidOperationError(message) {
+  this.name = 'InvalidOperationError';
+  this.message = (message || '');
+  this.stack = new Error().stack;
+}
+InvalidOperationError.prototype = Error.prototype;
+
 function ArgumentError(message, argumentName) {
   this.name = 'ArgumentError';
   this.argumentName = argumentName;
@@ -26,5 +33,6 @@ ArgumentError.prototype = Error.prototype;
 module.exports = {
   NotFoundError: NotFoundError,
   GenericError: GenericError,
-  ArgumentError: ArgumentError
+  ArgumentError: ArgumentError,
+  InvalidOperationError: InvalidOperationError
 };
