@@ -5,6 +5,11 @@ var logger = require('../logger');
 var domain = require('../domain');
 var errors = require('../errors');
 var util = require('util');
+var Promise = require('bluebird');
+var fs = Promise.promisifyAll(require('fs'));
+var path = require('path');
+var handlebars = require('handlebars');
+var templateCache = {};
 
 var notificationsService = require('./notificationsService');
 
@@ -40,8 +45,42 @@ function updateQuestionsFeed(user, question, message, karmaAdd){
         });
     })
     .then(function(){
+      return new Promise(function(resolve, reject){
+        if(templateCache.questionNotification){
+          resolve(templateCache.questionNotification);
+        } else {
+          var templatePath = path.resolve(__dirname, '../templates/question-notification.html');
+          fs.readFileAsync(templatePath, 'utf8')
+            .then(function(text){
+              templateCache.questionNotification = handlebars.compile(text);
+              resolve(templateCache.questionNotification);
+            })
+            .catch(function(err){
+              reject(err);
+            });
+        }
+      });
+    })
+    .then(function(template){
+      var url = util.format('%s://%s/%s/questions/%s/answers',
+        config('protocol'),
+        config('domain'),
+        config('path'),
+        question.id);
+
+      var context = {
+        branding: {
+          title: config('branding:title')
+        },
+        notification: message,
+        question:{
+          title: question.title,
+          url: url
+        }
+      };
+      var body = template(context);
       var subject = util.format('New notification on %s', config('branding:title'));
-      notificationsService(subject, message, user);
+      notificationsService(subject, body, user);
     });
 }
 

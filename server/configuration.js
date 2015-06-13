@@ -21,12 +21,13 @@ nconf
   .file({ file: path.join(__dirname, '../config.yaml'), format: yaml })
   .use('memory')
   .defaults({
+    protocol: 'http',
     domain: 'localhost',
+    path: '',
+    port: 3000,
     branding:{
       title: 'SugoiOverflow'
     },
-    path: '',
-    port: 3000,
     'log-folder': 'logs',
     iis: false,
     avatars:{

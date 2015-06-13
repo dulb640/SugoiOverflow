@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{subject}}</title>
+  <style type="text/css">
+    html, body{
+      background-color: lightgrey;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+    }
+    .content{
+      width: 600px;
+      margin:auto;
+      background-color: white;
+      height: 100%;
+
+    }
+    .content > div, .content > h2 {
+      padding: 0 0.5em;
+    }
+    .brand{
+      font-weight: bold;
+    }
+    .notification{
+      font-size: 16pt;
+    }
+    .visit-suggestion{
+      font-size: 15pt;
+      text-align: right
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <h2>You have a new notification from <span class="brand">{{branding.title}}</span></h2>
+    <div class="notification">
+      <p>{{notification}}</p>
+    </div>
+    <div class="visit-suggestion"> Visit question: <a href="{{question.url}}">{{question.title}}</a></div>
+  </div>
+</body>
+</html>

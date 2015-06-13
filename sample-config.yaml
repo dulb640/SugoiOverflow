@@ -1,9 +1,10 @@
+protocol: "http"
 domain: "localhost"
-branding:
-  title: 'SugoiOverflow'
 #Leave empty if your app is hosted at root
 path: ""
 port: 3000
+branding:
+  title: 'SugoiOverflow'
 log-folder: "logs"
 mongo: "mongodb://username:password@localhost:10000/dbname"
 #Indicates if website is being hosted inside of Interent Information Services
