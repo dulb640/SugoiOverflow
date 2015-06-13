@@ -36,6 +36,7 @@ auth:
 #   smtp:
 #     host: "localhost"
 #     port: 25
+#     from: "noreply@localhost"
 #     auth:
 #       username: "sugoioverflow"
 #       password: "secret"
