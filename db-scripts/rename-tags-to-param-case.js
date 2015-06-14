@@ -53,7 +53,7 @@ Promise.using(connection, function (db) {
       });
       console.log('%s -> %s', u.profile.selectedTags, tags);
       u.profile.selectedTags = tags;
-      return questions.saveAsync(u);
+      return users.saveAsync(u);
     })
     .toArrayAsync();
   })
