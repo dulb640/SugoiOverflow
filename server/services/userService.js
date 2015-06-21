@@ -80,7 +80,7 @@ function updateQuestionsFeed(user, question, message, karmaAdd){
       };
       var body = template(context);
       var subject = util.format('New notification on %s', config('branding:title'));
-      notificationsService(subject, body, user);
+      return notificationsService(subject, body, user);
     });
 }
 
