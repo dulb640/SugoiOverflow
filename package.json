@@ -1,6 +1,6 @@
 {
   "name": "sugoi-overflow",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "So much sugoi - it overflows",
   "main": "server/index.js",
   "dependencies": {
