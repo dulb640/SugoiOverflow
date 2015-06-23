@@ -29,7 +29,7 @@ function send(subject, text, user) {
       from: notificationsConfig.smtp.from || 'sugoioverflow',
       to: user.email,
       subject: subject,
-      text: text
+      html: text
     })
     .error(function(err){
       logger.error('Error sending email', err);
