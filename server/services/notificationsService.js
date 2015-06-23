@@ -13,11 +13,7 @@ function send(subject, text, user) {
     var smtpTransport =  Promise.promisifyAll(require('nodemailer-smtp-transport'));
     var smtpOptions = {
         host: notificationsConfig.smtp.host,
-        port: notificationsConfig.smtp.port || 25,
-        auth: {
-            user: 'username',
-            pass: 'password'
-        }
+        port: notificationsConfig.smtp.port || 25
     };
 
     if(notificationsConfig.smtp.auth) {
