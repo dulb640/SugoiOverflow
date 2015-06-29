@@ -1,18 +1,18 @@
-'use strict';
+'use strict'
 
-var domain          = require('../../domain');
-var errors          = require('../../errors');
+var domain = require('../../domain')
+var errors = require('../../errors')
 
-var logger          = require('../../logger');
+var logger = require('../../logger')
 
-var _               = require('lodash');
-var Promise         = require('bluebird');
-var express         = require('express');
-var validate        = require('express-jsonschema').validate;
-var router          = express.Router();
-var schemas         = require('../schemas');
-var userService     = require('../../services/userService');
-var middleWares     = require('./middleWares');
+var _ = require('lodash')
+var Promise = require('bluebird')
+var express = require('express')
+var validate = require('express-jsonschema').validate
+var router = express.Router()
+var schemas = require('../schemas')
+var userService = require('../../services/userService')
+var middleWares = require('./middleWares')
 
 /**
  * Add question
@@ -20,39 +20,39 @@ var middleWares     = require('./middleWares');
 router.post('/',
   validate({body: schemas.addOrEditQuestionSchema}),
 
-  function createQuestion(req, res, next) {
-    var question = new domain.Question(_.extend(req.body, {author: req.user.id}));
-    question.subscribers.push(req.user.id);
-    req.question = question;
-    next();
+  function createQuestion (req, res, next) {
+    var question = new domain.Question(_.extend(req.body, {author: req.user.id}))
+    question.subscribers.push(req.user.id)
+    req.question = question
+    next()
   },
 
   middleWares.saveQuestionAndSend,
 
-  function updateUserAndFeed(req, res, next) {
-    req.user.profile.asked.push(req.question.id);
+  function updateUserAndFeed (req, res, next) {
+    req.user.profile.asked.push(req.question.id)
     req.user.saveAsync()
-      .then(function() {
+      .then(function () {
         return domain.User.find({email: {$in: req.body.people} })
           .select('feed')
           .execAsync()
-          .then(function(people) {
-            if(!people) {
-              return;
+          .then(function (people) {
+            if (!people) {
+              return
             }
-            var promises = people.map(function(person){
-              return userService.updateQuestionsFeed(person, req.question, 'You have been proposed to answer the question');
-            });
-            return Promise.all(promises);
-          });
+            var promises = people.map(function (person) {
+              return userService.updateQuestionsFeed(person, req.question, 'You have been proposed to answer the question')
+            })
+            return Promise.all(promises)
+          })
       })
-      .then(function(){
-        next();
+      .then(function () {
+        next()
       })
-      .catch(function(error) {
-        next(error);
-      });
-});
+      .catch(function (error) {
+        next(error)
+      })
+  })
 
 /* Add comment to question */
 router.post('/:questionId/comment',
@@ -61,38 +61,38 @@ router.post('/:questionId/comment',
 
   middleWares.getQuestion,
 
-  function(req, res, next) {
+  function (req, res, next) {
     req.question.comments.push({
       author: req.user.id,
       body: req.body.body
-    });
-    next();
+    })
+    next()
   },
 
   middleWares.saveQuestionAndSend,
 
-  function updateUserAndFeed(req, res, next) {
-    req.user.profile.answered.push(req.question.id);
+  function updateUserAndFeed (req, res, next) {
+    req.user.profile.answered.push(req.question.id)
     req.user.saveAsync()
-      .catch(function(e) {
-        logger.error('Error saving user', e);
-        return next(e);
+      .catch(function (e) {
+        logger.error('Error saving user', e)
+        return next(e)
       })
-      .then(function() {
+      .then(function () {
         var promises = req.question.subscribers
-          .filter(function(sub) {
-            return sub.id !== req.user.id;
+          .filter(function (sub) {
+            return sub.id !== req.user.id
           })
-          .map(function(sub) {
-            return userService.updateQuestionsFeed(sub, req.question, 'Question has a new comment');
-          });
-        return Promise.all(promises);
+          .map(function (sub) {
+            return userService.updateQuestionsFeed(sub, req.question, 'Question has a new comment')
+          })
+        return Promise.all(promises)
       })
-      .then(function() {
-        next();
-      });
+      .then(function () {
+        next()
+      })
   }
-);
+)
 
 /**
  * Subscribe to question
@@ -101,21 +101,21 @@ router.put('/:questionId/subscribe',
 
   middleWares.getQuestion,
 
-  function addSubscriber(req, res, next) {
-    if(_.includes(req.question.subscribers, req.user.id)) {
-      next(new errors.InvalidOperationError('Already subscribed to this question'));
+  function addSubscriber (req, res, next) {
+    if (_.includes(req.question.subscribers, req.user.id)) {
+      next(new errors.InvalidOperationError('Already subscribed to this question'))
     }
-    req.question.subscribers.push(req.user.id);
-    next();
+    req.question.subscribers.push(req.user.id)
+    next()
   },
 
   middleWares.saveQuestionAndSend,
 
-  function updateUserAndFeed(req, res, next) {
+  function updateUserAndFeed (req, res, next) {
     userService.updateQuestionsFeed(req.question.author, req.question, 'Question has a new subscriber', 2)
-      .then(function(){
-        next();
-      });
-});
+      .then(function () {
+        next()
+      })
+  })
 
-module.exports = router;
+module.exports = router

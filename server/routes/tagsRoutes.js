@@ -1,24 +1,22 @@
-'use strict';
+'use strict'
 
-var domain = require('../domain');
-var _      = require('lodash');
-var express = require('express');
-var router  = express.Router();
-var logger      = require('../logger');
+var domain = require('../domain')
+var _ = require('lodash')
+var express = require('express')
+var router = express.Router()
+var logger = require('../logger')
 
-
-router.get('/top', function(req, res, next){
-
+router.get('/top', function (req, res, next) {
   var mapReduceOptions = {
-    //have to disable eslint because mapreduce is executed on mongodb server
+    //  have to disable eslint because mapreduce is executed on mongodb server
     /*eslint-disable */
-    map: function(){
-      this.tags.forEach(function(tag){
-        emit(tag, 1);
-      });
+    map: function () {
+      this.tags.forEach(function (tag) {
+        emit(tag, 1)
+      })
     },
-    reduce:function(key, values){
-      return values.length;
+    reduce:function (key, values) {
+      return values.length
     },
     limit:100,
     out: {
@@ -26,39 +24,38 @@ router.get('/top', function(req, res, next){
       reduce: 'questionsTagsTotal'
     }
     /*eslint-enable */
-  };
+  }
 
   domain.Question
     .mapReduceAsync(mapReduceOptions)
-    .spread(function(results){
-      if(results.length === 0 ){
+    .spread(function (results) {
+      if (results.length === 0) {
         return res
           .status(200)
-          .send([]);
+          .send([])
       }
 
       var tags = _.chain(results)
-        .filter(function(result){
-          return result;
+        .filter(function (result) {
+          return result
         })
-        .map(function(result){
+        .map(function (result) {
           return {
             text: result._id,
             count: result.value
-          };
+          }
         })
         .sortByOrder('count', false)
-        .value();
+        .value()
 
       res
         .status(200)
-        .send(tags);
+        .send(tags)
     })
-    .catch(function(error){
-      logger.error('Error getting top tags', error);
-      return next(error);
-    });
-});
+    .catch(function (error) {
+      logger.error('Error getting top tags', error)
+      return next(error)
+    })
+})
 
-
-module.exports = router;
+module.exports = router

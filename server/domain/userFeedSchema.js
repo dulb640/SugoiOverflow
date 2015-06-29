@@ -1,22 +1,23 @@
-'use strict';
+'use strict'
 
-var mongoose =             require('mongoose');
-var Schema =               mongoose.Schema;
-var QuestionNotification = require('./questionNotificationSchema');
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
+var QuestionNotification = require('./questionNotificationSchema')
 
 var UserFeed = new Schema({
-  questionNotifications:{
+  questionNotifications: {
     type: [QuestionNotification],
     required: false,
     default: []
   }
-});
+})
 
 UserFeed.set('toJSON', {
   transform: function (doc, ret) {
-    ret.id = ret._id;
-    delete ret._id;
-    delete ret.__v;
+    ret.id = ret._id
+    delete ret._id
+    delete ret.__v
   }
-});
-module.exports = UserFeed;
+})
+
+module.exports = UserFeed

@@ -1,5 +1,5 @@
-angular.module('sugoiOverflow.auth', [
-  'angular-jwt',
+window.angular.module('sugoiOverflow.auth', [
+  'window.angular-jwt',
   'ngStorage',
   'ngMessages',
   'ngRoute',
@@ -7,8 +7,8 @@ angular.module('sugoiOverflow.auth', [
   'sugoiOverflow.settings',
   'sugoiOverflow.shared',
   'sugoiOverflow.templates'])
-  .config(function($routeProvider){
-    'use strict';
+  .config(function ($routeProvider) {
+    'use strict'
 
     $routeProvider
       .when('/login', {
@@ -23,12 +23,12 @@ angular.module('sugoiOverflow.auth', [
       })
       .when('/logout', {
         template: '',
-        controller: function($location, authService){
+        controller: function ($location, authService) {
           authService.logout()
-            .then(function(){
-              $location.path('/login');
-            });
+            .then(function () {
+              $location.path('/login')
+            })
         },
         isSecured: true
-      });
-  });
+      })
+  })

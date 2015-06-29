@@ -2,14 +2,14 @@
   * @class sugoiOverflow.questions
   * @memberOf sugoiOverflow
   */
-angular.module('sugoiOverflow.questions', [
+window.angular.module('sugoiOverflow.questions', [
   'sugoiOverflow.shared',
-  'angular-jwt',
+  'window.angular-jwt',
   'ngRoute',
   'ngStorage',
   'ngMessages',
   'ui.bootstrap',
-  'angularFileUpload',
+  'window.angularFileUpload',
   'wiz.markdown',
   'ngTagsInput',
   'pageslide-directive',
@@ -17,8 +17,8 @@ angular.module('sugoiOverflow.questions', [
   'sugoiOverflow.shared',
   'sugoiOverflow.templates',
   'sugoiOverflow.auth'])
-.config(function($httpProvider, $routeProvider){
-    'use strict';
+.config(function ($httpProvider, $routeProvider) {
+    'use strict'
 
     $routeProvider
       .when('/questions/new/', {
@@ -44,6 +44,6 @@ angular.module('sugoiOverflow.questions', [
         controller: 'questionDetailsController',
         isSecured: true,
         title: 'Answers'
-      });
-  });
+      })
+  })
 

@@ -1,8 +1,9 @@
-'use strict';
-var express =  require('express');
-var config = require('../configuration');
+'use strict'
 
-var router = express.Router();
+var express = require('express')
+var config = require('../configuration')
+
+var router = express.Router()
 router.get('/', function (req, res, next) {
   var clientConfig = {
     auth: {
@@ -12,10 +13,10 @@ router.get('/', function (req, res, next) {
     branding: {
       title: config('branding:title')
     }
-  };
+  }
 
-  res.send(clientConfig);
-  next();
-});
+  res.send(clientConfig)
+  next()
+})
 
-module.exports = router;
+module.exports = router

@@ -12,9 +12,9 @@
  * @param {function} so-answer-is-own-question Function called to determine if question asked by current user.
  * @requires sugoiOverflow.questions.answerController
  */
-angular.module('sugoiOverflow.questions')
-  .directive('soAnswer', function(){
-    'use strict';
+window.angular.module('sugoiOverflow.questions')
+  .directive('soAnswer', function () {
+    'use strict'
 
     return {
       restrict: 'A',
@@ -26,5 +26,5 @@ angular.module('sugoiOverflow.questions')
         isOwnQuestion: '=soAnswerIsOwnQuestion'
       },
       controller: 'answerController'
-    };
-  });
+    }
+  })

@@ -1,79 +1,78 @@
-angular.module('sugoiOverflow.questions')
+window.angular.module('sugoiOverflow.questions')
   .controller('questionDetailsController',
-    function($scope, $q, $routeParams, questionsDataService, currentUser){
-      'use strict';
+    function ($scope, $q, $routeParams, questionsDataService, currentUser) {
+      'use strict'
 
-      function loadQuestion(question){
-        $scope.questionId = question.id;
-        $scope.title = question.title;
-        $scope.body = question.body;
-        $scope.tags = _.map(question.tags, function mapTags (tag) {
+      function loadQuestion (question) {
+        $scope.questionId = question.id
+        $scope.title = question.title
+        $scope.body = question.body
+        $scope.tags = window._.map(question.tags, function mapTags (tag) {
           return {
             text: tag
-          };
-        });
-        $scope.author = question.author;
-        $scope.timestamp = question.timestamp;
-        $scope.answers = question.answers;
-        $scope.subscribers = question.subscribers;
-        $scope.comments = question.comments;
-        $scope.answer = '';
-        $scope.questionComment = '';
+          }
+        })
+        $scope.author = question.author
+        $scope.timestamp = question.timestamp
+        $scope.answers = question.answers
+        $scope.subscribers = question.subscribers
+        $scope.comments = question.comments
+        $scope.answer = ''
+        $scope.questionComment = ''
       }
 
-      _.extend($scope, {
-        submitAnswer: function(){
-          if($scope.answerQuestionForm.$invalid || $scope.sendingAnswer){
-            return;
+      window._.extend($scope, {
+        submitAnswer: function () {
+          if ($scope.answerQuestionForm.$invalid || $scope.sendingAnswer) {
+            return
           }
 
-          $scope.sendingAnswer = true;
+          $scope.sendingAnswer = true
           questionsDataService.addAnswer($routeParams.id, $scope.answer)
             .then(loadQuestion)
-            .then(function(){
-              $scope.answer = '';
-              $scope.answerQuestionForm.$setPristine();
+            .then(function () {
+              $scope.answer = ''
+              $scope.answerQuestionForm.$setPristine()
             })
-            .finally(function(){
-              $scope.sendingAnswer = false;
-            });
+            .finally(function () {
+              $scope.sendingAnswer = false
+            })
         },
-        subscribeToQuestion: function(){
+        subscribeToQuestion: function () {
           questionsDataService.subscribeToQuestion($routeParams.id)
-            .then(loadQuestion);
+            .then(loadQuestion)
         },
-        isSubscribed: function(){
-          if ($scope.subscribers){
-            return _.some($scope.subscribers, function(sub){
-              return sub.username === currentUser.username;
-            });
+        isSubscribed: function () {
+          if ($scope.subscribers) {
+            return window._.some($scope.subscribers, function (sub) {
+              return sub.username === currentUser.username
+            })
           }
-          return false;
+          return false
         },
-        isOwnQuestion: function(){
-          if ($scope.author){
-            if (currentUser.username === $scope.author.username){
-              return true;
+        isOwnQuestion: function () {
+          if ($scope.author) {
+            if (currentUser.username === $scope.author.username) {
+              return true
             }
           }
-          return false;
+          return false
         },
-        submitQuestionComment : function(body)
-        {
-           return questionsDataService.addQuestionComment($routeParams.id, body)
-             .then(function(){
-              questionsDataService.getQuestion($routeParams.id)
-              .then(loadQuestion);
-            });
+        submitQuestionComment: function (body) {
+          return questionsDataService.addQuestionComment($routeParams.id, body)
+            .then(function () {
+              return questionsDataService.getQuestion($routeParams.id)
+            })
+            .then(loadQuestion)
         },
         loadQuestion: loadQuestion
-      });
+      })
 
-      $scope.votingInProgress = false;
+      $scope.votingInProgress = false
 
-      $scope.user = currentUser;
+      $scope.user = currentUser
 
       questionsDataService.getQuestion($routeParams.id)
-        .then(loadQuestion);
+        .then(loadQuestion)
     }
-  );
+  )

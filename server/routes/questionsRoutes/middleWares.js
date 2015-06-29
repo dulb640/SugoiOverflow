@@ -1,63 +1,63 @@
-'use strict';
+'use strict'
 
-var domain = require('../../domain');
-var errors = require('../../errors');
+var domain = require('../../domain')
+var errors = require('../../errors')
 
-function getQuestion(req, res, next){
+function getQuestion (req, res, next) {
   return domain.Question.findByIdAsync(req.params.questionId)
-  .then(function(question) {
-    if(!question){
-      return next(new errors.NotFoundError('Question was not found'));
+  .then(function (question) {
+    if (!question) {
+      return next(new errors.NotFoundError('Question was not found'))
     }
-    req.question = question;
-    next();
-  });
+    req.question = question
+    next()
+  })
 }
 
-function saveQuestionAndSend(req, res, next) {
+function saveQuestionAndSend (req, res, next) {
   req.question.saveAsync()
-    .spread(function(savedQuestion) { //have to use spread because callback has two arguments
+    .spread(function (savedQuestion) { // have to use spread because callback has two arguments
       return domain.Question.populateAsync(savedQuestion, {
         path: 'author subscribers upVotes downVotes answers.author comments.author answers.comments.author',
         select: 'profile username displayName email feed'
-      });
+      })
     })
-    .then(function(populatedQuestion){
+    .then(function (populatedQuestion) {
       res
         .status(200)
-        .send(populatedQuestion);
+        .send(populatedQuestion)
 
-      req.question = populatedQuestion;
-      next();
+      req.question = populatedQuestion
+      next()
     })
-    .catch(function(er){
-      return next(new errors.GenericError('Error posting comment', er));
-    });
+    .catch(function (er) {
+      return next(new errors.GenericError('Error posting comment', er))
+    })
 }
 
-function getUserByUsername(req, res, next) {
-  return domain.User.findOneAsync({username:req.params.username})
-    .then(function(foundUser) {
-      if(!foundUser){
-        return next(new errors.NotFoundError('User was not found'));
+function getUserByUsername (req, res, next) {
+  return domain.User.findOneAsync({username: req.params.username})
+    .then(function (foundUser) {
+      if (!foundUser) {
+        return next(new errors.NotFoundError('User was not found'))
       }
-      req.foundUser = foundUser;
-      next();
-    });
+      req.foundUser = foundUser
+      next()
+    })
 }
 
-function getAnswer(req, res, next) {
-  var answer = req.question.answers.id(req.params.answerId);
-  if(!answer){
-    return next(new errors.NotFoundError('Answer was not found'));
+function getAnswer (req, res, next) {
+  var answer = req.question.answers.id(req.params.answerId)
+  if (!answer) {
+    return next(new errors.NotFoundError('Answer was not found'))
   }
-  req.answer = answer;
-  next();
+  req.answer = answer
+  next()
 }
 
 module.exports = {
-  getQuestion:         getQuestion,
-  getAnswer:           getAnswer,
+  getQuestion: getQuestion,
+  getAnswer: getAnswer,
   saveQuestionAndSend: saveQuestionAndSend,
-  getUserByUsername :  getUserByUsername
-};
+  getUserByUsername: getUserByUsername
+}

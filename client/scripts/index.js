@@ -1,16 +1,16 @@
 /**
   * @namespace sugoiOverflow
   */
-angular
+window.angular
 	.module('sugoiOverflow',
 		['ngRoute',
     'change-case',
     'ngAnimate',
-    'angular-jwt',
+    'window.angular-jwt',
     'ngStorage',
     'ngMessages',
 		'ui.bootstrap',
-    'angularFileUpload',
+    'window.angularFileUpload',
     'wiz.markdown',
     'ngTagsInput',
     'pageslide-directive',
@@ -23,20 +23,20 @@ angular
     'sugoiOverflow.profile',
     'sugoiOverflow.auth'
 		])
-	.config(function($httpProvider, $routeProvider){
-		'use strict';
+	.config(function ($httpProvider, $routeProvider) {
+  'use strict'
 
-		$routeProvider
-      .otherwise({
-        redirectTo: '/questions/suggested'
-      });
+  $routeProvider
+    .otherwise({
+      redirectTo: '/questions/suggested'
+    })
 	})
-  .run(function($rootScope, $location, currentUser) {
-    'use strict';
+  .run(function ($rootScope, $location, currentUser) {
+    'use strict'
 
-    $rootScope.$on('$routeChangeStart', function(event, next) {
+    $rootScope.$on('$routeChangeStart', function (event, next) {
       if (!currentUser.isAuthenticated && next.isSecured) {
-        $location.path( '/login' );
+        $location.path('/login')
       }
-    });
- });
+    })
+  })

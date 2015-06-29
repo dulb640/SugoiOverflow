@@ -14,11 +14,11 @@ assert(argv.id, 'Question\'s id is not specified');
 var id = new MongoDB.ObjectID(argv.id);
 
 var connection = MongoClient.connectAsync(argv.url)
-  .then(function(db){
+  .then(function(db) {
     console.log('Connection established');
     return db;
   })
-  .error(function(err){
+  .error(function(err) {
     console.error(err);
   })
   .disposer(function (db) {
@@ -33,23 +33,23 @@ Promise.using(connection, function (db) {
   var users = db.collection('users');
   var userfeeds = db.collection('userfeeds');
 
-  return users.find({'profile.asked':{$elemMatch : { $eq: id}}})
+  return users.find({'profile.asked': {$elemMatch : { $eq: id}}})
     .map(function(u) {
       console.log('Processing asked for user %s', u._id);
-      u.profile.asked = _.filter(u.profile.asked, function(s){
+      u.profile.asked = _.filter(u.profile.asked, function(s) {
         return s && !s.equals(id);
       });
       return users.saveAsync(u);
     })
     .toArrayAsync()
-    .then(function(promises){
+    .then(function(promises) {
       return Promise.all(promises);
     })
-    .then(function(){
-      return users.find({'profile.answered':{$elemMatch : { $eq: id}}})
+    .then(function() {
+      return users.find({'profile.answered': {$elemMatch : { $eq: id}}})
         .map(function(u) {
           console.log('Processing answered for user %s', u._id);
-          u.profile.answered = _.filter(u.profile.answered, function(s){
+          u.profile.answered = _.filter(u.profile.answered, function(s) {
             return s && !s.equals(id);
           });
 
@@ -57,24 +57,24 @@ Promise.using(connection, function (db) {
         })
         .toArrayAsync();
     })
-    .then(function(promises){
+    .then(function(promises) {
       return Promise.all(promises);
     })
-    .then(function(){
-      return users.find({'profile.subscribed':{$elemMatch : { $eq: id}}})
+    .then(function() {
+      return users.find({'profile.subscribed': {$elemMatch : { $eq: id}}})
         .map(function(u) {
           console.log('Processing subscribed for user %s', u._id);
-          u.profile.subscribed = _.filter(u.profile.subscribed, function(s){
+          u.profile.subscribed = _.filter(u.profile.subscribed, function(s) {
             return s && !s.equals(id);
           });
           return users.saveAsync(u);
         })
         .toArrayAsync();
     })
-    .then(function(promises){
+    .then(function(promises) {
       return Promise.all(promises);
     })
-    .then(function(){
+    .then(function() {
       return users.find({
         'profile.karmaChanges': {
             $elemMatch : {
@@ -86,17 +86,17 @@ Promise.using(connection, function (db) {
         })
         .map(function(u) {
           console.log('Processing karmaChanges for user %s', u._id);
-          u.profile.karmaChanges = _.filter(u.profile.karmaChanges, function(k){
+          u.profile.karmaChanges = _.filter(u.profile.karmaChanges, function(k) {
             return k && k.question && !k.question.equals(id);
           });
           return users.saveAsync(u);
         })
         .toArrayAsync();
     })
-    .then(function(promises){
+    .then(function(promises) {
       return Promise.all(promises);
     })
-    .then(function(){
+    .then(function() {
       return userfeeds.find({
         questionNotifications: {
           $elemMatch : {
@@ -108,17 +108,17 @@ Promise.using(connection, function (db) {
       })
       .map(function(f) {
         console.log('Processing feed %s', f._id);
-        f.questionNotifications = _.filter(f.questionNotifications, function(n){
+        f.questionNotifications = _.filter(f.questionNotifications, function(n) {
           return n && n.question && !n.question.equals(id);
         });
         return userfeeds.saveAsync(f);
       })
       .toArrayAsync();
     })
-    .then(function(promises){
+    .then(function(promises) {
       return Promise.all(promises);
     })
-    .error(function(err){
+    .error(function(err) {
       console.error(err);
     });
 });

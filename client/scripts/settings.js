@@ -1,1 +1,1 @@
-angular.module('sugoiOverflow.settings', []);
+window.angular.module('sugoiOverflow.settings', [])

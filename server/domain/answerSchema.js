@@ -1,69 +1,68 @@
-'use strict';
+'use strict'
 
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var Comment = require('./commentSchema');
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
+var Comment = require('./commentSchema')
 
 var Answer = new Schema({
-  author:{
+  author: {
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true
   },
-  timestamp:{
+  timestamp: {
     type: Date,
     'default': Date.now
   },
-  body:{
+  body: {
     type: String,
     required: true
   },
-  comments:{
+  comments: {
     type: [Comment],
     default: []
   },
-  correct:{
+  correct: {
     type: Boolean,
     required: true,
     default: false
   },
-  upVotes:{
+  upVotes: {
     type: [Schema.Types.ObjectId],
     ref: 'User',
     default: []
   },
-  downVotes:{
+  downVotes: {
     type: [Schema.Types.ObjectId],
     ref: 'User',
     default: []
   }
-});
+})
 
 Answer.set('toJSON', {
   transform: function (doc, ret) {
-    ret.id = ret._id;
-    delete ret._id;
-    delete ret.__v;
+    ret.id = ret._id
+    delete ret._id
+    delete ret.__v
   },
   virtuals: true
-});
+})
 
 Answer.set('toObject', {
   virtuals: true
-});
+})
 
+Answer.virtual('score').get(function calculateScore () {
+  var score = 0
 
-Answer.virtual('score').get(function calculateScore() {
-  var score = 0;
-
-  if(this.upVotes && this.upVotes.length > 0){
-    score += this.upVotes.length;
+  if (this.upVotes && this.upVotes.length > 0) {
+    score += this.upVotes.length
   }
 
-  if(this.downVotes && this.downVotes.length > 0){
-    score -= this.downVotes.length;
+  if (this.downVotes && this.downVotes.length > 0) {
+    score -= this.downVotes.length
   }
 
-  return score;
-});
-module.exports = Answer;
+  return score
+})
+module.exports = Answer

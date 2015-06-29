@@ -1,10 +1,10 @@
-'use strict';
+'use strict'
 
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
 
 var QuestionNotification = new Schema({
-  question:{
+  question: {
     type: Schema.Types.ObjectId,
     ref: 'Question',
     required: false
@@ -13,26 +13,27 @@ var QuestionNotification = new Schema({
     type: String,
     required: false
   },
-  timestamp:{
+  timestamp: {
     type: Date,
     'default': Date.now
   },
-  body:{
+  body: {
     type: String,
     required: true
   },
-  read:{
+  read: {
     type: Boolean,
     required: true,
     default: false
   }
-});
+})
 
 QuestionNotification.set('toJSON', {
   transform: function (doc, ret) {
-    ret.id = ret._id;
-    delete ret._id;
-    delete ret.__v;
+    ret.id = ret._id
+    delete ret._id
+    delete ret.__v
   }
-});
-module.exports = QuestionNotification;
+})
+
+module.exports = QuestionNotification

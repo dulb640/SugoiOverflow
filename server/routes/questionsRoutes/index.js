@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 /**
  * @apiDefine QuestionSuccess
@@ -30,13 +30,12 @@
  * @apiSuccess {date}       timestamp                              Date and time when question was asked
  * @apiSuccess {string[]}   tags                                   Tags assigned to question
  */
-var express = require('express');
+var express = require('express')
 
-var router  = express.Router();
-router.use(require('./getQuestionsRoutes'));
-router.use(require('./getQuestionsForProfileRoutes'));
-router.use(require('./addOrUpdateQuestionRoutes'));
-router.use(require('./addOrUpdateAnswerRoutes'));
+var router = express.Router()
+router.use(require('./getQuestionsRoutes'))
+router.use(require('./getQuestionsForProfileRoutes'))
+router.use(require('./addOrUpdateQuestionRoutes'))
+router.use(require('./addOrUpdateAnswerRoutes'))
 
-
-module.exports = router;
+module.exports = router

@@ -10,9 +10,9 @@
  * Takes string as comment and should return promise.
  * @requires sugoiOverflow.questions.commentsController
  */
-angular.module('sugoiOverflow.questions')
-  .directive('soComments', function(){
-    'use strict';
+window.angular.module('sugoiOverflow.questions')
+  .directive('soComments', function () {
+    'use strict'
 
     return {
       restrict: 'A',
@@ -22,5 +22,5 @@ angular.module('sugoiOverflow.questions')
         addComment: '=soCommentsAdd'
       },
       controller: 'commentsController'
-    };
-  });
+    }
+  })

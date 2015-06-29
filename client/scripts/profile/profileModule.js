@@ -1,11 +1,11 @@
-angular.module('sugoiOverflow.profile', [
+window.angular.module('sugoiOverflow.profile', [
   'sugoiOverflow.shared',
-  'angular-jwt',
+  'window.angular-jwt',
   'ngStorage',
   'ngRoute',
   'ngMessages',
   'ui.bootstrap',
-  'angularFileUpload',
+  'window.angularFileUpload',
   'wiz.markdown',
   'ngTagsInput',
   'pageslide-directive',
@@ -13,8 +13,8 @@ angular.module('sugoiOverflow.profile', [
   'sugoiOverflow.shared',
   'sugoiOverflow.templates',
   'sugoiOverflow.auth'])
-  .config(function($routeProvider){
-    'use strict';
+  .config(function ($routeProvider) {
+    'use strict'
 
     $routeProvider
       .when('/profile', {
@@ -37,5 +37,5 @@ angular.module('sugoiOverflow.profile', [
         controller: 'viewProfileController',
         isSecured: true,
         title: 'Profile'
-      });
-  });
+      })
+  })

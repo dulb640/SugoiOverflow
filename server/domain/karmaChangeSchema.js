@@ -1,32 +1,33 @@
-'use strict';
+'use strict'
 
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
 
 var KarmaChange = new Schema({
-  question:{
+  question: {
     type: Schema.Types.ObjectId,
     ref: 'Question'
   },
-  timestamp:{
+  timestamp: {
     type: Date,
     'default': Date.now
   },
-  reason:{
+  reason: {
     type: String,
     required: true
   },
-  value:{
+  value: {
     type: Number,
     required: true
   }
-});
+})
 
 KarmaChange.set('toJSON', {
   transform: function (doc, ret) {
-    ret.id = ret._id;
-    delete ret._id;
-    delete ret.__v;
+    ret.id = ret._id
+    delete ret._id
+    delete ret.__v
   }
-});
-module.exports = KarmaChange;
+})
+
+module.exports = KarmaChange

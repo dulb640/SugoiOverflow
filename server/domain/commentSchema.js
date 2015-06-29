@@ -1,29 +1,30 @@
-'use strict';
+'use strict'
 
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
 
 var Comment = new Schema({
-  author:{
+  author: {
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true
   },
-  timestamp:{
+  timestamp: {
     type: Date,
     'default': Date.now
   },
-  body:{
+  body: {
     type: String,
     required: true
   }
-});
+})
 
 Comment.set('toJSON', {
   transform: function (doc, ret) {
-    ret.id = ret._id;
-    delete ret._id;
-    delete ret.__v;
+    ret.id = ret._id
+    delete ret._id
+    delete ret.__v
   }
-});
-module.exports = Comment;
+})
+
+module.exports = Comment

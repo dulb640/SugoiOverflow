@@ -12,11 +12,11 @@ Promise.promisifyAll(MongoClient);
 var argv = minimist(process.argv.slice(2));
 assert(argv.url, 'Url for mongodb is not provided');
 var connection = MongoClient.connectAsync(argv.url)
-  .then(function(db){
+  .then(function(db) {
     console.log('Connection established');
     return db;
   })
-  .error(function(err){
+  .error(function(err) {
     console.error(err);
   })
   .disposer(function (db) {
@@ -29,10 +29,10 @@ var connection = MongoClient.connectAsync(argv.url)
 Promise.using(connection, function (db) {
   console.log('Start renaming tags for questions');
   var questions = db.collection('questions');
-  var questionsCursor = questions.find({tags:{$not: {$size: 0}}});
+  var questionsCursor = questions.find({tags: {$not: {$size: 0}}});
   return questionsCursor.map(function(q) {
     console.log('Processing question %s', q._id);
-    var tags = _.map(q.tags, function(t){
+    var tags = _.map(q.tags, function(t) {
       return changeCase.paramCase(t);
     });
     console.log('%s -> %s', q.tags, tags);
@@ -40,15 +40,15 @@ Promise.using(connection, function (db) {
     return questions.saveAsync(q);
   })
   .toArrayAsync()
-  .then(function(promises){
+  .then(function(promises) {
     return Promise.all(promises);
   })
-  .then(function(){
+  .then(function() {
     var users = db.collection('users');
-    var usersCursor = users.find({'profile.selectedTags':{$not: {$size: 0}}});
+    var usersCursor = users.find({'profile.selectedTags': {$not: {$size: 0}}});
     return usersCursor.map(function(u) {
       console.log('Processing user %s', u._id);
-      var tags = _.map(u.profile.selectedTags, function(t){
+      var tags = _.map(u.profile.selectedTags, function(t) {
         return changeCase.paramCase(t);
       });
       console.log('%s -> %s', u.profile.selectedTags, tags);
@@ -57,10 +57,10 @@ Promise.using(connection, function (db) {
     })
     .toArrayAsync();
   })
-  .then(function(promises){
+  .then(function(promises) {
     return Promise.all(promises);
   })
-  .error(function(err){
+  .error(function(err) {
     console.error(err);
   });
 });

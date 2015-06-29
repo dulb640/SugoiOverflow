@@ -1,4 +1,4 @@
-angular.module('sugoiOverflow.shared')
+window.angular.module('sugoiOverflow.shared')
   .controller('siteHeaderController',
     function ($rootScope,
       $scope,
@@ -11,62 +11,62 @@ angular.module('sugoiOverflow.shared')
       $localStorage,
       tagsDataService,
       configService) {
-      'use strict';
+      'use strict'
 
-      configService.then(function(conf){
-        $scope.config = conf;
-      });
+      configService.then(function (conf) {
+        $scope.config = conf
+      })
 
-      function showTour() {
-        $scope.joyRideStarted = true;
-        $localStorage.visitedTour = new Date();
+      function showTour () {
+        $scope.joyRideStarted = true
+        $localStorage.visitedTour = new Date()
       }
 
-      _.extend($scope, {
+      window._.extend($scope, {
         currentUser: currentUser,
         user: {},
         notifications: [],
         notificationsOpened: false,
         searchTerms: '',
-        searchQuestions: function(){
-          $location.path(s.sprintf('/questions/search/%s', $scope.searchTerms));
+        searchQuestions: function () {
+          $location.path(window.s.sprintf('/questions/search/%s', $scope.searchTerms))
         },
-        getTypeahead: function(){
-          $scope.typeaheadLoading = true;
+        getTypeahead: function () {
+          $scope.typeaheadLoading = true
           return tagsDataService.getAvailableTags()
-          .then(function(tags){
-            return tags;
+          .then(function (tags) {
+            return tags
           })
-          .finally(function(){
-            $scope.typeaheadLoading = false;
-          });
+          .finally(function () {
+            $scope.typeaheadLoading = false
+          })
         },
-        newNotificationsCount: function(){
-          return _.where($scope.notifications, {'read' : false}).length;
+        newNotificationsCount: function () {
+          return window._.where($scope.notifications, {'read': false}).length
         },
-        readNotification: function(notification){
-          $scope.notificationsOpened = false;
+        readNotification: function (notification) {
+          $scope.notificationsOpened = false
           profilesDataService.markNotificationAsRead(notification.id)
-            .then(function(notifications){
-              $scope.notifications = notifications;
-            });
+            .then(function (notifications) {
+              $scope.notifications = notifications
+            })
 
-          $location.path(s.sprintf('/questions/%s/answers', notification.question));
+          $location.path(window.s.sprintf('/questions/%s/answers', notification.question))
         },
-        openNotifications: function(event){
-          $scope.notificationsOpened = true;
-          event.stopPropagation();
+        openNotifications: function (event) {
+          $scope.notificationsOpened = true
+          event.stopPropagation()
         },
-        closeNotifications: function(){
-          $scope.notificationsOpened = false;
+        closeNotifications: function () {
+          $scope.notificationsOpened = false
         },
-        hasNewNotifications : function (){
-          return $scope.newNotificationsCount() > 0;
+        hasNewNotifications: function () {
+          return $scope.newNotificationsCount() > 0
         },
         joyRideStarted: false,
         startJoyRide: showTour,
         joyRideConfig: [{
-          type: 'location_change',
+          type: 'locationwindow._change',
           path: '/questions/all'
         }, {
           type: 'title',
@@ -84,17 +84,14 @@ angular.module('sugoiOverflow.shared')
           type: 'element',
           selector: '.question-content:first .tags',
           heading: 'Tags',
-          text: 'Those are tags. \
-All questions should be marked with certain tags so that it will \
-be easy to find them in system and group by certain topics. \
-If you click on tag it will automatically transfer you to search page for this tag',
+          text: 'Those are tags. All questions should be marked with certain tags so that it will be easy to find them in system and group by certain topics. If you click on tag it will automatically transfer you to search page for this tag',
           placement: 'right',
           scroll: false,
           attachToBody: true
         }, {
           type: 'function',
           fn: function () {
-            angular.element('.question-content:first .tags a:first').click();
+            window.angular.element('.question-content:first .tags a:first').click()
           }
         }, {
           type: 'element',
@@ -121,7 +118,7 @@ If you click on tag it will automatically transfer you to search page for this t
           scroll: true,
           attachToBody: true
         }, {
-          type: 'location_change',
+          type: 'locationwindow._change',
           path: '/questions/suggested'
         }, {
           type: 'element',
@@ -134,7 +131,7 @@ If you click on tag it will automatically transfer you to search page for this t
         }, {
             type: 'function',
             fn: function () {
-              angular.element('.profile .dropdown-toggle').click();
+              window.angular.element('.profile .dropdown-toggle').click()
             }
           }, {
           type: 'element',
@@ -145,7 +142,7 @@ If you click on tag it will automatically transfer you to search page for this t
           scroll: true,
           attachToBody: true
         }, {
-          type: 'location_change',
+          type: 'locationwindow._change',
           path: '/profile/me'
         }, {
           type: 'element',
@@ -164,7 +161,7 @@ If you click on tag it will automatically transfer you to search page for this t
           scroll: true,
           attachToBody: true
         }, {
-          type: 'location_change',
+          type: 'locationwindow._change',
           path: '/profile/me/edit'
         }, {
           type: 'element',
@@ -199,7 +196,7 @@ If you click on tag it will automatically transfer you to search page for this t
           scroll: true,
           attachToBody: true
         }, {
-          type: 'location_change',
+          type: 'locationwindow._change',
           path: '/questions/new'
         }, {
           type: 'element',
@@ -213,7 +210,7 @@ If you click on tag it will automatically transfer you to search page for this t
           type: 'element',
           selector: 'form .markdown-editor',
           heading: 'Question body',
-          text: 'All questions and answers use familiar markdown to edit them. You can read more about markdown <a target="_blank" href="http://daringfireball.net/projects/markdown/syntax">here</a>',
+          text: 'All questions and answers use familiar markdown to edit them. You can read more about markdown <a target="window._blank" href="http://daringfireball.net/projects/markdown/syntax">here</a>',
           placement: 'top',
           scroll: true,
           attachToBody: true
@@ -234,12 +231,12 @@ If you click on tag it will automatically transfer you to search page for this t
           scroll: true,
           attachToBody: true
         }, {
-          type: 'location_change',
+          type: 'locationwindow._change',
           path: '/questions/all'
         }, {
           type: 'function',
           fn: function () {
-            angular.element('.question-container.has-answers:first .title a:first').click();
+            window.angular.element('.question-container.has-answers:first .title a:first').click()
           }
         }, {
           type: 'title',
@@ -249,8 +246,7 @@ If you click on tag it will automatically transfer you to search page for this t
           type: 'element',
           selector: '.score-container',
           heading: 'Rate answers',
-          text: 'Except this - you can rate answers to make other users know if they were useful. \
-If you were the author of the question you can also mark them as correct',
+          text: 'Except this - you can rate answers to make other users know if they were useful. If you were the author of the question you can also mark them as correct',
           placement: 'left',
           scroll: true,
           attachToBody: true
@@ -283,51 +279,51 @@ If you were the author of the question you can also mark them as correct',
           scroll: true,
           attachToBody: true
         }, {
-          type: 'location_change',
+          type: 'locationwindow._change',
           path: '/questions/all'
         }]
-      });
+      })
 
-    $window.onclick = function(){
-      if ($scope.notificationsOpened){
-        $scope.closeNotifications();
-        $scope.$apply();
-      }
-    };
-
-    if($routeParams.searchTerms){
-      $scope.searchTerms = $routeParams.searchTerms;
-    }
-
-    function getUpdates(){
-      if(!currentUser.isAuthenticated){
-        return;
+      $window.onclick = function () {
+        if ($scope.notificationsOpened) {
+          $scope.closeNotifications()
+          $scope.$apply()
+        }
       }
 
-      profilesDataService.getCurrentUserNotifications()
-        .then(function(notifications){
-          $scope.notifications = notifications;
-        });
-
-      profilesDataService.getCurrentUserProfile()
-        .then(function(user){
-          $scope.user = user;
-        });
-    }
-
-    getUpdates();
-
-    $interval(getUpdates, 30000);
-
-    $scope.$watch('currentUser.isAuthenticated', getUpdates);
-
-    $rootScope.$on('$routeChangeSuccess', function(){
-      $scope.searchTerms = $routeParams.searchTerms;
-    });
-
-    $scope.$watch('currentUser.isAuthenticated', function() {
-      if($scope.currentUser.isAuthenticated && !$localStorage.visitedTour){
-        showTour();
+      if ($routeParams.searchTerms) {
+        $scope.searchTerms = $routeParams.searchTerms
       }
-    });
-  });
+
+      function getUpdates () {
+        if (!currentUser.isAuthenticated) {
+          return
+        }
+
+        profilesDataService.getCurrentUserNotifications()
+          .then(function (notifications) {
+            $scope.notifications = notifications
+          })
+
+        profilesDataService.getCurrentUserProfile()
+          .then(function (user) {
+            $scope.user = user
+          })
+      }
+
+      getUpdates()
+
+      $interval(getUpdates, 30000)
+
+      $scope.$watch('currentUser.isAuthenticated', getUpdates)
+
+      $rootScope.$on('$routeChangeSuccess', function () {
+        $scope.searchTerms = $routeParams.searchTerms
+      })
+
+      $scope.$watch('currentUser.isAuthenticated', function () {
+        if ($scope.currentUser.isAuthenticated && !$localStorage.visitedTour) {
+          showTour()
+        }
+      })
+    })
