@@ -1,6 +1,6 @@
 {
   "name": "sugoi-overflow",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "description": "So much sugoi - it overflows",
   "main": "server/index.js",
   "dependencies": {
@@ -121,8 +121,11 @@
     "url": "https://github.com/Deadarius/SugoiOverflow/issues"
   },
   "homepage": "https://github.com/Deadarius/SugoiOverflow",
-  "standard":{
-    "globals": ["angular", "_"],
+  "standard": {
+    "globals": [
+      "angular",
+      "_"
+    ],
     "ignore": []
   }
 }
