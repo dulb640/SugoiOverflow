@@ -11,10 +11,10 @@ angular.module('sugoiOverflow.shared', [
     'sugoiOverflow.settings',
     'sugoiOverflow.templates',
     'sugoiOverflow.auth'])
-.run(function (configService, $rootScope) {
+.run(function (configService, $rootScope, $document) {
   'use strict'
   function updateTitle (title) {
-    $rootScope.$emit('titleChanged', title)
+    $document[0].title = title
   }
 
   configService.then(function (conf) {
