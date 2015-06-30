@@ -1,4 +1,5 @@
-window.angular.module('sugoiOverflow.questions')
+/* global angular*/
+angular.module('sugoiOverflow.questions')
   .factory('tagsDataService', function ($http, $q) {
     'use strict'
     var service = {

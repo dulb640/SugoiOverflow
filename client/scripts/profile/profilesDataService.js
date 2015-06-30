@@ -1,4 +1,5 @@
-window.angular.module('sugoiOverflow.profile')
+/* global angular*/
+angular.module('sugoiOverflow.profile')
   .factory('profilesDataService',
     function ($http, $q) {
       'use strict'

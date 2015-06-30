@@ -1,4 +1,5 @@
-window.angular.module('sugoiOverflow.auth')
+/* global angular*/
+angular.module('sugoiOverflow.auth')
   .factory('currentUser',
     function ($localStorage) {
       'use strict'

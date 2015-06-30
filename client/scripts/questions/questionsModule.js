@@ -1,15 +1,16 @@
+/* global angular*/
 /**
   * @class sugoiOverflow.questions
   * @memberOf sugoiOverflow
   */
-window.angular.module('sugoiOverflow.questions', [
+angular.module('sugoiOverflow.questions', [
   'sugoiOverflow.shared',
-  'window.angular-jwt',
+  'angular-jwt',
   'ngRoute',
   'ngStorage',
   'ngMessages',
   'ui.bootstrap',
-  'window.angularFileUpload',
+  'angularFileUpload',
   'wiz.markdown',
   'ngTagsInput',
   'pageslide-directive',
@@ -46,4 +47,3 @@ window.angular.module('sugoiOverflow.questions', [
         title: 'Answers'
       })
   })
-

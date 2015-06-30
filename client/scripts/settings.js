@@ -1,1 +1,2 @@
-window.angular.module('sugoiOverflow.settings', [])
+/* global angular*/
+angular.module('sugoiOverflow.settings', [])

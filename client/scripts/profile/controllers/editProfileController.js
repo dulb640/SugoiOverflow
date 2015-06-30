@@ -1,4 +1,5 @@
-window.angular.module('sugoiOverflow.profile')
+/* global angular*/
+angular.module('sugoiOverflow.profile')
   .controller('editProfileController',
     function ($scope, $q, $routeParams, $location, $upload, $timeout, tagsDataService, profilesDataService, $localStorage, autocompleteService, changeCase) {
       'use strict'

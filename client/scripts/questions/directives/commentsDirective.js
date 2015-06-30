@@ -1,3 +1,4 @@
+/* global angular*/
 /**
  * @ngdoc directive
  * @name soComments
@@ -10,7 +11,7 @@
  * Takes string as comment and should return promise.
  * @requires sugoiOverflow.questions.commentsController
  */
-window.angular.module('sugoiOverflow.questions')
+angular.module('sugoiOverflow.questions')
   .directive('soComments', function () {
     'use strict'
 

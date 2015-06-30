@@ -1,4 +1,5 @@
-window.angular.module('sugoiOverflow.auth')
+/* global angular*/
+angular.module('sugoiOverflow.auth')
   .controller('registerController',
     function ($scope, $q, $routeParams, $location, authService, configService) {
       'use strict'

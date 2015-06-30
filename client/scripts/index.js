@@ -1,16 +1,17 @@
+/* global angular*/
 /**
   * @namespace sugoiOverflow
   */
-window.angular
+angular
 	.module('sugoiOverflow',
 		['ngRoute',
     'change-case',
     'ngAnimate',
-    'window.angular-jwt',
+    'angular-jwt',
     'ngStorage',
     'ngMessages',
 		'ui.bootstrap',
-    'window.angularFileUpload',
+    'angularFileUpload',
     'wiz.markdown',
     'ngTagsInput',
     'pageslide-directive',

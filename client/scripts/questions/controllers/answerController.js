@@ -1,3 +1,4 @@
+/* global angular*/
 /**
  * @ngdoc controller
  * @name answerController
@@ -6,7 +7,7 @@
  * This controller is being used by answer directive.
  * $scope will have answer injected and update function
  */
-window.angular.module('sugoiOverflow.questions')
+angular.module('sugoiOverflow.questions')
   .controller('answerController',
     function ($scope, questionsDataService, currentUser) {
       'use strict'

@@ -1,3 +1,4 @@
+/* global angular*/
 /**
  * @ngdoc controller
  * @name commentsController
@@ -8,7 +9,7 @@
  * which will be bound to submitting comments logic
  * expects to have addComment function on the scope
  */
-window.angular.module('sugoiOverflow.questions')
+angular.module('sugoiOverflow.questions')
   .controller('commentsController',
     function ($scope) {
       'use strict'

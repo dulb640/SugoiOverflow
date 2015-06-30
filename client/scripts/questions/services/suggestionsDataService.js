@@ -1,4 +1,5 @@
-window.angular.module('sugoiOverflow.questions')
+/* global angular*/
+angular.module('sugoiOverflow.questions')
   .factory('suggestionsDataService', function ($http, $q) {
     'use strict'
     var service = {

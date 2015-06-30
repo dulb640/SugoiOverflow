@@ -1,3 +1,4 @@
+/* global angular*/
 /**
  * @ngdoc directive
  * @name soAnswer
@@ -12,7 +13,7 @@
  * @param {function} so-answer-is-own-question Function called to determine if question asked by current user.
  * @requires sugoiOverflow.questions.answerController
  */
-window.angular.module('sugoiOverflow.questions')
+angular.module('sugoiOverflow.questions')
   .directive('soAnswer', function () {
     'use strict'
 

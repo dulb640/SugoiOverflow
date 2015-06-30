@@ -1,9 +1,10 @@
+/* global angular*/
  /**
   * @function questionsDataService
   * @memberOf sugoiOverflow.questions
   * @description Questions data service.
   */
-window.angular.module('sugoiOverflow.questions')
+angular.module('sugoiOverflow.questions')
   .factory('questionsDataService',
   function ($http, $q) {
     'use strict'

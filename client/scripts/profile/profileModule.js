@@ -1,11 +1,12 @@
-window.angular.module('sugoiOverflow.profile', [
+/* global angular*/
+angular.module('sugoiOverflow.profile', [
   'sugoiOverflow.shared',
-  'window.angular-jwt',
+  'angular-jwt',
   'ngStorage',
   'ngRoute',
   'ngMessages',
   'ui.bootstrap',
-  'window.angularFileUpload',
+  'angularFileUpload',
   'wiz.markdown',
   'ngTagsInput',
   'pageslide-directive',

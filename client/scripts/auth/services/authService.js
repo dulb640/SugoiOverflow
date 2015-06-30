@@ -1,4 +1,5 @@
-window.angular.module('sugoiOverflow.auth')
+/* global angular*/
+angular.module('sugoiOverflow.auth')
   .factory('authService',
     function ($http, $q, $localStorage, $timeout, currentUser) {
       'use strict'

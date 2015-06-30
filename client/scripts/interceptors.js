@@ -1,4 +1,5 @@
-window.angular.module('sugoiOverflow.interceptors', ['sugoiOverflow.shared'])
+/* global angular*/
+angular.module('sugoiOverflow.interceptors', ['sugoiOverflow.shared'])
 .config(function ($httpProvider, jwtInterceptorProvider) {
   'use strict'
   jwtInterceptorProvider.tokenGetter =

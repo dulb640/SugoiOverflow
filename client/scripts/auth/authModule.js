@@ -1,5 +1,6 @@
-window.angular.module('sugoiOverflow.auth', [
-  'window.angular-jwt',
+/* global angular*/
+angular.module('sugoiOverflow.auth', [
+  'angular-jwt',
   'ngStorage',
   'ngMessages',
   'ngRoute',

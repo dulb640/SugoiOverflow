@@ -120,5 +120,9 @@
   "bugs": {
     "url": "https://github.com/Deadarius/SugoiOverflow/issues"
   },
-  "homepage": "https://github.com/Deadarius/SugoiOverflow"
+  "homepage": "https://github.com/Deadarius/SugoiOverflow",
+  "standard":{
+    "globals": ["angular", "_"],
+    "ignore": []
+  }
 }

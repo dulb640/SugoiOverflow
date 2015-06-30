@@ -1,9 +1,10 @@
-window.angular.module('sugoiOverflow.shared', [
-    'window.angular-jwt',
+/* global angular*/
+angular.module('sugoiOverflow.shared', [
+    'angular-jwt',
     'ngStorage',
     'ngMessages',
     'ui.bootstrap',
-    'window.angularFileUpload',
+    'angularFileUpload',
     'wiz.markdown',
     'ngTagsInput',
     'pageslide-directive',

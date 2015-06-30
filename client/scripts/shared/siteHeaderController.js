@@ -1,4 +1,5 @@
-window.angular.module('sugoiOverflow.shared')
+/* global angular*/
+angular.module('sugoiOverflow.shared')
   .controller('siteHeaderController',
     function ($rootScope,
       $scope,
@@ -91,7 +92,7 @@ window.angular.module('sugoiOverflow.shared')
         }, {
           type: 'function',
           fn: function () {
-            window.angular.element('.question-content:first .tags a:first').click()
+            angular.element('.question-content:first .tags a:first').click()
           }
         }, {
           type: 'element',
@@ -131,7 +132,7 @@ window.angular.module('sugoiOverflow.shared')
         }, {
             type: 'function',
             fn: function () {
-              window.angular.element('.profile .dropdown-toggle').click()
+              angular.element('.profile .dropdown-toggle').click()
             }
           }, {
           type: 'element',
@@ -236,7 +237,7 @@ window.angular.module('sugoiOverflow.shared')
         }, {
           type: 'function',
           fn: function () {
-            window.angular.element('.question-container.has-answers:first .title a:first').click()
+            angular.element('.question-container.has-answers:first .title a:first').click()
           }
         }, {
           type: 'title',

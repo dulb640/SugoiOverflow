@@ -1,4 +1,5 @@
-window.angular.module('sugoiOverflow.profile')
+/* global angular*/
+angular.module('sugoiOverflow.profile')
   .controller('viewProfileController',
     function ($scope, $q, $routeParams, tagsDataService, profilesDataService, questionsDataService) {
       'use strict'
