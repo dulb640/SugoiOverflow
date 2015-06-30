@@ -10,12 +10,7 @@ var domain = require('../../domain')
 var middleWares = require('./middleWares')
 
 /**
- * @apiName GetAllQuestionsForUser
- * @api {get} /api/questions/profile/:username
- * @apiParam {string} username User's username
- * @apiDescription Get a list of questions asked by user
- * @apiGroup Questions
- * @apiUse QuestionSuccess
+ * Get a list of questions asked by user
  */
 router.get('/profile/:username/asked',
 

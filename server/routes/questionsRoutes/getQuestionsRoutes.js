@@ -8,11 +8,7 @@ var logger = require('../../logger')
 var middleWares = require('./middleWares')
 
 /**
- * @apiName GetAllQuestions
- * @api {get} /api/questions/
- * @apiDescription Get all questions
- * @apiGroup Questions
- * @apiUse QuestionSuccess
+ * Get all questions
  */
 router.get('/', function (req, res, next) {
   domain.Question
@@ -35,11 +31,7 @@ router.get('/', function (req, res, next) {
 })
 
 /**
- * @apiName GetSuggestedQuestions
- * @api {get} /api/questions/suggested
- * @apiDescription Get a list of suggested questions
- * @apiGroup Questions
- * @apiUse QuestionSuccess
+ * Get a list of suggested questions
  */
 router.get('/suggested', function (req, res, next) {
   domain.User
@@ -67,11 +59,7 @@ router.get('/suggested', function (req, res, next) {
 })
 
 /**
- * @apiName GetMostWantedQuestions
- * @api {get} /api/questions/most-wanted
- * @apiDescription Get a list of most wanted(subscribed) questions
- * @apiGroup Questions
- * @apiUse QuestionSuccess
+ * Get a list of most wanted(subscribed) questions
  */
 router.get('/most-wanted', function (req, res, next) {
   domain.Question

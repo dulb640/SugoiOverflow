@@ -264,36 +264,6 @@ gulp.task('test-client', function (done) {
 
 gulp.task('test', ['test-server', 'test-client'])
 
-gulp.task('apidocs', function () {
-  apidoc.exec({
-    src: 'server/',
-    dest: 'apidocs/'
-  })
-})
-
-gulp.task('dgeni', function () {
-  var dgeni = new Dgeni([require('./dgeniConf')])
-  return dgeni.generate()
-})
-
-// gulp.task('clientdocs', function () {
-//   var conf = require('angular-jsdoc/conf.json')
-//   var template = {
-//     path: 'node_modules/angular-jsdoc/template',
-//   }
-
-//   return gulp.src('./client/**/*.js')
-//     .pipe(jsdoc.generator('./clientdocs/', template, conf))
-// })
-
-gulp.task('clientdocs', shell.task([
- 'node_modules/jsdoc/jsdoc.js ' +
-  '-c node_modules/angular-jsdoc/conf.json ' +   // config file
-  '-t node_modules/angular-jsdoc/template ' +    // template file
-  '-d clientdocs ' +                             // output directory
-  '-r client'                                    // source code directory
-]))
-
 gulp.task('debug', function () {
   gulp.src(paths.server)
     .pipe(nodeDebug({
