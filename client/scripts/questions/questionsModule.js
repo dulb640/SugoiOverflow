@@ -1,8 +1,4 @@
 /* global angular*/
-/**
-  * @class sugoiOverflow.questions
-  * @memberOf sugoiOverflow
-  */
 angular.module('sugoiOverflow.questions', [
   'sugoiOverflow.shared',
   'angular-jwt',

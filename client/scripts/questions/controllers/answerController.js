@@ -1,9 +1,5 @@
 /* global angular*/
 /**
- * @ngdoc controller
- * @name answerController
- * @memberOf sugoiOverflow.questions
- * @description
  * This controller is being used by answer directive.
  * $scope will have answer injected and update function
  */

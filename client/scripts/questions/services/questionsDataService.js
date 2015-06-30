@@ -1,8 +1,6 @@
 /* global angular*/
  /**
-  * @function questionsDataService
-  * @memberOf sugoiOverflow.questions
-  * @description Questions data service.
+  * Questions data service.
   */
 angular.module('sugoiOverflow.questions')
   .factory('questionsDataService',

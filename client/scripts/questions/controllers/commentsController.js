@@ -1,9 +1,5 @@
 /* global angular*/
 /**
- * @ngdoc controller
- * @name commentsController
- * @memberOf sugoiOverflow.questions
- * @description
  * This controller is being used by comments directive.
  * $scope will have comments injected and addComment function
  * which will be bound to submitting comments logic
