@@ -61,8 +61,8 @@ function updateQuestionsFeed (user, question, message, karmaAdd) {
         }
       })
     })
-    .then(function (template) {
-      var url = util.format('%s://%s/%s/questions/%s/answers',
+    .then(function(template){
+      var url = util.format('%s://%s/%s/#/questions/%s/answers',
         config('protocol'),
         config('domain'),
         config('path'),
