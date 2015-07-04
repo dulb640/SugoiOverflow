@@ -7,7 +7,7 @@ angular.module('sugoiOverflow.questions', [
   'ngMessages',
   'ui.bootstrap',
   'angularFileUpload',
-  'wiz.markdown',
+  'markdown-toolset',
   'ngTagsInput',
   'pageslide-directive',
   'sugoiOverflow.settings',

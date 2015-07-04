@@ -7,7 +7,6 @@ angular.module('sugoiOverflow.profile', [
   'ngMessages',
   'ui.bootstrap',
   'angularFileUpload',
-  'wiz.markdown',
   'ngTagsInput',
   'pageslide-directive',
   'sugoiOverflow.settings',

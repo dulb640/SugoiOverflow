@@ -8,19 +8,9 @@
         <input class="form-control" required minlength="10" maxlength=170 type="text" name="title" placeholder="Title" ng-model="title"/>
     </div>
     <div>
-      <wiz-markdown-editor content="body">
-        <wiz-toolbar-button command="bold" class="markdown-button"><i class="fa fa-bold"></i> Bold</wiz-toolbar-button>
-        <wiz-toolbar-button command="italic" class="markdown-button"><i class="fa fa-italic"></i> Italic</wiz-toolbar-button>
-        <wiz-toolbar-button command="heading" class="markdown-button"><i class="fa fa-header"></i> Heading</wiz-toolbar-button>
-        <wiz-toolbar-button command="code" class="markdown-button"><i class="fa fa-code"></i> Code</wiz-toolbar-button>
-        <wiz-toolbar-button command="ullist" class="markdown-button"><i class="fa fa-list"></i> UList</wiz-toolbar-button>
-        <wiz-toolbar-button command="ollist" class="markdown-button"><i class="fa fa-list-ol"></i> OList</wiz-toolbar-button>
-        <wiz-toolbar-button command="link" class="markdown-button"><i class="fa fa-link"></i> Link</wiz-toolbar-button>
-        <wiz-toolbar-button command="img" class="markdown-button"><i class="fa fa-picture-o"></i> Img</wiz-toolbar-button>
-      </wiz-markdown-editor>
-      <input type="text" name="body" ng-model="body" class="hidden" required minlength="30" maxlength=10000/>
+      <markdown-toolbar input-id="question-body"></markdown-toolbar>
+      <textarea name="body" id="question-body" ng-model="body" required minlength="30" maxlength=10000></textarea>
     </div>
-    <wiz-markdown content="body"></wiz-markdown>
     <div>
       <tags-input name="tags" min-tags="3" max-tags="10" ng-model="tags" min-length="3" max-length="30" required display-property="text" on-tag-added="formatTag($tag)" placeholder="Add a tag">
         <auto-complete source="getTagsAutocomlete($query)" ></auto-complete>

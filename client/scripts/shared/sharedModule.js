@@ -5,7 +5,6 @@ angular.module('sugoiOverflow.shared', [
     'ngMessages',
     'ui.bootstrap',
     'angularFileUpload',
-    'wiz.markdown',
     'ngTagsInput',
     'pageslide-directive',
     'sugoiOverflow.settings',

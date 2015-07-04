@@ -36,19 +36,9 @@
   <div class="answer-section">
     <form novalidate class="answer-question-form" name="answerQuestionForm" ng-submit="submitAnswer()">
       <div>
-        <wiz-markdown-editor content="answer">
-        <wiz-toolbar-button command="bold" class="markdown-button"><i class="fa fa-bold"></i> Bold</wiz-toolbar-button>
-        <wiz-toolbar-button command="italic" class="markdown-button"><i class="fa fa-italic"></i> Italic</wiz-toolbar-button>
-        <wiz-toolbar-button command="heading" class="markdown-button"><i class="fa fa-header"></i> Heading</wiz-toolbar-button>
-        <wiz-toolbar-button command="code" class="markdown-button"><i class="fa fa-code"></i> Code</wiz-toolbar-button>
-        <wiz-toolbar-button command="ullist" class="markdown-button"><i class="fa fa-list"></i> UList</wiz-toolbar-button>
-        <wiz-toolbar-button command="ollist" class="markdown-button"><i class="fa fa-list-ol"></i> OList</wiz-toolbar-button>
-        <wiz-toolbar-button command="link" class="markdown-button"><i class="fa fa-link"></i> Link</wiz-toolbar-button>
-        <wiz-toolbar-button command="img" class="markdown-button"><i class="fa fa-picture-o"></i> Img</wiz-toolbar-button>
-      </wiz-markdown-editor>
-    </div>
-    <wiz-markdown content="answer" class="markdown-output"></wiz-markdown>
-    <input type="text" name="answer" ng-model="answer" class="hidden" required minlength="30" maxlength=10000/>
+        <markdown-toolbar input-id="question-body"/>
+        <textarea type="text" name="answer" id="answer-body" ng-model="answer" required minlength="30" maxlength=10000/>
+      </div>
     <div class="validation-messages" ng-show="!answerQuestionForm.$valid && answerQuestionForm.$submitted">
         <ng-messages for="answerQuestionForm.answer.$error">
           <ng-message when="required">
