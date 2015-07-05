@@ -67,7 +67,7 @@ angular.module('sugoiOverflow.shared')
         joyRideStarted: false,
         startJoyRide: showTour,
         joyRideConfig: [{
-          type: 'locationwindow._change',
+          type: 'location_change',
           path: '/questions/all'
         }, {
           type: 'title',
@@ -119,7 +119,7 @@ angular.module('sugoiOverflow.shared')
           scroll: true,
           attachToBody: true
         }, {
-          type: 'locationwindow._change',
+          type: 'location_change',
           path: '/questions/suggested'
         }, {
           type: 'element',
@@ -143,7 +143,7 @@ angular.module('sugoiOverflow.shared')
           scroll: true,
           attachToBody: true
         }, {
-          type: 'locationwindow._change',
+          type: 'location_change',
           path: '/profile/me'
         }, {
           type: 'element',
@@ -162,7 +162,7 @@ angular.module('sugoiOverflow.shared')
           scroll: true,
           attachToBody: true
         }, {
-          type: 'locationwindow._change',
+          type: 'location_change',
           path: '/profile/me/edit'
         }, {
           type: 'element',
@@ -197,7 +197,7 @@ angular.module('sugoiOverflow.shared')
           scroll: true,
           attachToBody: true
         }, {
-          type: 'locationwindow._change',
+          type: 'location_change',
           path: '/questions/new'
         }, {
           type: 'element',
@@ -232,7 +232,7 @@ angular.module('sugoiOverflow.shared')
           scroll: true,
           attachToBody: true
         }, {
-          type: 'locationwindow._change',
+          type: 'location_change',
           path: '/questions/all'
         }, {
           type: 'function',
@@ -280,7 +280,7 @@ angular.module('sugoiOverflow.shared')
           scroll: true,
           attachToBody: true
         }, {
-          type: 'locationwindow._change',
+          type: 'location_change',
           path: '/questions/all'
         }]
       })
