@@ -30,9 +30,17 @@ function ArgumentError (message, argumentName) {
 }
 ArgumentError.prototype = Error.prototype
 
+function NotAuthorisedError (message) {
+  this.name = 'NotAuthorisedError'
+  this.message = (message || '')
+  this.stack = new Error().stack
+}
+NotAuthorisedError.prototype = Error.prototype
+
 module.exports = {
   NotFoundError: NotFoundError,
   GenericError: GenericError,
   ArgumentError: ArgumentError,
-  InvalidOperationError: InvalidOperationError
+  InvalidOperationError: InvalidOperationError,
+  NotAuthorisedError: NotAuthorisedError
 }

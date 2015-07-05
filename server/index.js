@@ -216,6 +216,20 @@ app.use(function (error, req, res, next) {
         })
 
       return next()
+
+    case 'NotAuthorisedError':
+        logger.error('Attempt of unauthorised access: user %s tried to %s %s',
+          req.user.username,
+          req.method,
+          req.url)
+
+        res
+          .status(403)
+          .send({
+            statusText: 'Unauthorised'
+          })
+
+        return next()
     default:
       logger.error('Unexpected error when user %s tried to %s %s',
         req.user.username,
