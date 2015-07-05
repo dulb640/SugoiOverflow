@@ -72,7 +72,7 @@ angular.module('sugoiOverflow.shared')
         }, {
           type: 'title',
           heading: 'Welcome',
-          text: 'Welcome to interactive tour'
+          text: 'Welcome to the interactive tour!'
         }, {
           type: 'element',
           selector: '.content.container',
@@ -85,7 +85,7 @@ angular.module('sugoiOverflow.shared')
           type: 'element',
           selector: '.question-content:first .tags',
           heading: 'Tags',
-          text: 'Those are tags. All questions should be marked with certain tags so that it will be easy to find them in system and group by certain topics. If you click on tag it will automatically transfer you to search page for this tag',
+          text: 'These are tags. All questions should be marked with tags so that it is easy to find questions and answers grouped by certain topics. If you click a tag it will automatically transfer you to a page showing all the search results',
           placement: 'right',
           scroll: false,
           attachToBody: true
@@ -114,7 +114,7 @@ angular.module('sugoiOverflow.shared')
           type: 'element',
           selector: '.toolbar',
           heading: 'Tabs',
-          text: 'You can also select different tabs to switch displayed questions. Like suggested questions.',
+          text: 'You can also select different tabs to switch the displayed questions(for example: Suggested questions).',
           placement: 'bottom',
           scroll: true,
           attachToBody: true
@@ -125,7 +125,7 @@ angular.module('sugoiOverflow.shared')
           type: 'element',
           selector: '.content.container',
           heading: 'Suggested questions',
-          text: 'Keep in mind that suggested page will be empty unless you specify favourite tags on your profile page',
+          text: 'Keep in mind that your Suggested page will be empty unless you add tags to your profile page',
           placement: 'bottom',
           scroll: false,
           attachToBody: true
@@ -138,7 +138,7 @@ angular.module('sugoiOverflow.shared')
           type: 'element',
           selector: '.profile-menu',
           heading: 'Profile',
-          text: 'You can navigate to your profile page by clicking on your username in header and than choosing "profile" item',
+          text: 'Navigate to your profile page by clicking on your username and than choosing Profile',
           placement: 'left',
           scroll: true,
           attachToBody: true
@@ -149,7 +149,7 @@ angular.module('sugoiOverflow.shared')
           type: 'element',
           selector: '.profile-questions',
           heading: 'Your questions',
-          text: 'All questions that you ask, answer or subscribe to will be displayed at the bottom here',
+          text: 'All questions that you ask, answer or subscribe to will be displayed here',
           placement: 'top',
           scroll: false,
           attachToBody: true
@@ -184,7 +184,7 @@ angular.module('sugoiOverflow.shared')
           type: 'element',
           selector: '.profile-form tags-input',
           heading: 'Specialisations',
-          text: 'Specify tags that you follow, like "web product-name team-web2". Press space to separate tags, if your tag supposed to have space in it - use dash(-) instead',
+          text: 'Specify the tags you follow (for example: web product-name team-web2). Press space to separate tags. If your tag needs to have a space in it, use dash (-) instead',
           placement: 'top',
           scroll: true,
           attachToBody: true
@@ -203,7 +203,7 @@ angular.module('sugoiOverflow.shared')
           type: 'element',
           selector: 'form input[name=\'title\']',
           heading: 'Title',
-          text: 'When ask new question - provide meaningful title for it, so that other people will easily find it',
+          text: 'Make sure you provide a meaningful title when you ask a new question. This will help other people find it',
           placement: 'top',
           scroll: true,
           attachToBody: true
@@ -219,7 +219,7 @@ angular.module('sugoiOverflow.shared')
           type: 'element',
           selector: 'form tags-input[name=\'tags\']',
           heading: 'Tags',
-          text: 'Add tags that describe your question well. Again remember that you should use dashes(-) instead of spaces',
+          text: 'Add tags that describe your question. Don\'t forget that you should use dashes (-) instead of spaces',
           placement: 'top',
           scroll: true,
           attachToBody: true
@@ -242,7 +242,7 @@ angular.module('sugoiOverflow.shared')
         }, {
           type: 'title',
           heading: 'Question page',
-          text: 'This is a question page. Everyrhing on this page mostly replecates elements from other pages'
+          text: 'This is a question page. Everything on this page replicates elements from other pages'
         }, {
           type: 'element',
           selector: '.score-container',
@@ -254,12 +254,12 @@ angular.module('sugoiOverflow.shared')
         }, {
           type: 'title',
           heading: 'The End',
-          text: 'Thank you for your time. Please remember that this software is still on early stage of development and your feedback is crucial for us.'
+          text: 'Thank you for your time. Please remember that this software is still in early stages of development. Your feedback is crucial for us.'
         }, {
           type: 'element',
           selector: 'footer a',
           heading: 'Feedback',
-          text: 'You can always submit a bug, feature request or pull request on our github page',
+          text: 'You can always submit a bug, feature request, or pull request on our github page',
           placement: 'top',
           scroll: true,
           attachToBody: true
@@ -275,7 +275,7 @@ angular.module('sugoiOverflow.shared')
           type: 'element',
           selector: 'header .branding a',
           heading: 'Home',
-          text: 'You can go to home page by clicking on logo',
+          text: 'You can return to the home page by clicking on logo',
           placement: 'right',
           scroll: true,
           attachToBody: true
