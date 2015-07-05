@@ -20,10 +20,27 @@ angular.module('sugoiOverflow.questions')
           input.val(result)
           input[0].selectionStart = start
           input[0].selectionEnd = start + processed.length
+        },
+        $scope.insertAtSelection = function insertAtSelection (text) {
+          var value = input.val()
+          var start = input[0].selectionStart
+          var result = value.substring(0, start) + text + value.slice(start, value.length)
+          input.val(result)
+          input[0].selectionStart = start
+          input[0].selectionEnd = start + text.length
         }
       },
-      controller: function ($scope, markdownToolset) {
+      controller: function ($scope, markdownToolset, $modal) {
         $scope.commands = markdownToolset
+        $scope.insertLink = function insertLink () {
+          $modal.open({
+            templateUrl: 'scripts/questions/templates/addLinkModal.html',
+            controller: 'addLinkController'
+          }).result.then(function (item) {
+            var link = markdownToolset.link(item.url, item.text)
+            $scope.insertAtSelection(link)
+          })
+        }
       }
     }
   })
