@@ -18,6 +18,8 @@ angular.module('sugoiOverflow.questions')
           var processed = processingCommand(selection)
           var result = value.substring(0, start) + processed + value.substring(end, len)
           input.val(result)
+          input[0].selectionStart = start
+          input[0].selectionEnd = start + processed.length
         }
       },
       controller: function ($scope, markdownToolset) {
