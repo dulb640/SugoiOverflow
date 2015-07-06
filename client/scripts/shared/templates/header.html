@@ -1,6 +1,9 @@
 <div class="header" ng-controller="siteHeaderController">
   <div class="branding">
-    <a href="#/">{{config.branding.title}}<img ng-show="config.branding.logo" ng-src="/content/{{config.branding.logo}}" alt="{{config.branding.title}}"/></a>
+    <a href="#/">
+      <span ng-hide="config.branding.logo">{{config.branding.title}}</span>
+      <img ng-show="config.branding.logo" ng-src="/content/{{config.branding.logo}}" alt="{{config.branding.title}}"/>
+    </a>
   </div>
   <div class="search">
     <input class="search-bar" type="text" ng-model="searchTerms" placeholder="Search Questions" class="form-control" ng-keyup="$event.keyCode === 13 && searchQuestions()"/>
