@@ -11,7 +11,8 @@ router.get('/', function (req, res, next) {
       local: config('auth:local')
     },
     branding: {
-      title: config('branding:title')
+      title: config('branding:title'),
+      logo: config('branding:logo')
     }
   }
 
