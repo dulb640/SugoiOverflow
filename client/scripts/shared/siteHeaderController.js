@@ -257,7 +257,7 @@ angular.module('sugoiOverflow.shared')
           text: 'Thank you for your time. Please remember that this software is still in early stages of development. Your feedback is crucial for us.'
         }, {
           type: 'element',
-          selector: 'footer a',
+          selector: 'footer a.issue-tracker',
           heading: 'Feedback',
           text: 'You can always submit a bug, feature request, or pull request on our github page',
           placement: 'top',

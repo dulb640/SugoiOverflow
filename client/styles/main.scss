@@ -14,7 +14,7 @@
 @import 'layouts/comments';
 
 $header-height: 60px;
-$footer-height: 4vh;
+$footer-height: 3vh;
 $body-min-height: calc(100vh - (#{$header-height} + #{$footer-height}));
 
 html, body{
@@ -185,7 +185,7 @@ footer{
 	height: $footer-height;
   padding: 0.5vh;
 	line-height: $footer-height - 1vh;
-  font-size: $footer-height - 1.5vh;
+  font-size: $footer-height - 1vh;
 	background-color: $gray-darker;
 	text-align: center;
 	a{
