@@ -118,4 +118,61 @@ router.put('/:questionId/subscribe',
       })
   })
 
+  /**
+   * Delete question
+   */
+router.delete('/:questionId',
+  function deleteQuestion (req, res, next) {
+    domain.Question.removeAsync({id: req.questionId})
+      .then(function () {
+        next()
+      })
+    next()
+  },
+
+  function removeUserAskedReferences (req, res, next) {
+    var query = {'profile.asked': { $elemMatch: { $eq: req.questionId} } }
+    var action = {'$pull': { 'profile.asked': { id: req.questionId } } }
+    domain.User.updateAsync(query, action)
+      .then(function () {
+        next()
+      })
+  },
+
+  function removeUserAnsweredReferences (req, res, next) {
+    var query = {'profile.answered': { $elemMatch: { $eq: req.questionId} } }
+    var action = {'$pull': { 'profile.answered': { id: req.questionId } } }
+    domain.User.updateAsync(query, action)
+      .then(function () {
+        next()
+      })
+  },
+
+  function removeUserSubscribedReferences (req, res, next) {
+    var query = {'profile.subscribed': { $elemMatch: { $eq: req.questionId} } }
+    var action = {'$pull': { 'profile.subscribed': { id: req.questionId } } }
+    domain.User.updateAsync(query, action)
+      .then(function () {
+        next()
+      })
+  },
+
+  function removeUserKarmaChangesReferences (req, res, next) {
+    var query = { 'profile.karmaChanges': {$elemMatch: {question: {$eq: req.questionId}}}}
+    var action = {'$pull': { 'profile.karmaChanges': { question: req.questionId } } }
+    domain.User.updateAsync(query, action)
+      .then(function () {
+        next()
+      })
+  },
+
+  function removeUserFeedReferences (req, res, next) {
+    var query = { questionNotifications: {$elemMatch: {question: {$eq: req.questionId}}}}
+    var action = {'$pull': { 'questionNotifications': { question: req.questionId } } }
+    domain.UserFeed.updateAsync(query, action)
+      .then(function () {
+        next()
+      })
+  })
+
 module.exports = router

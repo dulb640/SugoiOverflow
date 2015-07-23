@@ -248,5 +248,4 @@ app.use(function (error, req, res, next) {
   return next(error)
 })
 
-// PORT is iis specific
 app.listen(config('PORT') || config('port'))
