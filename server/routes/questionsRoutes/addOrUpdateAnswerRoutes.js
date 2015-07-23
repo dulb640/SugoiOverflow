@@ -10,6 +10,7 @@ var router = express.Router()
 var schemas = require('../schemas')
 var middleWares = require('./middleWares')
 var userService = require('../../services/userService')
+var roles = require('./roles')
 
 /**
  * Add answer
@@ -82,6 +83,8 @@ router.post('/:questionId/answer/:answerId/comment',
 
 /* Delete anser */
 router.delete('/:questionId/answer/:answerId',
+
+  roles(['moderator', 'admin']),
 
   function deleteAnswer (req, res, next) {
     var query = { 'id': req.questionId }

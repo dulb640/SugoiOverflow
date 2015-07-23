@@ -1,8 +1,13 @@
 var errors = require('../errors')
+var _ = require('lodash')
 
-function roles (role) {
+function roles (roles) {
+  if (typeof roles === 'string') {
+    roles = [roles]
+  }
+
   return function rolesMiddleware (req, res, next) {
-    if (req.user && req.user.roles && ~req.user.roles.indexOf(role)) {
+    if (req.user && req.user.roles && _.intersection(~req.user.roles, roles).length > 0) {
       return next()
     }
 

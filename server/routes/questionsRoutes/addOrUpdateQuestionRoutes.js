@@ -13,6 +13,7 @@ var router = express.Router()
 var schemas = require('../schemas')
 var userService = require('../../services/userService')
 var middleWares = require('./middleWares')
+var roles = require('./roles')
 
 /**
  * Add question
@@ -122,6 +123,9 @@ router.put('/:questionId/subscribe',
    * Delete question
    */
 router.delete('/:questionId',
+
+  roles(['moderator', 'admin']),
+
   function deleteQuestion (req, res, next) {
     domain.Question.removeAsync({id: req.questionId})
       .then(function () {
