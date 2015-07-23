@@ -127,7 +127,6 @@ router.delete('/:questionId',
       .then(function () {
         next()
       })
-    next()
   },
 
   function removeUserAskedReferences (req, res, next) {
@@ -171,7 +170,7 @@ router.delete('/:questionId',
     var action = {'$pull': { 'questionNotifications': { question: req.questionId } } }
     domain.UserFeed.updateAsync(query, action)
       .then(function () {
-        next()
+        res.send()
       })
   })
 

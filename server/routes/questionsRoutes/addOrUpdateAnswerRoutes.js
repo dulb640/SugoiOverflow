@@ -80,6 +80,18 @@ router.post('/:questionId/answer/:answerId/comment',
   }
 )
 
+/* Delete anser */
+router.delete('/:questionId/answer/:answerId',
+
+  function deleteAnswer (req, res, next) {
+    var query = { 'id': req.questionId }
+    var action = {'$pull': { 'answers': { id: req.answerId } } }
+    domain.Question.updateAsync(query, action)
+      .then(function () {
+        next()
+      })
+  })
+
 /**
  * Mark answer as correct
  */
