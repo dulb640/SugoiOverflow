@@ -22,7 +22,8 @@ function generateJwt (req, res, next) {
     jwt: token,
     username: req.user.username,
     displayName: req.user.displayName,
-    email: req.user.email
+    email: req.user.email,
+    roles: req.user.roles
   }
   res
     .status(200)

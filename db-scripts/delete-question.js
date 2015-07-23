@@ -77,7 +77,7 @@ Promise.using(connection, function (db) {
     .then(function () {
       return users.find({
         'profile.karmaChanges': {
-            $elemMatch : {
+            $elemMatch: {
               question: {
                 $eq: id
               }
