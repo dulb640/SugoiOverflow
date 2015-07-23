@@ -9,6 +9,7 @@ angular.module('sugoiOverflow.auth')
           service.email = ''
           service.displayName = ''
           service.username = ''
+          service.roles = []
         }
       }
 
@@ -17,7 +18,7 @@ angular.module('sugoiOverflow.auth')
       })
 
       Object.defineProperty(service, 'isPopulated', {
-        get: function () { return service.email || service.username || service.displayName }
+        get: function () { return service.email || service.username || service.displayName || service.roles }
       })
 
       Object.defineProperty(service, 'email', {
@@ -33,6 +34,11 @@ angular.module('sugoiOverflow.auth')
       Object.defineProperty(service, 'displayName', {
         get: function () { return $localStorage.userDisplayName },
         set: function (newValue) { $localStorage.userDisplayName = newValue }
+      })
+
+      Object.defineProperty(service, 'roles', {
+        get: function () { return $localStorage.roles },
+        set: function (newValue) { $localStorage.roles = newValue }
       })
 
       if (!service.isPopulated) {

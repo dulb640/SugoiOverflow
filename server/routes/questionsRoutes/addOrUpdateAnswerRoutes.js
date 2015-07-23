@@ -10,7 +10,7 @@ var router = express.Router()
 var schemas = require('../schemas')
 var middleWares = require('./middleWares')
 var userService = require('../../services/userService')
-var roles = require('./roles')
+var roles = require('../roles')
 
 /**
  * Add answer
