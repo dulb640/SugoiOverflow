@@ -3,7 +3,7 @@
   * Questions data service.
   */
 angular.module('sugoiOverflow.questions')
-  .factory('questionsDataService', function (promisedHttp) {
+  .factory('questionsDataService', function (promisedHttp, profilesDataService) {
     'use strict'
 
     var service = {
@@ -12,11 +12,19 @@ angular.module('sugoiOverflow.questions')
       },
 
       getSuggestedQuestionsList: function () {
-        return promisedHttp('get', '/api/questions/suggested')
+        return profilesDataService.getCurrentUserProfile()
+          .then(function (user) {
+            if (!user.profile.selectedTags || user.profile.selectedTags.length === 0) {
+              return []
+            }
+            var tagsString = user.profile.selectedTags.join(',')
+            var url = window.s.sprintf('/api/questions?tags=%s', tagsString)
+            return promisedHttp('get', url)
+          })
       },
 
       getMostWantedQuestionsList: function () {
-        return promisedHttp('get', '/api/questions/most-wanted')
+        return promisedHttp('get', '/api/questions?sort=-subCount')
       },
 
       getQuestionsAskedByUser: function (username) {
@@ -35,12 +43,12 @@ angular.module('sugoiOverflow.questions')
       },
 
       getQuestionsListSearch: function (terms) {
-        var url = window.s.sprintf('/api/questions/search/%s', terms)
+        var url = window.s.sprintf('/api/questions?search=%s', terms)
         return promisedHttp('get', url)
       },
 
       getQuestion: function (id) {
-        var url = window.s.sprintf('/api/questions/one/%s', id)
+        var url = window.s.sprintf('/api/questions/%s', id)
         return promisedHttp('get', url)
       },
 
