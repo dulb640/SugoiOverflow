@@ -37,7 +37,7 @@
     "change-case": "~2.3.0"
   },
   "resolutions": {
-    "angular": "1.4.1",
+    "angular": ">=1.2.1",
     "jquery": "^2.0"
   },
   "devDependencies": {
