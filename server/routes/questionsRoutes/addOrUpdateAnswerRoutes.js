@@ -87,8 +87,8 @@ router.delete('/:questionId/answer/:answerId',
   roles(['moderator', 'admin']),
 
   function deleteAnswer (req, res, next) {
-    var query = { 'id': req.questionId }
-    var action = {'$pull': { 'answers': { id: req.answerId } } }
+    var query = { 'id': req.params.questionId }
+    var action = {'$pull': { 'answers': { id: req.params.answerId } } }
     domain.Question.updateAsync(query, action)
       .then(function () {
         next()
