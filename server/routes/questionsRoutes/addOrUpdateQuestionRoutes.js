@@ -14,6 +14,7 @@ var schemas = require('../schemas')
 var userService = require('../../services/userService')
 var middleWares = require('./middleWares')
 var roles = require('../roles')
+let ObjectId = require('mongoose').Types.ObjectId
 
 /**
  * Add question
@@ -127,55 +128,61 @@ router.delete('/:questionId',
   roles(['moderator', 'admin']),
 
   function deleteQuestion (req, res, next) {
-    domain.Question.removeAsync({id: req.questionId})
+    logger.info('${req.user.username} initiated deleting question ${req.params.questionId)}')
+    domain.Question.findByIdAndRemoveAsync(req.params.questionId)
       .then(function () {
+        logger.info('Question ${req.params.questionId)} is now deleted')
         next()
       })
   },
 
   function removeUserAskedReferences (req, res, next) {
-    var query = {'profile.asked': { $elemMatch: { $eq: req.questionId} } }
-    var action = {'$pull': { 'profile.asked': { id: req.questionId } } }
+    var query = {'profile.asked': { $elemMatch: { $eq: req.params.questionId} } }
+    var action = {'$pull': { 'profile.asked': ObjectId(req.params.questionId) } }
+    logger.info('Deleting users asked references to ${req.params.questionId)}')
     domain.User.updateAsync(query, action)
       .then(function () {
+        logger.info('Users asked references to ${req.params.questionId)} are now deleted')
         next()
       })
   },
 
   function removeUserAnsweredReferences (req, res, next) {
-    var query = {'profile.answered': { $elemMatch: { $eq: req.questionId} } }
-    var action = {'$pull': { 'profile.answered': { id: req.questionId } } }
+    var query = {'profile.answered': { $elemMatch: { $eq: req.params.questionId} } }
+    var action = {'$pull': { 'profile.answered': ObjectId(req.params.questionId) } }
+    logger.info('Deleting users answered references to ${req.params.questionId)}')
     domain.User.updateAsync(query, action)
       .then(function () {
-        next()
-      })
-  },
-
-  function removeUserSubscribedReferences (req, res, next) {
-    var query = {'profile.subscribed': { $elemMatch: { $eq: req.questionId} } }
-    var action = {'$pull': { 'profile.subscribed': { id: req.questionId } } }
-    domain.User.updateAsync(query, action)
-      .then(function () {
+        logger.info('Users answered references to ${req.params.questionId)} are now deleted')
         next()
       })
   },
 
   function removeUserKarmaChangesReferences (req, res, next) {
-    var query = { 'profile.karmaChanges': {$elemMatch: {question: {$eq: req.questionId}}}}
-    var action = {'$pull': { 'profile.karmaChanges': { question: req.questionId } } }
+    var query = { 'profile.karmaChanges': {$elemMatch: {question: {$eq: req.params.questionId}}}}
+    var action = {'$pull': { 'profile.karmaChanges': { question: ObjectId(req.params.questionId) } } }
+    logger.info('Deleting users karmaChanges referencing ${req.params.questionId)}')
     domain.User.updateAsync(query, action)
       .then(function () {
+        logger.info('Users karmaChanges referencing ${req.params.questionId)} are now deleted')
         next()
       })
   },
 
   function removeUserFeedReferences (req, res, next) {
-    var query = { questionNotifications: {$elemMatch: {question: {$eq: req.questionId}}}}
-    var action = {'$pull': { 'questionNotifications': { question: req.questionId } } }
+    var query = { questionNotifications: {$elemMatch: {question: {$eq: req.params.questionId}}}}
+    var action = {'$pull': { 'questionNotifications': { question: ObjectId(req.params.questionId) } } }
+    logger.info('Deleting userfeed entries referencing ${req.params.questionId)}')
     domain.UserFeed.updateAsync(query, action)
       .then(function () {
+        logger.info('Userfeed entries referencing ${req.params.questionId)} are now deleted')
         res.send()
       })
+  },
+
+  function finishDeletion (req, res) {
+    logger.info('All references to ${req.params.questionId)} are now deleted')
+    res.send()
   })
 
 module.exports = router
