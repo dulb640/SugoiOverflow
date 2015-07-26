@@ -6,7 +6,7 @@ angular.module('sugoiOverflow.shared')
 
     return function convert$httpToPromise (method, url, data) {
       return $q(function (resolve, reject) {
-        $http['method'](url, data)
+        $http[method](url, data)
           .success(function (responseData) {
             resolve(responseData)
           })
