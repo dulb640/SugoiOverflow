@@ -3,89 +3,89 @@
 @import 'helpers/mixins';
 
 .body-container {
-	.toolbar {
-		height: 60px;
-		font-size: 18px;
-		padding-right: 20px;
-		border-bottom: 1px solid $gray-darker;
-		margin-bottom: 15px;
+  .toolbar {
+    @extend %display-flex;
+    @include flex-vertical-aligns(center);
+    @include flex-direction(row);
+    @include flex-justify-content(flex-end);
+    border-bottom: 1px solid $gray-darker;
+    font-size: 18px;
+    height: 60px;
+    margin-bottom: 15px;
+    padding-right: 20px;
 
-		@extend %display-flex;
-		@include flex-vertical-aligns(center);
-		@include flex-direction(row);
-		@include flex-justify-content(flex-end);
 
-		.category {
-			border-right: 1px solid $gray-darker;
-			margin-right: 10px;
-			padding-right: 10px;
-			color: $gray-darker;
+    .category {
+      border-right: 1px solid $gray-darker;
+      color: $gray-darker;
+      margin-right: 10px;
+      padding-right: 10px;
 
-			&:hover {
-				color: $gray-darkest;
-			}
+      &:hover {
+        color: $gray-darkest;
+      }
 
-			&:last-child {
-				border: none;
-			}
+      &:last-child {
+        border: none;
+      }
 
-			&.active {
-				color: $teal;
-			}
-		}
-	}
+      &.active {
+        color: $teal;
+      }
+    }
+  }
 }
 
 .question-container {
 
-	padding-top: 10px;
-	padding-bottom: 10px;
-	padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
 
-	&:nth-child(even){
-		background-color: $gray-background-light;
-	}
+  &:nth-child(even){
+    background-color: $gray-background-light;
+  }
 
-	@extend %display-flex;
-	@include flex-direction(row);
+  @extend %display-flex;
+  @include flex-direction(row);
 
-	.question-content {
-		width: 80%;
-		margin-right: 20px;
+  .question-content {
+    width: 80%;
+    margin-right: 20px;
 
-		.title {
-			font-size: 18px;
-			a{
-				text-decoration: underline;
-				color:$blue-light;
-				&:hover{
-					text-decoration: underline;
-					color: $blue-lighter;
-				}
-			}
-		}
-		.description {
-			color: darken($gray-darker,20%);
-		}
+    .title {
+      font-size: 18px;
+      a{
+        text-decoration: underline;
+        color:$blue-light;
+        &:hover{
+          text-decoration: underline;
+          color: $blue-lighter;
+        }
+      }
+    }
+    .description {
+      color: darken($gray-darker,20%);
+    }
 
-		.tags {
-			margin-top: 5px;
-			margin-bottom: 5px;
+    .tags {
+      margin-top: 5px;
+      margin-bottom: 5px;
 
-			.tag {
-				border: 1px solid $gray-darker;
-				padding: 0 5px 0 5px;
-				@include border-radius(4px);
-				display: inline-block;
-				margin-right: 5px;
-				cursor: pointer;
-			}
+      .tag {
+        border: 1px solid $gray-darker;
+        padding: 0 5px 0 5px;
+        @include border-radius(4px);
+        display: inline-block;
+        margin-right: 5px;
+        cursor: pointer;
+      }
 
-			.tag:hover {
-				color: $teal;
-				border-color: $teal;
-			}
-		}
+      .tag:hover {
+        color: $teal;
+        border-color: $teal;
+      }
+    }
     .author{
       a{
         text-decoration: underline;
@@ -95,47 +95,47 @@
         }
       }
     }
-	}
+  }
 
-	.question-status {
-		@extend %display-flex;
-		@include flex-direction(row);
-		@include flex-justify-content(flex-end);
-		width: 20%;
-		min-width: 200px;
+  .question-status {
+    @extend %display-flex;
+    @include flex-direction(row);
+    @include flex-justify-content(flex-end);
+    width: 20%;
+    min-width: 200px;
 
-		.answers,
-		.subs {
-			width: 70px;
-			height: 70px;
-			border: 1px solid $gray-darker;
-			margin-right: 10px;
+    .answers,
+    .subs {
+      width: 70px;
+      height: 70px;
+      border: 1px solid $gray-darker;
+      margin-right: 10px;
 
 
-			@extend %display-flex;
-			@include flex-direction(column);
-			@include flex-vertical-aligns(center);
-			@include flex-justify-content(center);
+      @extend %display-flex;
+      @include flex-direction(column);
+      @include flex-vertical-aligns(center);
+      @include flex-justify-content(center);
 
-			span {
-				display: block;
-			}
-		}
+      span {
+        display: block;
+      }
+    }
 
-		.answers span:first-child,
-		.subs span:first-child {
-			font-weight: bold;
-			font-size: 18px;
-		}
+    .answers span:first-child,
+    .subs span:first-child {
+      font-weight: bold;
+      font-size: 18px;
+    }
 
-		.answers span:first-child {
-			color: $teal;
-		}
+    .answers span:first-child {
+      color: $teal;
+    }
 
-		.subs span:first-child {
-			color: $green-light;
-		}
-	}
+    .subs span:first-child {
+      color: $green-light;
+    }
+  }
 }
 
 .question-suggested-empty{

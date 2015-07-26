@@ -130,3 +130,14 @@
 .subscribed-label {
   float: right;
 }
+
+.answer-question-layout .moderation-bar {
+  background-color: $orange;
+  height: 2em;
+  padding: 0.3em;
+
+  a {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
