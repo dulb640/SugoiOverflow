@@ -7,7 +7,7 @@ function roles (roles) {
   }
 
   return function rolesMiddleware (req, res, next) {
-    if (req.user && req.user.roles && _.intersection(~req.user.roles, roles).length > 0) {
+    if (req.user && req.user.roles && _.intersection(req.user.roles, roles).length > 0) {
       return next()
     }
 
