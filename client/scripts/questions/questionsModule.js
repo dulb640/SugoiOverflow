@@ -30,6 +30,9 @@ angular.module('sugoiOverflow.questions', [
         isSecured: true,
         title: 'Search'
       })
+      .when('/questions', {
+        redirectTo: '/questions/all'
+      })
       .when('/questions/:questionFilter?', {
         templateUrl: 'scripts/questions/templates/questions.html',
         controller: 'questionsController',

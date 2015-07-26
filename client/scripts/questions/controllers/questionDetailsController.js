@@ -1,7 +1,7 @@
-/* global angular*/
+/* global angular, _*/
 angular.module('sugoiOverflow.questions')
   .controller('questionDetailsController',
-    function ($scope, $q, $routeParams, questionsDataService, currentUser) {
+    function ($scope, $q, $routeParams, $location, questionsDataService, currentUser) {
       'use strict'
 
       function loadQuestion (question) {
@@ -22,7 +22,14 @@ angular.module('sugoiOverflow.questions')
         $scope.questionComment = ''
       }
 
-      window._.extend($scope, {
+      _.extend($scope, {
+        canModerate: currentUser.canModerate,
+        delete: function deleteQuestion () {
+          questionsDataService.deleteQuestion($scope.questionId)
+            .then(function () {
+              $location.path('/questions')
+            })
+        },
         submitAnswer: function () {
           if ($scope.answerQuestionForm.$invalid || $scope.sendingAnswer) {
             return
