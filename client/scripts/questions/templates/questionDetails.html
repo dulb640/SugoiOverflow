@@ -1,4 +1,7 @@
-<div class="answerQuestion-layout container">
+<div class="answer-question-layout container">
+  <div class="moderation-bar" ng-show="canModerate">
+    <a ng-click="delete()">Delete Question</a>
+  </div>
   <div class="question-section">
     <div class="question-container">
       <div class="question-content">
@@ -37,19 +40,19 @@
     <form novalidate class="answer-question-form" name="answerQuestionForm" ng-submit="submitAnswer()">
       <div>
         <wiz-markdown-editor content="answer">
-        <wiz-toolbar-button command="bold" class="markdown-button"><i class="fa fa-bold"></i> Bold</wiz-toolbar-button>
-        <wiz-toolbar-button command="italic" class="markdown-button"><i class="fa fa-italic"></i> Italic</wiz-toolbar-button>
-        <wiz-toolbar-button command="heading" class="markdown-button"><i class="fa fa-header"></i> Heading</wiz-toolbar-button>
-        <wiz-toolbar-button command="code" class="markdown-button"><i class="fa fa-code"></i> Code</wiz-toolbar-button>
-        <wiz-toolbar-button command="ullist" class="markdown-button"><i class="fa fa-list"></i> UList</wiz-toolbar-button>
-        <wiz-toolbar-button command="ollist" class="markdown-button"><i class="fa fa-list-ol"></i> OList</wiz-toolbar-button>
-        <wiz-toolbar-button command="link" class="markdown-button"><i class="fa fa-link"></i> Link</wiz-toolbar-button>
-        <wiz-toolbar-button command="img" class="markdown-button"><i class="fa fa-picture-o"></i> Img</wiz-toolbar-button>
-      </wiz-markdown-editor>
-    </div>
-    <wiz-markdown content="answer" class="markdown-output"></wiz-markdown>
-    <input type="text" name="answer" ng-model="answer" class="hidden" required minlength="30" maxlength=10000/>
-    <div class="validation-messages" ng-show="!answerQuestionForm.$valid && answerQuestionForm.$submitted">
+          <wiz-toolbar-button command="bold" class="markdown-button"><i class="fa fa-bold"></i> Bold</wiz-toolbar-button>
+          <wiz-toolbar-button command="italic" class="markdown-button"><i class="fa fa-italic"></i> Italic</wiz-toolbar-button>
+          <wiz-toolbar-button command="heading" class="markdown-button"><i class="fa fa-header"></i> Heading</wiz-toolbar-button>
+          <wiz-toolbar-button command="code" class="markdown-button"><i class="fa fa-code"></i> Code</wiz-toolbar-button>
+          <wiz-toolbar-button command="ullist" class="markdown-button"><i class="fa fa-list"></i> UList</wiz-toolbar-button>
+          <wiz-toolbar-button command="ollist" class="markdown-button"><i class="fa fa-list-ol"></i> OList</wiz-toolbar-button>
+          <wiz-toolbar-button command="link" class="markdown-button"><i class="fa fa-link"></i> Link</wiz-toolbar-button>
+          <wiz-toolbar-button command="img" class="markdown-button"><i class="fa fa-picture-o"></i> Img</wiz-toolbar-button>
+        </wiz-markdown-editor>
+      </div>
+      <wiz-markdown content="answer" class="markdown-output"></wiz-markdown>
+      <input type="text" name="answer" ng-model="answer" class="hidden" required minlength="30" maxlength=10000/>
+      <div class="validation-messages" ng-show="!answerQuestionForm.$valid && answerQuestionForm.$submitted">
         <ng-messages for="answerQuestionForm.answer.$error">
           <ng-message when="required">
             <p>Please enter answer</p>
@@ -62,8 +65,7 @@
           </ng-message>
         </ng-messages>
       </div>
-    <button class="form-submit action-button" type="submit">Post your answer</button>
-  </form>
-</div>
-
+      <button class="form-submit action-button" type="submit">Post your answer</button>
+    </form>
+  </div>
 </div>

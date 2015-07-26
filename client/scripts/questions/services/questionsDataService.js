@@ -53,7 +53,7 @@ angular.module('sugoiOverflow.questions')
       },
 
       addQuestion: function (question) {
-        return promisedHttp('get', '/api/questions/', question)
+        return promisedHttp('post', '/api/questions/', question)
       },
 
       subscribeToQuestion: function (questionId) {
@@ -90,6 +90,10 @@ angular.module('sugoiOverflow.questions')
       downvoteAnswer: function (questionId, answerId) {
         var url = window.s.sprintf('/api/questions/%s/answer/%s/downvote', questionId, answerId)
         return promisedHttp('put', url)
+      },
+      deleteQuestion: function (id) {
+        var url = window.s.sprintf('/api/questions/%s', id)
+        return promisedHttp('delete', url)
       },
       markAnswerAsCorrect: function (questionId, answerId) {
         var url = window.s.sprintf('/api/questions/%s/answer/%s/correct', questionId, answerId)

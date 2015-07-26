@@ -1,4 +1,4 @@
-/* global angular*/
+/* global angular, _*/
 angular.module('sugoiOverflow.auth')
   .factory('currentUser',
     function ($localStorage) {
@@ -39,6 +39,12 @@ angular.module('sugoiOverflow.auth')
       Object.defineProperty(service, 'roles', {
         get: function () { return $localStorage.roles },
         set: function (newValue) { $localStorage.roles = newValue }
+      })
+
+      Object.defineProperty(service, 'canModerate', {
+        get: function () {
+          return _.intersection($localStorage.roles, ['admin', 'moderator']).length > 0
+        }
       })
 
       if (!service.isPopulated) {
