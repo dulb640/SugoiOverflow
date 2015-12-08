@@ -12,8 +12,9 @@
   </div>
   <div class="answer-content">
     <div class="body markdown-output"  ng-bind-html="answer.body | wizMarkdownFltr"></div>
-    <input type="checkbox" ng-model="showEditor" ng-show="authorIsCurrentUser()">
-    <form novalidate class="answer-question-form" name="answerRevisionForm" ng-show="showEditor" ng-submit="submitAnswerRevision()">
+    <div class="timestamp"  ng-bind="answer.timestamp | date:'medium'"></div>
+    <button class="action-button" type="button" ng-click="toggleEditor()" ng-show="authorIsCurrentUser()">Edit</button>
+    <form novalidate class="answer-question-form" name="answerRevisionForm" ng-show="shouldShowEditor" ng-submit="submitAnswerRevision()">
       <div>
         <wiz-markdown-editor content="answerRevision">
           <wiz-toolbar-button command="bold" class="markdown-button"><i class="fa fa-bold"></i> Bold</wiz-toolbar-button>
@@ -43,7 +44,6 @@
       </div>
       <button class="form-submit action-button" type="submit">Revise your answer</button>
     </form>
-    <div class="timestamp"  ng-bind="answer.timestamp | date:'medium'"></div>
     <div so-comments="answer.comments" so-comments-add="submitComment"></div>
   </div>
   <div class="score-container">

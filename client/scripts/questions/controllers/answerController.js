@@ -75,6 +75,10 @@ angular.module('sugoiOverflow.questions')
             .finally(function () {
               $scope.sendingAnswerRevision = false
             })
+        },
+        toggleEditor: function() {
+          $scope.answerRevision = $scope.answer.body
+          $scope.shouldShowEditor = !$scope.shouldShowEditor
         }
       })
     }
