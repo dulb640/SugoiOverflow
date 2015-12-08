@@ -56,6 +56,25 @@ angular.module('sugoiOverflow.questions')
                 $scope.votingInProgress = false
               })
           }
+        },
+        authorIsCurrentUser: function () {
+          return $scope.answer.author.username == currentUser.username
+        },
+        submitAnswerRevision: function() {
+          if ($scope.answerRevisionForm.$invalid || $scope.sendingAnswerRevision) {
+            return
+          }
+
+          $scope.sendingAnswerRevision = true
+          questionsDataService.reviseAnswer($scope.questionId, $scope.answer.id, $scope.answerRevision)
+            .then($scope.update)
+            .then(function () {
+              $scope.answerRevision = ''
+              $scope.answerRevisionForm.$setPristine()
+            })
+            .finally(function () {
+              $scope.sendingAnswerRevision = false
+            })
         }
       })
     }

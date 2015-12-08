@@ -54,6 +54,45 @@ router.post('/:questionId/answer',
       })
   })
 
+/**
+ * Edit answer
+ */
+router.put('/:questionId/answer/:answerId',
+
+  validate({body: schemas.addOrEditAnswerSchema}),
+
+  middleWares.getQuestion,
+
+  middleWares.getAnswer,
+
+  function editAnswer (req, res, next) {
+    req.answer.body = req.body.body
+    next()
+  },
+
+  middleWares.saveQuestionAndSend/*,
+
+  function updateUserQuestionsFeed (req, res, next) {
+    req.user.profile.answered.push(req.question.id)
+    req.user.saveAsync()
+      .then(function () {
+        if (!req.question.subscribers) {
+          return
+        }
+        var promises = req.question.subscribers
+          .filter(function (sub) {
+            return sub.id !== req.user.id
+          })
+          .map(function (sub) {
+            return userService.updateQuestionsFeed(sub, req.question, 'Question has a new answer')
+          })
+        return Promise.all(promises)
+      })
+      .then(function () {
+        next()
+      })
+  }*/)
+
 /* Add comment to answer */
 router.post('/:questionId/answer/:answerId/comment',
 
@@ -81,7 +120,7 @@ router.post('/:questionId/answer/:answerId/comment',
   }
 )
 
-/* Delete anser */
+/* Delete answer */
 router.delete('/:questionId/answer/:answerId',
 
   roles(['moderator', 'admin']),

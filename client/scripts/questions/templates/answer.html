@@ -12,6 +12,37 @@
   </div>
   <div class="answer-content">
     <div class="body markdown-output"  ng-bind-html="answer.body | wizMarkdownFltr"></div>
+    <input type="checkbox" ng-model="showEditor" ng-show="authorIsCurrentUser()">
+    <form novalidate class="answer-question-form" name="answerRevisionForm" ng-show="showEditor" ng-submit="submitAnswerRevision()">
+      <div>
+        <wiz-markdown-editor content="answerRevision">
+          <wiz-toolbar-button command="bold" class="markdown-button"><i class="fa fa-bold"></i> Bold</wiz-toolbar-button>
+          <wiz-toolbar-button command="italic" class="markdown-button"><i class="fa fa-italic"></i> Italic</wiz-toolbar-button>
+          <wiz-toolbar-button command="heading" class="markdown-button"><i class="fa fa-header"></i> Heading</wiz-toolbar-button>
+          <wiz-toolbar-button command="code" class="markdown-button"><i class="fa fa-code"></i> Code</wiz-toolbar-button>
+          <wiz-toolbar-button command="ullist" class="markdown-button"><i class="fa fa-list"></i> UList</wiz-toolbar-button>
+          <wiz-toolbar-button command="ollist" class="markdown-button"><i class="fa fa-list-ol"></i> OList</wiz-toolbar-button>
+          <wiz-toolbar-button command="link" class="markdown-button"><i class="fa fa-link"></i> Link</wiz-toolbar-button>
+          <wiz-toolbar-button command="img" class="markdown-button"><i class="fa fa-picture-o"></i> Img</wiz-toolbar-button>
+        </wiz-markdown-editor>
+      </div>
+      <wiz-markdown content="answerRevision" class="markdown-output"></wiz-markdown>
+      <input type="text" name="answerRevisionPreview" ng-model="answerRevision" class="hidden" required minlength="30" maxlength=10000/>
+      <div class="validation-messages" ng-show="!answerRevisionForm.$valid && answerRevisionForm.$submitted">
+        <ng-messages for="answerRevisionForm.answer.$error">
+          <ng-message when="required">
+            <p>Please enter answer</p>
+          </ng-message>
+          <ng-message when="minlength">
+            <p>Answer is too short</p>
+          </ng-message>
+          <ng-message when="maxlength">
+            <p>Answer is too long</p>
+          </ng-message>
+        </ng-messages>
+      </div>
+      <button class="form-submit action-button" type="submit">Revise your answer</button>
+    </form>
     <div class="timestamp"  ng-bind="answer.timestamp | date:'medium'"></div>
     <div so-comments="answer.comments" so-comments-add="submitComment"></div>
   </div>

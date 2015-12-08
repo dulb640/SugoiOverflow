@@ -98,6 +98,13 @@ angular.module('sugoiOverflow.questions')
       markAnswerAsCorrect: function (questionId, answerId) {
         var url = window.s.sprintf('/api/questions/%s/answer/%s/correct', questionId, answerId)
         return promisedHttp('put', url)
+      },
+      reviseAnswer: function(questionId, answerId, answer) {
+        var url = window.s.sprintf('/api/questions/%s/answer/%s/', questionId, answerId)
+        var data = {
+          body: answer
+        }
+        return promisedHttp('put', url, data)
       }
     }
     return service
