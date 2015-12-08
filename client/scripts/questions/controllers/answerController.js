@@ -56,6 +56,9 @@ angular.module('sugoiOverflow.questions')
                 $scope.votingInProgress = false
               })
           }
+        },
+        authorIsCurrentUser: function () {
+          return $scope.answer.author.username == currentUser.username
         }
       })
     }
