@@ -13,6 +13,11 @@ angular.module('sugoiOverflow.questions')
             text: tag
           }
         })
+        $scope.proposedPeople = window._.map(question.proposedPeople, function mapPeople (tag) {
+          return {
+            text: proposedPeople
+          }
+        })
         $scope.author = question.author
         $scope.timestamp = question.timestamp
         $scope.answers = question.answers
@@ -72,6 +77,17 @@ angular.module('sugoiOverflow.questions')
               return questionsDataService.getQuestion($routeParams.id)
             })
             .then(loadQuestion)
+        },
+        submitQuestionRevision: function () {
+
+        },
+        toggleEditor: function() {
+          $scope.editedTitle = $scope.title
+          $scope.editedBody = $scope.body
+          $scope.editedTags = $scope.tags
+          $scope.editedPeople = $scope.propsedPeople
+
+          $scope.shouldShowEditor = !$scope.shouldShowEditor
         },
         loadQuestion: loadQuestion
       })

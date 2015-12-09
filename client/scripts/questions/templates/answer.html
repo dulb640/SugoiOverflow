@@ -28,7 +28,7 @@
         </wiz-markdown-editor>
       </div>
       <wiz-markdown content="answerRevision" class="markdown-output"></wiz-markdown>
-      <input type="text" name="answerRevisionPreview" ng-model="answerRevision" class="hidden" required minlength="30" maxlength=10000/>
+      <input type="text" name="answerRevisionInput" ng-model="answerRevision" class="hidden" required minlength="30" maxlength=10000/>
       <div class="validation-messages" ng-show="!answerRevisionForm.$valid && answerRevisionForm.$submitted">
         <ng-messages for="answerRevisionForm.answer.$error">
           <ng-message when="required">
