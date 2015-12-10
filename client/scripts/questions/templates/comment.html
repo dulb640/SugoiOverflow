@@ -1,0 +1,37 @@
+<div class="comment-body" ng-show="!shouldShowCommentEditor">{{comment.body}}</div>
+<form novalidate class="add-comment-form" name="addCommentForm" ng-submit="submit()" ng-show="shouldShowCommentEditor">
+  <textarea type="text" name="body" required minlength=30 maxlength=10000 ng-model="body"></textarea>
+  <div class="validation-messages" ng-show="!addCommentForm.$valid && addCommentForm.$submitted">
+    <ng-messages for="addCommentForm.body.$error">
+      <ng-message when="required">
+        <p>Please enter comment</p>
+      </ng-message>
+      <ng-message when="minlength">
+        <p>Comment is too short</p>
+      </ng-message>
+      <ng-message when="maxlength">
+        <p>Comment is too long</p>
+      </ng-message>
+    </ng-messages>
+  </div>
+  <!--<button class="form-submit action-button" type="submit">Add Comment</button>-->
+</form>
+<div class="comment-footer">
+  <div class="comment-actions">
+    <a class="comment-edit" href="javascript:void(0)" ng-click="toggleCommentEditor()" ng-show="!shouldShowCommentEditor">
+      Edit
+    </a>
+    <a class="comment-cancel" href="javascript:void(0)" ng-click="toggleCommentEditor()" ng-show="shouldShowCommentEditor">
+      Cancel
+    </a>
+    <a class="comment-submit" href="javascript:void(0)" ng-click="toggleCommentEditor()" ng-show="shouldShowCommentEditor">
+      Submit
+    </a>
+  </div>
+  <div class="footer-details">
+    <a class="comment-author" ng-href="/#/profile/{{comment.author.username}}">
+      <span>{{comment.author.displayName}}</span>
+    </a>
+    <span class="comment-timestap" ng-bind="comment.timestamp | date:'medium'"></span>
+  </div>
+</div>

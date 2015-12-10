@@ -1,12 +1,6 @@
 <div class="comments">
   <div class="comment" ng-repeat="comment in comments">
-    <div class="comment-body">{{comment.body}}</div>
-    <div class="comment-footer">
-      <a class="comment-author" ng-href="/#/profile/{{comment.author.username}}">
-        <span>{{comment.author.displayName}}</span>
-      </a>
-      <span class="comment-timestap" ng-bind="comment.timestamp | date:'medium'"></span>
-    </div>
+    <div so-comment="comment" so-submit="editComment"></div>
   </div>
   <div class="add-comment">
     <form novalidate class="add-comment-form" name="addCommentForm" ng-submit="submit()">

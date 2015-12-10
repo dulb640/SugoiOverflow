@@ -24,5 +24,8 @@ angular.module('sugoiOverflow.questions')
             $scope.sending = false
           })
       }
+      $scope.editComment = function () {
+        
+      }
     }
   )
