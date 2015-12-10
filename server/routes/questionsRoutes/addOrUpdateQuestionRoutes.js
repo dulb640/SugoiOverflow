@@ -56,6 +56,51 @@ router.post('/',
       })
   })
 
+/**
+ * Edit question
+ */
+router.put('/:questionId',
+  validate({body: schemas.addOrEditQuestionSchema}),
+
+  middleWares.getQuestion,
+
+  function editQuestion(req, res, next) {
+    console.log("message was in correct format")
+    req.question.title = req.body.title
+    req.question.body = req.body.body
+    req.question.tags = req.body.tags
+    // KNOWN BUG: proposed people doesn't work
+    //req.question.people = req.body.proposedPeople
+    next()
+  },
+
+  middleWares.saveQuestionAndSend,
+
+  function updateUserAndFeed (req, res, next) {
+    req.user.profile.asked.push(req.question.id)
+    req.user.saveAsync()
+      .then(function () {
+        return domain.User.find({email: {$in: req.body.people} })
+          .select('feed')
+          .execAsync()
+          .then(function (people) {
+            if (!people) {
+              return
+            }
+            var promises = people.map(function (person) {
+              return userService.updateQuestionsFeed(person, req.question, 'You have been proposed to answer the question')
+            })
+            return Promise.all(promises)
+          })
+      })
+      .then(function () {
+        next()
+      })
+      .catch(function (error) {
+        next(error)
+      })
+  })
+
 /* Add comment to question */
 router.post('/:questionId/comment',
 

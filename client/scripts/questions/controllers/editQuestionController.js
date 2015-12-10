@@ -5,10 +5,6 @@ angular.module('sugoiOverflow.questions')
       'use strict'
       window._.extend($scope, {
         user: {},
-        title: '',
-        body: '',
-        tags: [],
-        people: [],
         suggestedPeople: [],
         suggestedTags: [],
         getTagsAutocomlete: function (query) {
@@ -23,15 +19,22 @@ angular.module('sugoiOverflow.questions')
           var newTag = {
             text: tag
           }
-          $scope.tags.push(newTag)
+          $scope.tagsInput.push(newTag)
           $scope.suggestedTags = window._.without($scope.suggestedTags, tag)
         },
         addPerson: function (person) {
-          $scope.people.push(person)
+          $scope.peopleInput.push(person)
           $scope.suggestedPeople = window._.without($scope.suggestedPeople, person)
         },
         formatTag: function (tag) {
           tag.text = changeCase.paramCase(tag.text)
+        },
+        submitAndReset: function () {
+          if ($scope.editQuestionForm.$invalid) {
+            return
+          }
+          $scope.submit()
+          $scope.editQuestionForm.$setPristine()
         }
       })
 
@@ -52,17 +55,17 @@ angular.module('sugoiOverflow.questions')
         })
 
       function getTagsSuggestions () {
-        suggestionsDataService.getTags($scope.body, $scope.title)
+        suggestionsDataService.getTags($scope.bodyInput, $scope.titleInput)
           .then(function (tags) {
             var existing = window._.pluck($scope.tags, 'text')
-            $scope.suggestedTags = window._.filter(tags, function (t) { return !window._.includes(existing, t) })
+            $scope.suggestedTags = window._.filter($scope.tagsInput, function (t) { return !window._.includes(existing, t) })
           })
       }
 
       function getPeopleSuggestions () {
-        suggestionsDataService.getPeople($scope.body, $scope.title)
+        suggestionsDataService.getPeople($scope.bodyInput, $scope.titleInput)
           .then(function (people) {
-            var existing = window._.pluck($scope.people, 'email')
+            var existing = window._.pluck($scope.peopleInput, 'email')
             $scope.suggestedPeople = window._.filter(people, function (t) { return !window._.includes(existing, t) })
           })
       }

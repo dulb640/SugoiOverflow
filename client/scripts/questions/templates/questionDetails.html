@@ -17,14 +17,16 @@
         <div class="tags">
           <span class="tag" ng-repeat="propsedPerson in proposedPeople">{{propsedPerson.text}}</span>
         </div>
-        <button class="action-button" type="button" ng-click="toggleEditor()" ng-show="isOwnQuestion()">Edit</button>
+        <button class="action-button" type="button" ng-click="toggleEditor()" ng-show="isOwnQuestion()">{{shouldShowEditor ? 'Cancel Edit' : 'Edit'}}</button>
         <div so-edit-question=""
          so-title="editedTitle"
          so-body="editedBody"
          so-tags="editedTags"
          so-people="editedPeople"
-         so-submit="submitQuestionRevision" ng-show="shouldShowEditor" ></div>
-        <div so-comments="comments" so-comments-add="submitQuestionComment"></div>
+         so-submit="submitQuestionRevision"
+         so-submit-text="editAnswerText"
+         ng-show="shouldShowEditor" ></div>
+        <div so-comments="comments" so-comments-add="submitQuestionComment" ng-show="!shouldShowEditor"></div>
         <div class="answer-count">{{answers.length}} Answers</div>
       </div>
       <div class="user-info">

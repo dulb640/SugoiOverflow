@@ -28,7 +28,10 @@ angular.module('sugoiOverflow.questions')
       }
 
       _.extend($scope, {
+
         canModerate: currentUser.canModerate,
+        editAnswerText: "Confirm your edit",
+
         delete: function deleteQuestion () {
           questionsDataService.deleteQuestion($scope.questionId)
             .then(function () {
@@ -79,12 +82,31 @@ angular.module('sugoiOverflow.questions')
             .then(loadQuestion)
         },
         submitQuestionRevision: function () {
+          if ($scope.sendingQuestionRevision) {
+            return
+          }
 
+          var newQuestion = {
+            title: $scope.editedTitle,
+            body: $scope.editedBody,
+            tags: window._.pluck($scope.editedTags, 'text'),
+            people: window._.pluck($scope.editedPeople, 'email')
+          }
+
+          $scope.sendingQuestionRevision = true
+          questionsDataService.reviseQuestion($scope.questionId, newQuestion)
+            .then(loadQuestion)
+            .then(function () {
+              $scope.toggleEditor()
+            })
+            .finally(function () {
+              $scope.sendingQuestionRevision = false
+            })
         },
         toggleEditor: function() {
           $scope.editedTitle = $scope.title
           $scope.editedBody = $scope.body
-          $scope.editedTags = $scope.tags
+          $scope.editedTags = window._.map($scope.tags)
           $scope.editedPeople = $scope.propsedPeople
 
           $scope.shouldShowEditor = !$scope.shouldShowEditor

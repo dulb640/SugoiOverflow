@@ -13,12 +13,13 @@ angular.module('sugoiOverflow.questions')
       restrict: 'A',
       templateUrl: 'scripts/questions/templates/editQuestion.html',
       scope: {
-        questionId: "=soEditQuestion",
-        title: "=soTitle",
-        body: "=soBody",
-        tags: "=soTags",
-        people: "=soPeople",
-        submit: "=soSubmit"
+        questionIdInput: "=soEditQuestion",
+        titleInput: "=soTitle",
+        bodyInput: "=soBody",
+        tagsInput: "=soTags",
+        peopleInput: "=soPeople",
+        submit: "=soSubmit",
+        submitText: "=soSubmitText"
       },
       controller: 'editQuestionController'
     }

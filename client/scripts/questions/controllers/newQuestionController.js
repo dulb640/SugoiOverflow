@@ -9,8 +9,9 @@ angular.module('sugoiOverflow.questions')
         body: '',
         tags: [],
         people: [],
+        postText: "Post your question",
 
-        submit: function () {
+        submitNewQuestion: function () {
           var newQuestion = {
             title: $scope.title,
             body: $scope.body,

@@ -53,6 +53,8 @@ angular.module('sugoiOverflow.questions')
       },
 
       addQuestion: function (question) {
+        console.log("addingQuestion:")
+        console.log(data)
         return promisedHttp('post', '/api/questions/', question)
       },
 
@@ -105,6 +107,10 @@ angular.module('sugoiOverflow.questions')
           body: answer
         }
         return promisedHttp('put', url, data)
+      },
+      reviseQuestion: function(questionId, question) {
+        var url = window.s.sprintf('/api/questions/%s/', questionId)
+        return promisedHttp('put', url, question)
       }
     }
     return service
