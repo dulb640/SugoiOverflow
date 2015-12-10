@@ -29,7 +29,7 @@ angular.module('sugoiOverflow.questions')
         },*/
         toggleCommentEditor: function() {
           console.log("asdf")
-          //$scope.commentRevision = $scope.comment.body
+          $scope.commentRevision = $scope.comment.body
           $scope.shouldShowCommentEditor = !$scope.shouldShowCommentEditor
         }
       })

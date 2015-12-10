@@ -1,6 +1,6 @@
 <div class="comment-body" ng-show="!shouldShowCommentEditor">{{comment.body}}</div>
 <form novalidate class="add-comment-form" name="addCommentForm" ng-submit="submit()" ng-show="shouldShowCommentEditor">
-  <textarea type="text" name="body" required minlength=30 maxlength=10000 ng-model="body"></textarea>
+  <textarea type="text" name="body" required minlength=30 maxlength=10000 ng-model="commentRevision"></textarea>
   <div class="validation-messages" ng-show="!addCommentForm.$valid && addCommentForm.$submitted">
     <ng-messages for="addCommentForm.body.$error">
       <ng-message when="required">
