@@ -53,8 +53,6 @@ angular.module('sugoiOverflow.questions')
       },
 
       addQuestion: function (question) {
-        console.log("addingQuestion:")
-        console.log(data)
         return promisedHttp('post', '/api/questions/', question)
       },
 

@@ -50,8 +50,6 @@ angular.module('sugoiOverflow.questions')
       profilesDataService.getAvailableProfiles()
         .then(function (people) {
           $scope.availablePeople = people
-          console.log("got availablePeople")
-          console.log(people)
         })
 
       function getTagsSuggestions () {
