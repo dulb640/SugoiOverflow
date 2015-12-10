@@ -10,6 +10,7 @@ angular.module('sugoiOverflow.auth')
         currentUser.username = data.username
         currentUser.displayName = data.displayName
         currentUser.roles = data.roles
+        currentUser.userId = data.userId
         return data
       }
 

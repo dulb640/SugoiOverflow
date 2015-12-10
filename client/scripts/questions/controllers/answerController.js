@@ -21,12 +21,12 @@ angular.module('sugoiOverflow.questions')
         },
         hasUpVoted: function () {
           return window._.some($scope.answer.upVotes, function (upVoter) {
-            return upVoter.username === currentUser.username
+            return upVoter === currentUser.userId
           })
         },
         hasDownVoted: function () {
           return window._.some($scope.answer.downVotes, function (downVoter) {
-            return downVoter.username === currentUser.username
+            return downVoter === currentUser.userId
           })
         },
         upvote: function () {
@@ -56,6 +56,9 @@ angular.module('sugoiOverflow.questions')
                 $scope.votingInProgress = false
               })
           }
+        },
+        authorIsCurrentUser: function () {
+          return $scope.answer.author.username == currentUser.username
         }
       })
     }
