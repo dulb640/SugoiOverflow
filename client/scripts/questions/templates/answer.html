@@ -13,7 +13,7 @@
   <div class="answer-content">
     <div class="body markdown-output"  ng-bind-html="answer.body | wizMarkdownFltr"></div>
     <div class="timestamp"  ng-bind="answer.timestamp | date:'medium'"></div>
-    <button class="action-button" type="button" ng-click="toggleEditor()" ng-show="authorIsCurrentUser()">{{shouldShowEditor ? 'Cancel Edit' : 'Edit'}}</button>
+    <button class="action-button" type="button" ng-click="toggleEditor()" ng-show="isOwnAnswer()">{{shouldShowEditor ? 'Cancel Edit' : 'Edit'}}</button>
     <form novalidate class="answer-question-form" name="answerRevisionForm" ng-show="shouldShowEditor" ng-submit="submitAnswerRevision()">
       <div>
         <wiz-markdown-editor content="answerRevision">
@@ -44,7 +44,7 @@
       </div>
       <button class="form-submit action-button" type="submit">Confirm your edit</button>
     </form>
-    <div so-comments="answer.comments" so-comments-add="submitComment"></div>
+    <div so-comments="answer.comments" so-comments-add="submitComment", so-comments-edit="submitCommentEdit"></div>
   </div>
   <div class="score-container">
     <button class="upvote-button action-button" type="button" ng-disable="votingInProgress || hasUpVoted()" ng-click="upvote()"><span class="fa fa-thumbs-up"></span></button>

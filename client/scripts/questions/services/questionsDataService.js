@@ -99,6 +99,10 @@ angular.module('sugoiOverflow.questions')
         var url = window.s.sprintf('/api/questions/%s/answer/%s/correct', questionId, answerId)
         return promisedHttp('put', url)
       },
+      reviseQuestion: function(questionId, question) {
+        var url = window.s.sprintf('/api/questions/%s/', questionId)
+        return promisedHttp('put', url, question)
+      },
       reviseAnswer: function(questionId, answerId, answer) {
         var url = window.s.sprintf('/api/questions/%s/answer/%s/', questionId, answerId)
         var data = {
@@ -106,9 +110,19 @@ angular.module('sugoiOverflow.questions')
         }
         return promisedHttp('put', url, data)
       },
-      reviseQuestion: function(questionId, question) {
-        var url = window.s.sprintf('/api/questions/%s/', questionId)
-        return promisedHttp('put', url, question)
+      reviseQuestionComment: function(questionId, commentId, comment) {
+        var url = window.s.sprintf('/api/questions/%s/comment/%s/', questionId, commentId)
+        var data = {
+          body: comment
+        }
+        return promisedHttp('put', url, data) 
+      },
+      reviseAnswerComment: function(questionId, answerId, commentId, comment) {
+        var url = window.s.sprintf('/api/questions/%s/answer/%s/comment/%s/', questionId, answerId, commentId)
+        var data = {
+          body: comment
+        }
+        return promisedHttp('put', url, data) 
       }
     }
     return service

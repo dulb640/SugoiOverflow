@@ -14,7 +14,7 @@ angular.module('sugoiOverflow.questions')
       templateUrl: 'scripts/questions/templates/comment.html',
       scope: {
         comment: '=soComment',
-        submit: '=soSubmit',
+        submitEdit: '=soSubmitEdit',
       },
       controller: 'commentController'
     }

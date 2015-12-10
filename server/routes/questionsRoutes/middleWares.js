@@ -55,9 +55,29 @@ function getAnswer (req, res, next) {
   next()
 }
 
+function getQuestionComment (req, res, next) {
+  var comment = req.question.comments.id(req.params.commentId)
+  if (!comment) {
+    return next(new errors.NotFoundError('Comment was not found'))
+  }
+  req.comment = comment
+  next()
+}
+
+function getAnswerComment (req, res, next) {
+  var comment = req.answer.comments.id(req.params.commentId)
+  if (!comment) {
+    return next(new errors.NotFoundError('Comment was not found'))
+  }
+  req.comment = comment
+  next()
+}
+
 module.exports = {
   getQuestion: getQuestion,
   getAnswer: getAnswer,
+  getQuestionComment: getQuestionComment,
+  getAnswerComment: getAnswerComment,
   saveQuestionAndSend: saveQuestionAndSend,
   getUserByUsername: getUserByUsername
 }

@@ -91,7 +91,8 @@ router.put('/:questionId/answer/:answerId',
       .then(function () {
         next()
       })
-  }*/)
+  }*/
+)
 
 /* Add comment to answer */
 router.post('/:questionId/answer/:answerId/comment',
@@ -118,6 +119,32 @@ router.post('/:questionId/answer/:answerId/comment',
         next()
       })
   }
+)
+
+/* Edit comment on answer */
+router.put('/:questionId/answer/:answerId/comment/:commentId',
+
+  validate({body: schemas.addOrEditCommentSchema}),
+
+  middleWares.getQuestion,
+
+  middleWares.getAnswer,
+
+  middleWares.getAnswerComment,
+
+  function (req, res, next) {
+    req.comment.body = req.body.body
+    next()
+  },
+
+  middleWares.saveQuestionAndSend/*,
+
+  function updateFeed (req, res, next) {
+    userService.updateQuestionsFeed(req.answer.author, req.question, 'Answer has a new comment')
+      .then(function () {
+        next()
+      })
+  }*/
 )
 
 /* Delete answer */

@@ -19,16 +19,27 @@
       width: 100%;
     }
     
-    .comment-author, .comment-edit, .comment-submit {
+
+    .comment-edit, .comment-submit, .comment-cancel {
       color: $teal;
+      border: 0px;
+      border-color: rgba(255, 255, 255, 0);
+      background-color: rgba(255, 255, 255, 0);
+      padding: 0px;
+
+      text-decoration: none;
       &:hover {
         color: $gray-text-normal;
       }
+
     }
 
     .comment-cancel {
-      color: $teal;
       margin-right: 5px;
+    }
+
+    .comment-author {
+      color: $teal;
       &:hover {
         color: $gray-text-normal;
       }

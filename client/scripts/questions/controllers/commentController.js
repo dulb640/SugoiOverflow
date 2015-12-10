@@ -8,27 +8,25 @@ angular.module('sugoiOverflow.questions')
       'use strict'
 
       window._.extend($scope, {
-        authorIsCurrentUser: function () {
-          return $scope.answer.author.username == currentUser.username
+        isOwnComment: function () {
+          return $scope.comment.author.username == currentUser.username
         },
-        /*submitAnswerRevision: function() {
-          if ($scope.answerRevisionForm.$invalid || $scope.sendingAnswerRevision) {
+        submitCommentRevision: function() {
+          if ($scope.editCommentForm.$invalid || $scope.sendingCommentRevision) {
             return
           }
 
-          $scope.sendingAnswerRevision = true
-          questionsDataService.reviseAnswer($scope.questionId, $scope.answer.id, $scope.answerRevision)
-            .then($scope.update)
+          $scope.sendingCommentRevision = true
+          $scope.submitEdit($scope.comment.id, $scope.commentRevision)
             .then(function () {
-              $scope.answerRevision = ''
-              $scope.answerRevisionForm.$setPristine()
+              $scope.commentRevision = ''
+              $scope.editCommentForm.$setPristine()
             })
             .finally(function () {
-              $scope.sendingAnswerRevision = false
+              $scope.sendingCommentRevision = false
             })
-        },*/
+        },
         toggleCommentEditor: function() {
-          console.log("asdf")
           $scope.commentRevision = $scope.comment.body
           $scope.shouldShowCommentEditor = !$scope.shouldShowCommentEditor
         }

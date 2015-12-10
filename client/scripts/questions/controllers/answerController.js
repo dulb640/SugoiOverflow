@@ -9,8 +9,28 @@ angular.module('sugoiOverflow.questions')
       'use strict'
 
       window._.extend($scope, {
+        submitAnswerRevision: function() {
+          if ($scope.answerRevisionForm.$invalid || $scope.sendingAnswerRevision) {
+            return
+          }
+
+          $scope.sendingAnswerRevision = true
+          questionsDataService.reviseAnswer($scope.questionId, $scope.answer.id, $scope.answerRevision)
+            .then($scope.update)
+            .then(function () {
+              $scope.answerRevision = ''
+              $scope.answerRevisionForm.$setPristine()
+            })
+            .finally(function () {
+              $scope.sendingAnswerRevision = false
+            })
+        },
         submitComment: function (body) {
           return questionsDataService.addAnswerComment($scope.questionId, $scope.answer.id, body)
+            .then($scope.update)
+        },
+        submitCommentEdit: function (commentId, body) {
+          return questionsDataService.reviseAnswerComment($scope.questionId, $scope.answer.id, commentId, body)
             .then($scope.update)
         },
         markAsCorrect: function () {
@@ -57,24 +77,8 @@ angular.module('sugoiOverflow.questions')
               })
           }
         },
-        authorIsCurrentUser: function () {
+        isOwnAnswer: function () {
           return $scope.answer.author.username == currentUser.username
-        },
-        submitAnswerRevision: function() {
-          if ($scope.answerRevisionForm.$invalid || $scope.sendingAnswerRevision) {
-            return
-          }
-
-          $scope.sendingAnswerRevision = true
-          questionsDataService.reviseAnswer($scope.questionId, $scope.answer.id, $scope.answerRevision)
-            .then($scope.update)
-            .then(function () {
-              $scope.answerRevision = ''
-              $scope.answerRevisionForm.$setPristine()
-            })
-            .finally(function () {
-              $scope.sendingAnswerRevision = false
-            })
         },
         toggleEditor: function() {
           $scope.answerRevision = $scope.answer.body

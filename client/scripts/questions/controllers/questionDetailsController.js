@@ -38,6 +38,28 @@ angular.module('sugoiOverflow.questions')
               $location.path('/questions')
             })
         },
+        submitQuestionRevision: function () {
+          if ($scope.sendingQuestionRevision) {
+            return
+          }
+
+          var newQuestion = {
+            title: $scope.editedTitle,
+            body: $scope.editedBody,
+            tags: window._.pluck($scope.editedTags, 'text'),
+            people: window._.pluck($scope.editedPeople, 'email')
+          }
+
+          $scope.sendingQuestionRevision = true
+          questionsDataService.reviseQuestion($scope.questionId, newQuestion)
+            .then(loadQuestion)
+            .then(function () {
+              $scope.toggleEditor()
+            })
+            .finally(function () {
+              $scope.sendingQuestionRevision = false
+            })
+        },
         submitAnswer: function () {
           if ($scope.answerQuestionForm.$invalid || $scope.sendingAnswer) {
             return
@@ -81,27 +103,12 @@ angular.module('sugoiOverflow.questions')
             })
             .then(loadQuestion)
         },
-        submitQuestionRevision: function () {
-          if ($scope.sendingQuestionRevision) {
-            return
-          }
-
-          var newQuestion = {
-            title: $scope.editedTitle,
-            body: $scope.editedBody,
-            tags: window._.pluck($scope.editedTags, 'text'),
-            people: window._.pluck($scope.editedPeople, 'email')
-          }
-
-          $scope.sendingQuestionRevision = true
-          questionsDataService.reviseQuestion($scope.questionId, newQuestion)
-            .then(loadQuestion)
-            .then(function () {
-              $scope.toggleEditor()
-            })
-            .finally(function () {
-              $scope.sendingQuestionRevision = false
-            })
+        submitQuestionCommentEdit: function(commentId, body) {
+          return questionsDataService.reviseQuestionComment($routeParams.id, commentId, body)
+          .then(function () {
+            return questionsDataService.getQuestion($routeParams.id)
+          })
+          .then(loadQuestion)
         },
         toggleEditor: function() {
           $scope.editedTitle = $scope.title

@@ -26,7 +26,7 @@
          so-submit="submitQuestionRevision"
          so-submit-text="editAnswerText"
          ng-show="shouldShowEditor" ></div>
-        <div so-comments="comments" so-comments-add="submitQuestionComment" ng-show="!shouldShowEditor"></div>
+        <div so-comments="comments" so-comments-add="submitQuestionComment" ng-show="!shouldShowEditor" so-comments-edit="submitQuestionCommentEdit"></div>
         <div class="answer-count">{{answers.length}} Answers</div>
       </div>
       <div class="user-info">

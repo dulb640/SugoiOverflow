@@ -74,7 +74,7 @@ router.put('/:questionId',
     next()
   },
 
-  middleWares.saveQuestionAndSend,
+  middleWares.saveQuestionAndSend/*,
 
   function updateUserAndFeed (req, res, next) {
     req.user.profile.asked.push(req.question.id)
@@ -99,7 +99,8 @@ router.put('/:questionId',
       .catch(function (error) {
         next(error)
       })
-  })
+  }*/
+  )
 
 /* Add comment to question */
 router.post('/:questionId/comment',
@@ -108,7 +109,7 @@ router.post('/:questionId/comment',
 
   middleWares.getQuestion,
 
-  function (req, res, next) {
+  function addComment (req, res, next) {
     req.question.comments.push({
       author: req.user.id,
       body: req.body.body
@@ -139,6 +140,45 @@ router.post('/:questionId/comment',
         next()
       })
   }
+)
+
+/* Edit comment to question */
+router.put('/:questionId/comment/:commentId',
+
+  validate({body: schemas.addOrEditCommentSchema}),
+
+  middleWares.getQuestion,
+
+  middleWares.getQuestionComment,
+
+  function (req, res, next) {
+    req.comment.body = req.body.body
+    next()
+  },
+
+  middleWares.saveQuestionAndSend/*,
+
+  function updateUserAndFeed (req, res, next) {
+    req.user.profile.answered.push(req.question.id)
+    req.user.saveAsync()
+      .catch(function (e) {
+        logger.error('Error saving user', e)
+        return next(e)
+      })
+      .then(function () {
+        var promises = req.question.subscribers
+          .filter(function (sub) {
+            return sub.id !== req.user.id
+          })
+          .map(function (sub) {
+            return userService.updateQuestionsFeed(sub, req.question, 'Question has a new comment')
+          })
+        return Promise.all(promises)
+      })
+      .then(function () {
+        next()
+      })
+  }*/
 )
 
 /**
