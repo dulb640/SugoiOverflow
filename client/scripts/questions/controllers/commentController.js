@@ -1,7 +1,4 @@
 /* global angular*/
-/**
- * 
- */
 angular.module('sugoiOverflow.questions')
   .controller('commentController',
     function ($scope, questionsDataService, currentUser) {

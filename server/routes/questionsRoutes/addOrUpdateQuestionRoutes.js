@@ -65,7 +65,6 @@ router.put('/:questionId',
   middleWares.getQuestion,
 
   function editQuestion(req, res, next) {
-    console.log("message was in correct format")
     req.question.title = req.body.title
     req.question.body = req.body.body
     req.question.tags = req.body.tags

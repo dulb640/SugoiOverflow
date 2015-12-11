@@ -9,6 +9,8 @@ angular.module('sugoiOverflow.questions')
   .controller('commentsController',
     function ($scope) {
       'use strict'
+
+      /* I (Dean) don't know why this is not in a "window._extend(...)"*/
       $scope.submit = function () {
         if ($scope.addCommentForm.$invalid || $scope.sending) {
           return

@@ -1,7 +1,7 @@
 /* global angular*/
 angular.module('sugoiOverflow.questions')
   .controller('editQuestionController',
-    function ($scope, $q, $location, $timeout, questionsDataService, tagsDataService, profilesDataService, suggestionsDataService, autocompleteService, changeCase) {
+    function ($scope, $q, $location, $timeout, tagsDataService, profilesDataService, suggestionsDataService, autocompleteService, changeCase) {
       'use strict'
       window._.extend($scope, {
         user: {},

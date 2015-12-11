@@ -1,9 +1,11 @@
 /* global angular*/
 /**
- * so-answer-on-update Function to be called after upvoting/downvoting,
- * subscribing, marking as correct and other actions.
- * so-answer-is-own-question Function called to determine if question asked by current user.
- * requires sugoiOverflow.questions.answerController
+ * There should be one commentDirective per comment.
+ * This is only intended for use by commentsDirective.
+ * 
+ * so-submit-edit: when the comment is edited, it will call this function.
+ *
+ * requires sugoiOverflow.questions.commentController
  */
 angular.module('sugoiOverflow.questions')
   .directive('soComment', function () {
