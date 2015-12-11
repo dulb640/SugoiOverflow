@@ -55,8 +55,8 @@ angular.module('sugoiOverflow.questions')
       function getTagsSuggestions () {
         suggestionsDataService.getTags($scope.bodyInput, $scope.titleInput)
           .then(function (tags) {
-            var existing = window._.pluck($scope.tags, 'text')
-            $scope.suggestedTags = window._.filter($scope.tagsInput, function (t) { return !window._.includes(existing, t) })
+            var existing = window._.pluck($scope.tagsInput, 'text')
+            $scope.suggestedTags = window._.filter(tags, function (t) { return !window._.includes(existing, t) })
           })
       }
 
@@ -68,7 +68,7 @@ angular.module('sugoiOverflow.questions')
           })
       }
       var timer
-      $scope.$watch('body', function () {
+      $scope.$watch('bodyInput', function () {
         if (timer) {
           $timeout.cancel(timer)
         }
