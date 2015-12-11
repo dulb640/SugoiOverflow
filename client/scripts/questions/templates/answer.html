@@ -30,7 +30,7 @@
       <wiz-markdown content="answerRevision" class="markdown-output"></wiz-markdown>
       <input type="text" name="answerRevisionInput" ng-model="answerRevision" class="hidden" required minlength="30" maxlength=10000/>
       <div class="validation-messages" ng-show="!answerRevisionForm.$valid && answerRevisionForm.$submitted">
-        <ng-messages for="answerRevisionForm.answer.$error">
+        <ng-messages for="answerRevisionForm.answerRevisionInput.$error">
           <ng-message when="required">
             <p>Please enter answer</p>
           </ng-message>
@@ -44,7 +44,7 @@
       </div>
       <button class="form-submit action-button" type="submit">Confirm your edit</button>
     </form>
-    <div so-comments="answer.comments" so-comments-add="submitComment", so-comments-edit="submitCommentEdit"></div>
+    <div so-comments="answer.comments" so-comments-add="submitComment", so-comments-edit="submitCommentEdit" ng-show="!shouldShowEditor"></div>
   </div>
   <div class="score-container">
     <button class="action-button upvote-button" type="button" ng-disabled="votingInProgress || hasUpVoted() || isOwnAnswer()" ng-click="upvote()"><span class="fa fa-thumbs-up"></span></button>
