@@ -47,9 +47,9 @@
     <div so-comments="answer.comments" so-comments-add="submitComment", so-comments-edit="submitCommentEdit"></div>
   </div>
   <div class="score-container">
-    <button class="upvote-button action-button" type="button" ng-disable="votingInProgress || hasUpVoted()" ng-click="upvote()"><span class="fa fa-thumbs-up"></span></button>
+    <button class="action-button upvote-button" type="button" ng-disabled="votingInProgress || hasUpVoted() || isOwnAnswer()" ng-click="upvote()"><span class="fa fa-thumbs-up"></span></button>
     <div class="score">{{answer.score}}</div>
-    <button class="downvote-button action-button red" type="button" ng-disable="votingInProgress || hasDownVoted()" ng-click="downvote()"><i class="fa fa-thumbs-down"></i></button>
+    <button class="action-button downvote-button" type="button" ng-disabled="votingInProgress || hasDownVoted() || isOwnAnswer()" ng-click="downvote()"><span class="fa fa-thumbs-down"></span></button>
     <button class="action-button correct" type="button" ng-click="markAsCorrect()" ng-show="isOwnQuestion() && !answer.correct">Mark As Correct</button>
     <div class="correct-label" ng-show="answer.correct">Correct!</div>
   </div>
