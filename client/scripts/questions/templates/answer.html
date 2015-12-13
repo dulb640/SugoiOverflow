@@ -11,9 +11,10 @@
     <div class="author-karma">{{answer.author.profile.karma}}</div>
   </div>
   <div class="answer-content">
+    <button class="answer-edit" type="button" ng-click="toggleEditor()" ng-show="isOwnAnswer()"><i class="fa fa-pencil"></i></button>
     <div class="body markdown-output"  ng-bind-html="answer.body | wizMarkdownFltr"></div>
     <div class="timestamp"  ng-bind="answer.timestamp | date:'medium'"></div>
-    <button class="action-button" type="button" ng-click="toggleEditor()" ng-show="isOwnAnswer()">{{shouldShowEditor ? 'Cancel Edit' : 'Edit'}}</button>
+    <!--<button class="action-button" type="button" ng-click="toggleEditor()" ng-show="isOwnAnswer()">{{shouldShowEditor ? 'Cancel Edit' : 'Edit'}}</button>-->
     <form novalidate class="answer-question-form" name="answerRevisionForm" ng-show="shouldShowEditor" ng-submit="submitAnswerRevision()">
       <div>
         <wiz-markdown-editor content="answerRevision">
@@ -42,14 +43,15 @@
           </ng-message>
         </ng-messages>
       </div>
+      <button class="form-submit action-button red" ng-click="toggleEditor()">Cancel your edit</button>
       <button class="form-submit action-button" type="submit">Confirm your edit</button>
     </form>
     <div so-comments="answer.comments" so-comments-add="submitComment", so-comments-edit="submitCommentEdit" ng-show="!shouldShowEditor"></div>
   </div>
   <div class="score-container">
-    <button class="action-button upvote-button" type="button" ng-disabled="votingInProgress || hasUpVoted() || isOwnAnswer()" ng-click="upvote()"><span class="fa fa-thumbs-up"></span></button>
+    <button class="action-button" type="button" ng-disabled="votingInProgress || hasUpVoted() || isOwnAnswer()" ng-click="upvote()"><span class="fa fa-thumbs-up"></span></button>
     <div class="score">{{answer.score}}</div>
-    <button class="action-button downvote-button" type="button" ng-disabled="votingInProgress || hasDownVoted() || isOwnAnswer()" ng-click="downvote()"><span class="fa fa-thumbs-down"></span></button>
+    <button class="action-button red" type="button" ng-disabled="votingInProgress || hasDownVoted() || isOwnAnswer()" ng-click="downvote()"><span class="fa fa-thumbs-down"></span></button>
     <button class="action-button correct" type="button" ng-click="markAsCorrect()" ng-show="isOwnQuestion() && !answer.correct">Mark As Correct</button>
     <div class="correct-label" ng-show="answer.correct">Correct!</div>
   </div>

@@ -9,7 +9,6 @@ angular.module('sugoiOverflow.questions')
         body: '',
         tags: [],
         people: [],
-        postText: "Post your question",
 
         submitNewQuestion: function () {
           var newQuestion = {

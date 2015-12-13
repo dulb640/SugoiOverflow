@@ -30,7 +30,6 @@ angular.module('sugoiOverflow.questions')
       _.extend($scope, {
 
         canModerate: currentUser.canModerate,
-        editAnswerText: "Confirm your edit",
 
         delete: function deleteQuestion () {
           questionsDataService.deleteQuestion($scope.questionId)

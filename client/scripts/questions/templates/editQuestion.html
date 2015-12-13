@@ -89,5 +89,6 @@
         </ng-message>
       </ng-messages>
     </div>
+    <button type="button" class="action-button red" ng-show="cancel != undefined" ng-click="cancel()">{{cancelText}}</button>
     <button class="form-submit action-button" ng-disabled="editQuestionForm.$submitted && editQuestionForm.$invalid" type="submit">{{submitText}}</button>
   </form>
