@@ -13,11 +13,7 @@ angular.module('sugoiOverflow.questions')
             text: tag
           }
         })
-        $scope.proposedPeople = window._.map(question.proposedPeople, function mapPeople (tag) {
-          return {
-            text: proposedPeople
-          }
-        })
+        $scope.proposedPeople = window._.map(question.people)
         $scope.author = question.author
         $scope.timestamp = question.timestamp
         $scope.answers = question.answers
@@ -46,7 +42,7 @@ angular.module('sugoiOverflow.questions')
             title: $scope.editedTitle,
             body: $scope.editedBody,
             tags: window._.pluck($scope.editedTags, 'text'),
-            people: window._.pluck($scope.editedPeople, 'email')
+            people: window._.pluck($scope.editedPeople, '_id')
           }
 
           $scope.sendingQuestionRevision = true
@@ -113,7 +109,7 @@ angular.module('sugoiOverflow.questions')
           $scope.editedTitle = $scope.title
           $scope.editedBody = $scope.body
           $scope.editedTags = window._.map($scope.tags)
-          $scope.editedPeople = $scope.propsedPeople
+          $scope.editedPeople = window._.map($scope.proposedPeople)
 
           $scope.shouldShowEditor = !$scope.shouldShowEditor
         },

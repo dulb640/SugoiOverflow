@@ -15,9 +15,8 @@ angular.module('sugoiOverflow.questions')
             title: $scope.title,
             body: $scope.body,
             tags: window._.pluck($scope.tags, 'text'),
-            people: window._.pluck($scope.people, 'email')
+            people: window._.pluck($scope.people, '_id')
           }
-
           questionsDataService.addQuestion(newQuestion)
             .then(function (addedQuestion) {
               $location.path(window.s.sprintf('/questions/%s/answers', addedQuestion.id))
