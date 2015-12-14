@@ -43,10 +43,11 @@
           </ng-message>
         </ng-messages>
       </div>
-      <button class="form-submit action-button red" ng-click="toggleEditor()">Cancel your edit</button>
+      <button class="action-button blue" ng-click="toggleEditor()">Cancel your edit</button>
       <button class="form-submit action-button" type="submit">Confirm your edit</button>
+      <button class="action-button red" type="button" ng-click="submitAnswerDeletion()">Delete your post</button>
     </form>
-    <div so-comments="answer.comments" so-comments-add="submitComment", so-comments-edit="submitCommentEdit" ng-show="!shouldShowEditor"></div>
+    <div so-comments="answer.comments" so-comments-add="submitComment", so-comments-edit="submitCommentEdit" so-comments-delete="submitCommentDelete" ng-show="!shouldShowEditor"></div>
   </div>
   <div class="score-container">
     <button class="action-button" type="button" ng-disabled="votingInProgress || hasUpVoted() || isOwnAnswer()" ng-click="upvote()"><span class="fa fa-thumbs-up"></span></button>

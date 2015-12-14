@@ -65,7 +65,7 @@ router.put('/:questionId/answer/:answerId',
 
   middleWares.getAnswer,
 
-  function editAnswer (req, res, next) {
+  function (req, res, next) {
     req.answer.body = req.body.body
     next()
   },
@@ -92,6 +92,25 @@ router.put('/:questionId/answer/:answerId',
         next()
       })
   }*/
+)
+
+/* Delete answer */
+router.delete('/:questionId/answer/:answerId',
+
+  /*roles(['moderator', 'admin']),*/
+
+  function deleteAnswer (req, res, next) {
+    var query = { '_id': req.params.questionId }
+    var action = {'$pull': { 'answers': { _id: req.params.answerId } } }
+    domain.Question.updateAsync(query, action)
+      .then(function () {
+        next()
+      })
+  },
+
+  middleWares.getQuestion,
+
+  middleWares.saveQuestionAndSend,
 )
 
 /* Add comment to answer */
@@ -147,19 +166,29 @@ router.put('/:questionId/answer/:answerId/comment/:commentId',
   }*/
 )
 
-/* Delete answer */
-router.delete('/:questionId/answer/:answerId',
+/* Delete comment on answer */
+router.delete('/:questionId/answer/:answerId/comment/:commentId',
 
-  roles(['moderator', 'admin']),
+  middleWares.getQuestion,
 
-  function deleteAnswer (req, res, next) {
-    var query = { 'id': req.params.questionId }
-    var action = {'$pull': { 'answers': { id: req.params.answerId } } }
-    domain.Question.updateAsync(query, action)
+  middleWares.getAnswer,
+
+  function (req, res, next) {
+    req.answer.comments = req.answer.comments.filter(function (comment) {
+      return comment._id != req.params.commentId
+    })
+    next()
+  },
+
+  middleWares.saveQuestionAndSend/*,
+
+  function updateFeed (req, res, next) {
+    userService.updateQuestionsFeed(req.answer.author, req.question, 'Answer has a new comment')
       .then(function () {
         next()
       })
-  })
+  }*/
+)
 
 /**
  * Mark answer as correct

@@ -28,8 +28,14 @@
          so-cancel-text="'Cancel your edit'"
          so-submit="submitQuestionRevision"
          so-submit-text="'Confirm your edit'"
+         so-delete="deleteQuestion"
+         so-delete-text="'Delete your question'"
          ng-show="shouldShowEditor" ></div>
-        <div so-comments="comments" so-comments-add="submitQuestionComment" ng-show="!shouldShowEditor" so-comments-edit="submitQuestionCommentEdit"></div>
+        <div so-comments="comments" ng-show="!shouldShowEditor"
+         so-comments-add="submitQuestionComment"
+         so-comments-edit="submitQuestionCommentEdit"
+         so-comments-delete="submitQuestionCommentDelete"
+         ></div>
         <div class="answer-count">{{answers.length}} Answers</div>
       </div>
       <div class="user-info">

@@ -27,7 +27,8 @@ angular.module('sugoiOverflow.questions')
 
         canModerate: currentUser.canModerate,
 
-        delete: function deleteQuestion () {
+        deleteQuestion: function () {
+          $location.path('/questions')
           questionsDataService.deleteQuestion($scope.questionId)
             .then(function () {
               $location.path('/questions')
@@ -98,8 +99,15 @@ angular.module('sugoiOverflow.questions')
             })
             .then(loadQuestion)
         },
-        submitQuestionCommentEdit: function(commentId, body) {
+        submitQuestionCommentEdit: function (commentId, body) {
           return questionsDataService.reviseQuestionComment($routeParams.id, commentId, body)
+          .then(function () {
+            return questionsDataService.getQuestion($routeParams.id)
+          })
+          .then(loadQuestion)
+        },
+        submitQuestionCommentDelete: function (commentId) {
+          return questionsDataService.deleteQuestionComment($routeParams.id, commentId)
           .then(function () {
             return questionsDataService.getQuestion($routeParams.id)
           })

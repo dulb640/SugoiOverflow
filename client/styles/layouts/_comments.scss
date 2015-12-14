@@ -20,7 +20,7 @@
     }
     
 
-    .comment-edit, .comment-submit, .comment-cancel {
+    .comment-edit, .comment-submit, .comment-cancel, .comment-delete {
       color: $teal;
       border: 0px;
       border-color: rgba(255, 255, 255, 0);
@@ -35,6 +35,10 @@
     }
 
     .comment-cancel {
+      margin-right: 5px;
+    }
+
+    .comment-submit {
       margin-right: 5px;
     }
 

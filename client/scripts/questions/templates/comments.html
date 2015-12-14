@@ -1,6 +1,6 @@
 <div class="comments">
   <div class="comment" ng-repeat="comment in comments">
-    <div so-comment="comment" so-submit-edit="editComment"></div>
+    <div so-comment="comment" so-submit-edit="editComment" so-comment-delete="deleteComment"></div>
   </div>
   <div class="add-comment">
     <form novalidate class="add-comment-form" name="addCommentForm" ng-submit="submit()">
