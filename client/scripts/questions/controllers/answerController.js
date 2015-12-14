@@ -33,6 +33,10 @@ angular.module('sugoiOverflow.questions')
           return questionsDataService.reviseAnswerComment($scope.questionId, $scope.answer.id, commentId, body)
             .then($scope.update)
         },
+        submitCommentDelete: function (commentId) {
+          return questionsDataService.deleteAnswerComment($scope.questionId, $scope.answer.id, commentId)
+            .then($scope.update)
+        },
         markAsCorrect: function () {
           if ($scope.isOwnQuestion()) {
             questionsDataService.markAnswerAsCorrect($scope.questionId, $scope.answer.id)

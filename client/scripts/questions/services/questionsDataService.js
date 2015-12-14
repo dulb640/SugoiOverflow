@@ -117,12 +117,20 @@ angular.module('sugoiOverflow.questions')
         }
         return promisedHttp('put', url, data) 
       },
+      deleteQuestionComment: function(questionId, commentId) {
+        var url = window.s.sprintf('/api/questions/%s/comment/%s/', questionId, commentId)
+        return promisedHttp('delete', url)
+      },
       reviseAnswerComment: function(questionId, answerId, commentId, comment) {
         var url = window.s.sprintf('/api/questions/%s/answer/%s/comment/%s/', questionId, answerId, commentId)
         var data = {
           body: comment
         }
         return promisedHttp('put', url, data) 
+      },
+      deleteAnswerComment: function(questionId, answerId, commentId) {
+        var url = window.s.sprintf('/api/questions/%s/answer/%s/comment/%s/', questionId, answerId, commentId)
+        return promisedHttp('delete', url) 
       }
     }
     return service

@@ -147,6 +147,30 @@ router.put('/:questionId/answer/:answerId/comment/:commentId',
   }*/
 )
 
+/* Delete comment on answer */
+router.delete('/:questionId/answer/:answerId/comment/:commentId',
+
+  middleWares.getQuestion,
+
+  middleWares.getAnswer,
+
+  function (req, res, next) {
+    req.answer.comments = req.answer.comments.filter(function (comment) {
+      return comment._id != req.params.commentId
+    })
+    next()
+  },
+
+  middleWares.saveQuestionAndSend/*,
+
+  function updateFeed (req, res, next) {
+    userService.updateQuestionsFeed(req.answer.author, req.question, 'Answer has a new comment')
+      .then(function () {
+        next()
+      })
+  }*/
+)
+
 /* Delete answer */
 router.delete('/:questionId/answer/:answerId',
 

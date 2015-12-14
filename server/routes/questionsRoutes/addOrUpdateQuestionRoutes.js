@@ -180,6 +180,43 @@ router.put('/:questionId/comment/:commentId',
   }*/
 )
 
+/* delete comment to question */
+router.delete('/:questionId/comment/:commentId',
+
+  middleWares.getQuestion,
+
+  function (req, res, next) {
+    req.question.comments = req.question.comments.filter(function (comment) {
+      return comment._id != req.params.commentId
+    })
+    next()
+  },
+
+  middleWares.saveQuestionAndSend/*,
+
+  function updateUserAndFeed (req, res, next) {
+    req.user.profile.answered.push(req.question.id)
+    req.user.saveAsync()
+      .catch(function (e) {
+        logger.error('Error saving user', e)
+        return next(e)
+      })
+      .then(function () {
+        var promises = req.question.subscribers
+          .filter(function (sub) {
+            return sub.id !== req.user.id
+          })
+          .map(function (sub) {
+            return userService.updateQuestionsFeed(sub, req.question, 'Question has a new comment')
+          })
+        return Promise.all(promises)
+      })
+      .then(function () {
+        next()
+      })
+  }*/
+)
+
 /**
  * Subscribe to question
  */

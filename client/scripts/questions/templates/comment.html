@@ -21,11 +21,14 @@
       <!--<a class="comment-edit" href="javascript:void(0)" ng-click="toggleCommentEditor()" ng-show="!shouldShowCommentEditor && isOwnComment()">
         Edit
       </a>-->
-      <a class="comment-cancel" href="javascript:void(0)" ng-click="toggleCommentEditor()" ng-show="shouldShowCommentEditor">
+      <button class="comment-cancel" ng-show="shouldShowCommentEditor" ng-click="toggleCommentEditor()" type="button">
         Cancel
-      </a>
+      </button>
       <button class="comment-submit" ng-show="shouldShowCommentEditor" type="submit">
         Submit
+      </button>
+      <button class="comment-delete" ng-show="shouldShowCommentEditor" ng-click="deleteComment(comment.id)" type="button">
+        Delete
       </button>
     </div>
     <div class="footer-details">
