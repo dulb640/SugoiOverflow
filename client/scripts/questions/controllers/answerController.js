@@ -10,11 +10,11 @@ angular.module('sugoiOverflow.questions')
 
       window._.extend($scope, {
         submitAnswerRevision: function() {
-          if ($scope.answerRevisionForm.$invalid || $scope.sendingAnswerRevision) {
+          if ($scope.answerRevisionForm.$invalid || $scope.sendingAnswerChange) {
             return
           }
 
-          $scope.sendingAnswerRevision = true
+          $scope.sendingAnswerChange = true
           questionsDataService.reviseAnswer($scope.questionId, $scope.answer.id, $scope.answerRevision)
             .then($scope.update)
             .then(function () {
@@ -22,7 +22,19 @@ angular.module('sugoiOverflow.questions')
               $scope.answerRevisionForm.$setPristine()
             })
             .finally(function () {
-              $scope.sendingAnswerRevision = false
+              $scope.sendingAnswerChange = false
+            })
+        },
+        submitAnswerDeletion: function() {
+          if ($scope.sendingAnswerChange) {
+            return
+          }
+
+          $scope.sendingAnswerChange = true
+          questionsDataService.deleteAnswer($scope.questionId, $scope.answer.id)
+            .then($scope.update)
+            .finally(function () {
+              $scope.sendingAnswerChange = false
             })
         },
         submitComment: function (body) {

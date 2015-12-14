@@ -65,7 +65,7 @@ router.put('/:questionId/answer/:answerId',
 
   middleWares.getAnswer,
 
-  function editAnswer (req, res, next) {
+  function (req, res, next) {
     req.answer.body = req.body.body
     next()
   },
@@ -92,6 +92,26 @@ router.put('/:questionId/answer/:answerId',
         next()
       })
   }*/
+)
+
+/* Delete answer */
+router.delete('/:questionId/answer/:answerId',
+
+  /*roles(['moderator', 'admin']),*/
+
+  function deleteAnswer (req, res, next) {
+    console.log("Here I stand.")
+    var query = { '_id': req.params.questionId }
+    var action = {'$pull': { 'answers': { _id: req.params.answerId } } }
+    domain.Question.updateAsync(query, action)
+      .then(function () {
+        next()
+      })
+  },
+
+  middleWares.getQuestion,
+
+  middleWares.saveQuestionAndSend,
 )
 
 /* Add comment to answer */
@@ -170,20 +190,6 @@ router.delete('/:questionId/answer/:answerId/comment/:commentId',
       })
   }*/
 )
-
-/* Delete answer */
-router.delete('/:questionId/answer/:answerId',
-
-  roles(['moderator', 'admin']),
-
-  function deleteAnswer (req, res, next) {
-    var query = { 'id': req.params.questionId }
-    var action = {'$pull': { 'answers': { id: req.params.answerId } } }
-    domain.Question.updateAsync(query, action)
-      .then(function () {
-        next()
-      })
-  })
 
 /**
  * Mark answer as correct
