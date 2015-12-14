@@ -18,7 +18,7 @@ function saveQuestionAndSend (req, res, next) {
   req.question.saveAsync()
     .spread(function (savedQuestion) { // have to use spread because callback has two arguments
       return domain.Question.populateAsync(savedQuestion, {
-        path: 'author subscribers upVotes downVotes answers.author comments.author answers.comments.author',
+        path: 'author subscribers people upVotes downVotes answers.author comments.author answers.comments.author',
         select: 'profile username displayName email feed'
       })
     })
