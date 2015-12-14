@@ -31,11 +31,12 @@ angular.module('sugoiOverflow.questions')
 
         canModerate: currentUser.canModerate,
 
-        delete: function deleteQuestion () {
-          questionsDataService.deleteQuestion($scope.questionId)
+        deleteQuestion: function () {
+          $location.path('/questions')
+          /*questionsDataService.deleteQuestion($scope.questionId)
             .then(function () {
               $location.path('/questions')
-            })
+            })*/
         },
         submitQuestionRevision: function () {
           if ($scope.sendingQuestionRevision) {

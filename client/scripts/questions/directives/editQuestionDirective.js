@@ -32,7 +32,9 @@ angular.module('sugoiOverflow.questions')
         cancel: "=soCancel",
         cancelText: "=soCancelText",
         submit: "=soSubmit",
-        submitText: "=soSubmitText"
+        submitText: "=soSubmitText",
+        delete: "=soDelete",
+        deleteText: "=soDeleteText"
       },
       controller: 'editQuestionController'
     }

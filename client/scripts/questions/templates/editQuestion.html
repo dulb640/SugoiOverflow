@@ -89,6 +89,12 @@
         </ng-message>
       </ng-messages>
     </div>
-    <button type="button" class="action-button red" ng-show="cancel != undefined" ng-click="cancel()">{{cancelText}}</button>
-    <button class="form-submit action-button" ng-disabled="editQuestionForm.$submitted && editQuestionForm.$invalid" type="submit">{{submitText}}</button>
+    <div ng-show="!shouldShowconfirm">
+      <button type="button" class="action-button blue" ng-show="cancel != undefined" ng-click="cancel()">{{cancelText}}</button>
+      <button type="submit" class="form-submit action-button" ng-disabled="editQuestionForm.$submitted && editQuestionForm.$invalid">{{submitText}}</button>
+      <button type="button" class="form-submit action-button red" ng-show="delete != undefined" ng-click="shouldShowconfirm = true">{{deleteText}}</button>
+    </div>
+    <div ng-show="shouldShowconfirm">Permanently delete question?</div>
+    <button type="button" class="action-button blue" ng-show="shouldShowconfirm" ng-click="shouldShowconfirm = false">Cancel</button>
+    <button type="button" class="action-button red" ng-show="shouldShowconfirm" ng-click="delete()">Delete</button>
   </form>
