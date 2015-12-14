@@ -73,33 +73,24 @@ router.put('/:questionId',
     next()
   },
 
-  middleWares.saveQuestionAndSend/*,
+  middleWares.saveQuestionAndSend,
 
   function updateUserAndFeed (req, res, next) {
-    req.user.profile.asked.push(req.question.id)
-    req.user.saveAsync()
-      .then(function () {
-        return domain.User.find({email: {$in: req.body.people} })
-          .select('feed')
-          .execAsync()
-          .then(function (people) {
-            if (!people) {
-              return
-            }
-            var promises = people.map(function (person) {
-              return userService.updateQuestionsFeed(person, req.question, 'You have been proposed to answer the question')
-            })
-            return Promise.all(promises)
-          })
+    
+    var promises = req.question.subscribers
+      .filter(function (sub) {
+        return sub.id !== req.user.id
       })
+      .map(function (sub) {
+        return userService.updateQuestionsFeed(sub, req.question, 'Question has been edited')
+      })
+      
+      Promise.all(promises)
       .then(function () {
         next()
       })
-      .catch(function (error) {
-        next(error)
-      })
-  }*/
-  )
+  }
+)
 
 /* Add comment to question */
 router.post('/:questionId/comment',
@@ -155,29 +146,7 @@ router.put('/:questionId/comment/:commentId',
     next()
   },
 
-  middleWares.saveQuestionAndSend/*,
-
-  function updateUserAndFeed (req, res, next) {
-    req.user.profile.answered.push(req.question.id)
-    req.user.saveAsync()
-      .catch(function (e) {
-        logger.error('Error saving user', e)
-        return next(e)
-      })
-      .then(function () {
-        var promises = req.question.subscribers
-          .filter(function (sub) {
-            return sub.id !== req.user.id
-          })
-          .map(function (sub) {
-            return userService.updateQuestionsFeed(sub, req.question, 'Question has a new comment')
-          })
-        return Promise.all(promises)
-      })
-      .then(function () {
-        next()
-      })
-  }*/
+  middleWares.saveQuestionAndSend
 )
 
 /* delete comment to question */
@@ -192,29 +161,7 @@ router.delete('/:questionId/comment/:commentId',
     next()
   },
 
-  middleWares.saveQuestionAndSend/*,
-
-  function updateUserAndFeed (req, res, next) {
-    req.user.profile.answered.push(req.question.id)
-    req.user.saveAsync()
-      .catch(function (e) {
-        logger.error('Error saving user', e)
-        return next(e)
-      })
-      .then(function () {
-        var promises = req.question.subscribers
-          .filter(function (sub) {
-            return sub.id !== req.user.id
-          })
-          .map(function (sub) {
-            return userService.updateQuestionsFeed(sub, req.question, 'Question has a new comment')
-          })
-        return Promise.all(promises)
-      })
-      .then(function () {
-        next()
-      })
-  }*/
+  middleWares.saveQuestionAndSend
 )
 
 /**
