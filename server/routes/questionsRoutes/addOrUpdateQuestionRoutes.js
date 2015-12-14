@@ -246,7 +246,7 @@ router.put('/:questionId/subscribe',
    */
 router.delete('/:questionId',
 
-  roles(['moderator', 'admin']),
+  /*roles(['moderator', 'admin']),*/
 
   function deleteQuestion (req, res, next) {
     logger.info('${req.user.username} initiated deleting question ${req.params.questionId)}')

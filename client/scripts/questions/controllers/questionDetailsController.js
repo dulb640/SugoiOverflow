@@ -33,10 +33,10 @@ angular.module('sugoiOverflow.questions')
 
         deleteQuestion: function () {
           $location.path('/questions')
-          /*questionsDataService.deleteQuestion($scope.questionId)
+          questionsDataService.deleteQuestion($scope.questionId)
             .then(function () {
               $location.path('/questions')
-            })*/
+            })
         },
         submitQuestionRevision: function () {
           if ($scope.sendingQuestionRevision) {

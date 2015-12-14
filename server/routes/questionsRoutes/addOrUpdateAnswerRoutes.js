@@ -100,7 +100,6 @@ router.delete('/:questionId/answer/:answerId',
   /*roles(['moderator', 'admin']),*/
 
   function deleteAnswer (req, res, next) {
-    console.log("Here I stand.")
     var query = { '_id': req.params.questionId }
     var action = {'$pull': { 'answers': { _id: req.params.answerId } } }
     domain.Question.updateAsync(query, action)
