@@ -14,6 +14,7 @@ angular.module('sugoiOverflow.questions')
           var newQuestion = {
             title: $scope.title,
             body: $scope.body,
+            attachments: window._.pluck($scope.attachments, 'text'),
             tags: window._.pluck($scope.tags, 'text'),
             people: window._.pluck($scope.people, 'email')
           }

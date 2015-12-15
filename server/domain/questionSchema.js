@@ -17,6 +17,9 @@ var Question = new Schema({
     type: String,
     required: true
   },
+  attachments: {
+    type: [String]
+  },
   answers: {
     type: [Answer],
     default: []

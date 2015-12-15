@@ -8,6 +8,11 @@ angular.module('sugoiOverflow.questions')
         $scope.questionId = question.id
         $scope.title = question.title
         $scope.body = question.body
+        $scope.attachments = window._.map(question.attachments, function mapTags (attachment) {
+          return {
+            text: attachment
+          }
+        })
         $scope.tags = window._.map(question.tags, function mapTags (tag) {
           return {
             text: tag
@@ -46,6 +51,7 @@ angular.module('sugoiOverflow.questions')
           var newQuestion = {
             title: $scope.editedTitle,
             body: $scope.editedBody,
+            attachments: window._.pluck($scope.editedAttachments, 'text'),
             tags: window._.pluck($scope.editedTags, 'text'),
             people: window._.pluck($scope.editedPeople, 'email')
           }
@@ -120,6 +126,7 @@ angular.module('sugoiOverflow.questions')
         toggleEditor: function() {
           $scope.editedTitle = $scope.title
           $scope.editedBody = $scope.body
+          $scope.editedAttachments = window._.map($scope.attachments)
           $scope.editedTags = window._.map($scope.tags)
           $scope.editedPeople = $scope.propsedPeople
 

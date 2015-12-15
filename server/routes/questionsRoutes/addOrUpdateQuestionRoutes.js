@@ -67,6 +67,7 @@ router.put('/:questionId',
   function editQuestion(req, res, next) {
     req.question.title = req.body.title
     req.question.body = req.body.body
+    req.question.attachments = req.body.attachments
     req.question.tags = req.body.tags
     // KNOWN BUG: proposed people doesn't work
     //req.question.people = req.body.proposedPeople

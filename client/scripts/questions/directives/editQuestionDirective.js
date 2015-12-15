@@ -27,6 +27,7 @@ angular.module('sugoiOverflow.questions')
         question: "=soEditQuestion",
         titleInput: "=soTitle",
         bodyInput: "=soBody",
+        attachmentsInput: "=soAttachments",
         tagsInput: "=soTags",
         peopleInput: "=soPeople",
         cancel: "=soCancel",

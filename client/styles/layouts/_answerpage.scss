@@ -151,3 +151,20 @@
     color: $teal;
   }
 }
+
+.surround-tags {
+  display: flex;
+  flex-flow: row, nowrap;
+  align-items: center;
+}
+.tags-grow {
+  flex-grow: 1;
+}
+
+a.add-from-pc {
+  cursor: pointer;
+  display: inline;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 0px;
+}

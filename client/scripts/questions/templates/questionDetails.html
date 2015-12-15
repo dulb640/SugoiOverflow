@@ -9,6 +9,14 @@
         <div class="title" ng-bind-html="title | wizMarkdownFltr"></div>
         <button class="answer-edit" type="button" ng-click="toggleEditor()" ng-show="isOwnQuestion()"><i class="fa fa-pencil"></i></button>
         <wiz-markdown content="body"></wiz-markdown>
+        <div ng-show="attachments.length !== 0">
+          <div>Attachment:</div>
+          <ul>
+            <div ng-repeat="attachment in attachments">
+              <li><a ng-href="{{attachment.text}}">{{attachment.text}}</a></li>
+            </div>
+          </ul>
+        </div>
         <button ng-hide="isSubscribed()" class="subscribe-button action-button" ng-click="subscribeToQuestion()">Subscribe to Question</button>
         <span class="subscribed-label" ng-show="isSubscribed()">Subscribed!</span>
         <div class="timestamp"  ng-bind="timestamp | date:'medium'"></div>
@@ -22,6 +30,7 @@
         <div so-edit-question=""
          so-title="editedTitle"
          so-body="editedBody"
+         so-attachments="editedAttachments"
          so-tags="editedTags"
          so-people="editedPeople"
          so-cancel="toggleEditor"

@@ -157,6 +157,10 @@ button {
     }
 }
 
+.action-button.add-from-pc, a.action-button.add-from-pc {
+    float: right;
+}
+
 .cancel-button {
     border: none;
     background-color: #fff;

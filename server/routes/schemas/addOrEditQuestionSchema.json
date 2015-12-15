@@ -13,6 +13,13 @@
       "minLength": 10,
       "maxLength": 170
     },
+    "attachments": {
+      "type": "array",
+      "required": false,
+      "items": {
+        "type": "string"
+      }
+    },
     "tags": {
       "type": "array",
       "minItems": 3,
