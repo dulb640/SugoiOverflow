@@ -7,7 +7,7 @@
     <div class="question-container">
       <div class="question-content">
         <div ng-show="!shouldShowEditor">
-          <div class="title" ng-bind-html="title | wizMarkdownFltr"></div>
+          <div class="title" ng-bind-html="title"></div>
           <button class="answer-edit" type="button" ng-click="toggleEditor()" ng-show="isOwnQuestion()"><i class="fa fa-pencil"></i></button>
           <wiz-markdown content="body"></wiz-markdown>
           <button ng-hide="isSubscribed()" class="subscribe-button action-button" ng-click="subscribeToQuestion()">Subscribe to Question</button>
