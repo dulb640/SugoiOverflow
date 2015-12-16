@@ -6,19 +6,20 @@
   <div class="question-section">
     <div class="question-container">
       <div class="question-content">
-        <div class="title" ng-bind-html="title | wizMarkdownFltr"></div>
-        <button class="answer-edit" type="button" ng-click="toggleEditor()" ng-show="isOwnQuestion()"><i class="fa fa-pencil"></i></button>
-        <wiz-markdown content="body"></wiz-markdown>
-        <button ng-hide="isSubscribed()" class="subscribe-button action-button" ng-click="subscribeToQuestion()">Subscribe to Question</button>
-        <span class="subscribed-label" ng-show="isSubscribed()">Subscribed!</span>
-        <div class="timestamp"  ng-bind="timestamp | date:'medium'"></div>
-        <div class="tags">
-          <span class="tag" ng-repeat="tag in tags">{{tag.text}}</span>
+        <div ng-show="!shouldShowEditor">
+          <div class="title" ng-bind-html="title | wizMarkdownFltr"></div>
+          <button class="answer-edit" type="button" ng-click="toggleEditor()" ng-show="isOwnQuestion()"><i class="fa fa-pencil"></i></button>
+          <wiz-markdown content="body"></wiz-markdown>
+          <button ng-hide="isSubscribed()" class="subscribe-button action-button" ng-click="subscribeToQuestion()">Subscribe to Question</button>
+          <span class="subscribed-label" ng-show="isSubscribed()">Subscribed!</span>
+          <div class="timestamp"  ng-bind="timestamp | date:'medium'"></div>
+          <div class="tags">
+            <span class="tag" ng-repeat="tag in tags">{{tag.text}}</span>
+          </div>
+          <div class="tags">
+            <span class="tag" ng-repeat="propsedPerson in proposedPeople">{{propsedPerson.text}}</span>
+          </div>
         </div>
-        <div class="tags">
-          <span class="tag" ng-repeat="propsedPerson in proposedPeople">{{propsedPerson.text}}</span>
-        </div>
-        <!--<button class="action-button" type="button" ng-click="toggleEditor()" ng-show="isOwnQuestion()">{{shouldShowEditor ? 'Cancel Edit' : 'Edit'}}</button>-->
         <div so-edit-question=""
          so-title="editedTitle"
          so-body="editedBody"
