@@ -30,6 +30,7 @@ nconf
     },
     'log-folder': 'logs',
     iis: false,
+    highlightLanguages: true,
     avatars: {
       size: {
         x: 320,
