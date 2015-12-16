@@ -68,7 +68,7 @@ router.get('/:questionId',
 
   function sendQuestion (req, res, next) {
     req.question
-      .populateAsync('author subscribers upVotes downVotes answers.author comments.author answers.comments.author', 'profile username displayName email feed')
+      .populateAsync('author subscribers people upVotes downVotes answers.author comments.author answers.comments.author', 'profile username displayName email feed')
       .then(function (question) {
         res
           .status(200)

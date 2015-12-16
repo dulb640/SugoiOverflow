@@ -23,6 +23,7 @@ router.post('/',
   validate({body: schemas.addOrEditQuestionSchema}),
 
   function createQuestion (req, res, next) {
+    console.log(req)
     var question = new domain.Question(_.extend(req.body, {author: req.user.id}))
     question.subscribers.push(req.user.id)
     req.question = question
@@ -68,8 +69,7 @@ router.put('/:questionId',
     req.question.title = req.body.title
     req.question.body = req.body.body
     req.question.tags = req.body.tags
-    // KNOWN BUG: proposed people doesn't work
-    //req.question.people = req.body.proposedPeople
+    req.question.people = req.body.people
     next()
   },
 

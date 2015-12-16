@@ -74,7 +74,7 @@ var User = new Schema({
 })
 User.set('toJSON', {
   transform: function (doc, ret) {
-    delete ret._id
+    //delete ret._id
     delete ret.id
 
     delete ret.salt
