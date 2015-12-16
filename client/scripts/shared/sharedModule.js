@@ -11,14 +11,8 @@ angular.module('sugoiOverflow.shared', [
     'sugoiOverflow.settings',
     'sugoiOverflow.templates',
     'sugoiOverflow.auth'])
-.run(function (configService, $rootScope, $document, settings) {
+.run(function (configService, $rootScope, $document) {
   'use strict'
-
-  if (settings.highlightingLanguages !== 'undefined' && settings.highlightingLanguages !== 'all') {
-    hljs.configure({languages: settings.highlightingLanguages})
-  }
-
-
   function updateTitle (title) {
     $document[0].title = title
   }
