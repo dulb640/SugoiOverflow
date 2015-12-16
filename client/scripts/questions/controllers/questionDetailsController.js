@@ -4,7 +4,8 @@ angular.module('sugoiOverflow.questions')
     function ($scope, $q, $routeParams, $location, questionsDataService, currentUser) {
       'use strict'
 
-      function loadQuestion (question) {
+      function loadQuestion (question) { 
+
         $scope.questionId = question.id
         $scope.title = question.title
         $scope.body = question.body
@@ -118,6 +119,7 @@ angular.module('sugoiOverflow.questions')
           .then(loadQuestion)
         },
         toggleEditor: function() {
+
           $scope.editedTitle = $scope.title
           $scope.editedBody = $scope.body
           $scope.editedTags = window._.map($scope.tags)
