@@ -14,6 +14,7 @@ router.get('/', function (req, res, next) {
       title: config('branding:title'),
       logo: config('branding:logo')
     },
+    highlightLanguages: config('highlightLanguages'),
     version: packageJson.version
   }
 
