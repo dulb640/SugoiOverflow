@@ -11,7 +11,7 @@
     <div class="author-karma">{{answer.author.profile.karma}}</div>
   </div>
   <div class="answer-content">
-    <button class="answer-edit" type="button" ng-click="toggleEditor()" ng-show="isOwnAnswer()"><i class="fa fa-pencil"></i></button>
+    <button class="answer-edit" type="button" ng-click="toggleEditor()" ng-show="isOwnAnswer() && !answer.correct"><i class="fa fa-pencil"></i></button>
     <div class="body markdown-output"  ng-bind-html="answer.body | wizMarkdownFltr"></div>
     <div class="timestamp"  ng-bind="answer.timestamp | date:'medium'"></div>
     <!--<button class="action-button" type="button" ng-click="toggleEditor()" ng-show="isOwnAnswer()">{{shouldShowEditor ? 'Cancel Edit' : 'Edit'}}</button>-->
