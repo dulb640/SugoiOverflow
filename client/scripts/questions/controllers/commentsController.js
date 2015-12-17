@@ -7,10 +7,9 @@
  */
 angular.module('sugoiOverflow.questions')
   .controller('commentsController',
-    function ($scope) {
+    function ($scope, $element, $timeout) {
       'use strict'
 
-      /* I (Dean) don't know why this is not in a "window._extend(...)"*/
       $scope.submit = function () {
         if ($scope.addCommentForm.$invalid || $scope.sending) {
           return
@@ -24,7 +23,30 @@ angular.module('sugoiOverflow.questions')
           })
           .finally(function () {
             $scope.sending = false
+            $scope.shouldShowAddBox = false
           })
       }
+      window._.extend($scope, {
+        toggleAddBox: function () {
+          $scope.shouldShowAddBox = !$scope.shouldShowAddBox
+        }
+      })
+
+      // The $watch is fired when the text area should show, but
+      // before it is actually showing. Focusing only works if the
+      // box is visible. Setting a 0 millisecond timer allows the
+      // box to be actually shown before focusing on it.
+
+      var textBox = $element.find('.addCommentBox')
+      var timer
+      $scope.$watch('shouldShowAddBox', function (value) {
+        if (value === true) {
+          timer = $timeout(function () {
+            textBox[0].focus()
+          }, 0)
+        }
+      })
+
+
     }
   )

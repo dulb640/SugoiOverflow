@@ -32,6 +32,10 @@
          so-delete="deleteQuestion"
          so-delete-text="'Delete your question'"
          ng-show="shouldShowEditor" ></div>
+        <div class="comments-header" ng-show="comments.length !== 0">
+          <br>
+          Comments:
+        </div>
         <div so-comments="comments" ng-show="!shouldShowEditor"
          so-comments-add="submitQuestionComment"
          so-comments-edit="submitQuestionCommentEdit"
