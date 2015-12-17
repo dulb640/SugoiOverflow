@@ -14,6 +14,10 @@
         <div class="tags">
           <span class="tag" ng-repeat="tag in tags">{{tag.text}}</span>
         </div>
+        <div class="comments-header" ng-show="comments.length !== 0">
+          <br>
+          Comments:
+        </div>
         <div so-comments="comments" so-comments-add="submitQuestionComment"></div>
         <div class="answer-count">{{answers.length}} Answers</div>
       </div>
