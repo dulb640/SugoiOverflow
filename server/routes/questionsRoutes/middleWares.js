@@ -18,7 +18,7 @@ function saveQuestionAndSend (req, res, next) {
   req.question.saveAsync()
     .spread(function (savedQuestion) { // have to use spread because callback has two arguments
       return domain.Question.populateAsync(savedQuestion, {
-        path: 'author subscribers upVotes downVotes answers.author comments.author answers.comments.author',
+        path: 'author subscribers people upVotes downVotes answers.author comments.author answers.comments.author',
         select: 'profile username displayName email feed'
       })
     })
@@ -55,9 +55,29 @@ function getAnswer (req, res, next) {
   next()
 }
 
+function getQuestionComment (req, res, next) {
+  var comment = req.question.comments.id(req.params.commentId)
+  if (!comment) {
+    return next(new errors.NotFoundError('Comment was not found'))
+  }
+  req.comment = comment
+  next()
+}
+
+function getAnswerComment (req, res, next) {
+  var comment = req.answer.comments.id(req.params.commentId)
+  if (!comment) {
+    return next(new errors.NotFoundError('Comment was not found'))
+  }
+  req.comment = comment
+  next()
+}
+
 module.exports = {
   getQuestion: getQuestion,
   getAnswer: getAnswer,
+  getQuestionComment: getQuestionComment,
+  getAnswerComment: getAnswerComment,
   saveQuestionAndSend: saveQuestionAndSend,
   getUserByUsername: getUserByUsername
 }

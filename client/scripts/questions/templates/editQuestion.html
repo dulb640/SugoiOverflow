@@ -1,0 +1,100 @@
+<form novalidate class="editQuestion-form" name="editQuestionForm" ng-submit="editQuestionForm.$valid && submitAndReset()">
+    <div class="form-group">
+        <input class="form-control" required minlength="10" maxlength=170 type="text" name="title" placeholder="Title" ng-model="titleInput"/>
+    </div>
+    <div>
+      <wiz-markdown-editor content="bodyInput">
+        <wiz-toolbar-button command="bold" class="markdown-button"><i class="fa fa-bold"></i> Bold</wiz-toolbar-button>
+        <wiz-toolbar-button command="italic" class="markdown-button"><i class="fa fa-italic"></i> Italic</wiz-toolbar-button>
+        <wiz-toolbar-button command="heading" class="markdown-button"><i class="fa fa-header"></i> Heading</wiz-toolbar-button>
+        <wiz-toolbar-button command="code" class="markdown-button"><i class="fa fa-code"></i> Code</wiz-toolbar-button>
+        <wiz-toolbar-button command="ullist" class="markdown-button"><i class="fa fa-list"></i> UList</wiz-toolbar-button>
+        <wiz-toolbar-button command="ollist" class="markdown-button"><i class="fa fa-list-ol"></i> OList</wiz-toolbar-button>
+        <wiz-toolbar-button command="link" class="markdown-button"><i class="fa fa-link"></i> Link</wiz-toolbar-button>
+        <wiz-toolbar-button command="img" class="markdown-button"><i class="fa fa-picture-o"></i> Img</wiz-toolbar-button>
+      </wiz-markdown-editor>
+      <input type="text" name="bodyField" ng-model="bodyInput" class="hidden" required minlength="30" maxlength=10000/>
+    </div>
+    <wiz-markdown content="bodyInput"></wiz-markdown>
+    <div>
+      <tags-input name="tags" min-tags="3" max-tags="10" ng-model="tagsInput" min-length="3" max-length="30" required display-property="text" on-tag-added="formatTag($tag)" placeholder="Add a tag">
+        <auto-complete source="getTagsAutocomlete($query)" ></auto-complete>
+      </tags-input>
+      <div class="tags suggested" ng-show="suggestedTags.length > 0">
+        <label for="suggestedTags">Suggested tags:</label>
+        <span class="tag" ng-click="addTag(tag)" ng-repeat="tag in suggestedTags">{{tag}} <i class="fa fa-plus"></i></span>
+      </div>
+    </div>
+    <div>
+      <tags-input name="people" max-tags="5" min-length="3" max-length="30" ng-model="peopleInput" display-property="email" placeholder="Emails of people who you think can answer (optional)" allowed-tags-pattern="\S+@\S+\.\S+">
+        <auto-complete source="getPeopleAutocomplete($query)" ></auto-complete>
+      </tags-input>
+      <div class="tags suggested" ng-show="suggestedPeople.length > 0">
+        <label for="suggestedPeople">Suggested people:</label>
+        <span class="tag" ng-click="addPerson(person)" ng-repeat="person in suggestedPeople track by $index">{{person.email}} <i class="fa fa-plus"></i></span>
+      </div>
+    </div>
+    <div class="validation-messages" ng-show="editQuestionForm.$invalid && editQuestionForm.$submitted">
+      <ng-messages for="editQuestionForm.title.$error">
+        <ng-message when="required">
+          <p>Please enter title</p>
+        </ng-message>
+        <ng-message when="minlength">
+          <p>Title is too short</p>
+        </ng-message>
+        <ng-message when="maxlength">
+          <p>Title is too long</p>
+        </ng-message>
+      </ng-messages>
+      <ng-messages for="editQuestionForm.bodyField.$error">
+        <ng-message when="required">
+          <p>Please enter your question</p>
+        </ng-message>
+        <ng-message when="minlength">
+          <p>Your question is too short</p>
+        </ng-message>
+        <ng-message when="maxlength">
+          <p>Your question is too long</p>
+        </ng-message>
+      </ng-messages>
+      <ng-messages for="editQuestionForm.tags.$error">
+        <ng-message when="minTags">
+          <p>Please enter at least three tags</p>
+        </ng-message>
+        <ng-message when="maxTags">
+          <p>Please enter at most ten tags</p>
+        </ng-message>
+        <ng-message when="minLength">
+          <p>Your tag is too short</p>
+        </ng-message>
+        <ng-message when="maxLength">
+          <p>Your tag is too long</p>
+        </ng-message>
+        <ng-message when="leftoverText">
+          <p>Please finish typing a tag or remove any leftover text</p>
+        </ng-message>
+      </ng-messages>
+      <ng-messages for="editQuestionForm.people.$error">
+        <ng-message when="maxTags">
+          <p>Please enter at most five people</p>
+        </ng-message>
+        <ng-message when="minLength">
+          <p>Person's email is too short</p>
+        </ng-message>
+        <ng-message when="maxLength">
+          <p>Person's email is too long</p>
+        </ng-message>
+        <ng-message when="leftoverText">
+          <p>Please finish typing a proposed person's email or remove any leftover text</p>
+        </ng-message>
+      </ng-messages>
+    </div>
+    <div ng-show="!shouldShowconfirm">
+      <button type="button" class="action-button blue" ng-show="cancel != undefined" ng-click="cancel()">{{cancelText}}</button>
+      <button type="submit" class="form-submit action-button" ng-disabled="editQuestionForm.$submitted && editQuestionForm.$invalid">{{submitText}}</button>
+      <button type="button" class="form-submit action-button red" ng-show="delete != undefined" ng-click="shouldShowconfirm = true">{{deleteText}}</button>
+    </div>
+    <div ng-show="shouldShowconfirm">Permanently delete question?</div>
+    <button type="button" class="action-button blue" ng-show="shouldShowconfirm" ng-click="shouldShowconfirm = false">Cancel</button>
+    <button type="button" class="action-button red" ng-show="shouldShowconfirm" ng-click="delete()">Delete</button>
+  </form>

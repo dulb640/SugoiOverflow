@@ -68,7 +68,6 @@ angular.module('sugoiOverflow.questions')
         }
         return promisedHttp('post', url, data)
       },
-
       addQuestionComment: function (questionId, comment) {
         var url = window.s.sprintf('/api/questions/%s/comment', questionId)
         var data = {
@@ -98,6 +97,43 @@ angular.module('sugoiOverflow.questions')
       markAnswerAsCorrect: function (questionId, answerId) {
         var url = window.s.sprintf('/api/questions/%s/answer/%s/correct', questionId, answerId)
         return promisedHttp('put', url)
+      },
+      reviseQuestion: function(questionId, question) {
+        var url = window.s.sprintf('/api/questions/%s/', questionId)
+        return promisedHttp('put', url, question)
+      },
+      reviseAnswer: function(questionId, answerId, answer) {
+        var url = window.s.sprintf('/api/questions/%s/answer/%s/', questionId, answerId)
+        var data = {
+          body: answer
+        }
+        return promisedHttp('put', url, data)
+      },
+      deleteAnswer: function(questionId, answerId) {
+        var url = window.s.sprintf('/api/questions/%s/answer/%s/', questionId, answerId)
+        return promisedHttp('delete', url)
+      },
+      reviseQuestionComment: function(questionId, commentId, comment) {
+        var url = window.s.sprintf('/api/questions/%s/comment/%s/', questionId, commentId)
+        var data = {
+          body: comment
+        }
+        return promisedHttp('put', url, data) 
+      },
+      deleteQuestionComment: function(questionId, commentId) {
+        var url = window.s.sprintf('/api/questions/%s/comment/%s/', questionId, commentId)
+        return promisedHttp('delete', url)
+      },
+      reviseAnswerComment: function(questionId, answerId, commentId, comment) {
+        var url = window.s.sprintf('/api/questions/%s/answer/%s/comment/%s/', questionId, answerId, commentId)
+        var data = {
+          body: comment
+        }
+        return promisedHttp('put', url, data) 
+      },
+      deleteAnswerComment: function(questionId, answerId, commentId) {
+        var url = window.s.sprintf('/api/questions/%s/answer/%s/comment/%s/', questionId, answerId, commentId)
+        return promisedHttp('delete', url) 
       }
     }
     return service

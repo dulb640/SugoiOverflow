@@ -11,14 +11,48 @@
     <div class="author-karma">{{answer.author.profile.karma}}</div>
   </div>
   <div class="answer-content">
+    <button class="answer-edit" type="button" ng-click="toggleEditor()" ng-show="isOwnAnswer() && !answer.correct"><i class="fa fa-pencil"></i></button>
     <div class="body markdown-output"  ng-bind-html="answer.body | wizMarkdownFltr"></div>
     <div class="timestamp"  ng-bind="answer.timestamp | date:'medium'"></div>
-    <div so-comments="answer.comments" so-comments-add="submitComment"></div>
+    <!--<button class="action-button" type="button" ng-click="toggleEditor()" ng-show="isOwnAnswer()">{{shouldShowEditor ? 'Cancel Edit' : 'Edit'}}</button>-->
+    <form novalidate class="answer-question-form" name="answerRevisionForm" ng-show="shouldShowEditor" ng-submit="submitAnswerRevision()">
+      <div>
+        <wiz-markdown-editor content="answerRevision">
+          <wiz-toolbar-button command="bold" class="markdown-button"><i class="fa fa-bold"></i> Bold</wiz-toolbar-button>
+          <wiz-toolbar-button command="italic" class="markdown-button"><i class="fa fa-italic"></i> Italic</wiz-toolbar-button>
+          <wiz-toolbar-button command="heading" class="markdown-button"><i class="fa fa-header"></i> Heading</wiz-toolbar-button>
+          <wiz-toolbar-button command="code" class="markdown-button"><i class="fa fa-code"></i> Code</wiz-toolbar-button>
+          <wiz-toolbar-button command="ullist" class="markdown-button"><i class="fa fa-list"></i> UList</wiz-toolbar-button>
+          <wiz-toolbar-button command="ollist" class="markdown-button"><i class="fa fa-list-ol"></i> OList</wiz-toolbar-button>
+          <wiz-toolbar-button command="link" class="markdown-button"><i class="fa fa-link"></i> Link</wiz-toolbar-button>
+          <wiz-toolbar-button command="img" class="markdown-button"><i class="fa fa-picture-o"></i> Img</wiz-toolbar-button>
+        </wiz-markdown-editor>
+      </div>
+      <wiz-markdown content="answerRevision" class="markdown-output"></wiz-markdown>
+      <input type="text" name="answerRevisionInput" ng-model="answerRevision" class="hidden" required minlength="30" maxlength=10000/>
+      <div class="validation-messages" ng-show="!answerRevisionForm.$valid && answerRevisionForm.$submitted">
+        <ng-messages for="answerRevisionForm.answerRevisionInput.$error">
+          <ng-message when="required">
+            <p>Please enter answer</p>
+          </ng-message>
+          <ng-message when="minlength">
+            <p>Answer is too short</p>
+          </ng-message>
+          <ng-message when="maxlength">
+            <p>Answer is too long</p>
+          </ng-message>
+        </ng-messages>
+      </div>
+      <button class="action-button blue" ng-click="toggleEditor()">Cancel your edit</button>
+      <button class="form-submit action-button" type="submit">Confirm your edit</button>
+      <button class="action-button red" type="button" ng-click="submitAnswerDeletion()">Delete your post</button>
+    </form>
+    <div so-comments="answer.comments" so-comments-add="submitComment", so-comments-edit="submitCommentEdit" so-comments-delete="submitCommentDelete" ng-show="!shouldShowEditor"></div>
   </div>
   <div class="score-container">
-    <button class="action-button upvote-button" type="button" ng-disabled="votingInProgress || hasUpVoted() || authorIsCurrentUser()" ng-click="upvote()"><span class="fa fa-thumbs-up"></span></button>
+    <button class="action-button" type="button" ng-disabled="votingInProgress || hasUpVoted() || isOwnAnswer()" ng-click="upvote()"><span class="fa fa-thumbs-up"></span></button>
     <div class="score">{{answer.score}}</div>
-    <button class="action-button downvote-button" type="button" ng-disabled="votingInProgress || hasDownVoted() || authorIsCurrentUser()" ng-click="downvote()"><span class="fa fa-thumbs-down"></span></button>
+    <button class="action-button red" type="button" ng-disabled="votingInProgress || hasDownVoted() || isOwnAnswer()" ng-click="downvote()"><span class="fa fa-thumbs-down"></span></button>
     <button class="action-button correct" type="button" ng-click="markAsCorrect()" ng-show="isOwnQuestion() && !answer.correct">Mark As Correct</button>
     <div class="correct-label" ng-show="answer.correct">Correct!</div>
   </div>

@@ -9,12 +9,24 @@ log-folder: "logs"
 mongo: "mongodb://username:password@localhost:10000/dbname"
 #Indicates if website is being hosted inside of Interent Information Services
 iis: false
+
+# A list of languages to higlight in code sections
+# highlight-languages:
+#   - 'Python'
+#   - 'Java'
+#   - 'Javascript'
+# Turn highlighting off
+# highlight-languages: false
+# Turn highlighting on for all availabel languages
+highlight-languages: true
+
 avatars:
   size:
     x: 320
     y: 320
   quality: 90
   format: 'jpeg'
+
 auth:
   active-directory: false
   ldap:

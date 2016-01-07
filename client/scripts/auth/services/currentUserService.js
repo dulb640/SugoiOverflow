@@ -26,6 +26,11 @@ angular.module('sugoiOverflow.auth')
         set: function (newValue) { $localStorage.email = newValue }
       })
 
+      Object.defineProperty(service, 'userId', {
+        get: function () { return $localStorage.userId },
+        set: function (newValue) { $localStorage.userId = newValue }
+      })
+
       Object.defineProperty(service, 'username', {
         get: function () { return $localStorage.username },
         set: function (newValue) { $localStorage.username = newValue }

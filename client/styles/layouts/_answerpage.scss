@@ -149,3 +149,13 @@
     text-decoration: underline;
   }
 }
+
+.answer-edit {
+  border: 0px;
+  border-color: rgba(255, 255, 255, 0);
+  background-color: rgba(255, 255, 255, 0);
+  float: right;
+  &:hover {
+    color: $teal;
+  }
+}

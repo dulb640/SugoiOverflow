@@ -9,6 +9,7 @@ angular.module('sugoiOverflow.questions')
   .controller('commentsController',
     function ($scope, $element, $timeout) {
       'use strict'
+
       $scope.submit = function () {
         if ($scope.addCommentForm.$invalid || $scope.sending) {
           return

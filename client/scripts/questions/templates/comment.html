@@ -1,0 +1,41 @@
+<button class="answer-edit" type="button" ng-click="toggleCommentEditor()" ng-show="isOwnComment()"><i class="fa fa-pencil"></i></button>
+<div class="comment-body" ng-show="!shouldShowCommentEditor">{{comment.body}}</div>
+<form novalidate class="edit-comment-form" name="editCommentForm" ng-submit="submitCommentRevision()">
+  <textarea type="text" name="body" required minlength=30 maxlength=10000 ng-model="commentRevision" ng-show="shouldShowCommentEditor"></textarea>
+  <div class="validation-messages" ng-show="!editCommentForm.$valid && editCommentForm.$submitted">
+    <ng-messages for="editCommentForm.body.$error">
+      <ng-message when="required">
+        <p>Please enter comment</p>
+      </ng-message>
+      <ng-message when="minlength">
+        <p>Comment is too short</p>
+      </ng-message>
+      <ng-message when="maxlength">
+        <p>Comment is too long</p>
+      </ng-message>
+    </ng-messages>
+  </div>
+  <!--<button class="form-submit action-button" type="submit">Add Comment</button>-->
+  <div class="comment-footer">
+    <div class="comment-actions">
+      <!--<a class="comment-edit" href="javascript:void(0)" ng-click="toggleCommentEditor()" ng-show="!shouldShowCommentEditor && isOwnComment()">
+        Edit
+      </a>-->
+      <button class="comment-cancel" ng-show="shouldShowCommentEditor" ng-click="toggleCommentEditor()" type="button">
+        Cancel
+      </button>
+      <button class="comment-submit" ng-show="shouldShowCommentEditor" type="submit">
+        Submit
+      </button>
+      <button class="comment-delete" ng-show="shouldShowCommentEditor" ng-click="deleteComment(comment.id)" type="button">
+        Delete
+      </button>
+    </div>
+    <div class="footer-details">
+      <a class="comment-author" ng-href="/#/profile/{{comment.author.username}}">
+        <span>{{comment.author.displayName}}</span>
+      </a>
+      <span class="comment-timestap" ng-bind="comment.timestamp | date:'medium'"></span>
+    </div>
+  </div>
+</form>

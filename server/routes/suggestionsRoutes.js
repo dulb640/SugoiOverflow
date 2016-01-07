@@ -1,3 +1,10 @@
+/**
+ * How tag suggestions works:
+ * Look at the question and extract 6 most common words that occur at least 2 times.
+ * Search the database for questions that have the same words.
+ * Return the tags of those questions.
+ */
+
 'use strict'
 
 var domain = require('../domain')
@@ -9,7 +16,7 @@ var logger = require('../logger')
 var router = express.Router()
 
 router.post('/tags', function (req, res, next) {
-  var text = req.body.question
+  var text = req.body.title + " " + req.body.question
   var words = gramophone.extract(text, {limit: 6, min: 2})
   var search = words.join(' ')
   domain.Question
@@ -37,7 +44,7 @@ router.post('/tags', function (req, res, next) {
 })
 
 router.post('/people', function (req, res, next) {
-  var text = req.body.question
+  var text = req.body.title + " " + req.body.question
   var words = gramophone.extract(text, {limit: 6, min: 2})
   var search = words.join(' ')
   domain.Question

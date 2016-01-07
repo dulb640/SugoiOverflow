@@ -54,6 +54,64 @@ router.post('/:questionId/answer',
       })
   })
 
+/**
+ * Edit answer
+ */
+router.put('/:questionId/answer/:answerId',
+
+  validate({body: schemas.addOrEditAnswerSchema}),
+
+  middleWares.getQuestion,
+
+  middleWares.getAnswer,
+
+  function (req, res, next) {
+    req.answer.body = req.body.body
+    next()
+  },
+
+  middleWares.saveQuestionAndSend,
+
+  function updateUserQuestionsFeed (req, res, next) {
+    req.user.saveAsync()
+      .then(function () {
+        if (!req.question.subscribers) {
+          return
+        }
+        var promises = req.question.subscribers
+          .filter(function (sub) {
+            return sub.id !== req.user.id
+          })
+          .map(function (sub) {
+            return userService.updateQuestionsFeed(sub, req.question, 'Question has an edited answer')
+          })
+        return Promise.all(promises)
+      })
+      .then(function () {
+        next()
+      })
+  }
+)
+
+/* Delete answer */
+router.delete('/:questionId/answer/:answerId',
+
+  /*roles(['moderator', 'admin']),*/
+
+  function deleteAnswer (req, res, next) {
+    var query = { '_id': req.params.questionId }
+    var action = {'$pull': { 'answers': { _id: req.params.answerId } } }
+    domain.Question.updateAsync(query, action)
+      .then(function () {
+        next()
+      })
+  },
+
+  middleWares.getQuestion,
+
+  middleWares.saveQuestionAndSend,
+)
+
 /* Add comment to answer */
 router.post('/:questionId/answer/:answerId/comment',
 
@@ -81,19 +139,48 @@ router.post('/:questionId/answer/:answerId/comment',
   }
 )
 
-/* Delete anser */
-router.delete('/:questionId/answer/:answerId',
+/* Edit comment on answer */
+router.put('/:questionId/answer/:answerId/comment/:commentId',
 
-  roles(['moderator', 'admin']),
+  validate({body: schemas.addOrEditCommentSchema}),
 
-  function deleteAnswer (req, res, next) {
-    var query = { 'id': req.params.questionId }
-    var action = {'$pull': { 'answers': { id: req.params.answerId } } }
-    domain.Question.updateAsync(query, action)
+  middleWares.getQuestion,
+
+  middleWares.getAnswer,
+
+  middleWares.getAnswerComment,
+
+  function (req, res, next) {
+    req.comment.body = req.body.body
+    next()
+  },
+
+  middleWares.saveQuestionAndSend,
+
+  function updateFeed (req, res, next) {
+    userService.updateQuestionsFeed(req.answer.author, req.question, 'Answer has an edited comment')
       .then(function () {
         next()
       })
-  })
+  }
+)
+
+/* Delete comment on answer */
+router.delete('/:questionId/answer/:answerId/comment/:commentId',
+
+  middleWares.getQuestion,
+
+  middleWares.getAnswer,
+
+  function (req, res, next) {
+    req.answer.comments = req.answer.comments.filter(function (comment) {
+      return comment._id != req.params.commentId
+    })
+    next()
+  },
+
+  middleWares.saveQuestionAndSend
+)
 
 /**
  * Mark answer as correct
@@ -111,7 +198,20 @@ router.put('/:questionId/answer/:answerId/correct',
   middleWares.saveQuestionAndSend,
 
   function updateFeed (req, res, next) {
-    userService.updateQuestionsFeed(req.answer.author, req.question, 'Answer marked as correct', 5)
+    userService.updateQuestionsFeed(req.answer.author, req.question, 'Your answer marked as correct', 5)
+      .then(function () {
+        if (!req.question.subscribers) {
+          return
+        }
+        var promises = req.question.subscribers
+          .filter(function (sub) {
+            return (sub.id !== req.user.id && sub.id !== req.answer.author)
+          })
+          .map(function (sub) {
+            return userService.updateQuestionsFeed(sub, req.question, 'Answer has been marked as correct')
+          })
+        return Promise.all(promises)
+      })
       .then(function () {
         next()
       })
@@ -146,7 +246,7 @@ router.put('/:questionId/answer/:answerId/upvote',
       return next()
     }
 
-    userService.updateQuestionsFeed(req.answer.author, req.question, 'Answer is upvoted', 1)
+    userService.updateQuestionsFeed(req.answer.author, req.question, 'Answer was upvoted', 1)
       .then(function () {
         next()
       })
@@ -181,7 +281,7 @@ router.put('/:questionId/answer/:answerId/downvote',
       return next()
     }
 
-    userService.updateQuestionsFeed(req.answer.author, req.question, 'Answer is downvoted', -1)
+    userService.updateQuestionsFeed(req.answer.author, req.question, 'Answer was downvoted', -1)
       .then(function () {
         next()
       })

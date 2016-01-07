@@ -23,6 +23,7 @@ router.post('/',
   validate({body: schemas.addOrEditQuestionSchema}),
 
   function createQuestion (req, res, next) {
+    console.log(req)
     var question = new domain.Question(_.extend(req.body, {author: req.user.id}))
     question.subscribers.push(req.user.id)
     req.question = question
@@ -56,6 +57,41 @@ router.post('/',
       })
   })
 
+/**
+ * Edit question
+ */
+router.put('/:questionId',
+  validate({body: schemas.addOrEditQuestionSchema}),
+
+  middleWares.getQuestion,
+
+  function editQuestion(req, res, next) {
+    req.question.title = req.body.title
+    req.question.body = req.body.body
+    req.question.tags = req.body.tags
+    req.question.people = req.body.people
+    next()
+  },
+
+  middleWares.saveQuestionAndSend,
+
+  function updateUserAndFeed (req, res, next) {
+    
+    var promises = req.question.subscribers
+      .filter(function (sub) {
+        return sub.id !== req.user.id
+      })
+      .map(function (sub) {
+        return userService.updateQuestionsFeed(sub, req.question, 'Question has been edited')
+      })
+      
+      Promise.all(promises)
+      .then(function () {
+        next()
+      })
+  }
+)
+
 /* Add comment to question */
 router.post('/:questionId/comment',
 
@@ -63,7 +99,7 @@ router.post('/:questionId/comment',
 
   middleWares.getQuestion,
 
-  function (req, res, next) {
+  function addComment (req, res, next) {
     req.question.comments.push({
       author: req.user.id,
       body: req.body.body
@@ -96,6 +132,38 @@ router.post('/:questionId/comment',
   }
 )
 
+/* Edit comment to question */
+router.put('/:questionId/comment/:commentId',
+
+  validate({body: schemas.addOrEditCommentSchema}),
+
+  middleWares.getQuestion,
+
+  middleWares.getQuestionComment,
+
+  function (req, res, next) {
+    req.comment.body = req.body.body
+    next()
+  },
+
+  middleWares.saveQuestionAndSend
+)
+
+/* delete comment to question */
+router.delete('/:questionId/comment/:commentId',
+
+  middleWares.getQuestion,
+
+  function (req, res, next) {
+    req.question.comments = req.question.comments.filter(function (comment) {
+      return comment._id != req.params.commentId
+    })
+    next()
+  },
+
+  middleWares.saveQuestionAndSend
+)
+
 /**
  * Subscribe to question
  */
@@ -125,7 +193,7 @@ router.put('/:questionId/subscribe',
    */
 router.delete('/:questionId',
 
-  roles(['moderator', 'admin']),
+  /*roles(['moderator', 'admin']),*/
 
   function deleteQuestion (req, res, next) {
     logger.info('${req.user.username} initiated deleting question ${req.params.questionId)}')

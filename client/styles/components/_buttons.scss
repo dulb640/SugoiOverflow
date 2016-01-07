@@ -111,54 +111,6 @@ button {
     }
 }
 
-.action-button.upvote-button, a.action-button.upvote-button {
-    background-color: $green-light;
-
-    &:hover{
-        border-color: $green-light;
-        //background-color: rgba(255, 255, 255, 0);
-        background-color: #fff;
-        color: $green-light;
-
-        &.icon-add{
-            @extend .icon-add;
-        }
-    }
-
-    &.disabled,&:disabled{
-        background-color: #f0f0f0;
-        &:hover{
-            border-color: rgba(255, 255, 255, 0);
-            background-color: #f0f0f0;
-            color: #fff;
-        }
-    }
-}
-
-.action-button.downvote-button, a.action-button.downvote-button {
-    background-color: $red;
-
-    &:hover{
-        border-color: $red;
-        //background-color: rgba(255, 255, 255, 0);
-        background-color: #fff;
-        color: $red;
-
-        &.icon-add{
-            @extend .icon-add;
-        }
-    }
-
-    &.disabled,&:disabled{
-        background-color: #f0f0f0;
-        &:hover{
-            border-color: rgba(255, 255, 255, 0);
-            background-color: #f0f0f0;
-            color: #fff;
-        }
-    }
-}
-
 .action-button.blue, a.action-button.blue {
     background-color: $teal;
 
@@ -170,6 +122,14 @@ button {
 
         &.icon-add{
             @extend .icon-add;
+        }
+    }
+    &.disabled,&:disabled{
+        background-color: #f0f0f0;
+        &:hover{
+            border-color: rgba(255, 255, 255, 0);
+            background-color: #f0f0f0;
+            color: #fff;
         }
     }
 }
@@ -185,6 +145,14 @@ button {
 
         &.icon-add{
             @extend .icon-add;
+        }
+    }
+    &.disabled,&:disabled{
+        background-color: #f0f0f0;
+        &:hover{
+            border-color: rgba(255, 255, 255, 0);
+            background-color: #f0f0f0;
+            color: #fff;
         }
     }
 }

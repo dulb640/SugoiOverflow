@@ -9,8 +9,44 @@ angular.module('sugoiOverflow.questions')
       'use strict'
 
       window._.extend($scope, {
+        submitAnswerRevision: function() {
+          if ($scope.answerRevisionForm.$invalid || $scope.sendingAnswerChange) {
+            return
+          }
+
+          $scope.sendingAnswerChange = true
+          questionsDataService.reviseAnswer($scope.questionId, $scope.answer.id, $scope.answerRevision)
+            .then($scope.update)
+            .then(function () {
+              $scope.answerRevision = ''
+              $scope.answerRevisionForm.$setPristine()
+            })
+            .finally(function () {
+              $scope.sendingAnswerChange = false
+            })
+        },
+        submitAnswerDeletion: function() {
+          if ($scope.sendingAnswerChange) {
+            return
+          }
+
+          $scope.sendingAnswerChange = true
+          questionsDataService.deleteAnswer($scope.questionId, $scope.answer.id)
+            .then($scope.update)
+            .finally(function () {
+              $scope.sendingAnswerChange = false
+            })
+        },
         submitComment: function (body) {
           return questionsDataService.addAnswerComment($scope.questionId, $scope.answer.id, body)
+            .then($scope.update)
+        },
+        submitCommentEdit: function (commentId, body) {
+          return questionsDataService.reviseAnswerComment($scope.questionId, $scope.answer.id, commentId, body)
+            .then($scope.update)
+        },
+        submitCommentDelete: function (commentId) {
+          return questionsDataService.deleteAnswerComment($scope.questionId, $scope.answer.id, commentId)
             .then($scope.update)
         },
         markAsCorrect: function () {
@@ -57,8 +93,12 @@ angular.module('sugoiOverflow.questions')
               })
           }
         },
-        authorIsCurrentUser: function () {
+        isOwnAnswer: function () {
           return $scope.answer.author.username == currentUser.username
+        },
+        toggleEditor: function() {
+          $scope.answerRevision = $scope.answer.body
+          $scope.shouldShowEditor = !$scope.shouldShowEditor
         }
       })
     }

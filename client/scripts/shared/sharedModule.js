@@ -11,8 +11,13 @@ angular.module('sugoiOverflow.shared', [
     'sugoiOverflow.settings',
     'sugoiOverflow.templates',
     'sugoiOverflow.auth'])
-.run(function (configService, $rootScope, $document) {
+.run(function (configService, $rootScope, $document, settings) {
   'use strict'
+
+  if (settings.highlightingLanguages !== 'undefined' && settings.highlightingLanguages !== 'all') {
+    hljs.configure({languages: settings.highlightingLanguages})
+  }
+
   function updateTitle (title) {
     $document[0].title = title
   }
@@ -26,6 +31,19 @@ angular.module('sugoiOverflow.shared', [
         updateTitle(title)
       }
     })
+
+    var langs = conf.highlightLanguages
+    if (langs !== true) {
+      if (langs == false) {
+        hljs.configure({languages: []})
+      }
+
+      langs = langs.map(function (string) {
+        return string.toLowerCase()
+      })
+      hljs.configure({languages: langs})
+    }
+
   })
 })
 .factory('configService', function ($q, $http) {

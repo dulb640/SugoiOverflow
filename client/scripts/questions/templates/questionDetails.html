@@ -6,19 +6,41 @@
   <div class="question-section">
     <div class="question-container">
       <div class="question-content">
-        <div class="title" ng-bind-html="title"></div>
-        <wiz-markdown content="body"></wiz-markdown>
-        <button ng-hide="isSubscribed()" class="subscribe-button action-button" ng-click="subscribeToQuestion()">Subscribe to Question</button>
-        <span class="subscribed-label" ng-show="isSubscribed()">Subscribed!</span>
-        <div class="timestamp"  ng-bind="timestamp | date:'medium'"></div>
-        <div class="tags">
-          <span class="tag" ng-repeat="tag in tags">{{tag.text}}</span>
+        <div ng-show="!shouldShowEditor">
+          <div class="title" ng-bind-html="title"></div>
+          <button class="answer-edit" type="button" ng-click="toggleEditor()" ng-show="isOwnQuestion() && answers.length === 0"><i class="fa fa-pencil"></i></button>
+          <wiz-markdown content="body"></wiz-markdown>
+          <button ng-hide="isSubscribed()" class="subscribe-button action-button" ng-click="subscribeToQuestion()">Subscribe to Question</button>
+          <span class="subscribed-label" ng-show="isSubscribed()">Subscribed!</span>
+          <div class="timestamp"  ng-bind="timestamp | date:'medium'"></div>
+          <div class="tags">
+            <span class="tag" ng-repeat="tag in tags">{{tag.text}}</span>
+          </div>
+          <div class="tags">
+            <span class="tag" ng-repeat="propsedPerson in proposedPeople">{{propsedPerson.email}}</span>
+          </div>
         </div>
+        <div so-edit-question=""
+         so-title="editedTitle"
+         so-body="editedBody"
+         so-tags="editedTags"
+         so-people="editedPeople"
+         so-cancel="toggleEditor"
+         so-cancel-text="'Cancel your edit'"
+         so-submit="submitQuestionRevision"
+         so-submit-text="'Confirm your edit'"
+         so-delete="deleteQuestion"
+         so-delete-text="'Delete your question'"
+         ng-show="shouldShowEditor" ></div>
         <div class="comments-header" ng-show="comments.length !== 0">
           <br>
           Comments:
         </div>
-        <div so-comments="comments" so-comments-add="submitQuestionComment"></div>
+        <div so-comments="comments" ng-show="!shouldShowEditor"
+         so-comments-add="submitQuestionComment"
+         so-comments-edit="submitQuestionCommentEdit"
+         so-comments-delete="submitQuestionCommentDelete"
+         ></div>
         <div class="answer-count">{{answers.length}} Answers</div>
       </div>
       <div class="user-info">

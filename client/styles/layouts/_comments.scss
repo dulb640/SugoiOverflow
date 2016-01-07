@@ -12,17 +12,40 @@
     background-color: $light;
     margin-bottom: 10px;
     padding: 10px;
+    overflow: hidden;
 
     .comment-footer {
-      text-align: right;
+      /*text-align: right;*/
       width: 100%;
+    }
+    
+
+    .comment-edit, .comment-submit, .comment-cancel, .comment-delete {
+      color: $teal;
+      border: 0px;
+      border-color: rgba(255, 255, 255, 0);
+      background-color: rgba(255, 255, 255, 0);
+      padding: 0px;
+
+      text-decoration: none;
+      &:hover {
+        color: $gray-text-normal;
+      }
+
+    }
+
+    .comment-cancel {
+      margin-right: 5px;
+    }
+
+    .comment-submit {
+      margin-right: 5px;
     }
 
     .comment-author {
-      color: $gray-text-normal;
-
+      color: $teal;
       &:hover {
-        color: $teal;
+        color: $gray-text-normal;
       }
     }
 
@@ -30,10 +53,20 @@
       margin-bottom: 5px;
     }
 
-    .comment-author,
-    .comment-timestap {
+    .comment-actions {
+      font-size: 12px;
+      text-align: left;
+      float: left;
+    }
+
+    .footer-details {
       font-size: 12px;
       text-align: right;
+      float: right;
+    }
+    
+    .comment-author,
+    .comment-timestap {
     }
   }
 }

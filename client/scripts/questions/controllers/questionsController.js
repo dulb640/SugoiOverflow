@@ -11,14 +11,16 @@ angular.module('sugoiOverflow.questions')
         questionFilter: questionFilter,
         searchTerms: searchTerms,
         questions: {}, // Will have header information about questions - will change based on user tab selection,
-        suggestedNotEmpty: true,
+        suggestedWasEmpty: false,
         suggestedIsEmpty: function () {
-          $scope.suggestedNotEmpty = !(questionFilter === 'suggested' && !$scope.questions.length)
+          $scope.suggestedWasEmpty = (questionFilter === 'suggested' && !$scope.questions.length)
         }
       })
 
       var init = function () {
+
         var promise
+
         if (searchTerms) {
           promise = questionsDataService.getQuestionsListSearch(searchTerms)
         } else {
@@ -34,6 +36,7 @@ angular.module('sugoiOverflow.questions')
               break
           }
         }
+
         promise
           .then(function (questions) {
             $scope.questions = questions
@@ -45,7 +48,24 @@ angular.module('sugoiOverflow.questions')
               })
               question.hasAnswers = question.answers && question.answers.length > 0
             })
+
             $scope.suggestedIsEmpty()
+
+            if ($scope.suggestedWasEmpty) {
+
+              questionsDataService.getAllQuestionsList().then(function (questions) {
+                $scope.questions = questions
+
+                window._.each($scope.questions, function (question) {
+                  question.tags = window._.map(question.tags, function (tag) {
+                    return {
+                      text: tag
+                    }
+                  })
+                  question.hasAnswers = question.answers && question.answers.length > 0
+                })
+              })
+            }
           })
       }
 

@@ -4,7 +4,8 @@ angular.module('sugoiOverflow.questions')
     function ($scope, $q, $routeParams, $location, questionsDataService, currentUser) {
       'use strict'
 
-      function loadQuestion (question) {
+      function loadQuestion (question) { 
+
         $scope.questionId = question.id
         $scope.title = question.title
         $scope.body = question.body
@@ -13,6 +14,7 @@ angular.module('sugoiOverflow.questions')
             text: tag
           }
         })
+        $scope.proposedPeople = window._.map(question.people)
         $scope.author = question.author
         $scope.timestamp = question.timestamp
         $scope.answers = question.answers
@@ -23,11 +25,36 @@ angular.module('sugoiOverflow.questions')
       }
 
       _.extend($scope, {
+
         canModerate: currentUser.canModerate,
-        delete: function deleteQuestion () {
+
+        deleteQuestion: function () {
+          $location.path('/questions')
           questionsDataService.deleteQuestion($scope.questionId)
             .then(function () {
               $location.path('/questions')
+            })
+        },
+        submitQuestionRevision: function () {
+          if ($scope.sendingQuestionRevision) {
+            return
+          }
+
+          var newQuestion = {
+            title: $scope.editedTitle,
+            body: $scope.editedBody,
+            tags: window._.pluck($scope.editedTags, 'text'),
+            people: window._.pluck($scope.editedPeople, '_id')
+          }
+
+          $scope.sendingQuestionRevision = true
+          questionsDataService.reviseQuestion($scope.questionId, newQuestion)
+            .then(loadQuestion)
+            .then(function () {
+              $scope.toggleEditor()
+            })
+            .finally(function () {
+              $scope.sendingQuestionRevision = false
             })
         },
         submitAnswer: function () {
@@ -72,6 +99,29 @@ angular.module('sugoiOverflow.questions')
               return questionsDataService.getQuestion($routeParams.id)
             })
             .then(loadQuestion)
+        },
+        submitQuestionCommentEdit: function (commentId, body) {
+          return questionsDataService.reviseQuestionComment($routeParams.id, commentId, body)
+          .then(function () {
+            return questionsDataService.getQuestion($routeParams.id)
+          })
+          .then(loadQuestion)
+        },
+        submitQuestionCommentDelete: function (commentId) {
+          return questionsDataService.deleteQuestionComment($routeParams.id, commentId)
+          .then(function () {
+            return questionsDataService.getQuestion($routeParams.id)
+          })
+          .then(loadQuestion)
+        },
+        toggleEditor: function() {
+
+          $scope.editedTitle = $scope.title
+          $scope.editedBody = $scope.body
+          $scope.editedTags = window._.map($scope.tags)
+          $scope.editedPeople = window._.map($scope.proposedPeople)
+
+          $scope.shouldShowEditor = !$scope.shouldShowEditor
         },
         loadQuestion: loadQuestion
       })
