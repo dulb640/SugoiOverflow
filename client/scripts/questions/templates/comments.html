@@ -10,8 +10,8 @@
   </div>
   <div class="add-comment">
     <form novalidate class="add-comment-form" name="addCommentForm" ng-submit="submit()">
-      <div ng-show="shouldShowAddBox">
-        <textarea type="text" name="body" class="addCommentBox" required minlength=30 maxlength=10000 ng-model="body"></textarea>
+      <div ng-show="shouldShowAddBox" >
+        <textarea type="text" name="body" class="addCommentBox" required minlength=30 maxlength=10000 ng-model="body" so-focus="shouldShowAddBox"></textarea>
         <div class="validation-messages" ng-show="!addCommentForm.$valid && addCommentForm.$submitted">
           <ng-messages for="addCommentForm.body.$error">
             <ng-message when="required">

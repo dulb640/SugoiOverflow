@@ -31,21 +31,5 @@ angular.module('sugoiOverflow.questions')
         }
       })
 
-      // The $watch is fired when the text area should show, but
-      // before it is actually showing. Focusing only works if the
-      // box is visible. Setting a 0 millisecond timer allows the
-      // box to be actually shown before focusing on it.
-
-      var textBox = $element.find('.addCommentBox')
-      var timer
-      $scope.$watch('shouldShowAddBox', function (value) {
-        if (value === true) {
-          timer = $timeout(function () {
-            textBox[0].focus()
-          }, 0)
-        }
-      })
-
-
     }
   )
