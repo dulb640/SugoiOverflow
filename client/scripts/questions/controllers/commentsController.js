@@ -7,7 +7,7 @@
  */
 angular.module('sugoiOverflow.questions')
   .controller('commentsController',
-    function ($scope) {
+    function ($scope, $element, $timeout) {
       'use strict'
       $scope.submit = function () {
         if ($scope.addCommentForm.$invalid || $scope.sending) {
@@ -22,7 +22,14 @@ angular.module('sugoiOverflow.questions')
           })
           .finally(function () {
             $scope.sending = false
+            $scope.shouldShowAddBox = false
           })
       }
+      window._.extend($scope, {
+        toggleAddBox: function () {
+          $scope.shouldShowAddBox = !$scope.shouldShowAddBox
+        }
+      })
+
     }
   )

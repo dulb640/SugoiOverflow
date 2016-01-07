@@ -10,21 +10,25 @@
   </div>
   <div class="add-comment">
     <form novalidate class="add-comment-form" name="addCommentForm" ng-submit="submit()">
-      <textarea type="text" name="body" required minlength=30 maxlength=10000 ng-model="body"></textarea>
-      <div class="validation-messages" ng-show="!addCommentForm.$valid && addCommentForm.$submitted">
-        <ng-messages for="addCommentForm.body.$error">
-          <ng-message when="required">
-            <p>Please enter comment</p>
-          </ng-message>
-          <ng-message when="minlength">
-            <p>Comment is too short</p>
-          </ng-message>
-          <ng-message when="maxlength">
-            <p>Comment is too long</p>
-          </ng-message>
-        </ng-messages>
+      <div ng-show="shouldShowAddBox" >
+        <textarea type="text" name="body" class="addCommentBox" required minlength=30 maxlength=10000 ng-model="body" so-focus="shouldShowAddBox"></textarea>
+        <div class="validation-messages" ng-show="!addCommentForm.$valid && addCommentForm.$submitted">
+          <ng-messages for="addCommentForm.body.$error">
+            <ng-message when="required">
+              <p>Please enter comment</p>
+            </ng-message>
+            <ng-message when="minlength">
+              <p>Comment is too short</p>
+            </ng-message>
+            <ng-message when="maxlength">
+              <p>Comment is too long</p>
+            </ng-message>
+          </ng-messages>
+        </div>
       </div>
-      <button class="form-submit action-button" type="submit">Add Comment</button>
+      <button class="form-submit action-button" type="button" ng-click="toggleAddBox()" ng-show="!shouldShowAddBox">Add Comment</button>
+      <button class="form-submit action-button blue" type="button" ng-click="toggleAddBox()" ng-show="shouldShowAddBox">Cancel Comment</button>
+      <button class="form-submit action-button green" type="submit" ng-show="shouldShowAddBox">Submit Comment</button>
     </form>
   </div>
 </div>
